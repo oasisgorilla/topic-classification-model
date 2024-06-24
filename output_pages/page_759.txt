@@ -1,0 +1,47 @@
+758
+Chapter 8
+Exceptional Control Flow
+F
+rom the time you ﬁrst apply power to a processor until the time you shut it off,
+the program counter assumes a sequence of values
+a0, a1, . . . , an−1
+where each ak is the address of some corresponding instruction Ik. Each transition
+from ak to ak+1 is called a control transfer. A sequence of such control transfers is
+called the ﬂow of control, or control ﬂow, of the processor.
+The simplest kind of control ﬂow is a “smooth” sequence where each Ik and
+Ik+1 are adjacent in memory. Typically, abrupt changes to this smooth ﬂow, where
+Ik+1isnotadjacentto Ik, arecausedbyfamiliarprograminstructionssuchasjumps,
+calls, and returns. Such instructions are necessary mechanisms that allow programs
+to react to changes in internal program state represented by program variables.
+But systems must also be able to react to changes in system state that are
+not captured by internal program variables and are not necessarily related to
+the execution of the program. For example, a hardware timer goes off at regular
+intervals and must be dealt with. Packets arrive at the network adapter and must
+be stored in memory. Programs request data from a disk and then sleep until they
+are notiﬁed that the data are ready. Parent processes that create child processes
+must be notiﬁed when their children terminate.
+Modern systems react to these situations by making abrupt changes in the
+control ﬂow. In general, we refer to these abrupt changes as exceptional control
+ﬂow (ECF). ECF occurs at all levels of a computer system. For example, at the
+hardware level, events detected by the hardware trigger abrupt control transfers
+to exception handlers. At the operating systems level, the kernel transfers control
+from one user process to another via context switches. At the application level,
+a process can send a signal to another process that abruptly transfers control to
+a signal handler in the recipient. An individual program can react to errors by
+sidestepping the usual stack discipline and making nonlocal jumps to arbitrary
+locations in other functions.
+As programmers, there are a number of reasons why it is important for you
+to understand ECF:
+. Understanding ECF will help you understand important systems concepts.ECF
+is the basic mechanism that operating systems use to implement I/O, processes,
+and virtual memory. Before you can really understand these important ideas,
+you need to understand ECF.
+. Understanding ECF will help you understand how applications interact with the
+operating system.Applications request services from the operating system by
+using a form of ECF known as a trap or system call. For example, writing data
+to a disk, reading data from a network, creating a new process, and terminating
+the current process are all accomplished by application programs invoking
+system calls. Understanding the basic system call mechanism will help you
+understand how these services are provided to applications.
+. Understanding ECF will help you write interesting new application programs.
+The operating system provides application programs with powerful ECF

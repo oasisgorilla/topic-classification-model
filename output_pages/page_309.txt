@@ -1,0 +1,48 @@
+308
+Chapter 3
+Machine-Level Representation of Programs
+Section 3.11. The numeric value of u will bear no relation to that of d, except for
+the case when d is 0.0.
+When using unions to combine data types of different sizes, byte-ordering
+issues can become important. For example, suppose we write a procedure that
+will create an 8-byte double using the bit patterns given by two 4-byte unsigned
+values:
+double uu2double(unsigned word0, unsigned word1)
+{
+union {
+double d;
+unsigned u[2];
+} temp;
+temp.u[0] = word0;
+temp.u[1] = word1;
+return temp.d;
+}
+On a little-endian machine, such as an x86-64 processor, argument word0 will
+become the low-order 4 bytes of d, while word1 will become the high-order 4
+bytes. On a big-endian machine, the role of the two arguments will be reversed.
+Practice Problem 3.43 (solution page 380)
+Suppose you are given the job of checking that a C compiler generates the proper
+code for structure and union access. You write the following structure declaration:
+typedef union {
+struct {
+long
+u;
+short
+v;
+char
+w;
+} t1;
+struct {
+int a[2];
+char
+*p;
+} t2;
+} u_type;
+You write a series of functions of the form
+void get(u_type *up, type *dest) {
+*dest =
+expr;
+}
+with different access expressions expr and with destination data type type set
+according to type associated with expr. You then examine the code generated
+when compiling the functions to see if they match your expectations.

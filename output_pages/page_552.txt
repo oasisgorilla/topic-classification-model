@@ -1,0 +1,89 @@
+Section 5.6
+Eliminating Unneeded Memory References
+551
+1
+/* Accumulate result in local variable */
+2
+void combine4(vec_ptr v, data_t *dest)
+3
+{
+4
+long i;
+5
+long length = vec_length(v);
+6
+data_t *data = get_vec_start(v);
+7
+data_t acc = IDENT;
+8
+9
+for (i = 0; i < length; i++) {
+10
+acc = acc OP data[i];
+11
+}
+12
+*dest = acc;
+13
+}
+Figure 5.10
+Accumulating result in temporary. Holding the accumulated value in local
+variable acc (short for “accumulator”) eliminates the need to retrieve it from memory
+and write back the updated value on every loop iteration.
+Integer
+Floating point
+Function
+Page
+Method
++
+*
++
+*
+combine3
+549
+Direct data access
+7.17
+9.02
+9.02
+11.03
+combine4
+551
+Accumulate in temporary
+1.27
+3.01
+3.01
+5.01
+All of our times improve by factors ranging from 2.2× to 5.7×, with the integer
+addition case dropping to just 1.27 clock cycles per element.
+Again, one might think that a compiler should be able to automatically trans-
+form the combine3 code shown in Figure 5.9 to accumulate the value in a register,
+as it does with the code for combine4 shown in Figure 5.10. In fact, however, the
+two functions can have different behaviors due to memory aliasing. Consider, for
+example, the case of integer data with multiplication as the operation and 1 as the
+identity element. Let v = [2, 3, 5] be a vector of three elements and consider the
+following two function calls:
+combine3(v, get_vec_start(v) + 2);
+combine4(v, get_vec_start(v) + 2);
+That is, we create an alias between the last element of the vector and the destina-
+tion for storing the result. The two functions would then execute as follows:
+Function
+Initial
+Before loop
+i = 0
+i = 1
+i = 2
+Final
+combine3
+[2, 3, 5]
+[2, 3, 1]
+[2, 3, 2]
+[2, 3, 6]
+[2, 3, 36]
+[2, 3, 36]
+combine4
+[2, 3, 5]
+[2, 3, 5]
+[2, 3, 5]
+[2, 3, 5]
+[2, 3, 5]
+[2, 3, 30]

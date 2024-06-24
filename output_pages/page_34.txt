@@ -1,0 +1,45 @@
+Preface
+33
+and maintained our new Core i7 box. Michael Kozuch, Babu Pillai, and Jason
+Campbell provided valuable insight on memory system performance, multi-core
+systems, and the power wall. Phil Gibbons and Shimin Chen shared their consid-
+erable expertise on solid state disk designs.
+We have been able to call on the talents of many, including Wen-Mei Hwu,
+Markus Pueschel, and Jiri Simsa, to provide both detailed comments and high-
+level advice. James Hoe helped us create a Verilog version of the Y86 processor
+and did all of the work needed to synthesize working hardware.
+Many thanks to our colleagues who provided reviews of the draft manu-
+script: James Archibald (Brigham Young University), Richard Carver (George
+Mason University), Mirela Damian (Villanova University), Peter Dinda (North-
+western University), John Fiore (Temple University), Jason Fritts (St. Louis Uni-
+versity), John Greiner (Rice University), Brian Harvey (University of California,
+Berkeley), Don Heller (Penn State University), Wei Chung Hsu (University of
+Minnesota), Michelle Hugue (University of Maryland), Jeremy Johnson (Drexel
+University), Geoff Kuenning (Harvey Mudd College), Ricky Liu, Sam Mad-
+den (MIT), Fred Martin (University of Massachusetts, Lowell), Abraham Matta
+(Boston University), Markus Pueschel (Carnegie Mellon University), Norman
+Ramsey (Tufts University), Glenn Reinmann (UCLA), Michela Taufer (Univer-
+sity of Delaware), and Craig Zilles (UIUC).
+Paul Anagnostopoulos of Windfall Software did an outstanding job of type-
+setting the book and leading the production team. Many thanks to Paul and his
+superb team: Rick Camp (copyeditor), Joe Snowden (compositor), MaryEllen N.
+Oliver (proofreader), Laurel Muller (artist), and Ted Laux (indexer).
+Finally, we would like to thank our friends at Prentice Hall. Marcia Horton has
+always been there for us. Our editor, Matt Goldstein, provided stellar leadership
+from beginning to end. We are profoundly grateful for their help, encouragement,
+and insights.
+Acknowledgments from the First Edition
+We are deeply indebted to many friends and colleagues for their thoughtful crit-
+icisms and encouragement. A special thanks to our 15-213 students, whose infec-
+tious energy and enthusiasm spurred us on. Nick Carter and Vinny Furia gener-
+ously provided their malloc package.
+Guy Blelloch, Greg Kesden, Bruce Maggs, and Todd Mowry taught the course
+over multiple semesters, gave us encouragement, and helped improve the course
+material. Herb Derby provided early spiritual guidance and encouragement. Al-
+lan Fisher, Garth Gibson, Thomas Gross, Satya, Peter Steenkiste, and Hui Zhang
+encouraged us to develop the course from the start. A suggestion from Garth
+early on got the whole ball rolling, and this was picked up and reﬁned with the
+help of a group led by Allan Fisher. Mark Stehlik and Peter Lee have been very
+supportive about building this material into the undergraduate curriculum. Greg
+Kesden provided helpful feedback on the impact of ICS on the OS course. Greg
+Ganger and Jiri Schindler graciously provided some disk drive characterizations

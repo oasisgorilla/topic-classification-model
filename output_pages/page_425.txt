@@ -1,0 +1,56 @@
+424
+Chapter 4
+Processor Architecture
+Aside
+Tracing the execution of a subq instruction
+As an example, let us follow the processing of the subq instruction on line 3 of the object code shown
+in Figure 4.17. We can see that the previous two instructions initialize registers %rdx and %rbx to 9 and
+21, respectively. We can also see that the instruction is located at address 0x014 and consists of 2 bytes,
+having values 0x61 and 0x23. The stages would proceed as shown in the following table, which lists the
+generic rule for processing an OPq instruction (Figure 4.18) on the left, and the computations for this
+speciﬁc instruction on the right.
+Stage
+OPq rA, rB
+subq %rdx, %rbx
+Fetch
+icode:ifun ←M1[PC]
+icode:ifun ←M1[0x014] = 6:1
+rA :rB ←M1[PC + 1]
+rA :rB ←M1[0x015] = 2:3
+valP ←PC + 2
+valP ←0x014 + 2 = 0x016
+Decode
+valA ←R[rA]
+valA ←R[%rdx] = 9
+valB ←R[rB]
+valB ←R[%rbx] = 21
+Execute
+valE ←valB OP valA
+valE ←21 −9 = 12
+Set CC
+ZF ←0, SF ←0, OF ←0
+Memory
+Write back
+R[rB] ←valE
+R[%rbx] ←valE = 12
+PC update
+PC ←valP
+PC ←valP = 0x016
+As this trace shows, we achieve the desired effect of setting register %rbx to 12, setting all three
+condition codes to zero, and incrementing the PC by 2.
+Generic
+Speciﬁc
+Stage
+irmovq V, rB
+irmovq $128, %rsp
+Memory
+Write back
+R[rB] ←valE
+PC update
+PC ←valP
+How does this instruction execution modify the registers and the PC?
+Figure 4.19 shows the processing required for the memory write and read in-
+structions rmmovq and mrmovq. We see the same basic ﬂow as before, but using the
+ALU to add valC to valB, giving the effective address (the sum of the displacement
+and the base register value) for the memory operation. In the memory stage, we
+either write the register value valA to memory or read valM from memory.

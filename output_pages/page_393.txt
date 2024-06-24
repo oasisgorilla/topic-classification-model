@@ -1,0 +1,46 @@
+392
+Chapter 4
+Processor Architecture
+about the effect of the most recent arithmetic or logical instruction. The program
+counter (PC) holds the address of the instruction currently being executed.
+The memory is conceptually a large array of bytes, holding both program
+and data. Y86-64 programs reference memory locations using virtual addresses.
+A combination of hardware and operating system software translates these into
+the actual, or physical, addresses indicating where the values are actually stored
+in memory. We will study virtual memory in more detail in Chapter 9. For now,
+we can think of the virtual memory system as providing Y86-64 programs with an
+image of a monolithic byte array.
+A ﬁnal part of the program state is a status code Stat, indicating the overall
+state of program execution. It will indicate either normal operation or that some
+sort of exception has occurred, such as when an instruction attempts to read
+from an invalid memory address. The possible status codes and the handling of
+exceptions is described in Section 4.1.4.
+4.1.2
+Y86-64 Instructions
+Figure 4.2 gives a concise description of the individual instructions in the Y86-64
+ISA. We use this instruction set as a target for our processor implementations. The
+set of Y86-64 instructions is largely a subset of the x86-64 instruction set. It includes
+only 8-byte integer operations, has fewer addressing modes, and includes a smaller
+set of operations. Since we only use 8-byte data, we can refer to these as “words”
+without any ambiguity. In this ﬁgure, we show the assembly-code representation
+of the instructions on the left and the byte encodings on the right. Figure 4.3 shows
+further details of some of the instructions. The assembly-code format is similar to
+the ATT format for x86-64.
+Here are some details about the Y86-64 instructions.
+. The x86-64 movq instruction is split into four different instructions: irmovq,
+rrmovq, mrmovq, and rmmovq, explicitly indicating the form of the source and
+destination. The source is either immediate (i), register (r), or memory (m).
+It is designated by the ﬁrst character in the instruction name. The destination
+is either register (r) or memory (m). It is designated by the second character
+in the instruction name. Explicitly identifying the four types of data transfer
+will prove helpful when we decide how to implement them.
+The memory references for the two memory movement instructions have
+a simple base and displacement format. We do not support the second index
+register or any scaling of a register’s value in the address computation.
+As with x86-64, we do not allow direct transfers from one memory loca-
+tion to another. In addition, we do not allow a transfer of immediate data to
+memory.
+. There are four integer operation instructions, shown in Figure 4.2 as OPq.
+These are addq, subq, andq, and xorq. They operate only on register data,
+whereas x86-64 also allows operations on memory data. These instructions
+set the three condition codes ZF, SF, and OF (zero, sign, and overﬂow).

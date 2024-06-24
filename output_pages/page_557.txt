@@ -1,0 +1,46 @@
+556
+Chapter 5
+Optimizing Program Performance
+can be decoded into multiple operations. The details of how instructions are de-
+coded into sequences of operations varies between machines, and this information
+is considered highly proprietary. Fortunately, we can optimize our programs with-
+out knowing the low-level details of a particular machine implementation.
+In a typical x86 implementation, an instruction that only operates on registers,
+such as
+addq %rax,%rdx
+is converted into a single operation. On the other hand, an instruction involving
+one or more memory references, such as
+addq %rax,8(%rdx)
+yields multiple operations, separating the memory references from the arithmetic
+operations. This particular instruction would be decoded as three operations: one
+to load a value from memory into the processor, one to add the loaded value to the
+value in register %eax, and one to store the result back to memory. The decoding
+splits instructions to allow a division of labor among a set of dedicated hardware
+units. These units can then execute the different parts of multiple instructions in
+parallel.
+The EU receives operations from the instruction fetch unit. Typically, it can
+receive a number of them on each clock cycle. These operations are dispatched to
+a set of functional units that perform the actual operations. These functional units
+are specialized to handle different types of operations.
+Reading and writing memory is implemented by the load and store units. The
+load unit handles operations that read data from the memory into the processor.
+This unit has an adder to perform address computations. Similarly, the store unit
+handles operations that write data from the processor to the memory. It also has
+an adder to perform address computations. As shown in the ﬁgure, the load and
+store units access memory via a data cache, a high-speed memory containing the
+most recently accessed data values.
+With speculative execution, the operations are evaluated, but the ﬁnal results
+are not stored in the program registers or data memory until the processor can
+be certain that these instructions should actually have been executed. Branch
+operations are sent to the EU, not to determine where the branch should go, but
+rather to determine whether or not they were predicted correctly. If the prediction
+was incorrect, the EU will discard the results that have been computed beyond the
+branch point. It will also signal the branch unit that the prediction was incorrect
+and indicate the correct branch destination. In this case, the branch unit begins
+fetching at the new location. As we saw in Section 3.6.6, such a misprediction incurs
+a signiﬁcant cost in performance. It takes a while before the new instructions can
+be fetched, decoded, and sent to the functional units.
+Figure 5.11 indicates that the different functional units are designed to per-
+form different operations. Those labeled as performing “arithmetic operations”
+are typically specialized to perform different combinations of integer and ﬂoating-
+point operations. As the number of transistors that can be integrated onto a single

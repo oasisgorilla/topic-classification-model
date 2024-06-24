@@ -1,0 +1,58 @@
+Homework Problems
+695
+. buffer begins at memory address 0.
+. The cache is initially empty.
+. The only memory accesses are to the entries of the array buffer. Variables i,
+j, cptr, and iptr are stored in registers.
+What percentage of writes in the following code will hit in the cache?
+1
+for (j = 639; j >= 0; j--) {
+2
+for (i = 479; i >= 0; i--){
+3
+buffer[i][j].r = 0;
+4
+buffer[i][j].g = 0;
+5
+buffer[i][j].b = 0;
+6
+buffer[i][j].a = 0;
+7
+}
+8
+}
+6.42 ◆◆
+Given the assumptions in Problem 6.41, what percentage of writes in the following
+code will hit in the cache?
+1
+char *cptr = (char *) buffer;
+2
+for (; cptr < (((char *) buffer) + 640 * 480 * 4); cptr++)
+3
+*cptr = 0;
+6.43 ◆◆
+Given the assumptions in Problem 6.41, what percentage of writes in the following
+code will hit in the cache?
+1
+int *iptr = (int *)buffer;
+2
+for (; iptr < ((int *)buffer + 640*480); iptr++)
+3
+*iptr = 0;
+6.44 ◆◆◆
+Download the mountain program from the CS:APP Web site and run it on your
+favorite PC/Linux system. Use the results to estimate the sizes of the caches on
+your system.
+6.45 ◆◆◆◆
+In this assignment, you will apply the concepts you learned in Chapters 5 and 6
+to the problem of optimizing code for a memory-intensive application. Consider
+a procedure to copy and transpose the elements of an N × N matrix of type int.
+That is, for source matrix S and destination matrix D, we want to copy each
+element si,j to dj,i. This code can be written with a simple loop,
+1
+void transpose(int *dst, int *src, int dim)
+2
+{
+3
+int i, j;
+4

@@ -1,0 +1,46 @@
+502
+Chapter 4
+Processor Architecture
+Aside
+Formally verifying our design
+Even when a design passes an extensive set of tests, we cannot be certain that it will operate correctly for
+all possible programs. The number of possible programs we could test is unimaginably large, even if we
+only consider tests consisting of short code segments. Newer methods of formal veriﬁcation, however,
+hold the promise that we can have tools that rigorously consider all possible behaviors of a system and
+determine whether or not there are any design errors.
+We were able to apply formal veriﬁcation to an earlier version of our Y86-64 processors [13].
+We set up a framework to compare the behavior of the pipelined design PIPE to the unpipelined
+version SEQ. That is, it was able to prove that for an arbitrary machine-language program, the two
+processors would have identical effects on the programmer-visible state. Of course, our veriﬁer cannot
+actually run all possible programs, since there are an inﬁnite number of them. Instead, it uses a form
+of proof by induction, showing a consistency between the two processors on a cycle-by-cycle basis.
+Carrying out this analysis requires reasoning about the hardware using symbolic methods in which we
+consider all program values to be arbitrary integers, and we abstract the ALU as a sort of “black box,”
+computing some unspeciﬁed function over its arguments. We assume only that the ALUs for SEQ and
+PIPE compute identical functions.
+We used the HCL descriptions of the control logic to generate the control logic for our symbolic
+processor models, and so we could catch any bugs in the HCL code. Being able to show that SEQ
+and PIPE are identical does not guarantee that either of them faithfully implements the instruction set
+architecture. However, it would uncover any bug due to an incorrect pipeline design, and this is the
+major source of design errors.
+In our experiments, we veriﬁed not only a version of PIPE similar to the one we have presented
+in this chapter but also several variants that we give as homework problems, in which we add more
+instructions, modify the hardware capabilities, or use different branch prediction strategies. Interest-
+ingly, we found only one bug in all of our designs, involving control combination B (described in Section
+4.5.8) for our solution to the variant described in Problem 4.58. This exposed a weakness in our testing
+regime that caused us to add additional cases to the ctest testing script.
+Formal veriﬁcation is still in an early stage of development. The tools are often difﬁcult to use, and
+they do not have the capacity to verify large-scale designs. We were able to verify our processors in part
+because of their relative simplicity. Even then, it required several weeks of effort and multiple runs of
+the tools, each requiring up to 8 hours of computer time. This is an active area of research, with some
+tools becoming commercially available and some in use at companies such as Intel, AMD, and IBM.
+the cycles required to start the instructions ﬂowing through the pipeline. We can
+then compute the CPI for this benchmark as follows:
+CPI = Ci + Cb
+Ci
+= 1.0 + Cb
+Ci
+That is, the CPI equals 1.0 plus a penalty termCb/Ci indicating the average number
+of bubbles injected per instruction executed. Since only three different instruction
+types can cause a bubble to be injected, we can break this penalty term into three
+components:

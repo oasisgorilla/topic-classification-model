@@ -1,0 +1,104 @@
+Section 9.3
+VM as a Tool for Caching
+845
+Figure 9.6
+VM page fault (before).
+The reference to a word in
+VP 3 is a miss and triggers
+a page fault.
+PTE 0
+PP 0
+PP 3
+1
+1
+0
+1
+0
+0
+1
+0
+PTE 7
+Null
+VP 1
+VP 4
+VP 7
+VP 2
+VP 1
+VP 2
+VP 3
+VP 4
+VP 6
+VP 7
+Null
+Physical page
+number or
+disk address
+Memory-resident
+page table
+(DRAM)
+Virtual memory
+(disk)
+Physical memory
+(DRAM)
+Virtual address
+Valid
+Figure 9.7
+VM page fault (after).
+The page fault handler
+selects VP 4 as the victim
+and replaces it with a copy
+of VP 3 from disk. After the
+page fault handler restarts
+the faulting instruction, it
+will read the word from
+memory normally, without
+generating an exception.
+PTE 0
+PP 0
+PP 3
+1
+1
+1
+0
+0
+0
+1
+0
+PTE 7
+Null
+VP 1
+VP 3
+VP 7
+VP 2
+VP 1
+VP 2
+VP 3
+VP 4
+VP 6
+VP 7
+Null
+Physical page
+number or
+disk address
+Memory-resident
+page table
+(DRAM)
+Virtual memory
+(disk)
+Physical memory
+(DRAM)
+Valid
+Virtual address
+Next, the kernel copies VP 3 from disk to PP 3 in memory, updates PTE 3,
+and then returns. When the handler returns, it restarts the faulting instruction,
+which resends the faulting virtual address to the address translation hardware.
+But now, VP 3 is cached in main memory, and the page hit is handled normally by
+the address translation hardware. Figure 9.7 shows the state of our example page
+table after the page fault.
+Virtual memory was invented in the early 1960s, long before the widening
+CPU-memory gap spawned SRAM caches. As a result, virtual memory systems
+use a different terminology from SRAM caches, even though many of the ideas
+are similar. In virtual memory parlance, blocks are known as pages. The activity
+of transferring a page between disk and memory is known as swapping or paging.
+Pages are swapped in (paged in) from disk to DRAM, and swapped out (paged
+out) from DRAM to disk. The strategy of waiting until the last moment to swap

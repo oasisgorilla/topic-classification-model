@@ -1,0 +1,47 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+505
+division and ﬂoating-point operations. In a medium-performance processor such
+as PIPE, typical execution times for these operations range from 3 or 4 cycles for
+ﬂoating-point addition up to 64 cycles for integer division. To implement these
+instructions, we require both additional hardware to perform the computations
+and a mechanism to coordinate the processing of these instructions with the rest
+of the pipeline.
+One simple approach to implementing multicycle instructions is to simply
+expand the capabilities of the execute stage logic with integer and ﬂoating-point
+arithmetic units. An instruction remains in the execute stage for as many clock
+cycles as it requires, causing the fetch and decode stages to stall. This approach is
+simple to implement, but the resulting performance is not very good.
+Better performance can be achieved by handling the more complex opera-
+tions with special hardware functional units that operate independently of the
+main pipeline. Typically, there is one functional unit for performing integer mul-
+tiplication and division, and another for performing ﬂoating-point operations. As
+an instruction enters the decode stage, it can be issued to the special unit. While the
+unit performs the operation, the pipeline continues processing other instructions.
+Typically, the ﬂoating-point unit is itself pipelined, and thus multiple operations
+can execute concurrently in the main pipeline and in the different units.
+The operations of the different units must be synchronized to avoid incorrect
+behavior. For example, if there are data dependencies between the different
+operations being handled by different units, the control logic may need to stall
+one part of the system until the results from an operation handled by some other
+part of the system have been completed. Often, different forms of forwarding are
+used to convey results from one part of the system to other parts, just as we saw
+between the different stages of PIPE. The overall design becomes more complex
+than we have seen with PIPE, but the same techniques of stalling, forwarding, and
+pipeline control can be used to make the overall behavior match the sequential
+ISA model.
+Interfacing with the Memory System
+In our presentation of PIPE, we assumed that both the instruction fetch unit
+and the data memory could read or write any memory location in one clock
+cycle. We also ignored the possible hazards caused by self-modifying code where
+one instruction writes to the region of memory from which later instructions are
+fetched. Furthermore, we reference memory locations according to their virtual
+addresses, and these require a translation into physical addresses before the actual
+read or write operation can be performed. Clearly, it is unrealistic to do all of this
+processing in a single clock cycle. Even worse, the memory values being accessed
+may reside on disk, requiring millions of clock cycles to read into the processor
+memory.
+As will be discussed in Chapters 6 and 9, the memory system of a processor
+uses a combination of multiple hardware memories and operating system soft-
+ware to manage the virtual memory system. The memory system is organized as a
+hierarchy, with faster but smaller memories holding a subset of the memory being

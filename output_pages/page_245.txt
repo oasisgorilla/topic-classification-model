@@ -1,0 +1,64 @@
+244
+Chapter 3
+Machine-Level Representation of Programs
+Aside
+What do the instructions rep and repz do?
+Line 8 of the assembly code shown on page 243 contains the instruction combination rep; ret. These
+are rendered in the disassembled code (line 6) as repz retq. One can infer that repz is a synonym
+for rep, just as retq is a synonym for ret. Looking at the Intel and AMD documentation for the
+rep instruction, we ﬁnd that it is normally used to implement a repeating string operation [3, 51]. It
+seems completely inappropriate here. The answer to this puzzle can be seen in AMD’s guidelines to
+compiler writers [1]. They recommend using the combination of rep followed by ret to avoid making
+the ret instruction the destination of a conditional jump instruction. Without the rep instruction, the
+jg instruction (line 7 of the assembly code) would proceed to the ret instruction when the branch is not
+taken. According to AMD, their processors cannot properly predict the destination of a ret instruction
+when it is reached from a jump instruction. The rep instruction serves as a form of no-operation here,
+and so inserting it as the jump destination does not change behavior of the code, except to make it
+faster on AMD processors. We can safely ignore any rep or repz instruction we see in the rest of the
+code presented in this book.
+address of the following instruction, we get jump target address 0x8, the address
+of the instruction on line 4.
+Similarly, the target of the second jump instruction is encoded as 0xf8 (deci-
+mal −8) using a single-byte two’s-complement representation. Adding this to 0xd
+(decimal 13), the address of the instruction on line 6, we get 0x5, the address of
+the instruction on line 3.
+As these examples illustrate, the value of the program counter when perform-
+ing PC-relative addressing is the address of the instruction following the jump, not
+that of the jump itself. This convention dates back to early implementations, when
+the processor would update the program counter as its ﬁrst step in executing an
+instruction.
+The following shows the disassembled version of the program after linking:
+1
+4004d0:
+48 89 f8
+mov
+%rdi,%rax
+2
+4004d3:
+eb 03
+jmp
+4004d8 <loop+0x8>
+3
+4004d5:
+48 d1 f8
+sar
+%rax
+4
+4004d8:
+48 85 c0
+test
+%rax,%rax
+5
+4004db:
+7f f8
+jg
+4004d5 <loop+0x5>
+6
+4004dd:
+f3 c3
+repz retq
+The instructions have been relocated to different addresses, but the encodings
+of the jump targets in lines 2 and 5 remain unchanged. By using a PC-relative
+encoding of the jump targets, the instructions can be compactly encoded (requiring
+just 2 bytes), and the object code can be shifted to different positions in memory
+without alteration.

@@ -1,0 +1,43 @@
+682
+Chapter 6
+The Memory Hierarchy
+100
+10
+1
+50
+100 150 200 250 300 350 400 450 500 550 600 650 700
+Array size (n)
+Cycles per inner-loop iteration
+jki
+kji
+ijk
+jik
+kij
+ikj
+Figure 6.46
+Core i7 matrix multiply performance.
+class AB routines, which perform two loads and no stores). Second, the inner
+loop scans the columns of A and C with a stride of n. The result is a miss on each
+load, for a total of two misses per iteration. Notice that interchanging the loops
+has decreased the amount of spatial locality compared to the class AB routines.
+The BC routines (Figure 6.44(e) and (f)) present an interesting trade-off: With
+two loads and a store, they require one more memory operation than the AB
+routines. On the other hand, since the inner loop scans both B and C row-wise
+with a stride-1 access pattern, the miss rate on each array is only 0.25 misses per
+iteration, for a total of 0.50 misses per iteration.
+Figure 6.46 summarizes the performance of different versions of matrix mul-
+tiply on a Core i7 system. The graph plots the measured number of CPU cycles
+per inner-loop iteration as a function of array size (n).
+There are a number of interesting points to notice about this graph:
+. For large values of n, the fastest version runs almost 40 times faster than the
+slowest version, even though each performs the same number of ﬂoating-point
+arithmetic operations.
+. Pairs of versions with the same number of memory references and misses per
+iteration have almost identical measured performance.
+. The two versions with the worst memory behavior, in terms of the number of
+accesses and misses per iteration, run signiﬁcantly slower than the other four
+versions, which have fewer misses or fewer accesses, or both.
+. Miss rate, in this case, is a better predictor of performance than the total
+number of memory accesses. For example, the class BC routines, with 0.5
+misses per iteration, perform much better than the class AB routines, with
+1.25 misses per iteration, even though the class BC routines perform more

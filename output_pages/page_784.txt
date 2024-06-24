@@ -1,0 +1,71 @@
+Section 8.4
+Process Control
+783
+code/ecf/waitpid1.c
+1
+#include "csapp.h"
+2
+#define N 2
+3
+4
+int main()
+5
+{
+6
+int status, i;
+7
+pid_t pid;
+8
+9
+/* Parent creates N children */
+10
+for (i = 0; i < N; i++)
+11
+if ((pid = Fork()) == 0)
+/* Child */
+12
+exit(100+i);
+13
+14
+/* Parent reaps N children in no particular order */
+15
+while ((pid = waitpid(-1, &status, 0)) > 0) {
+16
+if (WIFEXITED(status))
+17
+printf("child %d terminated normally with exit status=%d\n",
+18
+pid, WEXITSTATUS(status));
+19
+else
+20
+printf("child %d terminated abnormally\n", pid);
+21
+}
+22
+23
+/* The only normal termination is if there are no more children */
+24
+if (errno != ECHILD)
+25
+unix_error("waitpid error");
+26
+27
+exit(0);
+28
+}
+code/ecf/waitpid1.c
+Figure 8.18
+Using the waitpid function to reap zombie children in no particular order.
+Before moving on, make sure you understand why line 12 is executed by each of
+the children, but not the parent.
+In line 15, the parent waits for all of its children to terminate by using waitpid
+as the test condition of a while loop. Because the ﬁrst argument is −1, the call to
+waitpid blocks until an arbitrary child has terminated. As each child terminates,
+the call to waitpid returns with the nonzero PID of that child. Line 16 checks the
+exit status of the child. If the child terminated normally—in this case, by calling
+the exit function—then the parent extracts the exit status and prints it on stdout.
+When all of the children have been reaped, the next call to waitpid returns −1
+and sets errno to ECHILD. Line 24 checks that the waitpid function terminated
+normally, and prints an error message otherwise. When we run the program on
+our Linux system, it produces the following output:

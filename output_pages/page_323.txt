@@ -1,0 +1,42 @@
+322
+Chapter 3
+Machine-Level Representation of Programs
+regions of memory each time a program is run. That means that a program running
+on one machine will have very different address mappings than the same program
+running on other machines. This can thwart some forms of attack.
+Overall, however, a persistent attacker can overcome randomization by brute
+force, repeatedly attempting attacks with different addresses. A common trick is
+to include a long sequence of nop (pronounced “no op,” short for “no operation”)
+instructions before the actual exploit code. Executing this instruction has no ef-
+fect, other than incrementing the program counter to the next instruction. As long
+as the attacker can guess an address somewhere within this sequence, the program
+will run through the sequence and then hit the exploit code. The common term for
+this sequence is a “nop sled” [97], expressing the idea that the program “slides”
+through the sequence. If we set up a 256-byte nop sled, then the randomization
+over n = 223 can be cracked by enumerating 215 = 32,768 starting addresses, which
+is entirely feasible for a determined attacker. For the 64-bit case, trying to enumer-
+ate 224 = 16,777,216 is a bit more daunting. We can see that stack randomization
+and other aspects of ASLR can increase the effort required to successfully attack a
+system, and therefore greatly reduce the rate at which a virus or worm can spread,
+but it cannot provide a complete safeguard.
+Practice Problem 3.47 (solution page 383)
+Running our stack-checking code 10,000 times on a system running Linux ver-
+sion 2.6.16, we obtained addresses ranging from a minimum of 0xffffb754 to a
+maximum of 0xffffd754.
+A. What is the approximate range of addresses?
+B. If we attempted a buffer overrun with a 128-byte nop sled, about how many
+attempts would it take to test all starting addresses?
+Stack Corruption Detection
+A second line of defense is to be able to detect when a stack has been corrupted.
+We saw in the example of the echo function (Figure 3.40) that the corruption
+typically occurs when the program overruns the bounds of a local buffer. In C,
+there is no reliable way to prevent writing beyond the bounds of an array. Instead,
+the program can attempt to detect when such a write has occurred before it can
+have any harmful effects.
+Recent versions of gcc incorporate a mechanism known as a stack protector
+into the generated code to detect buffer overruns. The idea is to store a special
+canary value4 in the stack frame between any local buffer and the rest of the stack
+state, as illustrated in Figure 3.42 [26, 97]. This canary value, also referred to as a
+guard value, is generated randomly each time the program runs, and so there is no
+4. The term “canary” refers to the historic use of these birds to detect the presence of dangerous gases
+in coal mines.

@@ -1,0 +1,45 @@
+Section 3.9
+Heterogeneous Data Structures
+309
+Suppose in these functions that up and dest are loaded into registers %rdi and
+%rsi, respectively. Fill in the following table with data type type and sequences of
+one to three instructions to compute the expression and store the result at dest.
+expr
+type
+Code
+up->t1.u
+long
+movq (%rdi), %rax
+movq %rax, (%rsi)
+up->t1.v
+&up->t1.w
+up->t2.a
+up->t2.a[up->t1.u]
+*up->t2.p
+3.9.3
+Data Alignment
+Many computer systems place restrictions on the allowable addresses for the
+primitive data types, requiring that the address for some objects must be a multiple
+of some value K (typically 2, 4, or 8). Such alignment restrictions simplify the design
+of the hardware forming the interface between the processor and the memory
+system. For example, suppose a processor always fetches 8 bytes from memory
+with an address that must be a multiple of 8. If we can guarantee that any double
+will be aligned to have its address be a multiple of 8, then the value can be read
+or written with a single memory operation. Otherwise, we may need to perform
+two memory accesses, since the object might be split across two 8-byte memory
+blocks.
+The x86-64 hardware will work correctly regardless of the alignment of data.
+However, Intel recommends that data be aligned to improve memory system
+performance. Their alignment rule is based on the principle that any primitive
+object of K bytes must have an address that is a multiple of K. We can see that
+this rule leads to the following alignments:
+K
+Types
+1
+char
+2
+short
+4
+int, float
+8
+long, double, char *

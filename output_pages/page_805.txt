@@ -1,0 +1,60 @@
+804
+Chapter 8
+Exceptional Control Flow
+#include "csapp.h"
+ssize_t sio_putl(long v);
+ssize_t sio_puts(char s[]);
+Returns: number of bytes transferred if OK, −1 on error
+void sio_error(char s[]);
+Returns: nothing
+The sio_putl and sio_puts functions emit a long and a string, respec-
+tively, to standard output. The sio_error function prints an error mes-
+sage and terminates.
+Figure 8.34 shows the implementation of the Sio package, which uses
+two private reentrant functions from csapp.c. The sio_strlen function
+in line 3 returns the length of string s. The sio_ltoa function in line 10,
+which is based on the itoa function from [61], converts v to its base b
+string representation in s. The _exit function in line 17 is an async-signal-
+safe variant of exit.
+Figure 8.35 shows a safe version of the SIGINT handler from Fig-
+ure 8.30.
+G2. Save and restore errno. Many of the Linux async-signal-safe functions set
+errno when they return with an error. Calling such functions inside a
+handler might interfere with other parts of the program that rely onerrno.
+code/src/csapp.c
+1
+ssize_t sio_puts(char s[]) /* Put string */
+2
+{
+3
+return write(STDOUT_FILENO, s, sio_strlen(s));
+4
+}
+5
+6
+ssize_t sio_putl(long v) /* Put long */
+7
+{
+8
+char s[128];
+9
+10
+sio_ltoa(v, s, 10); /* Based on K&R itoa() */
+11
+return sio_puts(s);
+12
+}
+13
+14
+void sio_error(char s[]) /* Put error message and exit */
+15
+{
+16
+sio_puts(s);
+17
+_exit(1);
+18
+}
+code/src/csapp.c
+Figure 8.34
+The Sio (Safe I/O) package for signal handlers.

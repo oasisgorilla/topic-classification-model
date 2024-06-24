@@ -1,0 +1,72 @@
+196
+Chapter 2
+Representing and Manipulating Information
+Comparing this to the binary representation of
+1
+10, we can see that it is
+2−22 × 1
+10, which is around 2.38 × 10−8.
+C. 2.38 × 10−8 × 100 × 60 × 60 × 10 ≈0.086 seconds, a factor of 4 less than the
+error in the Patriot system.
+D. 0.086 × 2,000 ≈171 meters.
+Solution to Problem 2.52 (page 158)
+This problem tests a lot of concepts about ﬂoating-point representations, including
+the encoding of normalized and denormalized values, as well as rounding.
+Format A
+Format B
+Bits
+Value
+Bits
+Value
+Comments
+011 0000
+1
+0111 000
+1
+101 1110
+15
+2
+1001 111
+15
+2
+010 1001
+25
+32
+0110 100
+3
+4
+Round down
+110 1111
+31
+2
+1011 000
+16
+Round up
+000 0001
+1
+64
+0001 000
+1
+64
+Denorm →norm
+Solution to Problem 2.53 (page 161)
+In general, it is better to use a library macro rather than inventing your own code.
+This code seems to work on a variety of machines, however.
+We assume that the value 1e400 overﬂows to inﬁnity.
+#define POS_INFINITY 1e400
+#define NEG_INFINITY (-POS_INFINITY)
+#define NEG_ZERO (-1.0/POS_INFINITY)
+Solution to Problem 2.54 (page 161)
+Exercises such as this one help you develop your ability to reason about ﬂoating-
+point operations from a programmer’s perspective. Make sure you understand
+each of the answers.
+A. x == (int)(double) x
+Yes, since double has greater precision and range than int.
+B. x == (int)(float) x
+No. For example, when x is TMax.
+C. d == (double)(float) d
+No. For example, when d is 1e40, we will get +∞on the right.
+D. f == (float)(double) f
+Yes, since double has greater precision and range than float.
+E. f == -(-f)
+Yes, since a ﬂoating-point number is negated by simply inverting its sign bit.

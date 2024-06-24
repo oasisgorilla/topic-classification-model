@@ -1,0 +1,75 @@
+Section 9.6
+Address Translation
+859
+TLB. The TLB is virtually addressed using the bits of the VPN. Since the TLB
+has four sets, the 2 low-order bits of the VPN serve as the set index (TLBI).
+The remaining 6 high-order bits serve as the tag (TLBT) that distinguishes
+the different VPNs that might map to the same TLB set.
+Page table. The page table is a single-level design with a total of 28 = 256 page
+table entries (PTEs). However, we are only interested in the ﬁrst 16 of
+these. For convenience, we have labeled each PTE with the VPN that
+indexes it; but keep in mind that these VPNs are not part of the page
+table and not stored in memory. Also, notice that the PPN of each invalid
+PTE is denoted with a dash to reinforce the idea that whatever bit values
+might happen to be stored there are not meaningful.
+Cache. The direct-mapped cache is addressed by the ﬁelds in the physical
+address. Since each block is 4 bytes, the low-order 2 bits of the physical
+address serve as the block offset (CO). Since there are 16 sets, the next 4
+bits serve as the set index (CI). The remaining 6 bits serve as the tag (CT).
+Given this initial setup, let’s see what happens when the CPU executes a load
+instruction that reads the byte at address 0x03d4. (Recall that our hypothetical
+CPU reads 1-byte words rather than 4-byte words.) To begin this kind of manual
+simulation, we ﬁnd it helpful to write down the bits in the virtual address, identify
+the various ﬁelds we will need, and determine their hex values. The hardware
+performs a similar task when it decodes the address.
+11
+Bit position
+VA = 0x03d4
+10
+9
+8
+0x03
+0x03
+7
+6
+5
+4
+3
+2
+1
+0
+0
+0
+1
+0
+1
+0
+1
+1
+1
+1
+0
+0
+12
+0
+13
+0
+0x0f
+0x14
+TLBT
+TLBI
+VPN
+VPO
+To begin, the MMU extracts the VPN (0x0F) from the virtual address and
+checks with the TLB to see if it has cached a copy of PTE 0x0F from some previous
+memory reference. The TLB extracts the TLB index (0x03) and the TLB tag (0x3)
+from the VPN, hits on a valid match in the second entry of set 0x3, and returns
+the cached PPN (0x0D) to the MMU.
+If the TLB had missed, then the MMU would need to fetch the PTE from main
+memory. However, in this case, we got lucky and had a TLB hit. The MMU now
+has everything it needs to form the physical address. It does this by concatenating
+the PPN (0x0D) from the PTE with the VPO (0x14) from the virtual address, which
+forms the physical address (0x354).
+Next, the MMU sends the physical address to the cache, which extracts the
+cache offset CO (0x0), the cache set index CI (0x5), and the cache tag CT (0x0D)
+from the physical address.

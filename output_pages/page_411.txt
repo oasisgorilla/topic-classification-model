@@ -1,0 +1,43 @@
+410
+Chapter 4
+Processor Architecture
+Figure 4.10
+Combinational circuit to
+test for bit equality. The
+output will equal 1 when
+both inputs are 0 or both
+are 1.
+a
+b
+eq
+Bit equal
+4.2.2
+Combinational Circuits and HCL Boolean Expressions
+By assembling a number of logic gates into a network, we can construct computa-
+tional blocks known as combinational circuits. Several restrictions are placed on
+how the networks are constructed:
+. Every logic gate input must be connected to exactly one of the following:
+(1) one of the system inputs (known as a primary input), (2) the output
+connection of some memory element, or (3) the output of some logic gate.
+. The outputs of two or more logic gates cannot be connected together. Oth-
+erwise, the two could try to drive the wire toward different voltages, possibly
+causing an invalid voltage or a circuit malfunction.
+. The network must be acyclic. That is, there cannot be a path through a series
+of gates that forms a loop in the network. Such loops can cause ambiguity in
+the function computed by the network.
+Figure 4.10 shows an example of a simple combinational circuit that we will
+ﬁnd useful. It has two inputs, a and b. It generates a single output eq, such that
+the output will equal 1 if either a and b are both 1 (detected by the upper and
+gate) or are both 0 (detected by the lower and gate). We write the function of this
+network in HCL as
+bool eq = (a && b) || (!a && !b);
+This code simply deﬁnes the bit-level (denoted by data type bool) signal eq as a
+function of inputs a and b. As this example shows, HCL uses C-style syntax, with
+‘=’ associating a signal name with an expression. Unlike C, however, we do not
+view this as performing a computation and assigning the result to some memory
+location. Instead, it is simply a way to give a name to an expression.
+Practice Problem 4.9 (solution page 520)
+Write an HCL expression for a signal xor, equal to the exclusive-or of inputs a
+and b. What is the relation between the signals xor and eq deﬁned above?
+Figure 4.11 shows another example of a simple but useful combinational
+circuit known as a multiplexor (commonly referred to as a “MUX”). A multiplexor

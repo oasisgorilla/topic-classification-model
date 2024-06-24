@@ -1,0 +1,54 @@
+Section 6.5
+Writing Cache-Friendly Code
+673
+Assume this code runs on a machine with the following properties:
+. sizeof(int) = 4.
+. The src array starts at address 0 and the dst array starts at address 16
+(decimal).
+. There is a single L1 data cache that is direct-mapped, write-through, and write-
+allocate, with a block size of 8 bytes.
+. The cache has a total size of 16 data bytes and the cache is initially empty.
+. Accesses to the src and dst arrays are the only sources of read and write
+misses, respectively.
+A. For each row and col, indicate whether the access to src[row][col] and
+dst[row][col] is a hit (h) or a miss (m). For example, reading src[0][0]
+is a miss and writing dst[0][0] is also a miss.
+dst array
+src array
+Col. 0
+Col. 1
+Col. 0
+Col. 1
+Row 0
+m
+Row0
+m
+Row 1
+Row 1
+B. Repeat the problem for a cache with 32 data bytes.
+Practice Problem 6.18 (solution page 702)
+The heart of the recent hit game SimAquarium is a tight loop that calculates the
+average position of 512 algae. You are evaluating its cache performance on a
+machine with a 2,048-byte direct-mapped data cache with 32-byte blocks (B = 32).
+You are given the following deﬁnitions:
+1
+struct algae_position {
+2
+int x;
+3
+int y;
+4
+};
+5
+6
+struct algae_position grid[32][32];
+7
+int total_x = 0, total_y = 0;
+8
+int i, j;
+You should also assume the following:
+. sizeof(int) = 4.
+. grid begins at memory address 0.
+. The cache is initially empty.
+. The only memory accesses are to the entries of the array grid. Variables i, j,
+total_x, and total_y are stored in registers.

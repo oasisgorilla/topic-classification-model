@@ -1,0 +1,50 @@
+Section 3.5
+Arithmetic and Logical Operations
+233
+short arith3(short x, short y, short z)
+{
+short p1 =
+;
+short p2 =
+;
+short p3 =
+;
+short p4 =
+;
+return p4;
+}
+The portion of the generated assembly code implementing these expressions
+is as follows:
+short arith3(short x, short y, short z)
+x in %rdi, y in %rsi, z in %rdx
+arith3:
+orq
+%rsi, %rdx
+sarq
+$9, %rdx
+notq
+%rdx
+movq
+%rdx, %bax
+subq
+%rsi, %rbx
+ret
+Based on this assembly code, ﬁll in the missing portions of the C code.
+Practice Problem 3.11 (solution page 365)
+It is common to ﬁnd assembly-code lines of the form
+xorq %rcx,%rcx
+in code that was generated from C where no exclusive-or operations were
+present.
+A. Explain the effect of this particular exclusive-or instruction and what useful
+operation it implements.
+B. What would be the more straightforward way to express this operation in
+assembly code?
+C. Compare the number of bytes to encode any two of these three different
+implementations of the same operation.
+3.5.5
+Special Arithmetic Operations
+As we saw in Section 2.3, multiplying two 64-bit signed or unsigned integers can
+yield a product that requires 128 bits to represent. The x86-64 instruction set
+provides limited support for operations involving 128-bit (16-byte) numbers. Con-
+tinuing with the naming convention of word (2 bytes), double word (4 bytes), and
+quad word (8 bytes), Intel refers to a 16-byte quantity as an oct word. Figure 3.12

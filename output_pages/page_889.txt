@@ -1,0 +1,50 @@
+888
+Chapter 9
+Virtual Memory
+Figure 9.39
+Format of heap block that
+uses a boundary tag.
+Block size
+Payload
+(allocated block only)
+Padding (optional)
+a/f
+a = 001: Allocated
+a = 000: Free
+Block size
+a/f
+31
+3 2 1 0
+Header
+Footer
+Figure 9.40 shows how we would coalesce each of the four cases.
+In case 1, both adjacent blocks are allocated and thus no coalescing is possible.
+So the status of the current block is simply changed from allocated to free. In case
+2, the current block is merged with the next block. The header of the current block
+and the footer of the next block are updated with the combined sizes of the current
+and next blocks. In case 3, the previous block is merged with the current block.
+The header of the previous block and the footer of the current block are updated
+with the combined sizes of the two blocks. In case 4, all three blocks are merged
+to form a single free block, with the header of the previous block and the footer of
+the next block updated with the combined sizes of the three blocks. In each case,
+the coalescing is performed in constant time.
+The idea of boundary tags is a simple and elegant one that generalizes to
+many different types of allocators and free list organizations. However, there is
+a potential disadvantage. Requiring each block to contain both a header and a
+footer can introduce signiﬁcant memory overhead if an application manipulates
+many small blocks. For example, if a graph application dynamically creates and
+destroys graph nodes by making repeated calls to malloc and free, and each graph
+node requires only a couple of words of memory, then the header and the footer
+will consume half of each allocated block.
+Fortunately, there is a clever optimization of boundary tags that eliminates
+the need for a footer in allocated blocks. Recall that when we attempt to coalesce
+the current block with the previous and next blocks in memory, the size ﬁeld in
+the footer of the previous block is only needed if the previous block is free. If we
+were to store the allocated/free bit of the previous block in one of the excess low-
+order bits of the current block, then allocated blocks would not need footers, and
+we could use that extra space for payload. Note, however, that free blocks would
+still need footers.
+Practice Problem 9.7 (solution page 919)
+Determine the minimum block size for each of the following combinations of
+alignment requirements and block formats. Assumptions: Implicit free list, zero-
+size payloads are not allowed, and headers and footers are stored in 4-byte words.

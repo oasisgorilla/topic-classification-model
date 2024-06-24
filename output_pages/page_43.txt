@@ -1,0 +1,42 @@
+42
+Chapter 1
+A Tour of Computer Systems
+Aside
+The GNU project
+Gcc is one of many useful tools developed by the GNU (short for GNU’s Not Unix) project. The
+GNU project is a tax-exempt charity started by Richard Stallman in 1984, with the ambitious goal of
+developing a complete Unix-like system whose source code is unencumbered by restrictions on how
+it can be modiﬁed or distributed. The GNU project has developed an environment with all the major
+components of a Unix operating system, except for the kernel, which was developed separately by
+the Linux project. The GNU environment includes the emacs editor, gcc compiler, gdb debugger,
+assembler, linker, utilities for manipulating binaries, and other components. The gcc compiler has
+grown to support many different languages, with the ability to generate code for many different
+machines. Supported languages include C, C++, Fortran, Java, Pascal, Objective-C, and Ada.
+The GNU project is a remarkable achievement, and yet it is often overlooked. The modern open-
+source movement (commonly associated with Linux) owes its intellectual origins to the GNU project’s
+notion of free software (“free” as in “free speech,” not “free beer”). Further, Linux owes much of its
+popularity to the GNU tools, which provide the environment for the Linux kernel.
+. Linkingphase.Noticethatour helloprogramcallstheprintffunction, which
+is part of the standard C library provided by every C compiler. The printf
+function resides in a separate precompiled object ﬁle called printf.o, which
+must somehow be merged with our hello.o program. The linker (ld) handles
+this merging. The result is the hello ﬁle, which is an executable object ﬁle (or
+simply executable) that is ready to be loaded into memory and executed by
+the system.
+1.3
+It Pays to Understand How Compilation Systems Work
+For simple programs such as hello.c, we can rely on the compilation system to
+produce correct and efﬁcient machine code. However, there are some important
+reasons why programmers need to understand how compilation systems work:
+. Optimizing program performance. Modern compilers are sophisticated tools
+that usually produce good code. As programmers, we do not need to know
+the inner workings of the compiler in order to write efﬁcient code. However,
+in order to make good coding decisions in our C programs, we do need a
+basic understanding of machine-level code and how the compiler translates
+different C statements into machine code. For example, is a switch statement
+always more efﬁcient than a sequence of if-else statements? How much
+overhead is incurred by a function call? Is a while loop more efﬁcient than
+a for loop? Are pointer references more efﬁcient than array indexes? Why
+does our loop run so much faster if we sum into a local variable instead of an
+argument that is passed by reference? How can a function run faster when we
+simply rearrange the parentheses in an arithmetic expression?

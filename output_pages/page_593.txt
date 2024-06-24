@@ -1,0 +1,91 @@
+592
+Chapter 5
+Optimizing Program Performance
+1
+/* Write to dest, read from src */
+2
+void write_read(long *src, long *dst, long n)
+3
+{
+4
+long cnt = n;
+5
+long val = 0;
+6
+7
+while (cnt) {
+8
+*dst = val;
+9
+val = (*src)+1;
+10
+cnt--;
+11
+}
+12
+}
+Initial
+Example A: write_read(&a[0],&a[1],3)
+3
+cnt
+a
+val
+0
+10
+17
+Iter. 1
+2
+9
+10
+0
+Iter. 2
+1
+9
+10
+9
+Iter. 3
+0
+9
+10
+9
+Initial
+Example B: write_read(&a[0],&a[0],3)
+3
+cnt
+a
+val
+0
+10
+17
+Iter. 1
+2
+1
+0
+17
+Iter. 2
+1
+2
+1
+17
+Iter. 3
+0
+3
+2
+17
+Figure 5.33
+Code to write and read memory locations, along with illustrative
+executions. This function highlights the interactions between stores and loads when
+arguments src and dest are equal.
+illustrates the potential interactions between loads and stores. This ﬁgure also
+shows two example executions of this function, when it is called for a two-element
+array a, with initial contents −10 and 17, and with argument cnt equal to 3. These
+executions illustrate some subtleties of the load and store operations.
+In Example A of Figure 5.33, argument src is a pointer to array element
+a[0], while dest is a pointer to array element a[1]. In this case, each load by the
+pointer reference *src will yield the value −10. Hence, after two iterations,
+the array elements will remain ﬁxed at −10 and −9, respectively. The result
+of the read from src is not affected by the write to dest. Measuring this example
+over a larger number of iterations gives a CPE of 1.3.
+In Example B of Figure 5.33, both arguments src and dest are pointers to
+array element a[0]. In this case, each load by the pointer reference *src will
+yield the value stored by the previous execution of the pointer reference *dest.

@@ -1,0 +1,89 @@
+Section 2.2
+Integer Representations
+97
+C data type
+Minimum
+Maximum
+[signed] char
+−128
+127
+unsigned char
+0
+255
+short
+−32,768
+32,767
+unsigned short
+0
+65,535
+int
+−2,147,483,648
+2,147,483,647
+unsigned
+0
+4,294,967,295
+long
+−2,147,483,648
+2,147,483,647
+unsigned long
+0
+4,294,967,295
+int32_t
+−2,147,483,648
+2,147,483,647
+uint32_t
+0
+4,294,967,295
+int64_t
+−9,223,372,036,854,775,808
+9,223,372,036,854,775,807
+uint64_t
+0
+18,446,744,073,709,551,615
+Figure 2.9
+Typical ranges for C integral data types for 32-bit programs.
+C data type
+Minimum
+Maximum
+[signed] char
+−128
+127
+unsigned char
+0
+255
+short
+−32,768
+32,767
+unsigned short
+0
+65,535
+int
+−2,147,483,648
+2,147,483,647
+unsigned
+0
+4,294,967,295
+long
+−9,223,372,036,854,775,808
+9,223,372,036,854,775,807
+unsigned long
+0
+18,446,744,073,709,551,615
+int32_t
+−2,147,483,648
+2,147,483,647
+uint32_t
+0
+4,294,967,295
+int64_t
+−9,223,372,036,854,775,808
+9,223,372,036,854,775,807
+uint64_t
+0
+18,446,744,073,709,551,615
+Figure 2.10
+Typical ranges for C integral data types for 64-bit programs.
+The C standards deﬁne minimum ranges of values that each data type must
+be able to represent. As shown in Figure 2.11, their ranges are the same or smaller
+than the typical implementations shown in Figures 2.9 and 2.10. In particular,
+with the exception of the ﬁxed-size data types, we see that they require only a

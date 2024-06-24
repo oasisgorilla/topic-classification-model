@@ -1,0 +1,55 @@
+Section 3.10
+Combining Control and Data in Machine-Level Programs
+319
+(a) C code
+/* This is very low-quality code.
+It is intended to illustrate bad programming practices.
+See Practice Problem 3.46. */
+char *get_line()
+{
+char buf[4];
+char *result;
+gets(buf);
+result = malloc(strlen(buf));
+strcpy(result, buf);
+return result;
+}
+(b) Disassembly up through call to gets
+char *get_line()
+1
+0000000000400720 <get_line>:
+2
+400720:
+53
+push
+%rbx
+3
+400721:
+48 83 ec 10
+sub
+$0x10,%rsp
+Diagram stack at this point
+4
+400725:
+48 89 e7
+mov
+%rsp,%rdi
+5
+400728:
+e8 73 ff ff ff
+callq
+4006a0 <gets>
+Modify diagram to show stack contents at this point
+Figure 3.41
+C and disassembled code for Practice Problem 3.46.
+The program terminates with a segmentation fault. You run gdb and determine
+that the error occurs during the execution of the ret instruction of get_line.
+A. Fill in the diagram that follows, indicating as much as you can about the stack
+just after executing the instruction at line 3 in the disassembly. Label the
+quantities stored on the stack (e.g., “Return address”) on the right, and their
+hexadecimal values (if known) within the box. Each box represents 8 bytes.
+Indicate the position of %rsp. Recall that the ASCII codes for characters 0–9
+are 0x30–0x39.
+00 00 00 00 00 40 00 76 Return address
+B. Modify your diagram to show the effect of the call to gets (line 5).
+C. To what address does the program attempt to return?

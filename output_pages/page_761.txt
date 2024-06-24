@@ -1,0 +1,57 @@
+760
+Chapter 8
+Exceptional Control Flow
+Aside
+Hardware versus software exceptions
+C++ and Java programmers will have noticed that the term “exception” is also used to describe the
+application-level ECF mechanism provided by C++ and Java in the form of catch, throw, and try
+statements. If we wanted to be perfectly clear, we might distinguish between “hardware” and “software”
+exceptions, but this is usually unnecessary because the meaning is clear from the context.
+Figure 8.1
+Anatomy of an exception.
+A change in the processor’s
+state (an event) triggers
+an abrupt control transfer
+(an exception) from the
+application program to an
+exception handler. After
+it ﬁnishes processing, the
+handler either returns
+control to the interrupted
+program or aborts.
+Application
+program
+Exception
+handler
+Exception
+Exception
+processing
+Exception
+return
+(optional)
+Event
+occurs
+here
+Icurr
+Inext
+The event might be directly related to the execution of the current instruction.
+For example, a virtual memory page fault occurs, an arithmetic overﬂow occurs,
+or an instruction attempts a divide by zero. On the other hand, the event might be
+unrelated to the execution of the current instruction. For example, a system timer
+goes off or an I/O request completes.
+In any case, when the processor detects that the event has occurred, it makes
+anindirectprocedurecall(theexception), throughajumptablecalledan exception
+table, to an operating system subroutine (the exception handler) that is speciﬁcally
+designed to process this particular kind of event. When the exception handler
+ﬁnishes processing, one of three things happens, depending on the type of event
+that caused the exception:
+1. The handler returns control to the current instruction Icurr, the instruction
+that was executing when the event occurred.
+2. The handler returns control to Inext, the instruction that would have executed
+next had the exception not occurred.
+3. The handler aborts the interrupted program.
+Section 8.1.2 says more about these possibilities.
+8.1.1
+Exception Handling
+Exceptions can be difﬁcult to understand because handling them involves close
+cooperation between hardware and software. It is easy to get confused about

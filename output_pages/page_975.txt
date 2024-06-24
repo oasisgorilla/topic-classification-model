@@ -1,0 +1,43 @@
+974
+Chapter 11
+Network Programming
+Figure 11.15
+Data structure returned
+by getaddrinfo.
+Socket address structs
+ai_canonname
+addrinfo structs
+ai_addr
+result
+ai_next
+NULL
+ai_addr
+ai_next
+NULL
+ai_addr
+NULL
+Given host and service (the two components of a socket address), getaddrinfo
+returns a result that points to a linked list of addrinfo structures, each of
+which points to a socket address structure that corresponds to host and service
+(Figure 11.15).
+After a client calls getaddrinfo, it walks this list, trying each socket address
+in turn until the calls to socket and connect succeed and the connection is
+established. Similarly, a server tries each socket address on the list until the calls
+to socket and bind succeed and the descriptor is bound to a valid socket address.
+To avoid memory leaks, the application must eventually free the list by calling
+freeaddrinfo. If getaddrinfo returns a nonzero error code, the application can
+call gai_strerror to convert the code to a message string.
+The host argument to getaddrinfo can be either a domain name or a numeric
+address (e.g., a dotted-decimal IP address). The service argument can be either
+a service name (e.g., http) or a decimal port number. If we are not interested in
+converting the hostname to an address, we can set host to NULL. The same holds
+for service. However, at least one of them must be speciﬁed.
+The optional hints argument is an addrinfo structure (Figure 11.16) that
+provides ﬁner control over the list of socket addresses that getaddrinfo re-
+turns. When passed as a hints argument, only the ai_family, ai_socktype,
+ai_protocol, and ai_flags ﬁelds can be set. The other ﬁelds must be set to zero
+(or NULL). In practice, we use memset to zero the entire structure and then set a
+few selected ﬁelds:
+. By default, getaddrinfo can return both IPv4 and IPv6 socket addresses.
+Setting ai_family to AF_INET restricts the list to IPv4 addresses. Setting it
+to AF_INET6 restricts the list to IPv6 addresses.

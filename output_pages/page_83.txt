@@ -1,0 +1,89 @@
+82
+Chapter 2
+Representing and Manipulating Information
+code/data/show-bytes.c
+1
+void test_show_bytes(int val) {
+2
+int ival = val;
+3
+float fval = (float) ival;
+4
+int *pval = &ival;
+5
+show_int(ival);
+6
+show_float(fval);
+7
+show_pointer(pval);
+8
+}
+code/data/show-bytes.c
+Figure 2.5
+Byte representation examples. This code prints the byte representations
+of sample data objects.
+Machine
+Value
+Type
+Bytes (hex)
+Linux 32
+12,345
+int
+39 30 00 00
+Windows
+12,345
+int
+39 30 00 00
+Sun
+12,345
+int
+00 00 30 39
+Linux 64
+12,345
+int
+39 30 00 00
+Linux 32
+12,345.0
+float
+00 e4 40 46
+Windows
+12,345.0
+float
+00 e4 40 46
+Sun
+12,345.0
+float
+46 40 e4 00
+Linux 64
+12,345.0
+float
+00 e4 40 46
+Linux 32
+&ival
+int *
+e4 f9 ff bf
+Windows
+&ival
+int *
+b4 cc 22 00
+Sun
+&ival
+int *
+ef ff fa 0c
+Linux 64
+&ival
+int *
+b8 11 e5 ff ff 7f 00 00
+Figure 2.6
+Byte representations of different data values. Results for int and float
+are identical, except for byte ordering. Pointer values are machine dependent.
+Our argument 12,345 has hexadecimal representation 0x00003039. For the int
+data, we get identical results for all machines, except for the byte ordering. In
+particular, we can see that the least signiﬁcant byte value of 0x39 is printed ﬁrst
+for Linux 32, Windows, and Linux 64, indicating little-endian machines, and last
+for Sun, indicating a big-endian machine. Similarly, the bytes of the float data
+are identical, except for the byte ordering. On the other hand, the pointer values
+are completely different. The different machine/operating system conﬁgurations
+use different conventions for storage allocation. One feature to note is that the
+Linux 32, Windows, and Sun machines use 4-byte addresses, while the Linux 64
+machine uses 8-byte addresses.

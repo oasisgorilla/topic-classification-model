@@ -1,0 +1,102 @@
+672
+Chapter 6
+The Memory Hierarchy
+But consider what happens if we make the seemingly innocuous change of
+permuting the loops:
+1
+int sumarraycols(int a[M][N])
+2
+{
+3
+int i, j, sum = 0;
+4
+5
+for (j = 0; j < N; j++)
+6
+for (i = 0; i < M; i++)
+7
+sum += a[i][j];
+8
+return sum;
+9
+}
+In this case, we are scanning the array column by column instead of row by row.
+If we are lucky and the entire array ﬁts in the cache, then we will enjoy the same
+miss rate of 1/4. However, if the array is larger than the cache (the more likely
+case), then each and every access of a[i][j] will miss!
+a[i][j]
+j = 0
+j = 1
+j = 2
+j = 3
+j = 4
+j = 5
+j = 6
+j = 7
+i = 0
+1 [m]
+5 [m]
+9 [m]
+13 [m]
+17 [m]
+21 [m]
+25 [m]
+29 [m]
+i = 1
+2 [m]
+6 [m]
+10 [m]
+14 [m]
+18 [m]
+22 [m]
+26 [m]
+30 [m]
+i = 2
+3 [m]
+7 [m]
+11 [m]
+15 [m]
+19 [m]
+23 [m]
+27 [m]
+31 [m]
+i = 3
+4 [m]
+8 [m]
+12 [m]
+16 [m]
+20 [m]
+24 [m]
+28 [m]
+32 [m]
+Higher miss rates can have a signiﬁcant impact on running time. For example,
+on our desktop machine, sumarrayrows runs 25 times faster than sumarraycols
+for large array sizes. To summarize, programmers should be aware of locality in
+their programs and try to write programs that exploit it.
+Practice Problem 6.17 (solution page 701)
+Transposing the rows and columns of a matrix is an important problem in signal
+processing and scientiﬁc computing applications. It is also interesting from a local-
+ity point of view because its reference pattern is both row-wise and column-wise.
+For example, consider the following transpose routine:
+1
+typedef int array[2][2];
+2
+3
+void transpose1(array dst, array src)
+4
+{
+5
+int i, j;
+6
+7
+for (i = 0; i < 2; i++) {
+8
+for (j = 0; j < 2; j++) {
+9
+dst[j][i] = src[i][j];
+10
+}
+11
+}
+12
+}

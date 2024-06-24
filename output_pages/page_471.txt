@@ -1,0 +1,144 @@
+470
+Chapter 4
+Processor Architecture
+F
+0x000: irmovq $10,%rdx
+# prog2
+# prog2
+0x00a: irmovq  $3,%rax
+0x014: nop
+0x015: nop
+       bubble
+       bubble
+0x016: addlq %rdx,%rax
+0x018: halt
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+E
+M
+W
+F
+D
+D
+E
+W
+M
+F
+F
+D
+E
+W
+M
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+Figure 4.47
+Pipelined execution of prog2 using stalls. After decoding the addq
+instruction in cycle 6, the stall control logic detects a data hazard due to the pending
+write to register %rax in the write-back stage. It injects a bubble into the execute stage
+and repeats the decoding of the addq instruction in cycle 7. In effect, the machine has
+dynamically inserted a nop instruction, giving a ﬂow similar to that shown for prog1
+(Figure 4.43).
+F
+0x000: irmovq $10,%rdx
+# prog4
+# prog4
+0x00a: irmovq  $3,%rax
+       bubble
+bubble
+       bubble
+bubble
+       bubble
+bubble
+0x014: addq %rdx,%rax
+0x016: halt
+D
+E
+M
+W
+F
+D
+E
+M
+W
+E
+M
+W
+E
+M
+W
+E
+M
+W
+D
+D
+F
+F
+F
+D
+D
+E
+W
+M
+F
+F
+D
+E
+W
+M
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+Figure 4.48
+Pipelined execution of prog4 using stalls. After decoding the addq
+instruction in cycle 4, the stall control logic detects data hazards for both source registers.
+It injects a bubble into the execute stage and repeats the decoding of the addq instruction
+on cycle 5. It again detects hazards for both source registers, injects a bubble into the
+execute stage, and repeats the decoding of the addq instruction on cycle 6. Still, it
+detects a hazard for source register %rax, injects a bubble into the execute stage, and
+repeats the decoding of the addq instruction on cycle 7. In effect, the machine has
+dynamically inserted three nop instructions, giving a ﬂow similar to that shown for
+prog1 (Figure 4.43).
+In holding back the addq instruction in the decode stage, we must also hold
+back the halt instruction following it in the fetch stage. We can do this by keeping
+the program counter at a ﬁxed value, so that the halt instruction will be fetched
+repeatedly until the stall has completed.
+Stalling involves holding back one group of instructions in their stages while
+allowing other instructions to continue ﬂowing through the pipeline. What then
+should we do in the stages that would normally be processing the addq instruction?
+We handle these by injecting a bubble into the execute stage each time we hold
+an instruction back in the decode stage. A bubble is like a dynamically generated
+nop instruction—it does not cause any changes to the registers, the memory, the

@@ -1,0 +1,44 @@
+Section 3.2
+Program Encodings
+209
+Aside
+How do I display the byte representation of a program?
+To display the binary object code for a program (say, mstore), we use a disassembler (described below)
+to determine that the code for the procedure is 14 bytes long. Then we run the GNU debugging tool
+gdb on ﬁle mstore.o and give it the command
+(gdb) x/14xb multstore
+telling it to display (abbreviated ‘x’) 14 hex-formatted (also ‘x’) bytes (‘b’) starting at the address where
+function multstore is located. You will ﬁnd that gdb has many useful features for analyzing machine-
+level programs, as will be discussed in Section 3.10.2.
+movq
+%rdx, %rbx
+call
+mult2
+movq
+%rax, (%rbx)
+popq
+%rbx
+ret
+Each indented line in the code corresponds to a single machine instruction. For
+example, the pushq instruction indicates that the contents of register %rbx should
+be pushed onto the program stack. All information about local variable names or
+data types has been stripped away.
+If we use the -c command-line option, gcc will both compile and assemble
+the code
+linux> gcc -Og -c mstore.c
+This will generate an object-code ﬁle mstore.o that is in binary format and hence
+cannot be viewed directly. Embedded within the 1,368 bytes of the ﬁle mstore.o
+is a 14-byte sequence with the hexadecimal representation
+53 48 89 d3 e8 00 00 00 00 48 89 03 5b c3
+This is the object code corresponding to the assembly instructions listed previously.
+A key lesson to learn from this is that the program executed by the machine is
+simply a sequence of bytes encoding a series of instructions. The machine has
+very little information about the source code from which these instructions were
+generated.
+To inspect the contents of machine-code ﬁles, a class of programs known as
+disassemblers can be invaluable. These programs generate a format similar to
+assembly code from the machine code. With Linux systems, the program objdump
+(for “object dump”) can serve this role given the -d command-line ﬂag:
+linux> objdump -d mstore.o
+The result (where we have added line numbers on the left and annotations in
+italicized text) is as follows:

@@ -1,0 +1,52 @@
+698
+Chapter 6
+The Memory Hierarchy
+Solution to Problem 6.5 (page 637)
+This is a simple problem that will give you some interesting insights into the feasi-
+bility of SSDs. Recall that for disks, 1 PB = 109 MB. Then the following straight-
+forward translation of units yields the following predicted times for each case:
+A. Worst-case sequential writes (520 MB/s):
+(109 × 128) × (1/520) × (1/(86,400 × 365)) ≈7 years
+B. Worst-case random writes (205 MB/s):
+(109 × 128) × (1/205) × (1/(86,400 × 365)) ≈19 years
+C. Average case (50 GB/day):
+(109 × 128) × (1/50,000) × (1/365) ≈6,912 years
+So even if the SSD operates continuously, it should last for at least 7 years, which
+is longer than the expected lifetime of most computers.
+Solution to Problem 6.6 (page 640)
+In the 10-year period between 2005 and 2015, the unit price of rotating disks
+dropped by a factor of 166, which means the price is dropping by roughly a factor
+of 2 every 18 months or so. Assuming this trend continues, a petabyte of storage,
+which costs about $30,000 in 2015, will drop below $200 after about eight of these
+factor-of-2 reductions. Since these are occurring every 18 months, we might expect
+a petabyte of storage to be available for $200 around the year 2027.
+Solution to Problem 6.7 (page 644)
+To create a stride-1 reference pattern, the loops must be permuted so that the
+rightmost indices change most rapidly.
+1
+int productarray3d(int a[N][N][N])
+2
+{
+3
+int i, j, k, product = 1;
+4
+5
+for (j = N-1; j >= 0; j--) {
+6
+for (k = N-1; k >= 0; k--) {
+7
+for (i = N-1; i >= 0; i--) {
+8
+product *= a[j][k][i];
+9
+}
+10
+}
+11
+}
+12
+return product;
+13
+}
+This is an important idea. Make sure you understand why this particular loop
+permutation results in a stride-1 access pattern.

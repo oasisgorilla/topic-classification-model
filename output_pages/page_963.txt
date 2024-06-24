@@ -1,0 +1,40 @@
+962
+Chapter 11
+Network Programming
+#include <arpa/inet.h>
+uint32_t htonl(uint32_t hostlong);
+uint16_t htons(uint16_t hostshort);
+Returns: value in network byte order
+uint32_t ntohl(uint32_t netlong);
+uint16_t ntohs(unit16_t netshort);
+Returns: value in host byte order
+The htonl function converts an unsigned 32-bit integer from host byte order to
+network byte order. The ntohl function converts an unsigned 32-bit integer from
+network byte order to host byte order. The htons and ntohs functions perform
+corresponding conversions for unsigned 16-bit integers. Note that there are no
+equivalent functions for manipulating 64-bit values.
+IP addresses are typically presented to humans in a form known as dotted-
+decimal notation, where each byte is represented by its decimal value and sep-
+arated from the other bytes by a period. For example, 128.2.194.242 is the
+dotted-decimal representation of the address 0x8002c2f2. On Linux systems, you
+can use the hostname command to determine the dotted-decimal address of your
+own host:
+linux> hostname -i
+128.2.210.175
+Application programs can convert back and forth between IP addresses and
+dotted-decimal strings using the functions inet_pton and inet_ntop.
+#include <arpa/inet.h>
+int inet_pton(AF_INET, const char *src, void *dst);
+Returns: 1 if OK, 0 if src is invalid dotted decimal, −1 on error
+const char *inet_ntop(AF_INET, const void *src, char *dst,
+socklen_t size);
+Returns: pointer to a dotted-decimal string if OK, NULL on error
+In these function names, the “n” stands for network and the “p” stands for pre-
+sentation. They can manipulate either 32-bit IPv4 addresses (AF_INET), as shown
+here, or 128-bit IPv6 addresses (AF_INET6), which we do not cover.
+The inet_pton function converts a dotted-decimal string (src) to a binary IP
+address in network byte order (dst). If src does not point to a valid dotted-decimal
+string, then it returns 0. Any other error returns −1 and sets errno. Similarly, the
+inet_ntop function converts a binary IP address in network byte order (src) to
+the corresponding dotted-decimal representation and copies at most size bytes
+of the resulting null-terminated string to dst.

@@ -1,0 +1,63 @@
+Solutions to Practice Problems
+521
+Figure 4.71
+Solution for Problem
+4.10.
+Xor
+Xor
+Xor
+Xor
+b63
+a63
+b62
+a62
+b1
+a1
+b0
+a0
+! eq63
+! eq1
+! eq0
+! eq62
+Eq
+. . .
+. . .
+word Med3 = [
+A <= B && B <= C : B;
+C <= B && B <= A : B;
+B <= A && A <= C : A;
+C <= A && A <= B : A;
+1
+: C;
+];
+Solution to Problem 4.13 (page 423)
+These exercises help make the stage computations more concrete. We can see from
+the object code that this instruction is located at address 0x016. It consists of 10
+bytes, with the ﬁrst two being 0x30 and 0xf4. The last 8 bytes are a byte-reversed
+version of 0x0000000000000080 (decimal 128).
+Generic
+Speciﬁc
+Stage
+irmovq V, rB
+irmovq $128, %rsp
+Fetch
+icode:ifun ←M1[PC]
+icode:ifun ←M1[0x016] = 3:0
+rA :rB ←M1[PC + 1]
+rA :rB ←M1[0x017] = f:4
+valC ←M8[PC + 2]
+valC ←M8[0x018] = 128
+valP ←PC + 10
+valP ←0x016 + 10 = 0x020
+Decode
+Execute
+valE ←0 + valC
+valE ←0 + 128 = 128
+Memory
+Write back
+R[rB] ←valE
+R[%rsp] ←valE = 128
+PC update
+PC ←valP
+PC ←valP = 0x020
+This instruction sets register %rsp to 128 and increments the PC by 10.

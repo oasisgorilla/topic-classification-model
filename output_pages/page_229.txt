@@ -1,0 +1,91 @@
+228
+Chapter 3
+Machine-Level Representation of Programs
+Instruction
+Effect
+Description
+leaq
+S, D
+D ←&S
+Load effective address
+inc
+D
+D ←D+1
+Increment
+dec
+D
+D ←D−1
+Decrement
+neg
+D
+D ←-D
+Negate
+not
+D
+D ←~D
+Complement
+add
+S, D
+D ←D + S
+Add
+sub
+S, D
+D ←D −S
+Subtract
+imul
+S, D
+D ←D ∗S
+Multiply
+xor
+S, D
+D ←D ^ S
+Exclusive-or
+or
+S, D
+D ←D | S
+Or
+and
+S, D
+D ←D & S
+And
+sal
+k, D
+D ←D << k
+Left shift
+shl
+k, D
+D ←D << k
+Left shift (same as sal)
+sar
+k, D
+D ←D >>A k
+Arithmetic right shift
+shr
+k, D
+D ←D >>L k
+Logical right shift
+Figure 3.10
+Integer arithmetic operations. The load effective address (leaq)
+instruction is commonly used to perform simple arithmetic. The remaining ones are
+more standard unary or binary operations. We use the notation >>A and >>L to denote
+arithmetic and logical right shift, respectively. Note the nonintuitive ordering of the
+operands with ATT-format assembly code.
+but it does not reference memory at all. Its ﬁrst operand appears to be a mem-
+ory reference, but instead of reading from the designated location, the instruction
+copies the effective address to the destination. We indicate this computation in
+Figure 3.10 using the C address operator &S. This instruction can be used to gener-
+ate pointers for later memory references. In addition, it can be used to compactly
+describe common arithmetic operations. For example, if register %rdx contains
+value x, then the instruction leaq 7(%rdx,%rdx,4), %rax will set register %rax
+to 5x + 7. Compilers often ﬁnd clever uses of leaq that have nothing to do with
+effective address computations. The destination operand must be a register.
+Practice Problem 3.6 (solution page 363)
+Suppose register %rbx holds value p and %rdx holds value q. Fill in the table below
+with formulas indicating the value that will be stored in register %rax for each of
+the given assembly-code instructions:
+Instruction
+Result
+leaq 9(%rdx), %rax
+leaq (%rdx,%rbx), %rax
+leaq (%rdx,%rbx,3), %rax
+leaq 2(%rbx,%rbx,7), %rax

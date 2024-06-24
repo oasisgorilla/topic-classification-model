@@ -1,0 +1,64 @@
+908
+Chapter 9
+Virtual Memory
+9.11.4
+Assuming That Pointers and the Objects They Point to
+Are the Same Size
+One common mistake is to assume that pointers to objects are the same size as
+the objects they point to:
+1
+/* Create an nxm array */
+2
+int **makeArray1(int n, int m)
+3
+{
+4
+int i;
+5
+int **A = (int **)Malloc(n * sizeof(int));
+6
+7
+for (i = 0; i < n; i++)
+8
+A[i] = (int *)Malloc(m * sizeof(int));
+9
+return A;
+10
+}
+The intent here is to create an array of n pointers, each of which points to an array
+of m ints. However, because the programmer has written sizeof(int) instead
+of sizeof(int *) in line 5, the code actually creates an array of ints.
+This code will run ﬁne on machines where ints and pointers to ints are the
+same size. But if we run this code on a machine like the Core i7, where a pointer is
+larger than an int, then the loop in lines 7–8 will write past the end of the A array.
+Since one of these words will likely be the boundary-tag footer of the allocated
+block, we may not discover the error until we free the block much later in the
+program, at which point the coalescing code in the allocator will fail dramatically
+and for no apparent reason. This is an insidious example of the kind of “action at
+a distance” that is so typical of memory-related programming bugs.
+9.11.5
+Making Off-by-One Errors
+Off-by-one errors are another common source of overwriting bugs:
+1
+/* Create an nxm array */
+2
+int **makeArray2(int n, int m)
+3
+{
+4
+int i;
+5
+int **A = (int **)Malloc(n * sizeof(int *));
+6
+7
+for (i = 0; i <= n; i++)
+8
+A[i] = (int *)Malloc(m * sizeof(int));
+9
+return A;
+10
+}
+This is another version of the program in the previous section. Here we have
+created an n-element array of pointers in line 5 but then tried to initialize n + 1 of
+its elements in lines 7 and 8, in the process overwriting some memory that follows
+the A array.

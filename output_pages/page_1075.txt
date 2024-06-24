@@ -1,0 +1,57 @@
+1074
+Chapter 12
+Concurrent Programming
+Solution to Problem 12.8 (page 1037)
+This problem is a simple test of your understanding of safe and unsafe trajectories
+in progress graphs. Trajectories such as A and C that skirt the critical region are
+safe and will produce correct results.
+A. H1, L1, U1, S1, H2, L2, U2, S2, T2, T1: safe
+B. H2, L2, H1, L1, U1, S1, T1, U2, S2, T2: unsafe
+C. H1, H2, L2, U2, S2, L1, U1, S1, T1, T2: safe
+Solution to Problem 12.9 (page 1042)
+A. p = 1, c = 1, n > 1: Yes, the mutex semaphore is necessary because the
+producer and consumer can concurrently access the buffer.
+B. p = 1, c = 1, n = 1: No, the mutex semaphore is not necessary in this case,
+because a nonempty buffer is equivalent to a full buffer. When the buffer
+contains an item, the producer is blocked. When the buffer is empty, the
+consumer is blocked. So at any point in time, only a single thread can access
+the buffer, and thus mutual exclusion is guaranteed without using the mutex.
+C. p > 1, c > 1, n = 1: No, the mutex semaphore is not necessary in this case
+either, by the same argument as the previous case.
+Solution to Problem 12.10 (page 1044)
+Suppose that a particular semaphore implementation uses a LIFO stack of threads
+for each semaphore. When a thread blocks on a semaphore in a P operation, its ID
+is pushed onto the stack. Similarly, the V operation pops the top thread ID from
+the stack and restarts that thread. Given this stack implementation, an adversarial
+writer in its critical section could simply wait until another writer blocks on the
+semaphore before releasing the semaphore. In this scenario, a waiting reader
+might wait forever as two writers passed control back and forth.
+Notice that although it might seem more intuitive to use a FIFO queue rather
+than a LIFO stack, using such a stack is not incorrect and does not violate the
+semantics of the P and V operations.
+Solution to Problem 12.11 (page 1056)
+This problem is a simple sanity check of your understanding of speedup and
+parallel efﬁciency:
+Threads (t)
+1
+4
+8
+Cores (p)
+1
+4
+8
+Running time (Tp)
+16
+8
+4
+Speedup (Sp)
+1
+2
+4
+Efﬁciency (Ep)
+100%
+50%
+25%
+Solution to Problem 12.12 (page 1060)
+The rand_r function is implicitly reentrant function, because it passes the param-
+eter by reference; i.e., the parameter *nextp and not by value. Explicit reentrant

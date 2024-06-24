@@ -1,0 +1,57 @@
+Section 12.7
+Other Concurrency Issues
+1057
+code/conc/rand.c
+1
+unsigned next_seed = 1;
+2
+3
+/* rand - return pseudorandom integer in the range 0..32767 */
+4
+unsigned rand(void)
+5
+{
+6
+next_seed = next_seed*1103515245 + 12543;
+7
+return (unsigned)(next_seed>>16) % 32768;
+8
+}
+9
+10
+/* srand - set the initial seed for rand() */
+11
+void srand(unsigned new_seed)
+12
+{
+13
+next_seed = new_seed;
+14
+}
+code/conc/rand.c
+Figure 12.37
+A thread-unsafe pseudorandom number generator. (Based on [61])
+increments an unprotected global counter variable. This class of thread-
+unsafe functions is relatively easy to make thread-safe: protect the shared
+variables with synchronization operations such as P and V . An advantage
+is that it does not require any changes in the calling program. A disadvan-
+tage is that the synchronization operations slow down the function.
+Class 2: Functions that keep state across multiple invocations.A pseudorandom
+number generator is a simple example of this class of thread-unsafe func-
+tions. Consider the pseudorandom number generator package in Fig-
+ure 12.37.
+The rand function is thread-unsafe because the result of the current
+invocation depends on an intermediate result from the previous iteration.
+When we call rand repeatedly from a single thread after seeding it with a
+call to srand, we can expect a repeatable sequence of numbers. However,
+this assumption no longer holds if multiple threads are calling rand.
+The only way to make a function such as rand thread-safe is to rewrite
+it so that it does not use any static data, relying instead on the caller
+to pass the state information in arguments. The disadvantage is that the
+programmer is now forced to change the code in the calling routine as
+well. In a large program where there are potentially hundreds of different
+call sites, making such modiﬁcations could be nontrivial and prone to
+error.
+Class 3: Functions that return a pointer to a static variable. Some functions,
+such as ctime and gethostbyname, compute a result in a static variable
+and then return a pointer to that variable. If we call such functions from

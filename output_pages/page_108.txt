@@ -1,0 +1,46 @@
+Section 2.2
+Integer Representations
+107
+3
+printf("u = %u, tu = %d\n", u, tu);
+When run on a two’s-complement machine, it generates the following output:
+u = 4294967295, tu = -1
+We can see from Figure 2.14 that, for a 32-bit word size, the bit patterns represent-
+ing 4,294,967,295 (UMax32) in unsigned form and −1 in two’s-complement form
+are identical. In casting from unsigned to int, the underlying bit representation
+stays the same.
+This is a general rule for how most C implementations handle conversions
+between signed and unsigned numbers with the same word size—the numeric
+values might change, but the bit patterns do not. Let us capture this idea in
+a more mathematical form. We deﬁned functions U2Bw and T2Bw that map
+numbers to their bit representations in either unsigned or two’s-complement form.
+That is, given an integer x in the range 0 ≤x < UMaxw, the function U2Bw(x)
+gives the unique w-bit unsigned representation of x. Similarly, when x is in the
+range TMinw ≤x ≤TMaxw, the function T2Bw(x) gives the unique w-bit two’s-
+complement representation of x.
+Now deﬁne the function T2Uw as T2Uw(x) .
+= B2Uw(T2Bw(x)). This function
+takes a number between TMinw and TMaxw and yields a number between 0 and
+UMaxw, where the two numbers have identical bit representations, except that
+the argument has a two’s-complement representation while the result is unsigned.
+Similarly, for x between 0 and UMaxw, the function U2Tw, deﬁned as U2Tw(x) .
+=
+B2Tw(U2Bw(x)), yields the number having the same two’s-complement represen-
+tation as the unsigned representation of x.
+Pursuing our earlier examples, we see from Figure 2.15 that T2U16(−12,345)
+= 53,191, and that U2T16(53,191) = −12,345. That is, the 16-bit pattern written in
+hexadecimal as 0xCFC7 is both the two’s-complement representation of −12,345
+and the unsigned representation of 53,191. Note also that 12,345 + 53,191 =
+65,536 = 216. This property generalizes to a relationship between the two nu-
+meric values (two’s complement and unsigned) represented by a given bit pat-
+tern. Similarly, from Figure 2.14, we see that T2U32(−1) = 4,294,967,295, and
+U2T32(4,294,967,295) = −1. That is, UMax has the same bit representation in un-
+signed form as does −1 in two’s-complement form. We can also see the relationship
+between these two numbers: 1 + UMaxw = 2w.
+We see, then, that function T2U describes the conversion of a two’s-
+complement number to its unsigned counterpart, while U2T converts in the op-
+posite direction. These describe the effect of casting between these data types in
+most C implementations.
+Practice Problem 2.19 (solution page 185)
+Using the table you ﬁlled in when solving Problem 2.17, ﬁll in the following table
+describing the function T2U4:

@@ -1,0 +1,71 @@
+846
+Chapter 9
+Virtual Memory
+Figure 9.8
+Allocating a new virtual
+page. The kernel allocates
+VP 5 on disk and points PTE
+5 to this new location.
+PTE 0
+PP 0
+PP 3
+1
+1
+1
+0
+0
+0
+1
+0
+PTE 7
+Null
+VP 1
+VP 3
+VP 7
+VP 2
+VP 1
+VP 2
+VP 3
+VP 4
+VP 5
+VP 6
+VP 7
+Physical page
+number or
+disk address
+Memory-resident
+page table
+(DRAM)
+Virtual memory
+(disk)
+Physical memory
+(DRAM)
+Valid
+in a page, when a miss occurs, is known as demand paging. Other approaches, such
+as trying to predict misses and swap pages in before they are actually referenced,
+are possible. However, all modern systems use demand paging.
+9.3.5
+Allocating Pages
+Figure 9.8 shows the effect on our example page table when the operating system
+allocates a new page of virtual memory—for example, as a result of calling malloc.
+In the example, VP 5 is allocated by creating room on disk and updating PTE 5
+to point to the newly created page on disk.
+9.3.6
+Locality to the Rescue Again
+When many of us learn about the idea of virtual memory, our ﬁrst impression is
+often that it must be terribly inefﬁcient. Given the large miss penalties, we worry
+that paging will destroy program performance. In practice, virtual memory works
+well, mainly because of our old friend locality.
+Although the total number of distinct pages that programs reference during an
+entire run might exceed the total size of physical memory, the principle of locality
+promises that at any point in time they will tend to work on a smaller set of active
+pages known as the working set or resident set. After an initial overhead where
+the working set is paged into memory, subsequent references to the working set
+result in hits, with no additional disk trafﬁc.
+As long as our programs have good temporal locality, virtual memory systems
+work quite well. But of course, not all programs exhibit good temporal locality. If
+the working set size exceeds the size of physical memory, then the program can
+produce an unfortunate situation known as thrashing, where pages are swapped in
+and out continuously. Although virtual memory is usually efﬁcient, if a program’s
+performance slows to a crawl, the wise programmer will consider the possibility
+that it is thrashing.

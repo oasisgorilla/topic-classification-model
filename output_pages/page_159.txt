@@ -1,0 +1,47 @@
+158
+Chapter 2
+Representing and Manipulating Information
+Practice Problem 2.51 (solution page 195)
+We saw in Problem 2.46 that the Patriot missile software approximated 0.1 as x =
+0.000110011001100110011002. Suppose instead that they had used IEEE round-
+to-even mode to determine an approximation x′ to 0.1 with 23 bits to the right of
+the binary point.
+A. What is the binary representation of x′?
+B. What is the approximate decimal value of x′ −0.1?
+C. How far off would the computed clock have been after 100 hours of opera-
+tion?
+D. How far off would the program’s prediction of the position of the Scud
+missile have been?
+Practice Problem 2.52 (solution page 196)
+Consider the following two 7-bit ﬂoating-point representations based on the IEEE
+ﬂoating-point format. Neither has a sign bit—they can only represent nonnegative
+numbers.
+1. Format A
+There are k = 3 exponent bits. The exponent bias is 3.
+There are n = 4 fraction bits.
+2. Format B
+There are k = 4 exponent bits. The exponent bias is 7.
+There are n = 3 fraction bits.
+Below, you are given some bit patterns in format A, and your task is to convert
+them to the closest value in format B. If necessary, you should apply the round-to-
+even rounding rule. In addition, give the values of numbers given by the format A
+and format B bit patterns. Give these as whole numbers (e.g., 17) or as fractions
+(e.g., 17/64).
+Format A
+Format B
+Bits
+Value
+Bits
+Value
+011 0000
+1
+0111 000
+1
+101 1110
+010 1001
+110 1111
+000 0001
+2.4.5
+Floating-Point Operations
+The IEEE standard speciﬁes a simple rule for determining the result of an arith-
+metic operation such as addition or multiplication. Viewing ﬂoating-point values x

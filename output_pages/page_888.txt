@@ -1,0 +1,52 @@
+Section 9.9
+Dynamic Memory Allocation
+887
+Unused
+Start
+of
+heap
+8/0
+16/1
+16/0
+16/1
+16/0
+0/1
+Double-
+word
+aligned
+Figure 9.38
+An example of false fragmentation. Allocated blocks are shaded. Free blocks are unshaded.
+Headers are labeled with (size (bytes)/allocated bit).
+Immediate coalescing is straightforward and can be performed in constant
+time, but with some request patterns it can introduce a form of thrashing where a
+block is repeatedly coalesced and then split soon thereafter. For example, in Fig-
+ure 9.38, a repeated pattern of allocating and freeing a three-word block would
+introduce a lot of unnecessary splitting and coalescing. In our discussion of allo-
+cators, we will assume immediate coalescing, but you should be aware that fast
+allocators often opt for some form of deferred coalescing.
+9.9.11
+Coalescing with Boundary Tags
+How does an allocator implement coalescing? Let us refer to the block we want
+to free as the current block. Then coalescing the next free block (in memory) is
+straightforward and efﬁcient. The header of the current block points to the header
+of the next block, which can be checked to determine if the next block is free. If
+so, its size is simply added to the size of the current header and the blocks are
+coalesced in constant time.
+But how would we coalesce the previous block? Given an implicit free list of
+blocks with headers, the only option would be to search the entire list, remember-
+ing the location of the previous block, until we reached the current block. With an
+implicit free list, this means that each call to free would require time linear in the
+size of the heap. Even with more sophisticated free list organizations, the search
+time would not be constant.
+Knuth developed a clever and general technique, known as boundary tags,
+that allows for constant-time coalescing of the previous block. The idea, which is
+shown in Figure 9.39, is to add a footer (the boundary tag) at the end of each block,
+where the footer is a replica of the header. If each block includes such a footer,
+then the allocator can determine the starting location and status of the previous
+block by inspecting its footer, which is always one word away from the start of the
+current block.
+Consider all the cases that can exist when the allocator frees the current block:
+1. The previous and next blocks are both allocated.
+2. The previous block is allocated and the next block is free.
+3. The previous block is free and the next block is allocated.
+4. The previous and next blocks are both free.

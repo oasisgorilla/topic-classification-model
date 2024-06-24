@@ -1,0 +1,77 @@
+18
+Contents
+12.3.2 Posix Threads
+1023
+12.3.3 Creating Threads
+1024
+12.3.4 Terminating Threads
+1024
+12.3.5 Reaping Terminated Threads
+1025
+12.3.6 Detaching Threads
+1025
+12.3.7 Initializing Threads
+1026
+12.3.8 A Concurrent Server Based on Threads
+1027
+12.4
+Shared Variables in Threaded Programs
+1028
+12.4.1 Threads Memory Model
+1029
+12.4.2 Mapping Variables to Memory
+1030
+12.4.3 Shared Variables
+1031
+12.5
+Synchronizing Threads with Semaphores
+1031
+12.5.1 Progress Graphs
+1035
+12.5.2 Semaphores
+1037
+12.5.3 Using Semaphores for Mutual Exclusion
+1038
+12.5.4 Using Semaphores to Schedule Shared Resources
+1040
+12.5.5 Putting It Together: A Concurrent Server Based on
+Prethreading
+1044
+12.6
+Using Threads for Parallelism
+1049
+12.7
+Other Concurrency Issues
+1056
+12.7.1 Thread Safety
+1056
+12.7.2 Reentrancy
+1059
+12.7.3 Using Existing Library Functions in Threaded Programs
+1060
+12.7.4 Races
+1061
+12.7.5 Deadlocks
+1063
+12.8
+Summary
+1066
+Bibliographic Notes
+1066
+Homework Problems
+1067
+Solutions to Practice Problems
+1072
+A
+Error Handling
+1077
+A.1
+Error Handling in Unix Systems
+1078
+A.2
+Error-Handling Wrappers
+1079
+References
+1083
+Index
+1089

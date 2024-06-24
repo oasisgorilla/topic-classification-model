@@ -1,0 +1,74 @@
+570
+Chapter 5
+Optimizing Program Performance
+%rax
+%rbp
+%rdx
+%xmm0
+vmulsd (%rax,%rdx,8), %xmm0, %xmm0
+vmulsd 8(%rax,%rdx,8), %xmm0, %xmm0
+addq $2,%rdx
+cmpq %rdx,%rbp
+jg loop 
+%rax
+%rbp
+%rdx
+%xmm0
+load
+mul
+load
+mul
+add
+cmp
+jg
+Figure 5.18
+Graphical representation of inner-loop code for combine5. Each
+iteration has two vmulsd instructions, each of which is translated into a load and a
+mul operation.
+Figure 5.19
+Abstracting combine5
+operations as a data-
+ﬂow graph. We rearrange,
+simplify, and abstract the
+representation of Figure
+5.18 to show the data
+dependencies between
+successive iterations
+(a). We see that each
+iteration must perform
+two multiplications in
+sequence (b).
+%rax
+%rbp
+%rdx
+%xmm0
+%rdx
+%xmm0
+data[i ]
+data[i +1]
+load
+load
+mul
+mul
+add
+cmp
+(a)
+(b)
+jg
+%rdx
+%xmm0
+%rdx
+%xmm0
+load
+mul
+add
+load
+mul
+the second to add data[i+1] to acc. Figure 5.18 shows a graphical representation
+of this code. The vmulsd instructions each get translated into two operations:
+one to load an array element from memory and one to multiply this value by
+the accumulated value. We see here that register %xmm0 gets read and written
+twice in each execution of the loop. We can rearrange, simplify, and abstract
+this graph, following the process shown in Figure 5.19(a), to obtain the template
+shown in Figure 5.19(b). We then replicate this template n/2 times to show the
+computation for a vector of length n, obtaining the data-ﬂow representation

@@ -1,0 +1,53 @@
+Section 3.6
+Control
+245
+Practice Problem 3.15 (solution page 366)
+In the following excerpts from a disassembled binary, some of the information has
+been replaced by X’s. Answer the following questions about these instructions.
+A. What is the target of the je instruction below? (You do not need to know
+anything about the callq instruction here.)
+4003fa: 74 02
+je
+XXXXXX
+4003fc: ff d0
+callq
+*%rax
+B. What is the target of the je instruction below?
+40042f: 74 f4
+je
+XXXXXX
+400431: 5d
+pop
+%rbp
+C. What is the address of the ja and pop instructions?
+XXXXXX: 77 02
+ja
+400547
+XXXXXX: 5d
+pop
+%rbp
+D. In the code that follows, the jump target is encoded in PC-relative form as a 4-
+byte two’s-complement number. The bytes are listed from least signiﬁcant to
+most, reﬂecting the little-endian byte ordering of x86-64. What is the address
+of the jump target?
+4005e8: e9 73 ff ff ff
+jmpq
+XXXXXXX
+4005ed: 90
+nop
+The jump instructions provide a means to implement conditional execution
+(if), as well as several different loop constructs.
+3.6.5
+Implementing Conditional Branches with Conditional Control
+The most general way to translate conditional expressions and statements from
+C into machine code is to use combinations of conditional and unconditional
+jumps. (As an alternative, we will see in Section 3.6.6 that some conditionals
+can be implemented by conditional transfers of data rather than control.) For
+example, Figure 3.16(a) shows the C code for a function that computes the absolute
+value of the difference of two numbers.3 The function also has a side effect of
+incrementing one of two counters, encoded as global variables lt_cnt and ge_
+cnt. Gcc generates the assembly code shown as Figure 3.16(c). Our rendition of
+the machine code into C is shown as the function gotodiff_se (Figure 3.16(b)).
+It uses the goto statement in C, which is similar to the unconditional jump of
+3. Actually, it can return a negative value if one of the subtractions overﬂows. Our interest here is to
+demonstrate machine code, not to implement robust code.

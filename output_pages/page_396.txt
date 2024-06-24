@@ -1,0 +1,73 @@
+Section 4.1
+The Y86-64 Instruction Set Architecture
+395
+Number
+Register name
+Number
+Register name
+0
+%rax
+8
+%r8
+1
+%rcx
+9
+%r9
+2
+%rdx
+A
+%r10
+3
+%rbx
+B
+%r11
+4
+%rsp
+C
+%r12
+5
+%rbp
+D
+%r13
+6
+%rsi
+E
+%r14
+7
+%rdi
+F
+No register
+Figure 4.4
+Y86-64 program register identiﬁers. Each of the 15 program registers
+has an associated identiﬁer (ID) ranging from 0 to 0xE. ID 0xF in a register ﬁeld of an
+instruction indicates the absence of a register operand.
+the other register speciﬁer set to value 0xF. This convention will prove useful in
+our processor implementation.
+Some instructions require an additional 8-byte constant word. This word can
+serve as the immediate data for irmovq, the displacement for rmmovq and mrmovq
+address speciﬁers, and the destination of branches and calls. Note that branch and
+call destinations are given as absolute addresses, rather than using the PC-relative
+addressing seen in x86-64. Processors use PC-relative addressing to give more
+compact encodings of branch instructions and to allow code to be shifted from
+one part of memory to another without the need to update all of the branch target
+addresses. Since we are more concerned with simplicity in our presentation, we
+use absolute addressing. As with x86-64, all integers have a little-endian encoding.
+When the instruction is written in disassembled form, these bytes appear in reverse
+order.
+As an example, let us generate the byte encoding of the instruction rmmovq
+%rsp,0x123456789abcd(%rdx) in hexadecimal. From Figure 4.2, we can see that
+rmmovq has initial byte 40. We can also see that source register %rsp should be
+encoded in the rA ﬁeld, and base register %rdx should be encoded in the rB ﬁeld.
+Using the register numbers in Figure 4.4, we get a register speciﬁer byte of 42.
+Finally, the displacement is encoded in the 8-byte constant word. We ﬁrst pad
+0x123456789abcd with leading zeros to ﬁll out 8 bytes, giving a byte sequence of
+00 01 23 45 67 89 ab cd. We write this in byte-reversed order as cd ab 89 67 45 23 01
+00. Combining these, we get an instruction encoding of 4042cdab896745230100.
+One important property of any instruction set is that the byte encodings must
+have a unique interpretation. An arbitrary sequence of bytes either encodes a
+unique instruction sequence or is not a legal byte sequence. This property holds for
+Y86-64, because every instruction has a unique combination of code and function
+in its initial byte, and given this byte, we can determine the length and meaning of
+any additional bytes. This property ensures that a processor can execute an object-
+code program without any ambiguity about the meaning of the code. Even if the
+code is embedded within other bytes in the program, we can readily determine

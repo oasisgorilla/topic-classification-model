@@ -1,0 +1,17 @@
+Solutions to Practice Problems
+1005
+31
+/* Clean up */
+32
+Freeaddrinfo(listp);
+33
+34
+exit(0);
+35
+}
+code/netp/hostinfo-ntop.c
+Solution to Problem 11.5 (page 990)
+Before the process that runs the CGI program is loaded, a Linux dup2 function
+is used to redirect standard output to the connected descriptor that is associated
+with the client. Thus, anything that the CGI program writes to standard output
+goes directly to the client.

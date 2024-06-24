@@ -1,0 +1,70 @@
+Section 3.4
+Accessing Information
+219
+Instruction
+Effect
+Description
+mov
+S, D
+D ←S
+Move
+movb
+Move byte
+movw
+Move word
+movl
+Move double word
+movq
+Move quad word
+movabsq
+I, R
+R ←I
+Move absolute quad word
+Figure 3.4
+Simple data movement instructions.
+The source operand designates a value that is immediate, stored in a register,
+or stored in memory. The destination operand designates a location that is either a
+register or a memory address. x86-64 imposes the restriction that a move instruc-
+tion cannot have both operands refer to memory locations. Copying a value from
+one memory location to another requires two instructions—the ﬁrst to load the
+source value into a register, and the second to write this register value to the des-
+tination. Referring to Figure 3.2, register operands for these instructions can be
+the labeled portions of any of the 16 registers, where the size of the register must
+match the size designated by the last character of the instruction (‘b’, ‘w’, ‘l’, or
+‘q’). For most cases, the mov instructions will only update the speciﬁc register bytes
+or memory locations indicated by the destination operand. The only exception is
+that when movl has a register as the destination, it will also set the high-order 4
+bytes of the register to 0. This exception arises from the convention, adopted in
+x86-64, that any instruction that generates a 32-bit value for a register also sets the
+high-order portion of the register to 0.
+The following mov instruction examples show the ﬁve possible combinations
+of source and destination types. Recall that the source operand comes ﬁrst and
+the destination second.
+1
+movl $0x4050,%eax
+Immediate--Register, 4 bytes
+2
+movw %bp,%sp
+Register--Register,
+2 bytes
+3
+movb (%rdi,%rcx),%al
+Memory--Register,
+1 byte
+4
+movb $-17,(%esp)
+Immediate--Memory,
+1 byte
+5
+movq %rax,-12(%rbp)
+Register--Memory,
+8 bytes
+A ﬁnal instruction documented in Figure 3.4 is for dealing with 64-bit imme-
+diate data. The regular movq instruction can only have immediate source operands
+that can be represented as 32-bit two’s-complement numbers. This value is then
+sign extended to produce the 64-bit value for the destination. The movabsq in-
+struction can have an arbitrary 64-bit immediate value as its source operand and
+can only have a register as a destination.
+Figures 3.5 and 3.6 document two classes of data movement instructions for
+use when copying a smaller source value to a larger destination. All of these
+instructions copy data from a source, which can be either a register or stored

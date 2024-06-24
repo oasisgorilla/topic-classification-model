@@ -1,0 +1,58 @@
+Section 6.1
+Storage Technologies
+637
+Reads
+Writes
+Sequential read throughput
+550 MB/s
+Sequential write throughput
+470 MB/s
+Random read throughput (IOPS)
+89,000 IOPS
+Random write throughput (IOPS)
+74,000 IOPS
+Random read throughput (MB/s)
+365 MB/s
+Random write throughput (MB/s)
+303 MB/s
+Avg. sequential read access time
+50 μs
+Avg. sequential write access time
+60 μs
+Figure 6.14
+Performance characteristics of a commercial solid state disk. Source: Intel SSD 730 product
+speciﬁcation [53]. IOPS is I/O operations per second. Throughput numbers are based on reads and writes of
+4 KB blocks. (Intel SSD 730 product speciﬁcation. Intel Corporation. 52.)
+KB to 512 KB. Data are read and written in units of pages. A page can be written
+only after the entire block to which it belongs has been erased (typically, this means
+that all bits in the block are set to 1). However, once a block is erased, each page
+in the block can be written once with no further erasing. A block wears out after
+roughly 100,000 repeated writes. Once a block wears out, it can no longer be used.
+Random writes are slower for two reasons. First, erasing a block takes a
+relatively long time, on the order of 1 ms, which is more than an order of magnitude
+longer than it takes to access a page. Second, if a write operation attempts to
+modify a page p that contains existing data (i.e., not all ones), then any pages in
+the same block with useful data must be copied to a new (erased) block before
+the write to page p can occur. Manufacturers have developed sophisticated logic
+in the ﬂash translation layer that attempts to amortize the high cost of erasing
+blocks and to minimize the number of internal copies on writes, but it is unlikely
+that random writing will ever perform as well as reading.
+SSDs have a number of advantages over rotating disks. They are built of
+semiconductor memory, with no moving parts, and thus have much faster random
+access times than rotating disks, use less power, and are more rugged. However,
+there are some disadvantages. First, because ﬂash blocks wear out after repeated
+writes, SSDs have the potential to wear out as well. Wear-leveling logic in the ﬂash
+translation layer attempts to maximize the lifetime of each block by spreading
+erasures evenly across all blocks. In practice, the wear-leveling logic is so good
+that it takes many years for SSDs to wear out (see Practice Problem 6.5). Second,
+SSDs are about 30 times more expensive per byte than rotating disks, and thus the
+typical storage capacities are signiﬁcantly less than rotating disks. However, SSD
+prices are decreasing rapidly as they become more popular, and the gap between
+the two is decreasing.
+SSDs have completely replaced rotating disks in portable music devices, are
+popular as disk replacements in laptops, and have even begun to appear in desk-
+tops and servers. While rotating disks are here to stay, it is clear that SSDs are an
+important alternative.
+Practice Problem 6.5 (solution page 698)
+As we have seen, a potential drawback of SSDs is that the underlying ﬂash memory
+can wear out. For example, for the SSD in Figure 6.14, Intel guarantees about

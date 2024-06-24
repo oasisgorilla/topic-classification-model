@@ -1,0 +1,64 @@
+350
+Chapter 3
+Machine-Level Representation of Programs
+1
+/* Enumerated type creates set of constants numbered 0 and upward */
+2
+typedef enum {MODE_A, MODE_B, MODE_C, MODE_D, MODE_E} mode_t;
+3
+4
+long switch3(long *p1, long *p2, mode_t action)
+5
+{
+6
+long result = 0;
+7
+switch(action) {
+8
+case MODE_A:
+9
+10
+case MODE_B:
+11
+12
+case MODE_C:
+13
+14
+case MODE_D:
+15
+16
+case MODE_E:
+17
+18
+default:
+19
+20
+}
+21
+return result;
+22
+}
+The part of the generated assembly code implementing the different actions is
+shown in Figure 3.52. The annotations indicate the argument locations, the register
+values, and the case labels for the different jump destinations.
+Fill in the missing parts of the C code. It contained one case that fell through
+to another—try to reconstruct this.
+3.63 ◆◆
+This problem will give you a chance to reverse engineer a switch statement from
+disassembled machine code. In the following procedure, the body of the switch
+statement has been omitted:
+1
+long switch_prob(long x, long n) {
+2
+long result = x;
+3
+switch(n) {
+4
+/* Fill in code here */
+5
+6
+}
+7
+return result;
+8
+}

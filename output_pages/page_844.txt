@@ -1,0 +1,67 @@
+Section 9.3
+VM as a Tool for Caching
+843
+Figure 9.4
+Page table.
+PTE 0
+PP 0
+PP 3
+1
+1
+0
+1
+0
+0
+1
+0
+PTE 7
+Null
+VP 1
+VP 4
+VP 7
+VP 2
+VP 1
+VP 2
+VP 3
+VP 4
+VP 6
+VP 7
+Null
+Physical page
+number or
+disk address
+Memory-resident
+page table
+(DRAM)
+Virtual memory
+(disk)
+Physical memory
+(DRAM)
+Valid
+where the virtual page is stored on disk, select a victim page in physical memory,
+and copy the virtual page from disk to DRAM, replacing the victim page.
+These capabilities are provided by a combination of operating system soft-
+ware, address translation hardware in the MMU (memory management unit), and
+a data structure stored in physical memory known as a page table that maps vir-
+tual pages to physical pages. The address translation hardware reads the page table
+each time it converts a virtual address to a physical address. The operating system
+is responsible for maintaining the contents of the page table and transferring pages
+back and forth between disk and DRAM.
+Figure 9.4 shows the basic organization of a page table. A page table is an array
+of page table entries (PTEs). Each page in the virtual address space has a PTE at
+a ﬁxed offset in the page table. For our purposes, we will assume that each PTE
+consists of a valid bit and an n-bit address ﬁeld. The valid bit indicates whether
+the virtual page is currently cached in DRAM. If the valid bit is set, the address
+ﬁeld indicates the start of the corresponding physical page in DRAM where the
+virtual page is cached. If the valid bit is not set, then a null address indicates that
+the virtual page has not yet been allocated. Otherwise, the address points to the
+start of the virtual page on disk.
+The example in Figure 9.4 shows a page table for a system with eight virtual
+pages and four physical pages. Four virtual pages (VP 1, VP 2, VP 4, and VP 7)
+are currently cached in DRAM. Two pages (VP 0 and VP 5) have not yet been
+allocated, and the rest (VP 3 and VP 6) have been allocated but are not currently
+cached. An important point to notice about Figure 9.4 is that because the DRAM
+cache is fully associative, any physical page can contain any virtual page.
+Practice Problem 9.2 (solution page 917)
+Determine the number of page table entries (PTEs) that are needed for the
+following combinations of virtual address size (n) and page size (P):

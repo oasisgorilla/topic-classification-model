@@ -1,0 +1,64 @@
+Section 5.12
+Understanding Memory Performance
+591
+a CPE of 4.00, which we claim is a direct indication of the latency of the load
+operation. To see this, consider the assembly code for the loop:
+Inner loop of list_len
+ls in %rdi, len in %rax
+1
+.L3:
+loop:
+2
+addq
+$1, %rax
+Increment len
+3
+movq
+(%rdi), %rdi
+ls = ls->next
+4
+testq
+%rdi, %rdi
+Test ls
+5
+jne
+.L3
+If nonnull, goto loop
+The movq instruction on line 3 forms the critical bottleneck in this loop. Each
+successive value of register %rdi depends on the result of a load operation having
+the value in %rdi as its address. Thus, the load operation for one iteration cannot
+begin until the one for the previous iteration has completed. The CPE of 4.00
+for this function is determined by the latency of the load operation. Indeed, this
+measurement matches the documented access time of 4 cycles for the reference
+machine’s L1 cache, as is discussed in Section 6.4.
+5.12.2
+Store Performance
+In all of our examples thus far, we analyzed only functions that reference mem-
+ory mostly with load operations, reading from a memory location into a register.
+Its counterpart, the store operation, writes a register value to memory. The per-
+formance of this operation, particularly in relation to its interactions with load
+operations, involves several subtle issues.
+As with the load operation, in most cases, the store operation can operate in a
+fully pipelined mode, beginning a new store on every cycle. For example, consider
+the function shown in Figure 5.32 that sets the elements of an array dest of length
+n to zero. Our measurements show a CPE of 1.0. This is the best we can achieve
+on a machine with a single store functional unit.
+Unlike the other operations we have considered so far, the store operation
+does not affect any register values. Thus, by their very nature, a series of store
+operations cannot create a data dependency. Only a load operation is affected by
+the result of a store operation, since only a load can read back the memory value
+that has been written by the store. The function write_read shown in Figure 5.33
+1
+/* Set elements of array to 0 */
+2
+void clear_array(long *dest, long n) {
+3
+long i;
+4
+for (i = 0; i < n; i++)
+5
+dest[i] = 0;
+6
+}
+Figure 5.32
+Function to set array elements to 0. This code achieves a CPE of 1.0.

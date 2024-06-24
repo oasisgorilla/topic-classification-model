@@ -1,0 +1,63 @@
+438
+Chapter 4
+Processor Architecture
+1
+0x000:
+irmovq $0x100,%rbx
+# %rbx <-- 0x100
+2
+0x00a:
+irmovq $0x200,%rdx
+# %rdx <-- 0x200
+3
+0x014:
+addq %rdx,%rbx
+# %rbx <-- 0x300 CC <-- 000
+4
+0x016:
+je dest
+# Not taken
+5
+0x01f:
+rmmovq %rbx,0(%rdx)
+# M[0x200] <-- 0x300
+6
+0x029: dest: halt
+Each of the diagrams labeled 1 through 4 shows the four state elements plus
+the combinational logic and the connections among the state elements. We show
+the combinational logic as being wrapped around the condition code register,
+because some of the combinational logic (such as the ALU) generates the input
+to the condition code register, while other parts (such as the branch computation
+and the PC selection logic) have the condition code register as input. We show the
+register ﬁle and the data memory as having separate connections for reading and
+writing, since the read operations propagate through these units as if they were
+combinational logic, while the write operations are controlled by the clock.
+The color coding in Figure 4.25 indicates how the circuit signals relate to the
+different instructions being executed. We assume the processing starts with the
+condition codes, listed in the order ZF, SF, and OF, set to 100. At the beginning of
+clock cycle 3 (point 1), the state elements hold the state as updated by the second
+irmovq instruction (line 2 of the listing), shown in light gray. The combinational
+logic is shown in white, indicating that it has not yet had time to react to the
+changed state. The clock cycle begins with address 0x014 loaded into the program
+counter. This causes the addq instruction (line 3 of the listing), shown in blue, to
+be fetched and processed. Values ﬂow through the combinational logic, including
+the reading of the random access memories. By the end of the cycle (point 2),
+the combinational logic has generated new values (000) for the condition codes,
+an update for program register %rbx, and a new value (0x016) for the program
+counter. At this point, the combinational logic has been updated according to the
+addq instruction (shown in blue), but the state still holds the values set by the
+second irmovq instruction (shown in light gray).
+As the clock rises to begin cycle 4 (point 3), the updates to the program
+counter, the register ﬁle, and the condition code register occur, and so we show
+these in blue, but the combinational logic has not yet reacted to these changes, and
+so we show this in white. In this cycle, the je instruction (line 4 in the listing), shown
+in dark gray, is fetched and executed. Since condition code ZF is 0, the branch is not
+taken. By the end of the cycle (point 4), a new value of 0x01f has been generated
+for the program counter. The combinational logic has been updated according to
+the je instruction (shown in dark gray), but the state still holds the values set by
+the addq instruction (shown in blue) until the next cycle begins.
+As this example illustrates, the use of a clock to control the updating of the
+state elements, combined with the propagation of values through combinational
+logic, sufﬁces to control the computations performed for each instruction in our
+implementation of SEQ. Every time the clock transitions from low to high, the
+processor begins executing a new instruction.

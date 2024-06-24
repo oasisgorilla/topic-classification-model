@@ -1,0 +1,46 @@
+330
+Chapter 3
+Machine-Level Representation of Programs
+. The instructions that operate on ﬂoating-point data.
+. The conventions used for passing ﬂoating-point values as arguments to func-
+tions and for returning them as results.
+. The conventions for how registers are preserved during function calls—for
+example, with some registers designated as caller saved, and others as callee
+saved.
+To understand the x86-64 ﬂoating-point architecture, it is helpful to have a
+brief historical perspective. Since the introduction of the Pentium/MMX in 1997,
+both Intel and AMD have incorporated successive generations of media instruc-
+tions to support graphics and image processing. These instructions originally fo-
+cused on allowing multiple operations to be performed in a parallel mode known
+as single instruction, multiple data, or SIMD (pronounced sim-dee). In this mode
+the same operation is performed on a number of different data values in parallel.
+Over the years, there has been a progression of these extensions. The names have
+changed through a series of major revisions from MMX to SSE (for “streaming
+SIMD extensions”) and most recently AVX (for “advanced vector extensions”).
+Within each generation, there have also been different versions. Each of these ex-
+tensions manages data in sets of registers, referred to as “MM” registers for MMX,
+“XMM” for SSE, and “YMM” for AVX, ranging from 64 bits for MM registers,
+to 128 for XMM, to 256 for YMM. So, for example, each YMM register can hold
+eight 32-bit values, or four 64-bit values, where these values can be either integer
+or ﬂoating point.
+Starting with SSE2, introduced with the Pentium 4 in 2000, the media in-
+structions have included ones to operate on scalar ﬂoating-point data, using single
+values in the low-order 32 or 64 bits of XMM or YMM registers. This scalar mode
+provides a set of registers and instructions that are more typical of the way other
+processors support ﬂoating point. All processors capable of executing x86-64 code
+support SSE2 or higher, and hence x86-64 ﬂoating point is based on SSE or AVX,
+including conventions for passing procedure arguments and return values [77].
+Our presentation is based on AVX2, the second version of AVX, introduced
+with the Core i7 Haswell processor in 2013. Gcc will generate AVX2 code when
+given the command-line parameter -mavx2. Code based on the different versions
+of SSE, as well as the ﬁrst version of AVX, is conceptually similar, although they
+differ in the instruction names and formats. We present only instructions that
+arise in compiling ﬂoating-point programs with gcc. These are, for the most part,
+the scalar AVX instructions, although we document occasions where instructions
+intended for operating on entire data vectors arise. A more complete coverage
+of how to exploit the SIMD capabilities of SSE and AVX is presented in Web
+Aside opt:simd on page 582. Readers may wish to refer to the AMD and Intel
+documentation for the individual instructions [4, 51]. As with integer operations,
+note that the ATT format we use in our presentation differs from the Intel format
+used in these documents. In particular, the instruction operands are listed in a
+different order in these two versions.

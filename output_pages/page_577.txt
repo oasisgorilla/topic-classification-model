@@ -1,0 +1,59 @@
+576
+Chapter 5
+Optimizing Program Performance
+6
+5
+4
+3
+2
+1
+0
+1
+2
+3
+4
+Unrolling factor k
+CPE
+5
+6
+double *
+double +
+long *
+long +
+7
+8
+9
+10
+Figure 5.25
+CPE performance of k × k loop unrolling. All of the CPEs improve with
+this transformation, achieving near or at their throughput bounds.
+achieve nearly the throughput bounds for all cases. Integer addition achieves a
+CPE of 0.54 with k = 7, close to the throughput bound of 0.50 caused by the two
+load units. Integer multiplication and ﬂoating-point addition achieve CPEs of 1.01
+when k ≥3, approaching the throughput bound of 1.00 set by their functional units.
+Floating-point multiplication achieves a CPE of 0.51 for k ≥10, approaching the
+throughput bound of 0.50 set by the two ﬂoating-point multipliers and the two
+load units. It is worth noting that our code is able to achieve nearly twice the
+throughput with ﬂoating-point multiplication as it can with ﬂoating-point addition,
+even though multiplication is a more complex operation.
+In general, a program can achieve the throughput bound for an operation
+only when it can keep the pipelines ﬁlled for all of the functional units capable of
+performing that operation. For an operation with latency L and capacity C, this
+requires an unrolling factor k ≥C . L. For example, ﬂoating-point multiplication
+has C = 2 and L = 5, necessitating an unrolling factor of k ≥10. Floating-point
+addition has C = 1 and L = 3, achieving maximum throughput with k ≥3.
+In performing the k × k unrolling transformation, we must consider whether it
+preserves the functionality of the original function. We have seen in Chapter 2 that
+two’s-complement arithmetic is commutative and associative, even when overﬂow
+occurs. Hence, for an integer data type, the result computed by combine6 will be
+identical to that computed by combine5 under all possible conditions. Thus, an
+optimizing compiler could potentially convert the code shown in combine4 ﬁrst
+to a two-way unrolled variant of combine5 by loop unrolling, and then to that
+of combine6 by introducing parallelism. Some compilers do either this or similar
+transformations to improve performance for integer data.
+On the other hand, ﬂoating-point multiplication and addition are not as-
+sociative. Thus, combine5 and combine6 could produce different results due to
+rounding or overﬂow. Imagine, for example, a product computation in which all
+of the elements with even indices are numbers with very large absolute values,
+while those with odd indices are very close to 0.0. In such a case, product PEn
+might overﬂow, or POn might underﬂow, even though computing product Pn pro-

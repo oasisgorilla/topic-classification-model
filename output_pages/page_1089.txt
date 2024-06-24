@@ -1,0 +1,42 @@
+1088
+References
+[113] A. S. Tanenbaum and H. Bos. Modern
+Operating Systems, Fourth Edition. Prentice
+Hall, 2015.
+[114] A. S. Tanenbaum and D. Wetherall. Computer
+Networks, Fifth Edition. Prentice Hall, 2010.
+[115] K. P
+. Wadleigh and I. L. Crawford. Software
+Optimization for High-Performance Comput-
+ing: Creating Faster Applications. Prentice Hall,
+2000.
+[116] J. F. Wakerly. Digital Design Principles and
+Practices, Fourth Edition. Prentice Hall, 2005.
+[117] M. V. Wilkes. Slave memories and dynamic
+storage allocation. IEEE Transactions on
+Electronic Computers, EC-14(2), April 1965.
+[118] P
+. Wilson, M. Johnstone, M. Neely, and D. Boles.
+Dynamic storage allocation: A survey and
+critical review. In International Workshop on
+Memory Management, volume 986 of Lecture
+Notes in Computer Science, pages 1–116.
+Springer-Verlag, 1995.
+[119] M. Wolf and M. Lam. A data locality algorithm.
+In Proceedings of the 1991 ACM Conference
+on Programming Language Design and
+Implementation (PLDI), pages 30–44, June
+1991.
+[120] G. R. Wright and W. R. Stevens. TCP/IP
+Illustrated, Volume 2: The Implementation.
+Addison-Wesley, 1995.
+[121] J. Wylie, M. Bigrigg, J. Strunk, G. Ganger,
+H. Kiliccote, and P
+. Khosla. Survivable
+information storage systems. IEEE Computer
+33:61–68, August 2000.
+[122] T.-Y. Yeh and Y. N. Patt. Alternative implemen-
+tation of two-level adaptive branch prediction.
+In Proceedings of the 19th Annual International
+Symposium on Computer Architecture (ISCA),
+pages 451–461. ACM, 1998.

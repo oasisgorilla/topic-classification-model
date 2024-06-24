@@ -1,0 +1,56 @@
+Section 4.3
+Sequential Y86-64 Implementations
+425
+Stage
+rmmovq rA, D(rB)
+mrmovq D(rB), rA
+Fetch
+icode:ifun ←M1[PC]
+icode:ifun ←M1[PC]
+rA :rB ←M1[PC + 1]
+rA :rB ←M1[PC + 1]
+valC ←M8[PC + 2]
+valC ←M8[PC + 2]
+valP ←PC + 10
+valP ←PC + 10
+Decode
+valA ←R[rA]
+valB ←R[rB]
+valB ←R[rB]
+Execute
+valE ←valB + valC
+valE ←valB + valC
+Memory
+M8[valE] ←valA
+valM ←M8[valE]
+Write back
+R[rA] ←valM
+PC update
+PC ←valP
+PC ←valP
+Figure 4.19
+Computations in sequential implementation of Y86-64 instructions
+rmmovq and mrmovq. These instructions read or write memory.
+Figure 4.20 shows the steps required to process pushq and popq instructions.
+These are among the most difﬁcult Y86-64 instructions to implement, because
+they involve both accessing memory and incrementing or decrementing the stack
+pointer. Although the two instructions have similar ﬂows, they have important
+differences.
+The pushq instruction starts much like our previous instructions, but in the
+decode stage we use %rsp as the identiﬁer for the second register operand, giving
+the stack pointer as value valB. In the execute stage, we use the ALU to decrement
+the stack pointer by 8. This decremented value is used for the memory write
+address and is also stored back to %rsp in the write-back stage. By using valE
+as the address for the write operation, we adhere to the Y86-64 (and x86-64)
+convention that pushq should decrement the stack pointer before writing, even
+though the actual updating of the stack pointer does not occur until after the
+memory operation has completed.
+The popq instruction proceeds much like pushq, except that we read two
+copies of the stack pointer in the decode stage. This is clearly redundant, but we
+will see that having the stack pointer as both valA and valB makes the subsequent
+ﬂow more similar to that of other instructions, enhancing the overall uniformity
+of the design. We use the ALU to increment the stack pointer by 8 in the execute
+stage, but use the unincremented value as the address for the memory operation.
+In the write-back stage, we update both the stack pointer register with the incre-
+mented stack pointer and register rA with the value read from memory. Using the
+unincremented stack pointer as the memory read address preserves the Y86-64

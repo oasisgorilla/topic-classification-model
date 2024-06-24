@@ -1,0 +1,57 @@
+412
+Chapter 4
+Processor Architecture
+(a) Bit-level implementation
+Bit equal
+Bit equal
+Bit equal
+Bit equal
+b63
+a63
+b62
+a62
+b1
+a1
+b0
+a0
+eq63
+eq1
+eq0
+eq62
+Eq
+. . .
+. . .
+(b) Word-level abstraction
+A
+B
+A == B
+=
+Figure 4.12
+Word-level equality test circuit. The output will equal 1 when each bit
+from word A equals its counterpart from word B. Word-level equality is one of the
+operations in HCL.
+4.2.3
+Word-Level Combinational Circuits and HCL Integer Expressions
+By assembling large networks of logic gates, we can construct combinational
+circuits that compute much more complex functions. Typically, we design circuits
+that operate on data words. These are groups of bit-level signals that represent an
+integer or some control pattern. For example, our processor designs will contain
+numerous words, with word sizes ranging between 4 and 64 bits, representing
+integers, addresses, instruction codes, and register identiﬁers.
+Combinational circuits that perform word-level computations are constructed
+using logic gates to compute the individual bits of the output word, based on the
+individual bits of the input words. For example, Figure 4.12 shows a combinational
+circuit that tests whether two 64-bit words A and B are equal. That is, the output
+will equal 1 if and only if each bit of A equals the corresponding bit of B. This
+circuit is implemented using 64 of the single-bit equality circuits shown in Figure
+4.10. The outputs of these single-bit circuits are combined with an and gate to
+form the circuit output.
+In HCL, we will declare any word-level signal as an int, without specifying
+the word size. This is done for simplicity. In a full-featured hardware description
+language, every word can be declared to have a speciﬁc number of bits. HCL allows
+words to be compared for equality, and so the functionality of the circuit shown
+in Figure 4.12 can be expressed at the word level as
+bool Eq = (A == B);
+where arguments A and B are of type int. Note that we use the same syntax
+conventions as in C, where ‘=’ denotes assignment and ‘==’ denotes the equality
+operator.

@@ -1,0 +1,90 @@
+Section 11.4
+The Sockets Interface
+983
+code/netp/echoserveri.c
+1
+#include "csapp.h"
+2
+3
+void echo(int connfd);
+4
+5
+int main(int argc, char **argv)
+6
+{
+7
+int listenfd, connfd;
+8
+socklen_t clientlen;
+9
+struct sockaddr_storage clientaddr;
+/* Enough space for any address */
+10
+char client_hostname[MAXLINE], client_port[MAXLINE];
+11
+12
+if (argc != 2) {
+13
+fprintf(stderr, "usage: %s <port>\n", argv[0]);
+14
+exit(0);
+15
+}
+16
+17
+listenfd = Open_listenfd(argv[1]);
+18
+while (1) {
+19
+clientlen = sizeof(struct sockaddr_storage);
+20
+connfd = Accept(listenfd, (SA *)&clientaddr, &clientlen);
+21
+Getnameinfo((SA *) &clientaddr, clientlen, client_hostname, MAXLINE,
+22
+client_port, MAXLINE, 0);
+23
+printf("Connected to (%s, %s)\n", client_hostname, client_port);
+24
+echo(connfd);
+25
+Close(connfd);
+26
+}
+27
+exit(0);
+28
+}
+code/netp/echoserveri.c
+Figure 11.21
+Iterative echo server main routine.
+code/netp/echo.c
+1
+#include "csapp.h"
+2
+3
+void echo(int connfd)
+4
+{
+5
+size_t n;
+6
+char buf[MAXLINE];
+7
+rio_t rio;
+8
+9
+Rio_readinitb(&rio, connfd);
+10
+while((n = Rio_readlineb(&rio, buf, MAXLINE)) != 0) {
+11
+printf("server received %d bytes\n", (int)n);
+12
+Rio_writen(connfd, buf, n);
+13
+}
+14
+}
+code/netp/echo.c
+Figure 11.22
+echo function that reads and echoes text lines.

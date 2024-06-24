@@ -1,0 +1,45 @@
+Homework Problems
+691
+3
+int sum = 0;
+4
+5
+for (i = 0; i < 128; i++) {
+6
+sum += x[0][i] * x[1][i];
+7
+}
+Assume we execute this under the following conditions:
+. sizeof(int) = 4.
+. Array x begins at memory address 0x0 and is stored in row-major order.
+. In each case below, the cache is initially empty.
+. The only memory accesses are to the entries of the array x. All other variables
+are stored in registers.
+Given these assumptions, estimate the miss rates for the following cases:
+A. Case 1: Assume the cache is 512 bytes, direct-mapped, with 16-byte cache
+blocks. What is the miss rate?
+B. Case 2: What is the miss rate if we double the cache size to 1,024 bytes?
+C. Case 3: Now assume the cache is 512 bytes, two-way set associative using
+an LRU replacement policy, with 16-byte cache blocks. What is the cache
+miss rate?
+D. For case 3, will a larger cache size help to reduce the miss rate? Why or
+why not?
+E. For case 3, will a larger block size help to reduce the miss rate? Why or why
+not?
+6.37 ◆◆
+This is another problem that tests your ability to analyze the cache behavior of C
+code. Assume we execute the three summation functions in Figure 6.47 under the
+following conditions:
+. sizeof(int) = 4.
+. The machine has a 4 KB direct-mapped cache with a 16-byte block size.
+. Within the two loops, the code uses memory accesses only for the array data.
+The loop indices and the value sum are held in registers.
+. Array a is stored starting at memory address 0x08000000.
+Fill in the table for the approximate cache miss rate for the two cases N = 64
+and N = 60.
+Function
+N = 64
+N = 60
+sumA
+sumB
+sumC

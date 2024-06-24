@@ -1,0 +1,62 @@
+824
+Chapter 8
+Exceptional Control Flow
+Homework Problems
+8.9 ◆
+Consider four processes with the following starting and ending times:
+Process
+Start time
+End time
+A
+6
+8
+B
+3
+5
+C
+4
+7
+D
+2
+9
+For each pair of processes, indicate whether they run concurrently (Y) or
+not (N):
+Process pair
+Concurrent?
+AB
+AC
+AD
+BC
+BD
+CD
+8.10 ◆
+In this chapter, we have introduced some functions with unusual call and return
+behaviors: getenv, setenv, unsetenv, and execve. Match each function with one
+of the following behaviors:
+A. Called once, returns only if there is an error
+B. Called once, returns nothing
+C. Called once, returns either a pointer or NULL
+8.11 ◆
+How many “Example” output lines does this program print?
+code/ecf/global-forkprob1.c
+1
+#include "csapp.h"
+2
+3
+int main()
+4
+{
+5
+int i;
+6
+7
+for (i = 3; i > 0; i--)
+8
+Fork();
+9
+printf("Example\n");
+10
+exit(0);
+11
+}
+code/ecf/global-forkprob1.c

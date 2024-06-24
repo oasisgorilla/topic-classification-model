@@ -1,0 +1,50 @@
+Section 7.6
+Symbol Resolution
+715
+Symbol
+.symtab entry?
+Symbol type
+Module where deﬁned
+Section
+buf
+bufp0
+bufp1
+swap
+temp
+7.6
+Symbol Resolution
+The linker resolves symbol references by associating each reference with exactly
+one symbol deﬁnition from the symbol tables of its input relocatable object ﬁles.
+Symbol resolution is straightforward for references to local symbols that are de-
+ﬁned in the same module as the reference. The compiler allows only one deﬁnition
+of each local symbol per module. The compiler also ensures that static local vari-
+ables, which get local linker symbols, have unique names.
+Resolving references to global symbols, however, is trickier. When the com-
+piler encounters a symbol (either a variable or function name) that is not deﬁned
+in the current module, it assumes that it is deﬁned in some other module, gener-
+ates a linker symbol table entry, and leaves it for the linker to handle. If the linker
+is unable to ﬁnd a deﬁnition for the referenced symbol in any of its input modules,
+it prints an (often cryptic) error message and terminates. For example, if we try to
+compile and link the following source ﬁle on a Linux machine,
+1
+void foo(void);
+2
+3
+int main() {
+4
+foo();
+5
+return 0;
+6
+}
+then the compiler runs without a hitch, but the linker terminates when it cannot
+resolve the reference to foo:
+linux> gcc -Wall -Og -o linkerror linkerror.c
+/tmp/ccSz5uti.o: In function ‘main’:
+/tmp/ccSz5uti.o(.text+0x7): undefined reference to ‘foo’
+Symbol resolution for global symbols is also tricky because multiple object
+modules might deﬁne global symbols with the same name. In this case, the linker
+must either ﬂag an error or somehow choose one of the deﬁnitions and discard
+the rest. The approach adopted by Linux systems involves cooperation between
+the compiler, assembler, and linker and can introduce some bafﬂing bugs to the
+unwary programmer.

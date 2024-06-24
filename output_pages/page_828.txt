@@ -1,0 +1,74 @@
+Homework Problems
+827
+4
+int main()
+5
+{
+6
+if (fork() == 0) {
+7
+counter++;
+8
+exit(0);
+9
+}
+10
+else {
+11
+Wait(NULL);
+12
+counter++; printf("counter = %d\n", counter);
+13
+}
+14
+exit(0);
+15
+}
+code/ecf/global-forkprob7.c
+8.17 ◆
+Enumerate all of the possible outputs of the program in Practice Problem 8.4.
+8.18 ◆◆
+Consider the following program:
+code/ecf/forkprob2.c
+1
+#include "csapp.h"
+2
+3
+void end(void)
+4
+{
+5
+printf("2"); fflush(stdout);
+6
+}
+7
+8
+int main()
+9
+{
+10
+if (Fork() == 0)
+11
+atexit(end);
+12
+if (Fork() == 0) {
+13
+printf("0"); fflush(stdout);
+14
+}
+15
+else {
+16
+printf("1"); fflush(stdout);
+17
+}
+18
+exit(0);
+19
+}
+code/ecf/forkprob2.c
+Determine which of the following outputs are possible. Note: The atexit
+function takes a pointer to a function and adds it to a list of functions (initially
+empty) that will be called when the exit function is called.
+A. 112002
+B. 211020

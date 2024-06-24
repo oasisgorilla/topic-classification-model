@@ -1,0 +1,37 @@
+Solutions to Practice Problems
+951
+if (Fork() == 0) { /* child */
+/* What code is the shell executing right here? */
+Execve("fstatcheck", argv, envp);
+}
+10.10 ◆◆
+Modify the cpfile program in Figure 10.5 so that it takes an optional command-
+line argument infile. If infile is given, then copy infile to standard output;
+otherwise, copy standard input to standard output as before. The twist is that your
+solution must use the original copy loop (lines 9–11) for both cases. You are only
+allowed to insert code, and you are not allowed to change any of the existing code.
+Solutions to Practice Problems
+Solution to Problem 10.1 (page 931)
+Unix processes begin life with open descriptors assigned to stdin (descriptor 0),
+stdout (descriptor 1), and stderr (descriptor 2). The open function always re-
+turns the lowest unopened descriptor, so the ﬁrst call to open returns descriptor 3.
+The call to the close function frees up descriptor 3. The ﬁnal call to open returns
+descriptor 3, and thus the output of the program is fd2 = 3.
+Solution to Problem 10.2 (page 944)
+The descriptors fd1 and fd2 each have their own open ﬁle table entry, so each
+descriptor has its own ﬁle position for foobar.txt. Thus, the read from fd2 reads
+the ﬁrst byte of foobar.txt, and the output is
+c = f
+and not
+c = o
+as you might have thought initially.
+Solution to Problem 10.3 (page 944)
+Recall that the child inherits the parent’s descriptor table and that all processes
+shared the same open ﬁle table. Thus, the descriptor fd in both the parent and
+child points to the same open ﬁle table entry. When the child reads the ﬁrst byte
+of the ﬁle, the ﬁle position increases by 1. Thus, the parent reads the second byte,
+and the output is
+c = o
+Solution to Problem 10.4 (page 945)
+To redirect standard input (descriptor 0) to descriptor 5, we would call dup2(5,0),
+or equivalently, dup2(5,STDIN_FILENO).

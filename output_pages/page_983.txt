@@ -1,0 +1,70 @@
+982
+Chapter 11
+Network Programming
+code/netp/echoclient.c
+1
+#include "csapp.h"
+2
+3
+int main(int argc, char **argv)
+4
+{
+5
+int clientfd;
+6
+char *host, *port, buf[MAXLINE];
+7
+rio_t rio;
+8
+9
+if (argc != 3) {
+10
+fprintf(stderr, "usage: %s <host> <port>\n", argv[0]);
+11
+exit(0);
+12
+}
+13
+host = argv[1];
+14
+port = argv[2];
+15
+16
+clientfd = Open_clientfd(host, port);
+17
+Rio_readinitb(&rio, clientfd);
+18
+19
+while (Fgets(buf, MAXLINE, stdin) != NULL) {
+20
+Rio_writen(clientfd, buf, strlen(buf));
+21
+Rio_readlineb(&rio, buf, MAXLINE);
+22
+Fputs(buf, stdout);
+23
+}
+24
+Close(clientfd);
+25
+exit(0);
+26
+}
+code/netp/echoclient.c
+Figure 11.20
+Echo client main routine.
+the main routine closes the connected descriptor. Once the client and server have
+closed their respective descriptors, the connection is terminated.
+The clientaddr variable in line 9 is a socket address structure that is passed
+to accept. Before accept returns, it ﬁlls in clientaddr with the socket address of
+the client on the other end of the connection. Notice how we declare clientaddr
+as type struct sockaddr_storage rather than struct sockaddr_in. By deﬁni-
+tion, the sockaddr_storage structure is large enough to hold any type of socket
+address, which keeps the code protocol-independent.
+Notice that our simple echo server can only handle one client at a time.
+A server of this type that iterates through clients, one at a time, is called an iterative
+server. In Chapter 12, we will learn how to build more sophisticated concurrent
+servers that can handle multiple clients simultaneously.
+Finally, Figure 11.22 shows the code for the echo routine, which repeatedly
+reads and writes lines of text until the rio_readlineb function encounters EOF
+in line 10.

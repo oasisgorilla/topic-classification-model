@@ -1,0 +1,63 @@
+232
+Chapter 3
+Machine-Level Representation of Programs
+(a) C code
+long arith(long x, long y, long z)
+{
+long t1 = x ^ y;
+long t2 = z * 48;
+long t3 = t1 & 0x0F0F0F0F;
+long t4 = t2 - t3;
+return t4;
+}
+(b) Assembly code
+long arith(long x, long y, long z)
+x in %rdi, y in %rsi, z in %rdx
+1
+arith:
+2
+xorq
+%rsi, %rdi
+t1 = x ^ y
+3
+leaq
+(%rdx,%rdx,2), %rax
+3*z
+4
+salq
+$4, %rax
+t2 = 16 * (3*z) = 48*z
+5
+andl
+$252645135, %edi
+t3 = t1 & 0x0F0F0F0F
+6
+subq
+%rdi, %rax
+Return t2 - t3
+7
+ret
+Figure 3.11
+C and assembly code for arithmetic function.
+3.5.4
+Discussion
+We see that most of the instructions shown in Figure 3.10 can be used for either
+unsigned or two’s-complement arithmetic. Only right shifting requires instructions
+that differentiate between signed versus unsigned data. This is one of the features
+that makes two’s-complement arithmetic the preferred way to implement signed
+integer arithmetic.
+Figure 3.11 shows an example of a function that performs arithmetic opera-
+tions and its translation into assembly code. Arguments x, y, and z are initially
+stored in registers %rdi, %rsi, and %rdx, respectively. The assembly-code instruc-
+tions correspond closely with the lines of C source code. Line 2 computes the value
+of x^y. Lines 3 and 4 compute the expression z*48 by a combination of leaq and
+shift instructions. Line 5 computes the and of t1 and 0x0F0F0F0F. The ﬁnal sub-
+traction is computed by line 6. Since the destination of the subtraction is register
+%rax, this will be the value returned by the function.
+In the assembly code of Figure 3.11, the sequence of values in register %rax
+corresponds to program values 3*z, z*48, and t4 (as the return value). In general,
+compilers generate code that uses individual registers for multiple program values
+and moves program values among the registers.
+Practice Problem 3.10 (solution page 365)
+Consider the following code, in which we have omitted the expression being
+computed:

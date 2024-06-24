@@ -1,0 +1,42 @@
+420
+Chapter 4
+Processor Architecture
+Aside
+Real-life memory design
+The memory system in a full-scale microprocessor is far more complex than the simple one we assume
+in our design. It consists of several forms of hardware memories, including several random access
+memories, plus nonvolatile memory or magnetic disk, as well as a variety of hardware and software
+mechanisms for managing these devices. The design and characteristics of the memory system are
+described in Chapter 6.
+Nonetheless, our simple memory design can be used for smaller systems, and it provides us with
+an abstraction of the interface between the processor and memory for more complex systems.
+Our processor includes an additional read-only memory for reading instruc-
+tions. In most actual systems, these memories are merged into a single memory
+with two ports: one for reading instructions, and the other for reading or writ-
+ing data.
+4.3
+Sequential Y86-64 Implementations
+Now we have the components required to implement a Y86-64 processor. As a ﬁrst
+step, we describe a processor called SEQ (for “sequential” processor). On each
+clock cycle, SEQ performs all the steps required to process a complete instruction.
+This would require a very long cycle time, however, and so the clock rate would be
+unacceptably low. Our purpose in developing SEQ is to provide a ﬁrst step toward
+our ultimate goal of implementing an efﬁcient pipelined processor.
+4.3.1
+Organizing Processing into Stages
+In general, processing an instruction involves a number of operations. We organize
+them in a particular sequence of stages, attempting to make all instructions follow
+a uniform sequence, even though the instructions differ greatly in their actions.
+The detailed processing at each step depends on the particular instruction being
+executed. Creating this framework will allow us to design a processor that makes
+best use of the hardware. The following is an informal description of the stages
+and the operations performed within them:
+Fetch. The fetch stage reads the bytes of an instruction from memory, using
+the program counter (PC) as the memory address. From the instruction
+it extracts the two 4-bit portions of the instruction speciﬁer byte, referred
+to as icode (the instruction code) and ifun (the instruction function). It
+possibly fetches a register speciﬁer byte, giving one or both of the register
+operand speciﬁers rA and rB. It also possibly fetches an 8-byte constant
+word valC. It computes valP to be the address of the instruction following
+the current one in sequential order. That is, valP equals the value of the
+PC plus the length of the fetched instruction.

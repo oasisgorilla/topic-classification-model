@@ -1,0 +1,77 @@
+894
+Chapter 9
+Virtual Memory
+code/vm/malloc/mm.c
+1
+int mm_init(void)
+2
+{
+3
+/* Create the initial empty heap */
+4
+if ((heap_listp = mem_sbrk(4*WSIZE)) == (void *)-1)
+5
+return -1;
+6
+PUT(heap_listp, 0);
+/* Alignment padding */
+7
+PUT(heap_listp + (1*WSIZE), PACK(DSIZE, 1)); /* Prologue header */
+8
+PUT(heap_listp + (2*WSIZE), PACK(DSIZE, 1)); /* Prologue footer */
+9
+PUT(heap_listp + (3*WSIZE), PACK(0, 1));
+/* Epilogue header */
+10
+heap_listp += (2*WSIZE);
+11
+12
+/* Extend the empty heap with a free block of CHUNKSIZE bytes */
+13
+if (extend_heap(CHUNKSIZE/WSIZE) == NULL)
+14
+return -1;
+15
+return 0;
+16
+}
+code/vm/malloc/mm.c
+Figure 9.44 mm_init creates a heap with an initial free block.
+code/vm/malloc/mm.c
+1
+static void *extend_heap(size_t words)
+2
+{
+3
+char *bp;
+4
+size_t size;
+5
+6
+/* Allocate an even number of words to maintain alignment */
+7
+size = (words % 2) ? (words+1) * WSIZE : words * WSIZE;
+8
+if ((long)(bp = mem_sbrk(size)) == -1)
+9
+return NULL;
+10
+11
+/* Initialize free block header/footer and the epilogue header */
+12
+PUT(HDRP(bp), PACK(size, 0));
+/* Free block header */
+13
+PUT(FTRP(bp), PACK(size, 0));
+/* Free block footer */
+14
+PUT(HDRP(NEXT_BLKP(bp)), PACK(0, 1)); /* New epilogue header */
+15
+16
+/* Coalesce if the previous block was free */
+17
+return coalesce(bp);
+18
+}
+code/vm/malloc/mm.c
+Figure 9.45 extend_heap extends the heap with a new free block.

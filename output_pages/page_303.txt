@@ -1,0 +1,54 @@
+302
+Chapter 3
+Machine-Level Representation of Programs
+New to C?
+Representing an object as a struct
+The struct data type constructor is the closest thing C provides to the objects of C++ and Java. It allows
+the programmer to keep information about some entity in a single data structure and to reference that
+information with names.
+For example, a graphics program might represent a rectangle as a structure:
+struct rect {
+long llx;
+/* X coordinate of lower-left corner */
+long lly;
+/* Y coordinate of lower-left corner */
+unsigned long width;
+/* Width (in pixels)
+*/
+unsigned long height; /* Height (in pixels)
+*/
+unsigned color;
+/* Coding of color
+*/
+};
+We can declare a variable r of type struct rect and set its ﬁeld values as follows:
+struct rect r;
+r.llx = r.lly = 0;
+r.color = 0xFF00FF;
+r.width = 10;
+r.height = 20;
+where the expression r.llx selects ﬁeld llx of structure r.
+Alternatively, we can both declare the variable and initialize its ﬁelds with a single statement:
+struct rect r = { 0, 0, 0xFF00FF, 10, 20 };
+It is common to pass pointers to structures from one place to another rather than copying them.
+For example, the following function computes the area of a rectangle, where a pointer to the rectangle
+struct is passed to the function:
+long area(struct rect *rp) {
+return (*rp).width * (*rp).height;
+}
+The expression (*rp).width dereferences the pointer and selects the width ﬁeld of the resulting
+structure. Parentheses are required, because the compiler would interpret the expression *rp.width as
+*(rp.width), which is not valid. This combination of dereferencing and ﬁeld selection is so common
+that C provides an alternative notation using ->. That is, rp->width is equivalent to the expression
+(*rp).width. For example, we can write a function that rotates a rectangle counterclockwise by 90
+degrees as
+void rotate_left(struct rect *rp) {
+/* Exchange width and height */
+long t = rp->height;
+rp->height = rp->width;
+rp->width
+= t;
+/* Shift to new lower-left corner */
+rp->llx
+-= t;
+}

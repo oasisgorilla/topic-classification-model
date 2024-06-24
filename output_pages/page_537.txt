@@ -1,0 +1,61 @@
+536
+Chapter 5
+Optimizing Program Performance
+The value computed for t1 depends on whether or not pointers p and q are
+aliased—if not, it will equal 3,000, but if so it will equal 1,000. This leads to one
+of the major optimization blockers, aspects of programs that can severely limit
+the opportunities for a compiler to generate optimized code. If a compiler cannot
+determine whether or not two pointers may be aliased, it must assume that either
+case is possible, limiting the set of possible optimizations.
+Practice Problem 5.1 (solution page 609)
+The following problem illustrates the way memory aliasing can cause unexpected
+program behavior. Consider the following procedure to swap two values:
+1
+/* Swap value x at xp with value y at yp */
+2
+void swap(long *xp, long *yp)
+3
+{
+4
+*xp = *xp + *yp; /* x+y
+*/
+5
+*yp = *xp - *yp; /* x+y-y = x */
+6
+*xp = *xp - *yp; /* x+y-x = y */
+7
+}
+If this procedure is called with xp equal to yp, what effect will it have?
+A second optimization blocker is due to function calls. As an example, con-
+sider the following two procedures:
+1
+long f();
+2
+3
+long func1() {
+4
+return f() + f() + f() + f();
+5
+}
+6
+7
+long func2() {
+8
+return 4*f();
+9
+}
+It might seem at ﬁrst that both compute the same result, but with func2 calling
+f only once, whereas func1 calls it four times. It is tempting to generate code in
+the style of func2 when given func1 as the source.
+Consider, however, the following code for f:
+1
+long counter = 0;
+2
+3
+long f() {
+4
+return counter++;
+5
+}
+This function has a side effect—it modiﬁes some part of the global program state.
+Changing the number of times it gets called changes the program behavior. In

@@ -1,0 +1,49 @@
+Section 2.2
+Integer Representations
+119
+2.2.8
+Advice on Signed versus Unsigned
+As we have seen, the implicit casting of signed to unsigned leads to some non-
+intuitive behavior. Nonintuitive features often lead to program bugs, and ones
+involving the nuances of implicit casting can be especially difﬁcult to see. Since the
+casting takes place without any clear indication in the code, programmers often
+overlook its effects.
+The following two practice problems illustrate some of the subtle errors that
+can arise due to implicit casting and the unsigned data type.
+Practice Problem 2.25 (solution page 187)
+Consider the following code that attempts to sum the elements of an array a, where
+the number of elements is given by parameter length:
+1
+/* WARNING: This is buggy code */
+2
+float sum_elements(float a[], unsigned length) {
+3
+int i;
+4
+float result = 0;
+5
+6
+for (i = 0; i <= length-1; i++)
+7
+result += a[i];
+8
+return result;
+9
+}
+When run with argument length equal to 0, this code should return 0.0.
+Instead, it encounters a memory error. Explain why this happens. Show how this
+code can be corrected.
+Practice Problem 2.26 (solution page 187)
+You are given the assignment of writing a function that determines whether one
+string is longer than another. You decide to make use of the string library function
+strlen having the following declaration:
+/* Prototype for library function strlen */
+size_t strlen(const char *s);
+Here is your ﬁrst attempt at the function:
+/* Determine whether string s is longer than string t */
+/* WARNING: This function is buggy */
+int strlonger(char *s, char *t) {
+return strlen(s) - strlen(t) > 0;
+}
+When you test this on some sample data, things do not seem to work quite
+right. You investigate further and determine that, when compiled as a 32-bit

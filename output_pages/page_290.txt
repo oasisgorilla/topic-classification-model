@@ -1,0 +1,83 @@
+Section 3.7
+Procedures
+289
+long P(long x)
+x in %rdi
+1
+P:
+2
+pushq
+%r15
+3
+pushq
+%r14
+4
+pushq
+%r13
+5
+pushq
+%r12
+6
+pushq
+%rbp
+7
+pushq
+%rbx
+8
+subq
+$24, %rsp
+9
+movq
+%rdi, %rbx
+10
+leaq
+1(%rdi), %r15
+11
+leaq
+2(%rdi), %r14
+12
+leaq
+3(%rdi), %r13
+13
+leaq
+4(%rdi), %r12
+14
+leaq
+5(%rdi), %rbp
+15
+leaq
+6(%rdi), %rax
+16
+movq
+%rax, (%rsp)
+17
+leaq
+7(%rdi), %rdx
+18
+movq
+%rdx, 8(%rsp)
+19
+movl
+$0, %eax
+20
+call
+Q
+. . .
+A. Identify which local values get stored in callee-saved registers.
+B. Identify which local values get stored on the stack.
+C. Explain why the program could not store all of the local values in callee-
+saved registers.
+3.7.6
+Recursive Procedures
+The conventions we have described for using the registers and the stack allow
+x86-64 procedures to call themselves recursively. Each procedure call has its own
+private space on the stack, and so the local variables of the multiple outstanding
+calls do not interfere with one another. Furthermore, the stack discipline naturally
+provides the proper policy for allocating local storage when the procedure is called
+and deallocating it before returning.
+Figure 3.35 shows both the C code and the generated assembly code for a
+recursive factorial function. We can see that the assembly code uses register %rbx
+to hold the parameter n, after ﬁrst saving the existing value on the stack (line 2)
+and later restoring the value before returning (line 11). Due to the stack discipline,
+and the register-saving conventions, we can be assured that when the recursive call
+to rfact(n-1) returns (line 9) that (1) the result of the call will be held in register

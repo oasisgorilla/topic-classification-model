@@ -1,0 +1,94 @@
+Section 8.4
+Process Control
+791
+code/ecf/shellex.c
+1
+/* eval - Evaluate a command line */
+2
+void eval(char *cmdline)
+3
+{
+4
+char *argv[MAXARGS]; /* Argument list execve() */
+5
+char buf[MAXLINE];
+/* Holds modified command line */
+6
+int bg;
+/* Should the job run in bg or fg? */
+7
+pid_t pid;
+/* Process id */
+8
+9
+strcpy(buf, cmdline);
+10
+bg = parseline(buf, argv);
+11
+if (argv[0] == NULL)
+12
+return;
+/* Ignore empty lines */
+13
+14
+if (!builtin_command(argv)) {
+15
+if ((pid = Fork()) == 0) {
+/* Child runs user job */
+16
+if (execve(argv[0], argv, environ) < 0) {
+17
+printf("%s: Command not found.\n", argv[0]);
+18
+exit(0);
+19
+}
+20
+}
+21
+22
+/* Parent waits for foreground job to terminate */
+23
+if (!bg) {
+24
+int status;
+25
+if (waitpid(pid, &status, 0) < 0)
+26
+unix_error("waitfg: waitpid error");
+27
+}
+28
+else
+29
+printf("%d %s", pid, cmdline);
+30
+}
+31
+return;
+32
+}
+33
+34
+/* If first arg is a builtin command, run it and return true */
+35
+int builtin_command(char **argv)
+36
+{
+37
+if (!strcmp(argv[0], "quit")) /* quit command */
+38
+exit(0);
+39
+if (!strcmp(argv[0], "&"))
+/* Ignore singleton & */
+40
+return 1;
+41
+return 0;
+/* Not a builtin command */
+42
+}
+code/ecf/shellex.c
+Figure 8.24
+eval evaluates the shell command line.

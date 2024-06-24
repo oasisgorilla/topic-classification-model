@@ -1,0 +1,60 @@
+522
+Chapter 4
+Processor Architecture
+Solution to Problem 4.14 (page 426)
+We can see that the instruction is located at address 0x02c and consists of 2 bytes
+with values 0xb0 and 0x00f. Register %rsp was set to 120 by the pushq instruction
+(line 6), which also stored 9 at this memory location.
+Generic
+Speciﬁc
+Stage
+popq rA
+popq %rax
+Fetch
+icode:ifun ←M1[PC]
+icode:ifun ←M1[0x02c] = b:0
+rA :rB ←M1[PC + 1]
+rA :rB ←M1[0x02d] = 0:f
+valP ←PC + 2
+valP ←0x02c + 2 = 0x02e
+Decode
+valA ←R[%rsp]
+valA ←R[%rsp] = 120
+valB ←R[%rsp]
+valB ←R[%rsp] = 120
+Execute
+valE ←valB + 8
+valE ←120 + 8 = 128
+Memory
+valM ←M8[valA]
+valM ←M8[120] = 9
+Write back
+R[%rsp] ←valE
+R[%rsp] ←128
+R[rA] ←valM
+R[%rax] ←9
+PC update
+PC ←valP
+PC ←0x02e
+The instruction sets %rax to 9, sets %rsp to 128, and increments the PC by 2.
+Solution to Problem 4.15 (page 427)
+Tracing the steps listed in Figure 4.20 with rA equal to %rsp, we can see that in
+the memory stage the instruction will store valA, the original value of the stack
+pointer, to memory, just as we found for x86-64.
+Solution to Problem 4.16 (page 428)
+Tracing the steps listed in Figure 4.20 with rA equal to %rsp, we can see that both
+of the write-back operations will update %rsp. Since the one writing valM would
+occur last, the net effect of the instruction will be to write the value read from
+memory to %rsp, just as we saw for x86-64.
+Solution to Problem 4.17 (page 429)
+Implementing conditional moves requires only minor changes from register-to-
+register moves. We simply condition the write-back step on the outcome of the
+conditional test:
+Stage
+cmovXX rA, rB
+Fetch
+icode:ifun ←M1[PC]
+rA :rB ←M1[PC + 1]
+valP ←PC + 2
+Decode
+valA ←R[rA]

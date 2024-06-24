@@ -1,0 +1,37 @@
+About the Authors
+Randal E. Bryant received his bachelor’s degree from
+the University of Michigan in 1973 and then attended
+graduate school at the Massachusetts Institute of
+Technology, receiving his PhD degree in computer
+science in 1981. He spent three years as an assistant
+professor at the California Institute of Technology,
+and has been on the faculty at Carnegie Mellon since
+1984. For ﬁve of those years he served as head of the
+Computer Science Department, and for ten of them
+he served as Dean of the School of Computer Science.
+He is currently a university professor of computer sci-
+ence. He also holds a courtesy appointment with the Department of Electrical and
+Computer Engineering.
+Professor Bryant has taught courses in computer systems at both the under-
+graduate and graduate level for around 40 years. Over many years of teaching
+computer architecture courses, he began shifting the focus from how computers
+are designed to how programmers can write more efﬁcient and reliable programs
+if they understand the system better. Together with Professor O’Hallaron, he de-
+veloped the course 15-213, Introduction to Computer Systems, at Carnegie Mellon
+that is the basis for this book. He has also taught courses in algorithms, program-
+ming, computer networking, distributed systems, and VLSI design.
+Most of Professor Bryant’s research concerns the design of software tools
+to help software and hardware designers verify the correctness of their systems.
+These include several types of simulators, as well as formal veriﬁcation tools that
+prove the correctness of a design using mathematical methods. He has published
+over 150 technical papers. His research results are used by major computer manu-
+facturers, including Intel, IBM, Fujitsu, and Microsoft. He has won several major
+awards for his research. These include two inventor recognition awards and a
+technical achievement award from the Semiconductor Research Corporation, the
+Kanellakis Theory and Practice Award from the Association for Computer Ma-
+chinery (ACM), and the W. R. G. Baker Award, the Emmanuel Piore Award, the
+Phil Kaufman Award, and the A. Richard Newton Award from the Institute of
+Electrical and Electronics Engineers (IEEE). He is a fellow of both the ACM and
+the IEEE and a member of both the US National Academy of Engineering and
+the American Academy of Arts and Sciences.
+35

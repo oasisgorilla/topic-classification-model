@@ -1,0 +1,80 @@
+Section 3.4
+Accessing Information
+217
+Type
+Form
+Operand value
+Name
+Immediate
+$Imm
+Imm
+Immediate
+Register
+ra
+R[ra]
+Register
+Memory
+Imm
+M[Imm]
+Absolute
+Memory
+(ra)
+M[R[ra]]
+Indirect
+Memory
+Imm(rb)
+M[Imm + R[rb]]
+Base + displacement
+Memory
+(rb,ri)
+M[R[rb] + R[ri]]
+Indexed
+Memory
+Imm(rb,ri)
+M[Imm + R[rb] + R[ri]]
+Indexed
+Memory
+(,ri,s)
+M[R[ri] . s]
+Scaled indexed
+Memory
+Imm(,ri,s)
+M[Imm + R[ri] . s]
+Scaled indexed
+Memory
+(rb,ri,s)
+M[R[rb] + R[ri] . s]
+Scaled indexed
+Memory
+Imm(rb,ri,s)
+M[Imm + R[rb] + R[ri] . s]
+Scaled indexed
+Figure 3.3
+Operand forms. Operands can denote immediate (constant) values, register
+values, or values from memory. The scaling factor s must be either 1, 2, 4, or 8.
+result. x86-64 supports a number of operand forms (see Figure 3.3). Source values
+can be given as constants or read from registers or memory. Results can be stored
+in either registers or memory. Thus, the different operand possibilities can be
+classiﬁed into three types. The ﬁrst type, immediate, is for constant values. In ATT-
+format assembly code, these are written with a ‘$’ followed by an integer using
+standard C notation—for example, $-577 or $0x1F. Different instructions allow
+different ranges of immediate values; the assembler will automatically select the
+most compact way of encoding a value. The second type, register, denotes the
+contents of a register, one of the sixteen 8-, 4-, 2-, or 1-byte low-order portions of
+the registers for operands having 64, 32, 16, or 8 bits, respectively. In Figure 3.3,
+we use the notation ra to denote an arbitrary register a and indicate its value with
+the reference R[ra], viewing the set of registers as an array R indexed by register
+identiﬁers.
+The third type of operand is a memory reference, in which we access some
+memory location according to a computed address, often called the effective ad-
+dress. Since we view the memory as a large array of bytes, we use the notation
+Mb[Addr] to denote a reference to the b-byte value stored in memory starting at
+address Addr. To simplify things, we will generally drop the subscript b.
+As Figure 3.3 shows, there are many different addressing modes allowing dif-
+ferent forms of memory references. The most general form is shown at the bottom
+of the table with syntax Imm(rb,ri,s). Such a reference has four components: an
+immediate offset Imm, a base register rb, an index register ri, and a scale factor
+s, where s must be 1, 2, 4, or 8. Both the base and index must be 64-bit registers.
+The effective address is computed as Imm + R[rb] + R[ri] . s. This general form is
+often seen when referencing elements of arrays. The other forms are simply spe-
+cial cases of this general form where some of the components are omitted. As we

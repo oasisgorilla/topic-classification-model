@@ -1,0 +1,67 @@
+Section 8.6
+Nonlocal Jumps
+821
+code/ecf/restart.c
+1
+#include "csapp.h"
+2
+3
+sigjmp_buf buf;
+4
+5
+void handler(int sig)
+6
+{
+7
+siglongjmp(buf, 1);
+8
+}
+9
+10
+int main()
+11
+{
+12
+if (!sigsetjmp(buf, 1)) {
+13
+Signal(SIGINT, handler);
+14
+Sio_puts("starting\n");
+15
+}
+16
+else
+17
+Sio_puts("restarting\n");
+18
+19
+while(1) {
+20
+Sleep(1);
+21
+Sio_puts("processing...\n");
+22
+}
+23
+exit(0); /* Control never reaches here */
+24
+}
+code/ecf/restart.c
+Figure 8.44
+A program that uses nonlocal jumps to restart itself when the user
+types Ctrl+C.
+Another important application of nonlocal jumps is to branch out of a signal
+handler to a speciﬁc code location, rather than returning to the instruction that was
+interrupted by the arrival of the signal. Figure 8.44 shows a simple program that
+illustrates this basic technique. The program uses signals and nonlocal jumps to
+do a soft restart whenever the user types Ctrl+C at the keyboard. The sigsetjmp
+and siglongjmp functions are versions of setjmp and longjmp that can be used
+by signal handlers.
+The initial call to the sigsetjmp function saves the calling environment and
+signal context (including the pending and blocked signal vectors) when the pro-
+gram ﬁrst starts. The main routine then enters an inﬁnite processing loop. When
+the user types Ctrl+C, the kernel sends a SIGINT signal to the process, which
+catches it. Instead of returning from the signal handler, which would pass control
+back to the interrupted processing loop, the handler performs a nonlocal jump
+back to the beginning of the main program. When we run the program on our
+system, we get the following output:

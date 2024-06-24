@@ -1,0 +1,49 @@
+Section 11.3
+The Global IP Internet
+967
+Aside
+Origins of the Internet
+The Internet is one of the most successful examples of government, university, and industry partnership.
+Many factors contributed to its success, but we think two are particularly important: a sustained 30-
+year investment by the United States government and a commitment by passionate researchers to what
+Dave Clarke at MIT has dubbed “rough consensus and working code.”
+The seeds of the Internet were sown in 1957, when, at the height of the Cold War, the Soviet
+Union shocked the world by launching Sputnik, the ﬁrst artiﬁcial earth satellite. In response, the United
+States government created the Advanced Research Projects Agency (ARPA), whose charter was to
+reestablish the US lead in science and technology. In 1967, Lawrence Roberts at ARPA published
+plans for a new network called the ARPANET. The ﬁrst ARPANET nodes were up and running by
+1969. By 1971, there were 13 ARPANET nodes, and email had emerged as the ﬁrst important network
+application.
+In 1972, Robert Kahn outlined the general principles of internetworking: a collection of intercon-
+nected networks, with communication between the networks handled independently on a “best-effort
+basis” by black boxes called “routers.” In 1974, Kahn and Vinton Cerf published the ﬁrst details of
+TCP/IP
+, which by 1982 had become the standard internetworking protocol for ARPANET. On January
+1, 1983, every node on the ARPANET switched to TCP/IP
+, marking the birth of the global IP Internet.
+In 1985, Paul Mockapetris invented DNS, and there were over 1,000 Internet hosts. The next year,
+the National Science Foundation (NSF) built the NSFNET backbone connecting 13 sites with 56 Kb/s
+phone lines. It was upgraded to 1.5 Mb/s T1 links in 1988 and 45 Mb/s T3 links in 1991. By 1988, there
+were more than 50,000 hosts. In 1989, the original ARPANET was ofﬁcially retired. In 1995, when there
+were almost 10,000,000 Internet hosts, NSF retired NSFNET and replaced it with the modern Internet
+architecture based on private commercial backbones connected by public network access points.
+Figure 11.11
+Anatomy of an Internet
+connection.
+Client
+Client host address
+128.2.194.242
+Connection socket pair
+(128.2.194.242:51213, 208.216.181.15:80)
+Server
+(port 80)
+Server host address
+208.216.181.15
+Client socket address
+128.2.194.242:51213
+Server socket address
+208.216.181.15:80
+where port 80 is the well-known port associated with Web services. Given these
+client and server socket addresses, the connection between the client and server
+is uniquely identiﬁed by the socket pair
+(128.2.194.242:51213, 208.216.181.15:80)

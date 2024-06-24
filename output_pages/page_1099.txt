@@ -1,0 +1,172 @@
+1098
+Index
+exclusive-or operation in execute
+stage, 444
+exclusive-or packed double precision
+instruction, 341
+exclusive-or packed single precision
+instruction, 341
+executable and linkable format (ELF),
+709
+executable object ﬁles, 731–732
+header tables, 710, 732
+headers, 710–711
+relocation, 726
+symbol tables, 711–715
+executable code, 206
+executable object ﬁles, 40
+creating, 708
+description, 708
+fully linked, 732
+loading, 733–734
+running, 43–44
+executable object programs, 40
+execute access, 325
+execute disable bit, 863
+execute stage
+instruction processing, 421, 423–433
+PIPE processor, 489–490
+sequential processing, 436
+sequential Y86-64 implementation,
+444–445
+Y86-64 pipelining, 459
+execution
+concurrent, 769
+parallel, 770
+speculative, 555, 555, 585–586
+tracing, 423, 430–431, 439
+execution code regions, 325–326
+execution units (EUs), 554, 556
+execve [Unix] load program, 786
+arguments and environment
+variables, 786–788
+child processes, 735, 737
+loading programs, 733
+running programs, 789–792
+virtual memory, 872–873
+exit [C Stdlib] terminate process, 775
+exit status, 775, 781
+expanding bit representation, 112–116
+expansion slots, 633
+explicit allocator requirements and
+goals, 880–881
+explicit dynamic memory allocators,
+875–876
+explicit free lists, 898–899
+explicit thread termination, 1024
+explicit waiting for, signals, 814–817
+explicitly reentrant functions, 1059
+exploit code, 320
+exponents in ﬂoating-point
+representation, 148
+extend_heap [CS:APP] allocator:
+extend heap, 894
+extended data out DRAM (EDO
+DRAM), 622
+extended precision ﬂoating-point
+representation, 173, 173
+external exceptions in pipelining, 480
+external fragmentation, 882, 882
+fall through in switch statements, 269
+false fragmentation, 886
+fast page mode DRAM (FPM
+DRAM), 621
+fault exception class, 762
+faulting instructions, 763
+faults, 764
+Linux/x86-64 systems, 765, 868–869
+Y86-64 pipelining caches, 506
+FD_CLR [Unix] clear bit in descriptor
+set, 1013, 1014
+FD_ISSET [Unix] bit turned on in
+descriptor set, 1013, 1014, 1016
+FD_SET [Unix] set bit in descriptor set,
+1013, 1014
+FD_ZERO [Unix] clear descriptor set,
+1013, 1014
+feedback in pipelining, 455–457, 461
+feedback paths, 432, 455
+fetch ﬁle metadata function, 939
+fetch stage
+instruction processing, 420, 423–433
+PIPE processor, 483–485
+SEQ, 440–442
+sequential processing, 436
+Y86-64 pipelining, 459
+fetches, locality, 643–644
+fgets function, 318
+Fibonacci (Pisano), 68
+ﬁeld-programmable gate arrays
+(FPGAs), 503
+FIFOs, 1013
+ﬁle descriptors, 927
+ﬁle position, 927
+ﬁle tables, 772, 942
+ﬁle type, 947
+ﬁlenames, 927
+ﬁles, 55
+as abstraction, 63
+anonymous, 869
+binary, 39
+metadata, 939–940
+object. See object ﬁles
+register, 46, 207, 394–395, 418–419,
+437, 557
+regular, 869
+sharing, 942–944
+system-level I/O. See system-level
+I/O
+types, 927–929
+Unix, 926, 926–927
+ﬁnger command, 320
+fingerd daemon, 320
+finish command, 316
+ﬁrmware, 623
+ﬁrst-ﬁt block placement policy, 885,
+885
+ﬁrst-level domain names, 963
+ﬁrst readers-writers problem, 1044
+ﬁts, segregated, 899, 900–901
+ﬁve-stage pipelines, 507
+ﬁxed-size arithmetic, 121
+ﬁxed-size arrays, 296–298
+ﬁxed-size integer types, 77, 103
+ﬂash memory, 623
+ﬂash translation layers, 636–637
+ﬂat addressing, 203
+float [C] single-precision ﬂoating
+point, 160
+float ﬂoating-point declaration, 214
+ﬂoating-point code
+architecture, 329, 329–332
+arithmetic operations, 338–340
+bitwise operations, 341–342
+comparison operations, 342–345
+constants, 340–341
+movement and conversion
+operations, 332–337
+observations, 345
+in procedures, 337–338
+ﬂoating-point representation and
+programs, 144–145
+arithmetic, 69
+C, 160–162
+denormalized values, 150, 150–152
+encodings, 68
+extended precision, 173, 173
+fractional binary numbers, 145–148
+IEEE, 148–150
+normalized value, 149–150
+operations, 158–160
+overﬂow, 163
+pi, 176
+rounding, 156, 156–158
+special values, 151
+support, 76
+x87 processors, 203
+ﬂows
+concurrent, 769, 769–770
+control, 758
+logical, 768, 768–769
+parallel, 770
+synchronizing, 812–814

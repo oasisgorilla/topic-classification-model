@@ -1,0 +1,166 @@
+Index
+1111
+qsort function, 602
+quad words, 213
+QuickPath interconnect, 624, 862
+quit command, 316
+R_X86_64_32 (absolute addressing),
+727
+R_X86_64_PC32 (PC-relative
+addressing), 726
+symbol table entry, 713
+and Unix, 709
+%r8 [Y86-64] program register, 216,
+391
+%r8d [x86-64] low order 32 bits of
+register %r8, 216
+%r8w [x86-64] low order 16 bits of
+register %r8, 216
+%r9 [Y86-64] program register, 216,
+391
+%r9d [x86-64] low order 32 bits of
+register %r9, 216
+%r9w [x86-64] low order 16 bits of
+register %r9, 216
+%r10 [Y86-64] program register, 216,
+391
+%r10d [x86-64] low order 32 bits of
+register %r10, 216
+%r10w [x86-64] low order 16 bits of
+register %r10, 216
+%r11 [Y86-64] program register, 216,
+391
+%r11d [x86-64] low order 32 bits of
+register %r11, 216
+%r11w [x86-64] low order 16 bits of
+register %r11, 216
+%r12 [Y86-64] program register, 216,
+391
+%r12d [x86-64] low order 32 bits of
+register %r12, 216
+%r12w [x86-64] low order 16 bits of
+register %r12, 216
+%r13 [Y86-64] program register, 216,
+391
+%r13d [x86-64] low order 32 bits of
+register %r13, 216
+%r13w [x86-64] low order 16 bits of
+register %r13, 216
+%r14 [Y86-64] program register, 216,
+391
+%r14d [x86-64] low order 32 bits of
+register %r14, 216
+%r14w [x86-64] low order 16 bits of
+register %r14, 216
+%r15 [x86-64] program register, 216,
+391
+%r15d [x86-64] low order 32 bits of
+register %r15, 216
+%r15w [x86-64] low order 16 bits of
+register %r15, 216
+race.c [CS:APP] program with a
+race, 1061
+race conditions, 812, 1028
+concurrent programming, 1061,
+1061–1063
+signals, 812–814
+RAM. See random access memory
+(RAM)
+rand [CS:APP] pseudorandom
+number generator, 1057, 1060
+rand_r function, 1060
+random access memory (RAM), 417,
+617
+dynamic. See dynamic RAM
+(DRAM)
+multiported, 418
+processors, 420
+SEQ timing, 437
+static. See static RAM (SRAM)
+random operations in SSDs, 636
+random replacement policies, 648
+ranges
+asymmetric, 102, 113
+bytes, 72
+constants for, 103–104
+data types, 76
+integral types, 96–98
+Java standard, 104
+RAS (row access strobe) requests, 619
+%rax [Y86-64] program register, 216,
+391
+%rbp [Y86-64] program register, 216,
+391
+%rbx [Y86-64] program register, 216,
+391
+%rcx [Y86-64] program register, 216,
+391
+%rdi [Y86-64] program register, 216,
+391
+%rdx [Y86-64] program register, 216,
+391
+reachability graphs, 902
+reachable nodes, 902
+read access, 325
+read and echo input lines function,
+983
+read bandwidth, 675
+read environment variable function,
+787
+read/evaluate steps, 789
+read [Unix] read ﬁle, 931, 931–933
+read-only memory (ROM), 622
+read-only register, 563
+read operations
+buffered, 934, 936–937
+disk sectors, 633–635
+ﬁle metadata, 939–940
+ﬁles, 927, 931–933
+SSDs, 637
+unbuffered, 933–934
+uninitialized memory, 907
+read ports, 418
+read_requesthdrs [CS:APP] Tiny
+helper function, 996
+read sets, 1014
+read throughput, 675
+read transactions
+descriptions, 623
+example of, 624–625
+read/write heads, 628
+readdir functions, 941
+readelf GNU object ﬁle reader, 714,
+749
+readers-writers problem, 1042, 1044
+reading
+directory contents, 941–942
+disk sectors, 633
+readline function, 939
+readn function, 939
+ready read descriptors, 1014
+ready sets, 1014
+realloc function, 877
+reap thread function, 1025
+reaping
+child processes, 779, 779–785
+threads, 1025
+rearranging signals in pipelining,
+462–463
+reassociation transformations, 577,
+577–582, 606
+receiving signals, 794, 798–800
+recording density, 627
+recording zones, 628
+recursive procedures, 289–291
+redirection of I/O, 945, 945–946
+reduced instruction set computers
+(RISC), 397
+vs. CISC, 397–399
+SPARC processors, 507
+reentrancy issues, 1059–1060
+reentrant functions, 802, 1059
+reference bits, 863
+reference counts, 942
+reference machines, 543
+referencing
+data in free heap blocks, 910–911

@@ -1,0 +1,80 @@
+Section 7.11
+Loading and Linking Shared Libraries from Applications
+739
+code/link/dll.c
+1
+#include <stdio.h>
+2
+#include <stdlib.h>
+3
+#include <dlfcn.h>
+4
+5
+int x[2] = {1, 2};
+6
+int y[2] = {3, 4};
+7
+int z[2];
+8
+9
+int main()
+10
+{
+11
+void *handle;
+12
+void (*addvec)(int *, int *, int *, int);
+13
+char *error;
+14
+15
+/* Dynamically load the shared library containing addvec() */
+16
+handle = dlopen("./libvector.so", RTLD_LAZY);
+17
+if (!handle) {
+18
+fprintf(stderr, "%s\n", dlerror());
+19
+exit(1);
+20
+}
+21
+22
+/* Get a pointer to the addvec() function we just loaded */
+23
+addvec = dlsym(handle, "addvec");
+24
+if ((error = dlerror()) != NULL) {
+25
+fprintf(stderr, "%s\n", error);
+26
+exit(1);
+27
+}
+28
+29
+/* Now we can call addvec() just like any other function */
+30
+addvec(x, y, z, 2);
+31
+printf("z = [%d %d]\n", z[0], z[1]);
+32
+33
+/* Unload the shared library */
+34
+if (dlclose(handle) < 0) {
+35
+fprintf(stderr, "%s\n", dlerror());
+36
+exit(1);
+37
+}
+38
+return 0;
+39
+}
+code/link/dll.c
+Figure 7.17
+Example program 3. Dynamically loads and links the shared library
+libvector.so at run time.

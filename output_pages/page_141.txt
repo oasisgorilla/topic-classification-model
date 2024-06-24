@@ -1,0 +1,57 @@
+140
+Chapter 2
+Representing and Manipulating Information
+k
+>> k (binary)
+Decimal
+12,340/2k
+0
+0011000000110100
+12,340
+12,340.0
+1
+0001100000011010
+6,170
+6,170.0
+4
+0000001100000011
+771
+771.25
+8
+0000000000110000
+48
+48.203125
+Figure 2.28
+Dividing unsigned numbers by powers of 2. The examples illustrate
+how performing a logical right shift by k has the same effect as dividing by 2k and then
+rounding toward zero.
+using shift operations, but we use a right shift rather than a left shift. The two
+different right shifts—logical and arithmetic—serve this purpose for unsigned and
+two’s-complement numbers, respectively.
+Integer division always rounds toward zero. To deﬁne this precisely, let us
+introduce some notation. For any real number a, deﬁne ⌊a⌋to be the unique
+integer a′ such that a′ ≤a < a′ + 1. As examples, ⌊3.14⌋= 3, ⌊−3.14⌋= −4, and
+⌊3⌋= 3. Similarly, deﬁne ⌈a⌉to be the unique integer a′ such that a′ −1 < a ≤a′.
+As examples, ⌈3.14⌉= 4, ⌈−3.14⌉= −3, and ⌈3⌉= 3. For x ≥0 and y > 0, integer
+division should yield ⌊x/y⌋, while for x < 0 and y > 0, it should yield ⌈x/y⌉. That
+is, it should round down a positive result but round up a negative one.
+The case for using shifts with unsigned arithmetic is straightforward, in part
+because right shifting is guaranteed to be performed logically for unsigned values.
+principle: Unsigned division by a power of 2
+For C variables x and k with unsigned values x and k, such that 0 ≤k < w, the C
+expression x >> k yields the value ⌊x/2k⌋.
+As examples, Figure 2.28 shows the effects of performing logical right shifts
+on a 16-bit representation of 12,340 to perform division by 1, 2, 16, and 256. The
+zeros shifted in from the left are shown in italics. We also show the result we would
+obtain if we did these divisions with real arithmetic. These examples show that the
+result of shifting consistently rounds toward zero, as is the convention for integer
+division.
+derivation: Unsigned division by a power of 2
+Let x be the unsigned integer represented by bit pattern [xw−1, xw−2, . . . , x0], and
+let k be in the range 0 ≤k < w. Let x′ be the unsigned number with w −k-bit
+representation [xw−1, xw−2, . . . , xk], and let x′′ be the unsigned number with k-bit
+representation [xk−1, . . . , x0]. We can therefore see that x = 2kx′ + x′′, and that
+0 ≤x′′ < 2k. It therefore follows that ⌊x/2k⌋= x′.
+Performing a logical right shift of bit vector [xw−1, xw−2, . . . , x0] by k yields
+the bit vector
+[0, . . . , 0, xw−1, xw−2, . . . , xk]

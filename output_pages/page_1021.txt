@@ -1,0 +1,69 @@
+1020
+Chapter 12
+Concurrent Programming
+code/conc/echoservers.c
+1
+void check_clients(pool *p)
+2
+{
+3
+int i, connfd, n;
+4
+char buf[MAXLINE];
+5
+rio_t rio;
+6
+7
+for (i = 0; (i <= p->maxi) && (p->nready > 0); i++) {
+8
+connfd = p->clientfd[i];
+9
+rio = p->clientrio[i];
+10
+11
+/* If the descriptor is ready, echo a text line from it */
+12
+if ((connfd > 0) && (FD_ISSET(connfd, &p->ready_set))) {
+13
+p->nready--;
+14
+if ((n = Rio_readlineb(&rio, buf, MAXLINE)) != 0) {
+15
+byte_cnt += n;
+16
+printf("Server received %d (%d total) bytes on fd %d\n",
+17
+n, byte_cnt, connfd);
+18
+Rio_writen(connfd, buf, n);
+19
+}
+20
+21
+/* EOF detected, remove descriptor from pool */
+22
+else {
+23
+Close(connfd);
+24
+FD_CLR(connfd, &p->read_set);
+25
+p->clientfd[i] = -1;
+26
+}
+27
+}
+28
+}
+29
+}
+code/conc/echoservers.c
+Figure 12.11 check_clients services ready client connections.
+In terms of the ﬁnite state model in Figure 12.7, the select function detects
+input events, and the add_client function creates a new logical ﬂow (state ma-
+chine). The check_clients function performs state transitions by echoing input
+lines, and it also deletes the state machine when the client has ﬁnished sending
+text lines.
+Practice Problem 12.4 (solution page 1072)
+In the server in Figure 12.8, pool.nready is reinitialized with the value obtained
+from the call to select. Why?

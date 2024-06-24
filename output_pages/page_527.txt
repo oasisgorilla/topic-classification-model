@@ -1,0 +1,47 @@
+526
+Chapter 4
+Processor Architecture
+500 ps. Adding more stages would not help, since we cannot run the pipeline
+any faster than one cycle every 100 ps.
+Solution to Problem 4.29 (page 454)
+Each stage would have combinational logic requiring 300/k ps and a pipeline
+register requiring 20 ps.
+A. The total latency would be 300 + 20k ps, while the throughput (in GIPS)
+would be
+1,000
+300
+k + 20
+=
+1,000k
+300 + 20k
+B. As we let k go to inﬁnity, the throughput becomes 1,000/20 = 50 GIPS. Of
+course, the latency would approach inﬁnity as well.
+This exercise quantiﬁes the diminishing returns of deep pipelining. As we try to
+subdivide the logic into many stages, the latency of the pipeline registers becomes
+a limiting factor.
+Solution to Problem 4.30 (page 485)
+This code is very similar to the corresponding code for SEQ, except that we cannot
+yet determine whether the data memory will generate an error signal for this
+instruction.
+# Determine status code for fetched instruction
+word f_stat = [
+imem_error: SADR;
+!instr_valid : SINS;
+f_icode == IHALT : SHLT;
+1 : SAOK;
+];
+Solution to Problem 4.31 (page 485)
+This code simply involves preﬁxing the signal names in the code for SEQ with d_
+and D_.
+word d_dstE = [
+D_icode in { IRRMOVQ, IIRMOVQ, IOPQ} : D_rB;
+D_icode in { IPUSHQ, IPOPQ, ICALL, IRET } : RRSP;
+1 : RNONE;
+# Don’t write any register
+];
+Solution to Problem 4.32 (page 488)
+The rrmovq instruction (line 5) would stall for one cycle due to a load/use hazard
+caused by the popq instruction (line 4). As it enters the decode stage, the popq
+instruction would be in the memory stage, giving both M_dstE and M_dstM equal
+to %rsp. If the two cases were reversed, then the write back from M_valE would
+take priority, causing the incremented stack pointer to be passed as the argument

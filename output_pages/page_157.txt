@@ -1,0 +1,71 @@
+156
+Chapter 2
+Representing and Manipulating Information
+Practice Problem 2.49 (solution page 195)
+A. For a ﬂoating-point format with an n-bit fraction, give a formula for the
+smallest positive integer that cannot be represented exactly (because it
+would require an (n + 1)-bit fraction to be exact). Assume the exponent
+ﬁeld size k is large enough that the range of representable exponents does
+not provide a limitation for this problem.
+B. What is the numeric value of this integer for single-precision format (n =
+23)?
+2.4.4
+Rounding
+Floating-point arithmetic can only approximate real arithmetic, since the repre-
+sentation has limited range and precision. Thus, for a value x, we generally want
+a systematic method of ﬁnding the “closest” matching value x′ that can be rep-
+resented in the desired ﬂoating-point format. This is the task of the rounding
+operation. One key problem is to deﬁne the direction to round a value that is
+halfway between two possibilities. For example, if I have $1.50 and want to round
+it to the nearest dollar, should the result be $1 or $2? An alternative approach is
+to maintain a lower and an upper bound on the actual number. For example, we
+could determine representable values x−and x+ such that the value x is guaran-
+teed to lie between them: x−≤x ≤x+. The IEEE ﬂoating-point format deﬁnes
+four different rounding modes. The default method ﬁnds a closest match, while
+the other three can be used for computing upper and lower bounds.
+Figure 2.37 illustrates the four rounding modes applied to the problem of
+rounding a monetary amount to the nearest whole dollar. Round-to-even (also
+called round-to-nearest) is the default mode. It attempts to ﬁnd a closest match.
+Thus, it rounds $1.40 to $1 and $1.60 to $2, since these are the closest whole dollar
+values. The only design decision is to determine the effect of rounding values
+that are halfway between two possible results. Round-to-even mode adopts the
+convention that it rounds the number either upward or downward such that the
+least signiﬁcant digit of the result is even. Thus, it rounds both $1.50 and $2.50
+to $2.
+The other three modes produce guaranteed bounds on the actual value. These
+can be useful in some numerical applications. Round-toward-zero mode rounds
+positive numbers downward and negative numbers upward, giving a value ˆ
+x such
+Mode
+$1.40
+$1.60
+$1.50
+$2.50
+$–1.50
+Round-to-even
+$1
+$2
+$2
+$2
+$–2
+Round-toward-zero
+$1
+$1
+$1
+$2
+$–1
+Round-down
+$1
+$1
+$1
+$2
+$–2
+Round-up
+$2
+$2
+$2
+$3
+$–1
+Figure 2.37
+Illustration of rounding modes for dollar rounding. The ﬁrst rounds to
+a nearest value, while the other three bound the result above or below.

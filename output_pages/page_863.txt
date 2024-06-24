@@ -1,0 +1,78 @@
+862
+Chapter 9
+Virtual Memory
+. . .
+. . .
+CPU
+VPN
+VPO
+36
+12
+TLBT
+TLBI
+32
+4
+VPN1
+VPN2
+PTE
+PTE
+PTE
+PTE
+PPN
+PPO
+40
+12
+9
+9
+VPN3
+VPN4
+9
+9
+TLB
+miss
+Virtual address (VA)
+TLB
+hit
+L1 TLB (16 sets, 4 entries/set)
+Page tables
+Result
+CR3
+32/64
+CT
+CI CO
+40
+6
+6
+L1
+hit
+L1 d-cache
+(64 sets, 8 lines/set)
+L2, L3, and
+main memory
+L1
+miss
+Physical
+address
+(PA)
+Figure 9.22
+Summary of Core i7 address translation. For simplicity, the i-caches,
+i-TLB, and L2 uniﬁed TLB are not shown.
+a DDR3 memory controller. Each core contains a hierarchy of TLBs, a hierarchy
+of data and instruction caches, and a set of fast point-to-point links, based on the
+QuickPath technology, for communicating directly with the other cores and the
+external I/O bridge. The TLBs are virtually addressed, and 4-way set associative.
+The L1, L2, and L3 caches are physically addressed, with a block size of 64 bytes.
+L1 and L2 are 8-way set associative, and L3 is 16-way set associative. The page
+size can be conﬁgured at start-up time as either 4 KB or 4 MB. Linux uses 4 KB
+pages.
+9.7.1
+Core i7 Address Translation
+Figure 9.22 summarizes the entire Core i7 address translation process, from the
+time the CPU generates a virtual address until a data word arrives from memory.
+The Core i7 uses a four-level page table hierarchy. Each process has its own private
+page table hierarchy. When a Linux process is running, the page tables associated
+with allocated pages are all memory-resident, although the Core i7 architecture
+allows these page tables to be swapped in and out. The CR3 control register
+contains the physical address of the beginning of the level 1 (L1) page table. The
+value of CR3 is part of each process context, and is restored during each context
+switch.

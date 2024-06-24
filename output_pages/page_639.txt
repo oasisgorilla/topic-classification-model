@@ -1,0 +1,46 @@
+638
+Chapter 6
+The Memory Hierarchy
+128 petabytes (128 × 1015 bytes) of writes before the drive wears out. Given
+this assumption, estimate the lifetime (in years) of this SSD for the following
+workloads:
+A. Worst case for sequential writes: The SSD is written to continuously at a rate
+of 470 MB/s (the average sequential write throughput of the device).
+B. Worst case for random writes: The SSD is written to continuously at a rate
+of 303 MB/s (the average random write throughput of the device).
+C. Average case: The SSD is written to at a rate of 20 GB/day (the average
+daily write rate assumed by some computer manufacturers in their mobile
+computer workload simulations).
+6.1.4
+Storage Technology Trends
+There are several important concepts to take away from our discussion of storage
+technologies.
+Different storage technologies have different price and performance trade-offs.
+SRAM is somewhat faster than DRAM, and DRAM is much faster than disk. On
+the other hand, fast storage is always more expensive than slower storage. SRAM
+costs more per byte than DRAM. DRAM costs much more than disk. SSDs split
+the difference between DRAM and rotating disk.
+The price and performance properties of different storage technologies are
+changing at dramatically different rates.Figure 6.15 summarizes the price and per-
+formance properties of storage technologies since 1985, shortly after the ﬁrst PCs
+were introduced. The numbers were culled from back issues of trade magazines
+and the Web. Although they were collected in an informal survey, the numbers
+reveal some interesting trends.
+Since 1985, both the cost and performance of SRAM technology have im-
+proved at roughly the same rate. Access times and cost per megabyte have de-
+creased by a factor of about 100 (Figure 6.15(a)). However, the trends for DRAM
+and disk are much more dramatic and divergent. While the cost per megabyte of
+DRAM has decreased by a factor of 44,000 (more than four orders of magnitude!),
+DRAM access times have decreased by only a factor of 10 (Figure 6.15(b)). Disk
+technology has followed the same trend as DRAM and in even more dramatic
+fashion. While the cost of a megabyte of disk storage has plummeted by a factor
+of more than 3,000,000 (more than six orders of magnitude!) since 1980, access
+times have improved much more slowly, by only a factor of 25 (Figure 6.15(c)).
+These startling long-term trends highlight a basic truth of memory and disk tech-
+nology: it is much easier to increase density (and thereby reduce cost) than to
+decrease access time.
+DRAM and disk performance are lagging behind CPU performance.As we see
+in Figure 6.15(d), CPU cycle times improved by a factor of 500 between 1985 and
+2010. If we look at the effective cycle time —which we deﬁne to be the cycle time
+of an individual CPU (processor) divided by the number of its processor cores—
+then the improvement between 1985 and 2010 is even greater, a factor of 2,000.

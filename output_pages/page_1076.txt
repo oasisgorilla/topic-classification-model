@@ -1,0 +1,28 @@
+Solutions to Practice Problems
+1075
+functions pass arguments only by value and all data references are to local auto-
+matic stack variables.
+Solution to Problem 12.13 (page 1062)
+If we free the block immediately after the call to pthread_create in line 14, then
+we will introduce a new race, this time between the call to free in the main thread
+and the assignment statement in line 24 of the thread routine.
+Solution to Problem 12.14 (page 1062)
+A. Another approach is to pass the integer i directly, rather than passing a
+pointer to i:
+for (i = 0; i < N; i++)
+Pthread_create(&tid[i], NULL, thread, (void *)i);
+In the thread routine, we cast the argument back to an int and assign it to
+myid:
+int myid = (int) vargp;
+B. The advantage is that it reduces overhead by eliminating the calls to malloc
+and free. A signiﬁcant disadvantage is that it assumes that pointers are at
+least as large as ints. While this assumption is true for all modern systems,
+it might not be true for legacy or future systems.
+Solution to Problem 12.15 (page 1065)
+A. The progress graph for the original program is shown in Figure 12.48 on the
+next page.
+B. The program always deadlocks, since any feasible trajectory is eventually
+trapped in a deadlock state.
+C. To eliminate the deadlock potential, initialize the binary semaphore t to 1
+instead of 0.
+D. The progress graph for the corrected program is shown in Figure 12.49.

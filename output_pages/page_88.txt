@@ -1,0 +1,80 @@
+Section 2.1
+Information Storage
+87
+~
+&
+0
+1
+|
+0
+1
+^
+0
+1
+0
+1
+0
+0
+0
+0
+0
+1
+0
+0
+1
+1
+0
+1
+0
+1
+1
+1
+1
+1
+1
+0
+Figure 2.7
+Operations of Boolean algebra. Binary values 1 and 0 encode logic values
+true and false, while operations ~, &, |, and ^ encode logical operations not, and, or,
+and exclusive-or, respectively.
+as will be discussed later. The Boolean operation ~ corresponds to the logical
+operation not, denoted by the symbol ¬. That is, we say that ¬P is true when
+P is not true, and vice versa. Correspondingly, ~p equals 1 when p equals 0, and
+vice versa. Boolean operation & corresponds to the logical operation and, denoted
+by the symbol ∧. We say that P ∧Q holds when both P is true and Q is true.
+Correspondingly, p & q equals 1 only when p = 1 and q = 1. Boolean operation
+| corresponds to the logical operation or, denoted by the symbol ∨. We say that
+P ∨Q holds when either P is true or Q is true. Correspondingly, p | q equals
+1 when either p = 1 or q = 1. Boolean operation ^ corresponds to the logical
+operation exclusive-or, denoted by the symbol ⊕. We say that P ⊕Q holds when
+either P is true or Q is true, but not both. Correspondingly, p ^ q equals 1 when
+either p = 1 and q = 0, or p = 0 and q = 1.
+Claude Shannon (1916–2001), who later founded the ﬁeld of information
+theory, ﬁrst made the connection between Boolean algebra and digital logic. In
+his 1937 master’s thesis, he showed that Boolean algebra could be applied to the
+design and analysis of networks of electromechanical relays. Although computer
+technology has advanced considerably since, Boolean algebra still plays a central
+role in the design and analysis of digital systems.
+We can extend the four Boolean operations to also operate on bit vectors,
+strings of zeros and ones of some ﬁxed length w. We deﬁne the operations over bit
+vectors according to their applications to the matching elements of the arguments.
+Let a and b denote the bit vectors [aw−1, aw−2, . . . , a0] and [bw−1, bw−2, . . . , b0],
+respectively. We deﬁne a & b to also be a bit vector of length w, where the ith
+element equals ai & bi, for 0 ≤i < w. The operations |, ^, and ~ are extended to
+bit vectors in a similar fashion.
+As examples, consider the case where w = 4, and with arguments a = [0110]
+and b = [1100]. Then the four operations a & b, a | b, a ^ b, and ~b yield
+0110
+0110
+0110
+& 1100
+| 1100
+^ 1100
+~ 1100
+0100
+1110
+1010
+0011
+Practice Problem 2.8 (solution page 181)
+Fill in the following table showing the results of evaluating Boolean operations on
+bit vectors.

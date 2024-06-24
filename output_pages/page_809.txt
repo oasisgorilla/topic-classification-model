@@ -1,0 +1,55 @@
+808
+Chapter 8
+Exceptional Control Flow
+does some additional cleanup work (modeled by the sleep statement), and then
+returns.
+The signal1 program in Figure 8.36 seems fairly straightforward. When we
+run it on our Linux system, however, we get the following output:
+linux> ./signal1
+Hello from child 14073
+Hello from child 14074
+Hello from child 14075
+Handler reaped child
+Handler reaped child
+CR
+Parent processing input
+From the output, we note that although three SIGCHLD signals were sent to the
+parent, only two of these signals were received, and thus the parent only reaped
+two children. If we suspend the parent process, we see that, indeed, child process
+14075 was never reaped and remains a zombie (indicated by the string <defunct>
+in the output of the ps command):
+Ctrl+Z
+Suspended
+linux> ps t
+PID TTY
+STAT
+TIME COMMAND
+.
+.
+.
+14072 pts/3
+T
+0:02 ./signal1
+14075 pts/3
+Z
+0:00 [signal1] <defunct>
+14076 pts/3
+R+
+0:00 ps t
+What went wrong? The problem is that our code failed to account for the fact
+that signals are not queued. Here’s what happened: The ﬁrst signal is received
+and caught by the parent. While the handler is still processing the ﬁrst signal, the
+second signal is delivered and added to the set of pending signals. However, since
+SIGCHLD signals are blocked by the SIGCHLD handler, the second signal is not
+received. Shortly thereafter, while the handler is still processing the ﬁrst signal,
+the third signal arrives. Since there is already a pending SIGCHLD, this third
+SIGCHLD signal is discarded. Sometime later, after the handler has returned,
+the kernel notices that there is a pending SIGCHLD signal and forces the parent
+to receive the signal. The parent catches the signal and executes the handler a
+second time. After the handler ﬁnishes processing the second signal, there are no
+more pending SIGCHLD signals, and there never will be, because all knowledge
+of the third SIGCHLD has been lost. The crucial lesson is that signals cannot be
+used to count the occurrence of events in other processes.
+To ﬁx the problem, we must recall that the existence of a pending signal only
+implies that at least one signal has been delivered since the last time the process
+received a signal of that type. So we must modify the SIGCHLD handler to reap

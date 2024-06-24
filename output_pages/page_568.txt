@@ -1,0 +1,52 @@
+Section 5.8
+Loop Unrolling
+567
+4
+long i;
+5
+double result = a[degree];
+6
+for (i = degree-1; i >= 0; i--)
+7
+result = a[i] + x*result;
+8
+return result;
+9
+}
+A. For degree n, how many additions and how many multiplications does this
+code perform?
+B. On our reference machine, with the arithmetic operations having the laten-
+cies shown in Figure 5.12, we measure the CPE for this function to be 8.00.
+Explain how this CPE arises based on the data dependencies formed be-
+tween iterations due to the operations implementing line 7 of the function.
+C. Explain how the function shown in Practice Problem 5.5 can run faster, even
+though it requires more operations.
+5.8
+Loop Unrolling
+Loop unrolling is a program transformation that reduces the number of iterations
+for a loop by increasing the number of elements computed on each iteration. We
+saw an example of this with the function psum2 (Figure 5.1), where each iteration
+computes two elements of the preﬁx sum, thereby halving the total number of
+iterations required. Loop unrolling can improve performance in two ways. First,
+it reduces the number of operations that do not contribute directly to the program
+result, such as loop indexing and conditional branching. Second, it exposes ways
+in which we can further transform the code to reduce the number of operations
+in the critical paths of the overall computation. In this section, we will examine
+simple loop unrolling, without any further transformations.
+Figure 5.16 shows a version of our combining code using what we will refer
+to as “2 × 1 loop unrolling.” The ﬁrst loop steps through the array two elements
+at a time. That is, the loop index i is incremented by 2 on each iteration, and the
+combining operation is applied to array elements i and i + 1 in a single iteration.
+In general, the vector length will not be a multiple of 2. We want our code
+to work correctly for arbitrary vector lengths. We account for this requirement in
+two ways. First, we make sure the ﬁrst loop does not overrun the array bounds.
+For a vector of length n, we set the loop limit to be n −1. We are then assured that
+the loop will only be executed when the loop index i satisﬁes i < n −1, and hence
+the maximum array index i + 1 will satisfy i + 1 < (n −1) + 1 = n.
+We can generalize this idea to unroll a loop by any factor k, yielding k × 1
+loop unrolling. To do so, we set the upper limit to be n −k + 1 and within the
+loop apply the combining operation to elements i through i + k −1. Loop index i
+is incremented by k in each iteration. The maximum array index i + k −1 will
+then be less than n. We include the second loop to step through the ﬁnal few
+elements of the vector one at a time. The body of this loop will be executed
+between 0 and k −1 times. For k = 2, we could use a simple conditional statement

@@ -1,0 +1,79 @@
+Section 9.9
+Dynamic Memory Allocation
+891
+code/vm/malloc/memlib.c
+1
+/* Private global variables */
+2
+static char *mem_heap;
+/* Points to first byte of heap */
+3
+static char *mem_brk;
+/* Points to last byte of heap plus 1 */
+4
+static char *mem_max_addr; /* Max legal heap addr plus 1*/
+5
+6
+/*
+7
+* mem_init - Initialize the memory system model
+8
+*/
+9
+void mem_init(void)
+10
+{
+11
+mem_heap = (char *)Malloc(MAX_HEAP);
+12
+mem_brk = (char *)mem_heap;
+13
+mem_max_addr = (char *)(mem_heap + MAX_HEAP);
+14
+}
+15
+16
+/*
+17
+* mem_sbrk - Simple model of the sbrk function. Extends the heap
+18
+*
+by incr bytes and returns the start address of the new area. In
+19
+*
+this model, the heap cannot be shrunk.
+20
+*/
+21
+void *mem_sbrk(int incr)
+22
+{
+23
+char *old_brk = mem_brk;
+24
+25
+if ( (incr < 0) || ((mem_brk + incr) > mem_max_addr)) {
+26
+errno = ENOMEM;
+27
+fprintf(stderr, "ERROR: mem_sbrk failed. Ran out of memory...\n");
+28
+return (void *)-1;
+29
+}
+30
+mem_brk += incr;
+31
+return (void *)old_brk;
+32
+}
+code/vm/malloc/memlib.c
+Figure 9.41 memlib.c: Memory system model.
+shown in Figure 9.39. The minimum block size is 16 bytes. The free list is organized
+as an implicit free list, with the invariant form shown in Figure 9.42.
+The ﬁrst word is an unused padding word aligned to a double-word boundary.
+The padding is followed by a special prologue block, which is an 8-byte allocated
+block consisting of only a header and a footer. The prologue block is created
+during initialization and is never freed. Following the prologue block are zero
+or more regular blocks that are created by calls to malloc or free. The heap
+always ends with a special epilogue block, which is a zero-size allocated block

@@ -1,0 +1,165 @@
+1118
+Index
+TLBs (translation lookaside buffers),
+506, 853, 853–861
+TLBT (TLB tags), 853, 859
+TMax (maximum two’s complement
+number), 96, 101, 102
+TMin (minimum two’s complement
+number), 96, 101, 102, 113
+top of stack, 226, 226
+top tool, 822
+topological sorts of vertices, 778
+Torvalds, Linus, 56
+touching pages, 869
+TRACE method, 987
+tracing execution, 423, 430–431, 439
+track density of disks, 627
+tracks, disk, 626, 631
+trajectories in progress graphs, 1036,
+1036
+transactions
+bus, 623, 624–625
+client-server model, 954
+client-server vs. database, 955
+HTTP, 986–989
+transfer time for disks, 630
+transfer units, 648
+transferring control, 277–281
+transformations, reassociation, 577,
+577–582, 606
+transistors in Moore’s Law, 205
+transitions
+progress graphs, 1035
+state machines, 1016
+translating programs, 40–41
+translation
+address. See address translation
+switch statements, 269
+translation lookaside buffers (TLBs),
+506, 853, 853–861
+Transmission Control Protocol (TCP),
+960
+Transmission Control Protocol/
+Internet Protocol (TCP/IP),
+960
+trap exception class, 763
+traps, 763, 763–764
+tree height reduction, 606
+tree structure, 306–307
+truncating numbers, 117–118
+two-operand multiply instructions,
+234
+two-way parallelism, 572–573
+two’s-complement representation
+addition, 126–131
+asymmetric range, 102, 113
+bit-level representation, 132
+encodings, 68
+minimum value, 101
+multiplication, 133–137
+negation, 131
+signed and unsigned conversions,
+106–110
+signed numbers, 100, 100–106
+typedef [C] type deﬁnition, 80, 83
+types
+conversions. See conversions
+ﬂoating point, 160–162
+integral, 96, 96–98
+machine-level, 207, 213–214
+MIME, 985
+naming, 83
+pointers, 72, 313
+pointers associated with, 70
+U2B (unsigned to binary conversion),
+96, 100, 107, 110
+U2T (unsigned to two’s-complement
+conversion), 96, 107, 109, 118
+ucomisd [x86-64] compare double
+precision, 342
+ucomiss [x86-64] compare single
+precision, 342
+UDP (Unreliable Datagram
+Protocol), 960
+UINT_MAX constant, maximum
+unsigned integer, 104
+UINTN_MAX [C] maximum value of
+N-bit unsigned data type, 103
+uintN_t [C] N-bit unsigned integer
+data type, 103
+umask function, 930–931
+UMax (maximum unsigned number),
+99, 102–103
+unallocated pages, 841
+unary operations, 230
+unblocking signals, 800–801
+unbuffered input and output, 933–934
+uncached pages, 842
+unconditional jump instruction, 393
+underﬂow, gradual, 151
+Unicode characters, 86
+uniﬁed caches, 667
+uniform resource identiﬁers (URIs),
+987
+uninitialized memory, reading, 907
+unions, 80, 305–309
+uniprocessor systems, 52, 60
+United States, ARPA creation in, 967
+universal resource locators (URLs),
+985
+Universal Serial Bus (USB), 632
+Unix 4.xBSD, 52, 968
+unix_error [CS:APP] reports Unix-
+style errors, 774, 774, 1079
+Unix IPC, 1013
+Unix operating systems, 52, 52, 71
+constants, 782
+error handling, 1079, 1079
+I/O, 55, 926, 926–927
+Unix signals, 795
+unlocking mutexes, 1039
+unmap disk object function, 875
+unordered, ﬂoating-point comparison
+outcome, 342
+unpack and interleave low packed
+double precision instruction, 334
+unpack and interleave low packed
+single precision instruction, 334
+Unreliable Datagram Protocol
+(UDP), 960
+unrolling
+k × 1, 567
+k × 1a, 580
+k × k, 575–576
+loops, 538, 540, 567, 567–571, 608
+unsafe regions in progress graphs,
+1036
+unsafe trajectories in progress graphs,
+1036
+unsetenv [Unix] delete environment
+variable, 788
+unsigned [C] integer data type, 77, 97
+unsigned representations, 119–120
+addition, 120–126
+conversions, 106–112
+division, 234, 235
+encodings, 68, 98–100
+integers, 76
+maximum value, 99
+multiplication, 132–133, 234, 234
+unsigned size type, 932
+update instructions, 45–46
+URIs (uniform resource identiﬁers),
+987
+URLs (universal resource locators),
+985
+USB (Universal Serial Bus), 632
+user-level memory mapping, 873–875
+user mode, 762
+processes, 770–772, 771
+regular functions in, 764
+user stack, 55
+UTF-8 characters, 86
+V [CS:APP] wrapper function for
+Posix sem_post, 1038

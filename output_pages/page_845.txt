@@ -1,0 +1,73 @@
+844
+Chapter 9
+Virtual Memory
+n
+P = 2p
+Number of PTEs
+12
+1 K
+16
+16 K
+24
+2 M
+36
+1 G
+9.3.3
+Page Hits
+Consider what happens when the CPU reads a word of virtual memory contained
+in VP 2, which is cached in DRAM (Figure 9.5). Using a technique we will describe
+in detail in Section 9.6, the address translation hardware uses the virtual address
+as an index to locate PTE 2 and read it from memory. Since the valid bit is set, the
+address translation hardware knows that VP 2 is cached in memory. So it uses the
+physical memory address in the PTE (which points to the start of the cached page
+in PP 1) to construct the physical address of the word.
+9.3.4
+Page Faults
+In virtual memory parlance, a DRAM cache miss is known as a page fault. Fig-
+ure 9.6 shows the state of our example page table before the fault. The CPU has
+referenced a word in VP 3, which is not cached in DRAM. The address transla-
+tion hardware reads PTE 3 from memory, infers from the valid bit that VP 3 is
+not cached, and triggers a page fault exception. The page fault exception invokes
+a page fault exception handler in the kernel, which selects a victim page—in this
+case, VP 4 stored in PP 3. If VP 4 has been modiﬁed, then the kernel copies it back
+to disk. In either case, the kernel modiﬁes the page table entry for VP 4 to reﬂect
+the fact that VP 4 is no longer cached in main memory.
+Figure 9.5
+VM page hit. The reference
+to a word in VP 2 is a hit.
+PTE 0
+PP 0
+PP 3
+1
+1
+0
+1
+0
+0
+1
+0
+PTE 7
+Null
+VP 1
+VP 4
+VP 7
+VP 2
+VP 1
+VP 2
+VP 3
+VP 4
+VP 6
+VP 7
+Null
+Physical page
+number or
+disk address
+Memory-resident
+page table
+(DRAM)
+Virtual memory
+(disk)
+Physical memory
+(DRAM)
+Virtual address
+Valid

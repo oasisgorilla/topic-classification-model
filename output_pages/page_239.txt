@@ -1,0 +1,59 @@
+238
+Chapter 3
+Machine-Level Representation of Programs
+Instruction
+Based on
+Description
+cmp
+S1, S2
+S2 −S1
+Compare
+cmpb
+Compare byte
+cmpw
+Compare word
+cmpl
+Compare double word
+cmpq
+Compare quad word
+test
+S1, S2
+S1 & S2
+Test
+testb
+Test byte
+testw
+Test word
+testl
+Test double word
+testq
+Test quad word
+Figure 3.13
+Comparison and test instructions. These instructions set the condition
+codes without updating any other registers.
+the operands are listed in reverse order, making the code difﬁcult to read. These
+instructions set the zero ﬂag if the two operands are equal. The other ﬂags can
+be used to determine ordering relations between the two operands. The test
+instructions behave in the same manner as the and instructions, except that they
+set the condition codes without altering their destinations. Typically, the same
+operand is repeated (e.g., testq %rax,%rax to see whether %rax is negative, zero,
+or positive), or one of the operands is a mask indicating which bits should be tested.
+3.6.2
+Accessing the Condition Codes
+Rather than reading the condition codes directly, there are three common ways
+of using the condition codes: (1) we can set a single byte to 0 or 1 depending
+on some combination of the condition codes, (2) we can conditionally jump to
+some other part of the program, or (3) we can conditionally transfer data. For the
+ﬁrst case, the instructions described in Figure 3.14 set a single byte to 0 or to 1
+depending on some combination of the condition codes. We refer to this entire
+class of instructions as the set instructions; they differ from one another based on
+which combinations of condition codes they consider, as indicated by the different
+sufﬁxes for the instruction names. It is important to recognize that the sufﬁxes for
+these instructions denote different conditions and not different operand sizes. For
+example, instructions setl and setb denote “set less” and “set below,” not “set
+long word” or “set byte.”
+A set instruction has either one of the low-order single-byte register elements
+(Figure 3.2) or a single-byte memory location as its destination, setting this byte to
+either 0 or 1. To generate a 32-bit or 64-bit result, we must also clear the high-order
+bits. A typical instruction sequence to compute the C expression a < b, where a
+and b are both of type long, proceeds as follows:

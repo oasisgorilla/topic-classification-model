@@ -1,0 +1,169 @@
+1114
+Index
+set on greater or equal instruction, 239
+set on less instruction, 239
+set on less or equal instruction, 239
+set on negative instruction, 239
+set on nonnegative instruction, 239
+set on not equal instruction, 239
+set on not greater instruction, 239
+set on not greater or equal instruction,
+239
+set on not less instruction, 239
+set on not less or equal instruction,
+239
+set on not zero instruction, 239
+set on unsigned greater instruction,
+239
+set on unsigned greater or equal
+instruction, 239
+set on unsigned less instruction, 239
+set on unsigned less or equal
+instruction, 239
+set on unsigned not greater instruction,
+239
+set on unsigned not less instruction,
+239
+set on unsigned not less or equal
+instruction, 239
+set on zero instruction, 239
+set process group ID function, 795
+set selection
+direct-mapped caches, 654
+fully associative caches, 661
+set associative caches, 661
+seta [x86-64] set on unsigned greater,
+239
+setae [x86-64] set on unsigned greater
+or equal, 239
+setb [x86-64] set on unsigned less, 239
+setbe [x86-64] set on unsigned less or
+equal, 239
+sete [x86-64] set on equal, 239
+setenv [Unix] create/change
+environment variable, 788
+setg [x86-64] set on greater, 239
+setge [x86-64] set on greater or equal,
+239
+setjmp [C Stdlib] init nonlocal jump,
+759, 817, 819
+setjmp.c [CS:APP] nonlocal jump
+example, 820
+setl [x86-64] set on less, 239
+setle [x86-64] set on less or equal,
+239
+setna [x86-64] set on unsigned not
+greater, 239
+setnae [x86-64] set on unsigned not
+less or equal, 239
+setnb [x86-64] set on unsigned not
+less, 239
+setnbe [x86-64] set on unsigned not
+less or equal, 239
+setne [x86-64] set on not equal, 239
+setng [x86-64] set on not greater, 239
+setnge [x86-64] set on not greater or
+equal, 239
+setnl [x86-64] set on not less, 239
+setnle [x86-64] set on not less or
+equal, 239
+setns [x86-64] set on nonnegative,
+239
+setnz [x86-64] set on not zero, 239
+setpgid [Unix] set process group ID,
+795
+sets
+vs. cache lines, 670
+membership, 416–417
+sets [x86-64] set on negative, 239
+setz [x86-64] set on zero, 239
+SF [x86-64] sign ﬂag condition code,
+237, 391
+sh [Unix] Unix shell program, 789
+Shannon, Claude, 87
+shared areas, 870
+shared libraries, 55, 735
+dynamic linking with, 735–737
+loading and linking from
+applications, 737–739
+shared object ﬁles, 709
+shared objects, 735, 869–872, 870
+shared resources, scheduling, 1040–
+1044
+shared variables, 1028–1031, 1029
+sharing
+ﬁles, 942–944
+virtual memory for, 848
+sharing.c [CS:APP] sharing in
+Pthreads programs, 1029
+shellex.c [CS:APP] shell main
+routine, 790
+shells, 43, 789
+shift arithmetic right instruction, 228
+shift left instruction, 228
+shift logical right instruction, 228
+shift operations, 93, 93–95
+for division, 139–143
+machine language, 230–232
+for multiplication, 137–139
+shift arithmetic right instruction,
+228
+shift left instruction, 228
+shift logical right instruction, 228
+shl [instruction class] shift left, 228,
+231
+SHLT [Y86-64] status code for halt,
+440
+short counts, 931
+short [C] integer data type, 76, 97
+shr [instruction class] shift logical
+right, 228, 231
+%si [x86-64] low order 16 bits of
+register %rsi, 216
+side effects, 536
+sig_atomic_t type, 806
+sigaction [Unix] install portable
+handler, 811
+sigaddset [Unix] add signal to signal
+set, 801
+sigdelset [Unix] delete signal from
+signal set, 801
+sigemptyset [Unix] clear a signal set,
+801
+sigfillset [Unix] add every signal
+to signal set, 801
+sigint.c [CS:APP] catches SIGINT
+signal, 799
+sigismember [Unix] test signal set
+membership, 801
+siglongjmp [Unix] init nonlocal
+jump, 819, 821
+sign bits
+ﬂoating-point representation, 173
+two’s complement representation,
+100
+sign extension, 113, 113, 219–220
+sign ﬂag condition code, 237, 391
+sign-magnitude representation, 104
+Signal [CS:APP] portable version of
+signal, 811
+signal handlers, 794
+installing, 799
+writing, 802–811
+Y86-64, 400
+signal1.c [CS:APP] ﬂawed signal
+handler, 807
+signal2.c [CS:APP] ﬂawed signal
+handler, 808
+signals, 758, 792–794
+blocking and unblocking, 800–801
+correct handling, 806–810
+enabling and disabling, 88
+ﬂow synchronizing, 812–814
+portable handling, 810–811
+processes, 775
+receiving, 798, 798–800
+safe handling, 802–806
+sending, 794, 795–798
+terminology, 794–795
+waiting for, 814–817

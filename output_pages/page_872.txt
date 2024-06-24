@@ -1,0 +1,46 @@
+Section 9.8
+Memory Mapping
+871
+Figure 9.30
+A private copy-on-write
+object. (a) After both
+processes have mapped
+the private copy-on-write
+object. (b) After process
+2 writes to a page in the
+private area.
+Process 1
+virtual memory
+Process 2
+virtual memory
+Physical
+memory
+Private
+copy-on-write object
+(a)
+Process 1
+virtual memory
+Process 2
+virtual memory
+Physical
+memory
+Private
+copy-on-write object
+(b)
+Copy-on-write
+Write to private
+copy-on-write
+page
+ject into its address space (not necessarily at the same virtual address as process 1),
+as shown in Figure 9.29(b).
+Since each object has a unique ﬁlename, the kernel can quickly determine
+that process 1 has already mapped this object and can point the page table entries
+in process 2 to the appropriate physical pages. The key point is that only a single
+copy of the shared object needs to be stored in physical memory, even though the
+object is mapped into multiple shared areas. For convenience, we have shown the
+physical pages as being contiguous, but of course this is not true in general.
+Private objects are mapped into virtual memory using a clever technique
+known as copy-on-write. A private object begins life in exactly the same way as a
+shared object, with only one copy of the private object stored in physical memory.
+For example, Figure 9.30(a) shows a case where two processes have mapped a
+private object into different areas of their virtual memories but share the same

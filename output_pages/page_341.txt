@@ -1,0 +1,78 @@
+340
+Chapter 3
+Machine-Level Representation of Programs
+4
+vunpcklps
+%xmm1, %xmm1, %xmm1
+5
+vcvtps2pd
+%xmm1, %xmm2
+6
+vcvtsi2sdq
+%rsi, %xmm1, %xmm1
+7
+vdivsd
+%xmm1, %xmm0, %xmm0
+8
+vsubsd
+%xmm0, %xmm2, %xmm0
+9
+ret
+Write a C version of funct2.
+3.11.4
+Deﬁning and Using Floating-Point Constants
+Unlike integer arithmetic operations, AVX ﬂoating-point operations cannot have
+immediate values as operands. Instead, the compiler must allocate and initialize
+storage for any constant values. The code then reads the values from memory. This
+is illustrated by the following Celsius to Fahrenheit conversion function:
+double cel2fahr(double temp)
+{
+return 1.8 * temp + 32.0;
+}
+The relevant parts of the x86-64 assembly code are as follows:
+double cel2fahr(double temp)
+temp in %xmm0
+1
+cel2fahr:
+2
+vmulsd
+.LC2(%rip), %xmm0, %xmm0
+Multiply by 1.8
+3
+vaddsd
+.LC3(%rip), %xmm0, %xmm0
+Add 32.0
+4
+ret
+5
+.LC2:
+6
+.long
+3435973837
+Low-order 4 bytes of 1.8
+7
+.long
+1073532108
+High-order 4 bytes of 1.8
+8
+.LC3:
+9
+.long
+0
+Low-order 4 bytes of 32.0
+10
+.long
+1077936128
+High-order 4 bytes of 32.0
+We see that the function reads the value 1.8 from the memory location labeled
+.LC2 and the value 32.0 from the memory location labeled .LC3. Looking at the
+values associated with these labels, we see that each is speciﬁed by a pair of .long
+declarations with the values given in decimal. How should these be interpreted
+as ﬂoating-point values? Looking at the declaration labeled .LC2, we see that the
+two values are 3435973837 (0xcccccccd) and 1073532108 (0x3ffccccc.) Since
+the machine uses little-endian byte ordering, the ﬁrst value gives the low-order 4
+bytes, while the second gives the high-order 4 bytes. From the high-order bytes,
+we can extract an exponent ﬁeld of 0x3ff (1023), from which we subtract a bias of
+1023 to get an exponent of 0. Concatenating the fraction bits of the two values, we
+get a fraction ﬁeld of 0xccccccccccccd, which can be shown to be the fractional
+binary representation of 0.8, to which we add the implied leading one to get 1.8.

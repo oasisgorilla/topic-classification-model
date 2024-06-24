@@ -1,0 +1,93 @@
+190
+Chapter 2
+Representing and Manipulating Information
+Mode
+x
+y
+x . y
+Truncated x . y
+Unsigned
+4
+[100]
+5
+[101]
+20
+[010100]
+4
+[100]
+Two’s complement
+−4
+[100]
+−3
+[101]
+12
+[001100]
+−4
+[100]
+Unsigned
+2
+[010]
+7
+[111]
+14
+[001110]
+6
+[110]
+Two’s complement
+2
+[010]
+−1
+[111]
+−2
+[111110]
+−2
+[110]
+Unsigned
+6
+[110]
+6
+[110]
+36
+[100100]
+4
+[100]
+Two’s complement
+−2
+[110]
+−2
+[110]
+4
+[000100]
+−4
+[100]
+Solution to Problem 2.35 (page 135)
+It is not realistic to test this function for all possible values of x and y. Even if
+you could run 10 billion tests per second, it would require over 58 years to test all
+combinations when data type int is 32 bits. On the other hand, it is feasible to test
+your code by writing the function with data type short or char and then testing
+it exhaustively.
+Here’s a more principled approach, following the proposed set of arguments:
+1. We know that x . y can be written as a 2w-bit two’s-complement number. Let
+u denote the unsigned number represented by the lower w bits, and v denote
+the two’s-complement number represented by the upper w bits. Then, based
+on Equation 2.3, we can see that x . y = v2w + u.
+We also know that u = T2Uw(p), since they are unsigned and two’s-
+complement numbers arising from the same bit pattern, and so by Equation
+2.6, we can write u = p + pw−12w, where pw−1 is the most signiﬁcant bit of p.
+Letting t = v + pw−1, we have x . y = p + t2w.
+When t = 0, we have x . y = p; the multiplication does not overﬂow. When
+t ̸= 0, we have x . y ̸= p; the multiplication does overﬂow.
+2. By deﬁnition of integer division, dividing p by nonzero x gives a quotient
+q and a remainder r such that p = x . q + r, and |r| < |x|. (We use absolute
+values here, because the signs of x and r may differ. For example, dividing −7
+by 2 gives quotient −3 and remainder −1.)
+3. Suppose q = y. Then we have x . y = x . y + r + t2w. From this, we can see
+that r + t2w = 0. But |r| < |x| ≤2w, and so this identity can hold only if t = 0,
+in which case r = 0.
+Suppose r = t = 0. Then we will have x . y = x . q, implying that y = q.
+When x equals 0, multiplication does not overﬂow, and so we see that our code
+provides a reliable way to test whether or not two’s-complement multiplication
+causes overﬂow.
+Solution to Problem 2.36 (page 135)
+With 64 bits, we can perform the multiplication without overﬂowing. We then test
+whether casting the product to 32 bits changes the value:

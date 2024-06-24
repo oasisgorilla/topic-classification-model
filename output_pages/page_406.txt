@@ -1,0 +1,69 @@
+Section 4.1
+The Y86-64 Instruction Set Architecture
+405
+the program on the hardware itself. Running on our sample object code, yis
+generates the following output:
+Stopped in 34 steps at PC = 0x13.
+Status ’HLT’, CC Z=1 S=0 O=0
+Changes to registers:
+%rax:
+0x0000000000000000
+0x0000abcdabcdabcd
+%rsp:
+0x0000000000000000
+0x0000000000000200
+%rdi:
+0x0000000000000000
+0x0000000000000038
+%r8:
+0x0000000000000000
+0x0000000000000008
+%r9:
+0x0000000000000000
+0x0000000000000001
+%r10:
+0x0000000000000000
+0x0000a000a000a000
+Changes to memory:
+0x01f0: 0x0000000000000000
+0x0000000000000055
+0x01f8: 0x0000000000000000
+0x0000000000000013
+The ﬁrst line of the simulation output summarizes the execution and the
+resulting values of the PC and program status. In printing register and memory
+values, it only prints out words that change during simulation, either in registers
+or in memory. The original values (here they are all zero) are shown on the left,
+and the ﬁnal values are shown on the right. We can see in this output that register
+%rax contains 0xabcdabcdabcdabcd, the sum of the 4-element array passed to
+procedure sum. In addition, we can see that the stack, which starts at address 0x200
+and grows toward lower addresses, has been used, causing changes to words of
+memory at addresses 0x1f0–0x1f8. The maximum address for executable code is
+0x090, and so the pushing and popping of values on the stack did not corrupt the
+executable code.
+Practice Problem 4.3 (solution page 518)
+One common pattern in machine-level programs is to add a constant value to a
+register. With the Y86-64 instructions presented thus far, this requires ﬁrst using an
+irmovq instruction to set a register to the constant, and then an addq instruction to
+add this value to the destination register. Suppose we want to add a new instruction
+iaddq with the following format:
+0
+C
+0
+Byte
+iaddq V, rB
+1
+F
+rB
+V
+2
+3
+4
+5
+6
+7
+8
+9
+This instruction adds the constant value V to register rB.
+Rewrite the Y86-64 sum function of Figure 4.6 to make use of the iaddq
+instruction. In the original version, we dedicated registers %r8 and %r9 to hold
+constant values. Now, we can avoid using those registers altogether.

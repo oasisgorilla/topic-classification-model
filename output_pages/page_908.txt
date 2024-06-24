@@ -1,0 +1,58 @@
+Section 9.11
+Common Memory-Related Bugs in C Programs
+907
+In this case, scanf will interpret the contents of val as an address and attempt to
+write a word to that location. In the best case, the program terminates immediately
+with an exception. In the worst case, the contents of val correspond to some
+valid read/write area of virtual memory, and we overwrite memory, usually with
+disastrous and bafﬂing consequences much later.
+9.11.2
+Reading Uninitialized Memory
+While bss memory locations (such as uninitialized global C variables) are always
+initialized to zeros by the loader, this is not true for heap memory. A common
+error is to assume that heap memory is initialized to zero:
+1
+/* Return y = Ax */
+2
+int *matvec(int **A, int *x, int n)
+3
+{
+4
+int i, j;
+5
+6
+int *y = (int *)Malloc(n * sizeof(int));
+7
+8
+for (i = 0; i < n; i++)
+9
+for (j = 0; j < n; j++)
+10
+y[i] += A[i][j] * x[j];
+11
+return y;
+12
+}
+In this example, the programmer has incorrectly assumed that vector y has been
+initialized to zero. A correct implementation would explicitly zero y[i] or use
+calloc.
+9.11.3
+Allowing Stack Buffer Overﬂows
+As we saw in Section 3.10.3, a program has a buffer overﬂow bug if it writes
+to a target buffer on the stack without examining the size of the input string.
+For example, the following function has a buffer overﬂow bug because the gets
+function copies an arbitrary-length string to the buffer. To ﬁx this, we would need
+to use the fgets function, which limits the size of the input string.
+1
+void bufoverflow()
+2
+{
+3
+char buf[64];
+4
+5
+gets(buf); /* Here is the stack buffer overflow bug */
+6
+return;
+7
+}

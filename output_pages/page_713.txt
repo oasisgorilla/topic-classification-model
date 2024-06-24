@@ -1,0 +1,56 @@
+712
+Chapter 7
+Linking
+. Global symbols that are deﬁned by module m and that can be referenced by
+other modules. Global linker symbols correspond to nonstatic C functions and
+global variables.
+. Global symbols that are referenced by module m but deﬁned by some other
+module. Such symbols are called externals and correspond to nonstatic C
+functions and global variables that are deﬁned in other modules.
+. Local symbols that are deﬁned and referenced exclusively by module m. These
+correspond to static C functions and global variables that are deﬁned with the
+static attribute. These symbols are visible anywhere within module m, but
+cannot be referenced by other modules.
+It is important to realize that local linker symbols are not the same as local
+program variables. The symbol table in .symtab does not contain any symbols
+that correspond to local nonstatic program variables. These are managed at run
+time on the stack and are not of interest to the linker.
+Interestingly, local procedure variables that are deﬁned with the C static
+attribute are not managed on the stack. Instead, the compiler allocates space in
+.data or .bss for each deﬁnition and creates a local linker symbol in the symbol
+table with a unique name. For example, suppose a pair of functions in the same
+module deﬁne a static local variable x:
+1
+int f()
+2
+{
+3
+static int x = 0;
+4
+return x;
+5
+}
+6
+7
+int g()
+8
+{
+9
+static int x = 1;
+10
+return x;
+11
+}
+In this case, the compiler exports a pair of local linker symbols with different names
+to the assembler. For example, it might use x.1 for the deﬁnition in function f and
+x.2 for the deﬁnition in function g.
+Symbol tables are built by assemblers, using symbols exported by the compiler
+into the assembly-language .s ﬁle. An ELF symbol table is contained in the
+.symtab section. It contains an array of entries. Figure 7.4 shows the format of
+each entry.
+The name is a byte offset into the string table that points to the null-terminated
+string name of the symbol. The value is the symbol’s address. For relocatable
+modules, the value is an offset from the beginning of the section where the object
+is deﬁned. For executable object ﬁles, the value is an absolute run-time address.
+The size is the size (in bytes) of the object. The type is usually either data or
+function. The symbol table can also contain entries for the individual sections

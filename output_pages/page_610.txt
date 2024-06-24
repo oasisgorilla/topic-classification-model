@@ -1,0 +1,43 @@
+Solutions to Practice Problems
+609
+faster versions of the function using the optimization techniques we have explored,
+including loop unrolling, parallel accumulation, and reassociation. You will ﬁnd
+many different ways of mixing together Horner’s scheme and direct evaluation
+with these optimization techniques.
+Ideally, you should be able to reach a CPE close to the throughput limit of
+your machine. Our best version achieves a CPE of 1.07 on our reference machine.
+5.19 ◆◆◆
+In Problem 5.12, we were able to reduce the CPE for the preﬁx-sum computation
+to 3.00, limited by the latency of ﬂoating-point addition on this machine. Simple
+loop unrolling does not improve things.
+Using a combination of loop unrolling and reassociation, write code for a
+preﬁx sum that achieves a CPE less than the latency of ﬂoating-point addition
+on your machine. Doing this requires actually increasing the number of additions
+performed. For example, our version with two-way unrolling requires three ad-
+ditions per iteration, while our version with four-way unrolling requires ﬁve. Our
+best implementation achieves a CPE of 1.67 on our reference machine.
+Determine how the throughput and latency limits of your machine limit the
+minimum CPE you can achieve for the preﬁx-sum operation.
+Solutions to Practice Problems
+Solution to Problem 5.1 (page 536)
+This problem illustrates some of the subtle effects of memory aliasing.
+As the following commented code shows, the effect will be to set the value at
+xp to zero:
+4
+*xp = *xp + *xp; /* 2x */
+5
+*xp = *xp - *xp; /* 2x-2x = 0 */
+6
+*xp = *xp - *xp; /* 0-0 = 0 */
+This example illustrates that our intuition about program behavior can often
+be wrong. We naturally think of the case where xp and yp are distinct but overlook
+the possibility that they might be equal. Bugs often arise due to conditions the
+programmer does not anticipate.
+Solution to Problem 5.2 (page 540)
+This problem illustrates the relationship between CPE and absolute performance.
+It can be solved using elementary algebra. We ﬁnd that for n ≤2, version 1 is the
+fastest. Version 2 is fastest for 3 ≤n ≤7, and version 3 is fastest for n ≥8.
+Solution to Problem 5.3 (page 548)
+This is a simple exercise, but it is important to recognize that the four statements
+of a for loop—initial, test, update, and body—get executed different numbers of
+times.

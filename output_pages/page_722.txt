@@ -1,0 +1,46 @@
+Section 7.6
+Symbol Resolution
+721
+to every C program in the libc.a library. ISO C99 also deﬁnes an extensive
+collection of ﬂoating-point math functions such as sin, cos, and sqrt in the libm.a
+library.
+Consider the different approaches that compiler developers might use to pro-
+vide these functions to users without the beneﬁt of static libraries. One approach
+would be to have the compiler recognize calls to the standard functions and to
+generate the appropriate code directly. Pascal, which provides a small set of stan-
+dard functions, takes this approach, but it is not feasible for C, because of the large
+number of standard functions deﬁned by the C standard. It would add signiﬁcant
+complexity to the compiler and would require a new compiler version each time a
+function was added, deleted, or modiﬁed. To application programmers, however,
+this approach would be quite convenient because the standard functions would
+always be available.
+Another approach would be to put all of the standard C functions in a single
+relocatable object module, say, libc.o, that application programmers could link
+into their executables:
+linux> gcc main.c /usr/lib/libc.o
+This approach has the advantage that it would decouple the implementation of the
+standard functions from the implementation of the compiler, and would still be
+reasonably convenient for programmers. However, a big disadvantage is that ev-
+ery executable ﬁle in a system would now contain a complete copy of the collection
+of standard functions, which would be extremely wasteful of disk space. (On our
+system, libc.a is about 5 MB and libm.a is about 2 MB.) Worse, each running
+program would now contain its own copy of these functions in memory, which
+would be extremely wasteful of memory. Another big disadvantage is that any
+change to any standard function, no matter how small, would require the library
+developer to recompile the entire source ﬁle, a time-consuming operation that
+would complicate the development and maintenance of the standard functions.
+We could address some of these problems by creating a separate relocatable
+ﬁle for each standard function and storing them in a well-known directory. How-
+ever, this approach would require application programmers to explicitly link the
+appropriate object modules into their executables, a process that would be error
+prone and time consuming:
+linux> gcc main.c /usr/lib/printf.o /usr/lib/scanf.o
+. . .
+The notion of a static library was developed to resolve the disadvantages of
+these various approaches. Related functions can be compiled into separate object
+modules and then packaged in a single static library ﬁle. Application programs
+can then use any of the functions deﬁned in the library by specifying a single
+ﬁlename on the command line. For example, a program that uses functions from
+the C standard library and the math library could be compiled and linked with a
+command of the form
+linux> gcc main.c /usr/lib/libm.a /usr/lib/libc.a

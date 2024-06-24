@@ -1,0 +1,51 @@
+Section 7.12
+Position-Independent Code (PIC)
+741
+Code segment 
+Global offset table (GOT) 
+Data segment 
+Fixed distance of
+0x2008b9 bytes
+at run time
+between GOT[3]
+and addl
+instruction     
+ 
+GOT[0]: …
+GOT[1]: …
+GOT[2]: …
+GOT[3]: &addcnt  
+addvec:
+  mov 0x2008b9(%rip),% rax  # %rax=*GOT[3]=&addcnt
+  addl $0x1,(%rax)          # addcnt++
+Figure 7.18
+Using the GOT to reference a global variable. The addvec routine in
+libvector.so references addcnt indirectly through the GOT for libvector.so.
+object modules) in memory, the data segment is always the same distance from
+the code segment. Thus, the distance between any instruction in the code segment
+and any variable in the data segment is a run-time constant, independent of the
+absolute memory locations of the code and data segments.
+Compilers that want to generate PIC references to global variables exploit
+this fact by creating a table called the global offset table (GOT) at the beginning
+of the data segment. The GOT contains an 8-byte entry for each global data
+object (procedure or global variable) that is referenced by the object module.
+The compiler also generates a relocation record for each entry in the GOT. At
+load time, the dynamic linker relocates each GOT entry so that it contains the
+absolute address of the object. Each object module that references global objects
+has its own GOT.
+Figure 7.18 shows the GOT from our example libvector.so shared module.
+The addvec routine loads the address of the global variable addcnt indirectly via
+GOT[3] and then increments addcnt in memory. The key idea here is that the offset
+in the PC-relative reference to GOT[3] is a run-time constant.
+Since addcnt is deﬁned by the libvector.so module, the compiler could have
+exploited the constant distance between the code and data segments by generating
+a direct PC-relative reference to addcnt and adding a relocation for the linker
+to resolve when it builds the shared module. However, if addcnt were deﬁned
+by another shared module, then the indirect access through the GOT would be
+necessary. In this case, the compiler has chosen to use the most general solution,
+the GOT, for all references.
+PIC Function Calls
+Suppose that a program calls a function that is deﬁned by a shared library. The
+compiler has no way of predicting the run-time address of the function, since
+the shared module that deﬁnes it could be loaded anywhere at run time. The
+normal approach would be to generate a relocation record for the reference, which

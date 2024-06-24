@@ -1,0 +1,58 @@
+762
+Chapter 8
+Exceptional Control Flow
+was executing when the event occurred) or the next instruction (the instruc-
+tion that would have executed after the current instruction had the event not
+occurred).
+. The processor also pushes some additional processor state onto the stack that
+will be necessary to restart the interrupted program when the handler returns.
+For example, an x86-64 system pushes the EFLAGS register containing the
+current condition codes, among other things, onto the stack.
+. When control is being transferred from a user program to the kernel, all of
+these items are pushed onto the kernel’s stack rather than onto the user’s
+stack.
+. Exception handlers run in kernel mode (Section 8.2.4), which means they have
+complete access to all system resources.
+Once the hardware triggers the exception, the rest of the work is done in
+software by the exception handler. After the handler has processed the event, it
+optionally returns to the interrupted program by executing a special “return from
+interrupt” instruction, which pops the appropriate state back into the processor’s
+control and data registers, restores the state to user mode (Section 8.2.4) if the
+exception interrupted a user program, and then returns control to the interrupted
+program.
+8.1.2
+Classes of Exceptions
+Exceptions can be divided into four classes: interrupts, traps, faults, and aborts.
+The table in Figure 8.4 summarizes the attributes of these classes.
+Interrupts
+Interrupts occur asynchronously as a result of signals from I/O devices that are
+external to the processor. Hardware interrupts are asynchronous in the sense
+that they are not caused by the execution of any particular instruction. Exception
+handlers for hardware interrupts are often called interrupt handlers.
+Figure 8.5 summarizes the processing for an interrupt. I/O devices such as
+network adapters, disk controllers, and timer chips trigger interrupts by signaling
+a pin on the processor chip and placing onto the system bus the exception number
+that identiﬁes the device that caused the interrupt.
+Class
+Cause
+Async/sync
+Return behavior
+Interrupt
+Signal from I/O device
+Async
+Always returns to next instruction
+Trap
+Intentional exception
+Sync
+Always returns to next instruction
+Fault
+Potentially recoverable error
+Sync
+Might return to current instruction
+Abort
+Nonrecoverable error
+Sync
+Never returns
+Figure 8.4
+Classes of exceptions. Asynchronous exceptions occur as a result of events in I/O devices that
+are external to the processor. Synchronous exceptions occur as a direct result of executing an instruction.

@@ -1,0 +1,51 @@
+Section 3.4
+Accessing Information
+223
+(a) C code
+long exchange(long *xp, long y)
+{
+long x = *xp;
+*xp = y;
+return x;
+}
+(b) Assembly code
+long exchange(long *xp, long y)
+xp in %rdi, y in %rsi
+1
+exchange:
+2
+movq
+(%rdi), %rax
+Get x at xp. Set as return value.
+3
+movq
+%rsi, (%rdi)
+Store y at xp.
+4
+ret
+Return.
+Figure 3.7
+C and assembly code for exchange routine. Registers %rdi and %rsi
+hold parameters xp and y, respectively.
+When the procedure begins execution, procedure parameters xp and y are
+stored in registers %rdi and %rsi, respectively. Instruction 2 then reads x from
+memory and stores the value in register %rax, a direct implementation of the
+operation x = *xp in the C program. Later, register %rax will be used to return
+a value from the function, and so the return value will be x. Instruction 3 writes y
+to the memory location designated by xp in register %rdi, a direct implementation
+of the operation *xp = y. This example illustrates how the mov instructions can be
+used to read from memory to a register (line 2), and to write from a register to
+memory (line 3).
+Two features about this assembly code are worth noting. First, we see that what
+we call “pointers” in C are simply addresses. Dereferencing a pointer involves
+copying that pointer into a register, and then using this register in a memory
+reference. Second, local variables such as x are often kept in registers rather than
+stored in memory locations. Register access is much faster than memory access.
+Practice Problem 3.4 (solution page 362)
+Assume variables sp and dp are declared with types
+src_t
+*sp;
+dest_t *dp;
+where src_t and dest_t are data types declared with typedef. We wish to use
+the appropriate pair of data movement instructions to implement the operation
+*dp = (dest_t) *sp;

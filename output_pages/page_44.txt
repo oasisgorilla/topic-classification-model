@@ -1,0 +1,44 @@
+Section 1.4
+Processors Read and Interpret Instructions Stored in Memory
+43
+In Chapter 3, we introduce x86-64, the machine language of recent gen-
+erations of Linux, Macintosh, and Windows computers. We describe how
+compilers translate different C constructs into this language. In Chapter 5,
+you will learn how to tune the performance of your C programs by making
+simple transformations to the C code that help the compiler do its job better.
+In Chapter 6, you will learn about the hierarchical nature of the memory sys-
+tem, how C compilers store data arrays in memory, and how your C programs
+can exploit this knowledge to run more efﬁciently.
+. Understanding link-time errors. In our experience, some of the most perplex-
+ing programming errors are related to the operation of the linker, especially
+when you are trying to build large software systems. For example, what does
+it mean when the linker reports that it cannot resolve a reference? What is the
+difference between a static variable and a global variable? What happens if
+you deﬁne two global variables in different C ﬁles with the same name? What
+is the difference between a static library and a dynamic library? Why does it
+matter what order we list libraries on the command line? And scariest of all,
+why do some linker-related errors not appear until run time? You will learn
+the answers to these kinds of questions in Chapter 7.
+. Avoiding security holes. For many years, buffer overﬂow vulnerabilities have
+accounted for many of the security holes in network and Internet servers.
+These vulnerabilities exist because too few programmers understand the need
+to carefully restrict the quantity and forms of data they accept from untrusted
+sources. A ﬁrst step in learning secure programming is to understand the con-
+sequences of the way data and control information are stored on the program
+stack. We cover the stack discipline and buffer overﬂow vulnerabilities in
+Chapter 3 as part of our study of assembly language. We will also learn about
+methods that can be used by the programmer, compiler, and operating system
+to reduce the threat of attack.
+1.4
+Processors Read and Interpret Instructions
+Stored in Memory
+At this point, our hello.c source program has been translated by the compilation
+system into an executable object ﬁle called hello that is stored on disk. To run
+the executable ﬁle on a Unix system, we type its name to an application program
+known as a shell:
+linux> ./hello
+hello, world
+linux>
+The shell is a command-line interpreter that prints a prompt, waits for you
+to type a command line, and then performs the command. If the ﬁrst word of the
+command line does not correspond to a built-in shell command, then the shell

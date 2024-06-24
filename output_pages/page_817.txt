@@ -1,0 +1,82 @@
+816
+Chapter 8
+Exceptional Control Flow
+code/ecf/waitforsignal.c
+1
+#include "csapp.h"
+2
+3
+volatile sig_atomic_t pid;
+4
+5
+void sigchld_handler(int s)
+6
+{
+7
+int olderrno = errno;
+8
+pid = waitpid(-1, NULL, 0);
+9
+errno = olderrno;
+10
+}
+11
+12
+void sigint_handler(int s)
+13
+{
+14
+}
+15
+16
+int main(int argc, char **argv)
+17
+{
+18
+sigset_t mask, prev;
+19
+20
+Signal(SIGCHLD, sigchld_handler);
+21
+Signal(SIGINT, sigint_handler);
+22
+Sigemptyset(&mask);
+23
+Sigaddset(&mask, SIGCHLD);
+24
+25
+while (1) {
+26
+Sigprocmask(SIG_BLOCK, &mask, &prev); /* Block SIGCHLD */
+27
+if (Fork() == 0) /* Child */
+28
+exit(0);
+29
+30
+/* Parent */
+31
+pid = 0;
+32
+Sigprocmask(SIG_SETMASK, &prev, NULL); /* Unblock SIGCHLD */
+33
+34
+/* Wait for SIGCHLD to be received (wasteful) */
+35
+while (!pid)
+36
+;
+37
+38
+/* Do some work after receiving SIGCHLD */
+39
+printf(".");
+40
+}
+41
+exit(0);
+42
+}
+code/ecf/waitforsignal.c
+Figure 8.41
+Waiting for a signal with a spin loop. This code is correct, but the spin loop is wasteful.

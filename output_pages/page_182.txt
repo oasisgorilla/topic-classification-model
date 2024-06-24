@@ -1,0 +1,62 @@
+Solutions to Practice Problems
+181
+C.
+Little endian: 78 56 34
+Big endian: 12 34 56
+Recall that show_bytes enumerates a series of bytes starting from the one with
+lowest address and working toward the one with highest address. On a little-
+endian machine, it will list the bytes from least signiﬁcant to most. On a big-endian
+machine, it will list bytes from the most signiﬁcant byte to the least.
+Solution to Problem 2.6 (page 85)
+This problem is another chance to practice hexadecimal to binary conversion. It
+also gets you thinking about integer and ﬂoating-point representations. We will
+explore these representations in more detail later in this chapter.
+A. Using the notation of the example in the text, we write the two strings as
+follows:
+0
+0
+2
+7
+C
+8
+F
+8
+00000000001001111100100011111000
+**********************
+4
+A
+1
+F
+2
+3
+E
+0
+01001010000111110010001111100000
+B. With the second word shifted two positions to the right relative to the ﬁrst,
+we ﬁnd a sequence with 21 matching bits.
+C. We ﬁnd all bits of the integer embedded in the ﬂoating-point number, except
+for the most signiﬁcant bit having value 0. Such is the case for the example
+in the text as well. In addition, the ﬂoating-point number has some nonzero
+high-order bits that do not match those of the integer.
+Solution to Problem 2.7 (page 85)
+It prints 6D 6E 6F 70 71 72. Recall also that the library routine strlen does not
+count the terminating null character, and so show_bytes printed only through the
+character ‘r’.
+Solution to Problem 2.8 (page 87)
+This problem is a drill to help you become more familiar with Boolean operations.
+Operation
+Result
+a
+[01001110]
+b
+[11100001]
+~a
+[10110001]
+~b
+[00011110]
+a & b
+[01000000]
+a | b
+[11101111]
+a ^ b
+[10101111]

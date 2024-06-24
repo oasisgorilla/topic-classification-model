@@ -1,0 +1,56 @@
+378
+Chapter 3
+Machine-Level Representation of Programs
+Solution to Problem 3.39 (page 298)
+These computations are direct applications of Equation 3.1:
+. For L = 4, C = 16, and j = 0, pointer Aptr is computed as xA + 4 . (16i + 0) =
+xA + 64i.
+. For L = 4, C = 16, i = 0, and j = k, Bptr is computed as xB + 4 . (16 . 0 + k) =
+xB + 4k.
+. For L = 4, C = 16, i = 16, and j = k, Bend is computed as xB + 4 .
+(16 . 16 + k) = xB + 1,024 + 4k.
+Solution to Problem 3.40 (page 298)
+This exercise requires that you be able to study compiler-generated assembly code
+to understand what optimizations have been performed. In this case, the compiler
+was clever in its optimizations.
+Let us ﬁrst study the following C code, and then see how it is derived from the
+assembly code generated for the original function.
+/* Set all diagonal elements to val */
+void fix_set_diag_opt(fix_matrix A, int val) {
+int *Abase = &A[0][0];
+long i = 0;
+long iend = N*(N+1);
+do {
+Abase[i] = val;
+i += (N+1);
+} while (i != iend);
+}
+This function introduces a variable Abase, of type int *, pointing to the start
+of array A. This pointer designates a sequence of 4-byte integers consisting of
+elements of A in row-major order. We introduce an integer variable index that
+steps through the diagonal elements of A, with the property that diagonal elements
+i and i + 1are spaced N + 1elements apart in the sequence, and that once we reach
+diagonal element N (index value N(N + 1)), we have gone beyond the end.
+The actual assembly code follows this general form, but now the pointer
+increments must be scaled by a factor of 4. We label register %rax as holding a value
+index4 equal to index in our C version but scaled by a factor of 4. For N = 16, we
+can see that our stopping point for index4 will be 4 . 16(16 + 1) = 1,088.
+1
+fix_set_diag:
+void fix_set_diag(fix_matrix A, int val)
+A in %rdi, val in %rsi
+2
+movl
+$0, %eax
+Set index4 = 0
+3
+.L13:
+loop:
+4
+movl
+%esi, (%rdi,%rax)
+Set Abase[index4/4] to val
+5
+addq
+$68, %rax
+Increment index4 += 4(N+1)

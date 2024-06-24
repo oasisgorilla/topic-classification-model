@@ -1,0 +1,92 @@
+654
+Chapter 6
+The Memory Hierarchy
+Figure 6.28
+Set selection in a direct-
+mapped cache.
+m–1
+0
+t bits
+Tag
+Set index Block offset
+s bits
+b bits
+Selected set
+0 0 0 0 1
+Valid
+Tag
+Cache block
+Set 0:
+Valid
+Tag
+Cache block
+Set 1:
+Valid
+Tag
+Cache block
+Set S–1:
+. . .
+Figure 6.29
+Line matching and word
+selection in a direct-
+mapped cache. Within the
+cache block, w0 denotes
+the low-order byte of the
+word w, w1 the next byte,
+and so on.
+0
+1
+m–1
+0
+2
+3
+4
+5
+6
+7
+1
+0110
+t bits
+Tag
+Set index Block offset
+s bits
+b bits
+= ?
+w0
+w1
+w2
+w3
+0110
+i
+100
+= 1?   (1) The valid bit must be set.
+Selected set (i ):
+The tag bits in the 
+cache line must 
+match the tag bits 
+in the address.
+(3) If (1) and (2), then 
+cache hit, and
+block offset selects 
+starting byte.
+(2)
+Set Selection in Direct-Mapped Caches
+In this step, the cache extracts the s set index bits from the middle of the address
+for w. These bits are interpreted as an unsigned integer that corresponds to a set
+number. In other words, if we think of the cache as a one-dimensional array of
+sets, then the set index bits form an index into this array. Figure 6.28 shows how
+set selection works for a direct-mapped cache. In this example, the set index bits
+000012 are interpreted as an integer index that selects set 1.
+Line Matching in Direct-Mapped Caches
+Now that we have selected some set i in the previous step, the next step is to
+determine if a copy of the word w is stored in one of the cache lines contained in
+set i. In a direct-mapped cache, this is easy and fast because there is exactly one
+line per set. A copy of w is contained in the line if and only if the valid bit is set
+and the tag in the cache line matches the tag in the address of w.
+Figure 6.29 shows how line matching works in a direct-mapped cache. In this
+example, there is exactly one cache line in the selected set. The valid bit for this
+line is set, so we know that the bits in the tag and block are meaningful. Since the
+tag bits in the cache line match the tag bits in the address, we know that a copy of
+the word we want is indeed stored in the line. In other words, we have a cache hit.
+On the other hand, if either the valid bit were not set or the tags did not match,
+then we would have had a cache miss.

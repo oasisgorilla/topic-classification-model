@@ -1,0 +1,75 @@
+946
+Chapter 10
+System-Level I/O
+Aside
+Right and left hoinkies
+To avoid confusion with other bracket-type operators such as ‘]’ and ‘[’, we have always referred to
+the shell’s ‘>’ operator as a “right hoinky” and the ‘<’ operator as a “left hoinky.”
+Figure 10.15
+Kernel data structures
+after redirecting standard
+output by calling
+dup2(4,1). The initial
+situation is shown in
+Figure 10.12.
+Descriptor table
+(one table
+per process)
+Open file table
+(shared by
+all processes)
+v-node table
+(shared by
+all processes)
+   fd 0
+   fd 1
+   fd 2
+ fd 3
+fd 4
+File size
+File access
+File type
+File B
+File pos
+refcnt2
+…
+File A
+File pos
+refcnt0
+…
+…
+File size
+File access
+File type
+…
+Practice Problem 10.5 (solution page 952)
+Assuming that the disk ﬁle foobar.txt consists of the six ASCII characters
+foobar, what is the output of the following program?
+1
+#include "csapp.h"
+2
+3
+int main()
+4
+{
+5
+int fd1, fd2;
+6
+char c;
+7
+8
+fd1 = Open("foobar.txt", O_RDONLY, 0);
+9
+fd2 = Open("foobar.txt", O_RDONLY, 0);
+10
+Read(fd2, &c, 1);
+11
+Dup2(fd2, fd1);
+12
+Read(fd1, &c, 1);
+13
+printf("c = %c\n", c);
+14
+exit(0);
+15
+}

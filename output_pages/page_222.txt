@@ -1,0 +1,59 @@
+Section 3.4
+Accessing Information
+221
+Instruction
+Effect
+Description
+movs
+S, R
+R ←SignExtend(S)
+Move with sign extension
+movsbw
+Move sign-extended byte to word
+movsbl
+Move sign-extended byte to double word
+movswl
+Move sign-extended word to double word
+movsbq
+Move sign-extended byte to quad word
+movswq
+Move sign-extended word to quad word
+movslq
+Move sign-extended double word to quad word
+cltq
+%rax ←
+SignExtend(%eax)
+Sign-extend %eax to %rax
+Figure 3.6
+Sign-extending data movement instructions. The movs instructions have
+a register or memory location as the source and a register as the destination. The cltq
+instruction is speciﬁc to registers %eax and %rax.
+Note the absence of an explicit instruction to zero-extend a 4-byte source
+value to an 8-byte destination in Figure 3.5. Such an instruction would logically
+be named movzlq, but this instruction does not exist. Instead, this type of data
+movement can be implemented using a movl instruction having a register as the
+destination. This technique takes advantage of the property that an instruction
+generating a 4-byte value with a register as the destination will ﬁll the upper 4
+bytes with zeros. Otherwise, for 64-bit destinations, moving with sign extension is
+supported for all three source types, and moving with zero extension is supported
+for the two smaller source types.
+Figure 3.6 also documents the cltq instruction. This instruction has no
+operands—it always uses register %eax as its source and %rax as the destination for
+the sign-extended result. It therefore has the exact same effect as the instruction
+movslq %eax, %rax, but it has a more compact encoding.
+Practice Problem 3.2 (solution page 361)
+For each of the following lines of assembly language, determine the appropriate
+instruction sufﬁx based on the operands. (For example, mov can be rewritten as
+movb, movw, movl, or movq.)
+mov
+%eax, (%rsp)
+mov
+(%rax), %dx
+mov
+$0xFF, %bl
+mov
+(%rsp,%rdx,4), %dl
+mov
+(%rdx), %rax
+mov
+%dx, (%rax)

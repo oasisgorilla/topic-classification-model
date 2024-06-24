@@ -1,0 +1,75 @@
+290
+Chapter 3
+Machine-Level Representation of Programs
+(a) C code
+long rfact(long n)
+{
+long result;
+if (n <= 1)
+result = 1;
+else
+result = n * rfact(n-1);
+return result;
+}
+(b) Generated assembly code
+long rfact(long n)
+n in %rdi
+1
+rfact:
+2
+pushq
+%rbx
+Save %rbx
+3
+movq
+%rdi, %rbx
+Store n in callee-saved register
+4
+movl
+$1, %eax
+Set return value = 1
+5
+cmpq
+$1, %rdi
+Compare n:1
+6
+jle
+.L35
+If <=, goto done
+7
+leaq
+-1(%rdi), %rdi
+Compute n-1
+8
+call
+rfact
+Call rfact(n-1)
+9
+imulq
+%rbx, %rax
+Multiply result by n
+10
+.L35:
+done:
+11
+popq
+%rbx
+Restore %rbx
+12
+ret
+Return
+Figure 3.35
+Code for recursive factorial program. The standard procedure handling
+mechanisms sufﬁce for implementing recursive functions.
+%rax, and (2) the value of argument n will held in register %rbx. Multiplying these
+two values then computes the desired result.
+We can see from this example that calling a function recursively proceeds just
+like any other function call. Our stack discipline provides a mechanism where
+each invocation of a function has its own private storage for state information
+(saved values of the return location and callee-saved registers). If need be, it
+can also provide storage for local variables. The stack discipline of allocation and
+deallocation naturally matches the call-return ordering of functions. This method
+of implementing function calls and returns even works for more complex patterns,
+including mutual recursion (e.g., when procedure P calls Q, which in turn calls P).
+Practice Problem 3.35 (solution page 376)
+For a C function having the general structure

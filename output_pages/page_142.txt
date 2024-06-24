@@ -1,0 +1,57 @@
+Section 2.3
+Integer Arithmetic
+141
+k
+>> k (binary)
+Decimal
+−12,340/2k
+0
+1100111111001100
+−12,340
+−12,340.0
+1
+1110011111100110
+−6,170
+−6,170.0
+4
+1111110011111100
+−772
+−771.25
+8
+1111111111001111
+−49
+−48.203125
+Figure 2.29
+Applying arithmetic right shift. The examples illustrate that arithmetic
+right shift is similar to division by a power of 2, except that it rounds down rather than
+toward zero.
+This bit vector has numeric value x′, which we have seen is the value that would
+result by computing the expression x >> k.
+The case for dividing by a power of 2 with two’s-complement arithmetic is
+slightly more complex. First, the shifting should be performed using an arithmetic
+right shift, to ensure that negative values remain negative. Let us investigate what
+value such a right shift would produce.
+principle: Two’s-complement division by a power of 2, rounding down
+Let C variables x and k have two’s-complement value x and unsigned value
+k, respectively, such that 0 ≤k < w. The C expression x >> k, when the shift is
+performed arithmetically, yields the value ⌊x/2k⌋.
+For x ≥0, variable x has 0 as the most signiﬁcant bit, and so the effect of an
+arithmetic shift is the same as for a logical right shift. Thus, an arithmetic right shift
+by k is the same as division by 2k for a nonnegative number. As an example of a
+negative number, Figure 2.29 shows the effect of applying arithmetic right shift to
+a 16-bit representation of −12,340 for different shift amounts. For the case when
+no rounding is required (k = 1), the result will be x/2k. When rounding is required,
+shifting causes the result to be rounded downward. For example, the shifting right
+by four has the effect of rounding −771.25 down to −772. We will need to adjust
+our strategy to handle division for negative values of x.
+derivation: Two’s-complement division by a power of 2, rounding down
+Let x be the two’s-complement integer represented by bit pattern [xw−1, xw−2,
+. . . , x0], and let k be in the range 0 ≤k < w. Let x′ be the two’s-complement
+number represented by the w −k bits [xw−1, xw−2, . . . , xk], and let x′′ be the
+unsigned number represented by the low-order k bits [xk−1, . . . , x0]. By a similar
+analysis as the unsigned case, we have x = 2kx′ + x′′ and 0 ≤x′′ < 2k, giving x′ =
+⌊x/2k⌋. Furthermore, observe that shifting bit vector [xw−1, xw−2, . . . , x0] right
+arithmetically by k yields the bit vector
+[xw−1, . . . , xw−1, xw−1, xw−2, . . . , xk]
+which is the sign extension from w −k bits to w bits of [xw−1, xw−2, . . . , xk]. Thus,
+this shifted bit vector is the two’s-complement representation of ⌊x/2k⌋.

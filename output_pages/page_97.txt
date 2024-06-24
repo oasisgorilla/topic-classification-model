@@ -1,0 +1,96 @@
+96
+Chapter 2
+Representing and Manipulating Information
+Symbol
+Type
+Meaning
+Page
+B2Tw
+Function
+Binary to two’s complement
+100
+B2Uw
+Function
+Binary to unsigned
+98
+U2Bw
+Function
+Unsigned to binary
+100
+U2Tw
+Function
+Unsigned to two’s complement
+107
+T2Bw
+Function
+Two’s complement to binary
+101
+T2Uw
+Function
+Two’s complement to unsigned
+107
+TMinw
+Constant
+Minimum two’s-complement value
+101
+TMaxw
+Constant
+Maximum two’s-complement value
+101
+UMaxw
+Constant
+Maximum unsigned value
+99
++t
+w
+Operation
+Two’s-complement addition
+126
++u
+w
+Operation
+Unsigned addition
+121
+*t
+w
+Operation
+Two’s-complement multiplication
+133
+*u
+w
+Operation
+Unsigned multiplication
+132
+-t
+w
+Operation
+Two’s-complement negation
+131
+-u
+w
+Operation
+Unsigned negation
+125
+Figure 2.8
+Terminology for integer data and arithmetic operations. The subscript
+w denotes the number of bits in the data representation. The “Page” column indicates
+the page on which the term is deﬁned.
+terminology will be introduced over the course of the presentation. The ﬁgure is
+included here as a reference.
+2.2.1
+Integral Data Types
+C supports a variety of integral data types—ones that represent ﬁnite ranges of
+integers. These are shown in Figures 2.9 and 2.10, along with the ranges of values
+they can have for “typical” 32- and 64-bit programs. Each type can specify a
+size with keyword char, short, long, as well as an indication of whether the
+represented numbers are all nonnegative (declared as unsigned), or possibly
+negative (the default.) As we saw in Figure 2.3, the number of bytes allocated for
+the different sizes varies according to whether the program is compiled for 32 or
+64 bits. Based on the byte allocations, the different sizes allow different ranges of
+values to be represented. The only machine-dependent range indicated is for size
+designator long. Most 64-bit programs use an 8-byte representation, giving a much
+wider range of values than the 4-byte representation used with 32-bit programs.
+One important feature to note in Figures 2.9 and 2.10 is that the ranges are not
+symmetric—the range of negative numbers extends one further than the range of
+positive numbers. We will see why this happens when we consider how negative
+numbers are represented.

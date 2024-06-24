@@ -1,0 +1,65 @@
+Section 3.11
+Floating-Point Code
+331
+127
+255
+0
+%ymm0
+%ymm1
+%ymm2
+%ymm3
+%ymm4
+%ymm5
+%ymm6
+%ymm7
+%ymm8
+%ymm9
+%ymm10
+%ymm11
+%ymm12
+%ymm13
+%ymm14
+%ymm15
+%xmm0
+%xmm1
+%xmm2
+%xmm3
+%xmm4
+%xmm5
+%xmm6
+%xmm7
+%xmm8
+%xmm9
+%xmm10
+%xmm11
+%xmm12
+%ymm13
+%xmm14
+%xmm15
+1st FP arg./Return value
+2nd FP argument
+3rd FP argument
+4th FP argument
+5th FP argument
+6th FP argument
+7th FP argument
+8th FP argument
+Caller saved
+Caller saved
+Caller saved
+Caller saved
+Caller saved
+Caller saved
+Caller saved
+Caller saved
+Figure 3.45
+Media registers. These registers are used to hold ﬂoating-point data.
+Each YMM register holds 32 bytes. The low-order 16 bytes can be accessed as an XMM
+register.
+As is illustrated in Figure 3.45, the AVX ﬂoating-point architecture allows
+data to be stored in 16 YMM registers, named %ymm0–%ymm15. Each YMM register
+is 256 bits (32 bytes) long. When operating on scalar data, these registers only
+hold ﬂoating-point data, and only the low-order 32 bits (for float) or 64 bits (for
+double) are used. The assembly code refers to the registers by their SSE XMM
+register names %xmm0–%xmm15, where each XMM register is the low-order 128 bits
+(16 bytes) of the corresponding YMM register.

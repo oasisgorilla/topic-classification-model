@@ -1,0 +1,55 @@
+1050
+Chapter 12
+Concurrent Programming
+threads to work on its own region. For simplicity, assume that n is a multiple of t,
+such that each region has n/t elements. Let’s look at some of the different ways
+that multiple threads might work on their assigned regions in parallel.
+The simplest and most straightforward option is to have the threads sum into
+a shared global variable that is protected by a mutex. Figure 12.31 shows how we
+might implement this. In lines 28–33, the main thread creates the peer threads
+and then waits for them to terminate. Notice that the main thread passes a small
+integer to each peer thread that serves as a unique thread ID. Each peer thread
+will use its thread ID to determine which portion of the sequence it should work
+on. This idea of passing a small unique thread ID to the peer threads is a general
+technique that is used in many parallel applications. After the peer threads have
+terminated, the global variable gsum contains the ﬁnal sum. The main thread then
+uses the closed-form solution to verify the result (lines 36–37).
+Figure 12.32 shows the function that each peer thread executes. In line 4, the
+thread extracts the thread ID from the thread argument and then uses this ID to
+determine the region of the sequence it should work on (lines 5–6). In lines 9–13,
+the thread iterates over its portion of the sequence, updating the shared global
+variable gsum on each iteration. Notice that we are careful to protect each update
+with P and V mutex operations.
+When we run psum-mutex on a system with four cores on a sequence of size
+n = 231 and measure its running time (in seconds) as a function of the number of
+threads, we get a nasty surprise:
+Number of threads
+Version
+1
+2
+4
+8
+16
+psum-mutex
+68
+432
+719
+552
+599
+Not only is the program extremely slow when it runs sequentially as a single
+thread, it is nearly an order of magnitude slower when it runs in parallel as
+multiple threads. And the performance gets worse as we add more cores. The
+reason for this poor performance is that the synchronization operations (P and V )
+are very expensive relative to the cost of a single memory update. This highlights
+an important lesson about parallel programming: Synchronization overhead is
+expensive and should be avoided if possible. If it cannot be avoided, the overhead
+should be amortized by as much useful computation as possible.
+One way to avoid synchronization in our example program is to have each
+peer thread compute its partial sum in a private variable that is not shared with
+any other thread, as shown in Figure 12.33. The main thread (not shown) deﬁnes
+a global array called psum, and each peer thread i accumulates its partial sum in
+psum[i]. Since we are careful to give each peer thread a unique memory location
+to update, it is not necessary to protect these updates with mutexes. The only
+necessary synchronization is that the main thread must wait for all of the children
+to ﬁnish. After the peer threads have terminated, the main thread sums up the
+elements of the psum vector to arrive at the ﬁnal result.

@@ -1,0 +1,44 @@
+Chapter 4
+Processor Architecture
+389
+Aside
+The progress of computer technology
+To get a sense of how much computer technology has improved over the past four decades, consider
+the following two processors.
+The ﬁrst Cray 1 supercomputer was delivered to Los Alamos National Laboratory in 1976. It was
+the fastest computer in the world, able to perform as many as 250 million arithmetic operations per
+second. It came with 8 megabytes of random access memory, the maximum conﬁguration allowed by
+the hardware. The machine was also very large—it weighed 5,000 kg, consumed 115 kilowatts, and cost
+$9 million. In total, around 80 of them were manufactured.
+The Apple ARM A7 microprocessor chip, introduced in 2013 to power the iPhone 5S, contains
+two CPUs, each of which can perform several billion arithmetic operations per second, and 1 gigabyte
+of random access memory. The entire phone weighs just 112 grams, consumes around 1 watt, and costs
+less than $800. Over 9 million units were sold in the ﬁrst weekend of its introduction. In addition to
+being a powerful computer, it can be used to take pictures, to place phone calls, and to provide driving
+directions, features never considered for the Cray 1.
+These two systems, spaced just 37 years apart, demonstrate the tremendous progress of semicon-
+ductor technology. Whereas the Cray 1’s CPU was constructed using around 100,000 semiconductor
+chips, each containing less than 20 transistors, the Apple A7 has over 1 billion transistors on its single
+chip. The Cray 1’s 8-megabyte memory required 8,192 chips, whereas the iPhone’s gigabyte memory is
+contained in a single chip.
+a system that is such a part of the daily lives of computer scientists and engi-
+neers and yet remains a mystery to many. Processor design embodies many of
+the principles of good engineering practice. It requires creating a simple and
+regular structure to perform a complex task.
+. Understanding how the processor works aids in understanding how the overall
+computer system works.In Chapter 6, we will look at the memory system and
+the techniques used to create an image of a very large memory with a very
+fast access time. Seeing the processor side of the processor–memory interface
+will make this presentation more complete.
+. Although few people design processors, many design hardware systems that
+contain processors. This has become commonplace as processors are embed-
+ded into real-world systems such as automobiles and appliances. Embedded-
+system designers must understand how processors work, because these sys-
+tems are generally designed and programmed at a lower level of abstraction
+than is the case for desktop and server-based systems.
+. You just might work on a processor design. Although the number of compa-
+nies producing microprocessors is small, the design teams working on those
+processors are already large and growing. There can be over 1,000 people
+involved in the different aspects of a major processor design.
+In this chapter, we start by deﬁning a simple instruction set that we use as a
+running example for our processor implementations. We call this the “Y86-64”

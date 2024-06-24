@@ -1,0 +1,43 @@
+168
+Chapter 2
+Representing and Manipulating Information
+A. In what way does our code fail to comply with the C standard?
+B. Modify the code to run properly on any machine for which data type int is
+at least 32 bits.
+C. Modify the code to run properly on any machine for which data type int is
+at least 16 bits.
+2.68 ◆◆
+Write code for a function with the following prototype:
+/*
+* Mask with least signficant n bits set to 1
+* Examples: n = 6 --> 0x3F, n = 17 --> 0x1FFFF
+* Assume 1 <= n <= w
+*/
+int lower_one_mask(int n);
+Your function should follow the bit-level integer coding rules (page 164). Be
+careful of the case n = w.
+2.69 ◆◆◆
+Write code for a function with the following prototype:
+/*
+* Do rotating left shift.
+Assume 0 <= n < w
+* Examples when x = 0x12345678 and w = 32:
+*
+n=4 -> 0x23456781, n=20 -> 0x67812345
+*/
+unsigned rotate_left(unsigned x, int n);
+Your function should follow the bit-level integer coding rules (page 164). Be
+careful of the case n = 0.
+2.70 ◆◆
+Write code for the function with the following prototype:
+/*
+* Return 1 when x can be represented as an n-bit, 2’s-complement
+* number; 0 otherwise
+* Assume 1 <= n <= w
+*/
+int fits_bits(int x, int n);
+Your function should follow the bit-level integer coding rules (page 164).
+2.71 ◆
+You just started working for a company that is implementing a set of procedures
+to operate on a data structure where 4 signed bytes are packed into a 32-bit
+unsigned. Bytes within the word are numbered from 0 (least signiﬁcant) to 3

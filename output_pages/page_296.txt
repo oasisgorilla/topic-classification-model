@@ -1,0 +1,72 @@
+Section 3.8
+Array Allocation and Access
+295
+Figure 3.36
+Elements of array in
+row-major order.
+A[0][0]
+A[0]
+xA
+Element
+Row
+Address
+A[0][1]
+xA + 4
+A[0][2]
+xA + 8
+A[1][0]
+A[1]
+xA + 12
+A[1][1]
+xA + 16
+A[1][2]
+xA + 20
+A[2][0]
+A[2]
+xA + 24
+A[2][1]
+xA + 28
+A[2][2]
+xA + 32
+A[3][0]
+A[3]
+xA + 36
+A[3][1]
+xA + 40
+A[4][2]
+xA + 44
+A[4][0]
+A[4]
+xA + 48
+A[4][1]
+xA + 52
+A[4][2]
+xA + 56
+where L is the size of data type T in bytes. As an example, consider the 5 × 3integer
+array A deﬁned earlier. Suppose xA, i, and j are in registers %rdi, %rsi, and %rdx,
+respectively. Then array element A[i][j] can be copied to register %eax by the
+following code:
+A in %rdi, i in %rsi, and j in %rdx
+1
+leaq
+(%rsi,%rsi,2), %rax
+Compute 3i
+2
+leaq
+(%rdi,%rax,4), %rax
+Compute xA + 12i
+3
+movl
+(%rax,%rdx,4), %eax
+Read from M[xA + 12i + 4]
+As can be seen, this code computes the element’s address as xA + 12i + 4j = xA +
+4(3i + j) using the scaling and addition capabilities of x86-64 address arithmetic.
+Practice Problem 3.38 (solution page 377)
+Consider the following source code, where M and N are constants declared with
+#define:
+long P[M][N];
+long Q[N][M];
+long sum_element(long i, long j) {
+return P[i][j] + Q[j][i];
+}
+In compiling this program, gcc generates the following assembly code:

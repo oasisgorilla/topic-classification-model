@@ -1,0 +1,50 @@
+770
+Chapter 8
+Exceptional Control Flow
+ﬂows known as parallel ﬂows. If two ﬂows are running concurrently on different
+processor cores or computers, then we say that they are parallel ﬂows, that they
+are running in parallel, and have parallel execution.
+Practice Problem 8.1 (solution page 831)
+Consider three processes with the following starting and ending times:
+Process
+Start time
+End time
+A
+1
+3
+B
+2
+5
+C
+4
+6
+For each pair of processes, indicate whether they run concurrently (Y) or
+not (N):
+Process pair
+Concurrent?
+AB
+AC
+BC
+8.2.3
+Private Address Space
+A process provides each program with the illusion that it has exclusive use of the
+system’s address space. On a machine with n-bit addresses, the address space is the
+set of 2n possible addresses, 0, 1, . . . , 2n −1. A process provides each program
+with its own private address space. This space is private in the sense that a byte
+of memory associated with a particular address in the space cannot in general be
+read or written by any other process.
+Although the contents of the memory associated with each private address
+space is different in general, each such space has the same general organization.
+For example, Figure 8.13 shows the organization of the address space for an x86-64
+Linux process.
+The bottom portion of the address space is reserved for the user program, with
+the usual code, data, heap, and stack segments. The code segment always begins at
+address 0x400000. The top portion of the address space is reserved for the kernel
+(the memory-resident part of the operating system). This part of the address space
+contains the code, data, and stack that the kernel uses when it executes instructions
+on behalf of the process (e.g., when the application program executes a system
+call).
+8.2.4
+User and Kernel Modes
+In order for the operating system kernel to provide an airtight process abstraction,
+the processor must provide a mechanism that restricts the instructions that an

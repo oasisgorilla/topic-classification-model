@@ -1,0 +1,110 @@
+Section 12.5
+Synchronizing Threads with Semaphores
+1039
+Thread 2
+Thread 1
+S2
+T2
+U2
+L2
+P(s)
+H2
+H1
+P(s)
+L1
+U1
+S1
+V(s)
+V(s)
+T1
+1
+1
+0
+0
+0
+0
+1
+1
+0
+0
+0
+0
+0
+0
+–1
+–1
+–1
+–1
+0
+0
+–1
+–1
+–1
+–1
+0
+0
+–1
+–1
+–1
+–1
+0
+0
+–1
+–1
+–1
+–1
+1
+1
+0
+0
+0
+0
+1
+1
+0
+0
+0
+0
+1
+1
+0
+0
+0
+0
+1
+1
+1
+1
+0
+0
+0
+0
+1
+1
+Unsafe region
+Forbidden region
+Initially
+s1
+Figure 12.22
+Using semaphores for mutual exclusion. The infeasible states where
+s < 0 deﬁne a forbidden region that surrounds the unsafe region and prevents any feasible
+trajectory from touching the unsafe region.
+each shared variable (or related set of shared variables) and then surround the
+corresponding critical section with P(s) and V (s) operations.
+A semaphore that is used in this way to protect shared variables is called a
+binary semaphore because its value is always 0 or 1. Binary semaphores whose
+purpose is to provide mutual exclusion are often called mutexes. Performing a
+P operation on a mutex is called locking the mutex. Similarly, performing the
+V operation is called unlocking the mutex. A thread that has locked but not yet
+unlocked a mutex is said to be holding the mutex. A semaphore that is used as a
+counter for a set of available resources is called a counting semaphore.
+The progress graph in Figure 12.22 shows how we would use binary sema-
+phores to properly synchronize our example counter program.
+Each state is labeled with the value of semaphore s in that state. The crucial
+idea is that this combination of P and V operations creates a collection of states,
+called a forbidden region, where s < 0. Because of the semaphore invariant, no
+feasible trajectory can include one of the states in the forbidden region. And since
+the forbidden region completely encloses the unsafe region, no feasible trajectory
+can touch any part of the unsafe region. Thus, every feasible trajectory is safe, and
+regardless of the ordering of the instructions at run time, the program correctly
+increments the counter.

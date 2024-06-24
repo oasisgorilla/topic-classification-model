@@ -1,0 +1,45 @@
+Section 2.3
+Integer Arithmetic
+137
+the original call to malloc (line 9) as follows:
+uint64_t asize =
+ele_cnt * (uint64_t) ele_size;
+void *result = malloc(asize);
+Recall that the argument to malloc has type size_t.
+A. Does your code provide any improvement over the original?
+B. How would you change the code to eliminate the vulnerability?
+2.3.6
+Multiplying by Constants
+Historically, the integer multiply instruction on many machines was fairly slow,
+requiring 10 or more clock cycles, whereas other integer operations—such as
+addition, subtraction, bit-level operations, and shifting—required only 1 clock
+cycle. Even on the Intel Core i7 Haswell we use as our reference machine, integer
+multiply requires 3 clock cycles. As a consequence, one important optimization
+used by compilers is to attempt to replace multiplications by constant factors with
+combinations of shift and addition operations. We will ﬁrst consider the case of
+multiplying by a power of 2, and then we will generalize this to arbitrary constants.
+principle: Multiplication by a power of 2
+Let x be the unsigned integer represented by bit pattern [xw−1, xw−2, . . . , x0].
+Then for any k ≥0, the w + k-bit unsigned representation of x2k is given by
+[xw−1, xw−2, . . . , x0, 0, . . . , 0], where k zeros have been added to the right.
+So, for example, 11 can be represented for w = 4 as [1011]. Shifting this left
+by k = 2 yields the 6-bit vector [101100], which encodes the unsigned number
+11 . 4 = 44.
+derivation: Multiplication by a power of 2
+This property can be derived using Equation 2.1:
+B2Uw+k([xw−1, xw−2, . . . , x0, 0, . . . , 0]) =
+w−1
+
+i=0
+xi2i+k
+=
+w−1
+
+i=0
+xi2i
+
+. 2k
+= x2k
+When shifting left by k for a ﬁxed word size, the high-order k bits are discarded,
+yielding
+[xw−k−1, xw−k−2, . . . , x0, 0, . . . , 0]

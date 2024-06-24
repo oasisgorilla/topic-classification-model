@@ -1,0 +1,52 @@
+Section 8.5
+Signals
+801
+#include <signal.h>
+int sigprocmask(int how, const sigset_t *set, sigset_t *oldset);
+int sigemptyset(sigset_t *set);
+int sigfillset(sigset_t *set);
+int sigaddset(sigset_t *set, int signum);
+int sigdelset(sigset_t *set, int signum);
+Returns: 0 if OK, −1 on error
+int sigismember(const sigset_t *set, int signum);
+Returns: 1 if member, 0 if not, −1 on error
+The sigprocmask function changes the set of currently blocked signals (the
+blocked bit vector described in Section 8.5.1). The speciﬁc behavior depends on
+the value of how:
+SIG_BLOCK. Add the signals in set to blocked (blocked = blocked | set).
+SIG_UNBLOCK. Remove the signals in set from blocked (blocked =
+blocked & ~set).
+SIG_SETMASK. blocked = set.
+If oldset is non-NULL, the previous value of the blocked bit vector is stored in
+oldset.
+Signal sets such as set are manipulated using the following functions: The
+sigemptyset initializes set to the empty set. The sigfillset function adds every
+signal to set. The sigaddset function adds signum to set, sigdelset deletes
+signum from set, and sigismember returns 1 if signum is a member of set, and
+0 if not.
+For example, Figure 8.32 shows how you would use sigprocmask to tempo-
+rarily block the receipt of SIGINT signals.
+1
+sigset_t mask, prev_mask;
+2
+3
+Sigemptyset(&mask);
+4
+Sigaddset(&mask, SIGINT);
+5
+6
+/* Block SIGINT and save previous blocked set */
+7
+Sigprocmask(SIG_BLOCK, &mask, &prev_mask);
+8
+.
+.
+.
+// Code region that will not be interrupted by SIGINT
+9
+/* Restore previous blocked set, unblocking SIGINT */
+10
+Sigprocmask(SIG_SETMASK, &prev_mask, NULL);
+11
+Figure 8.32
+Temporarily blocking a signal from being received.

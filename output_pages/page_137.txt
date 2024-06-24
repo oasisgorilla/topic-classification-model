@@ -1,0 +1,71 @@
+136
+Chapter 2
+Representing and Manipulating Information
+Aside
+Security vulnerability in the XDR library
+In 2002, it was discovered that code supplied by Sun Microsystems to implement the XDR library, a
+widely used facility for sharing data structures between programs, had a security vulnerability arising
+from the fact that multiplication can overﬂow without any notice being given to the program.
+Code similar to that containing the vulnerability is shown below:
+1
+/* Illustration of code vulnerability similar to that found in
+2
+* Sun’s XDR library.
+3
+*/
+4
+void* copy_elements(void *ele_src[], int ele_cnt, size_t ele_size) {
+5
+/*
+6
+* Allocate buffer for ele_cnt objects, each of ele_size bytes
+7
+* and copy from locations designated by ele_src
+8
+*/
+9
+void *result = malloc(ele_cnt * ele_size);
+10
+if (result == NULL)
+11
+/* malloc failed */
+12
+return NULL;
+13
+void *next = result;
+14
+int i;
+15
+for (i = 0; i < ele_cnt; i++) {
+16
+/* Copy object i to destination */
+17
+memcpy(next, ele_src[i], ele_size);
+18
+/* Move pointer to next memory region */
+19
+next += ele_size;
+20
+}
+21
+return result;
+22
+}
+The function copy_elements is designed to copy ele_cnt data structures, each consisting of ele_
+size bytes into a buffer allocated by the function on line 9. The number of bytes required is computed
+as ele_cnt * ele_size.
+Imagine, however, that a malicious programmer calls this function with ele_cnt being 1,048,577
+(220 + 1) and ele_size being 4,096 (212) with the program compiled for 32 bits. Then the multiplication
+on line 9 will overﬂow, causing only 4,096 bytes to be allocated, rather than the 4,294,971,392 bytes
+required to hold that much data. The loop starting at line 15 will attempt to copy all of those bytes,
+overrunning the end of the allocated buffer, and therefore corrupting other data structures. This could
+cause the program to crash or otherwise misbehave.
+The Sun code was used by almost every operating system and in such widely used programs as
+Internet Explorer and the Kerberos authentication system. The Computer Emergency Response Team
+(CERT), an organization run by the Carnegie Mellon Software Engineering Institute to track security
+vulnerabilities and breaches, issued advisory “CA-2002-25,” and many companies rushed to patch their
+code. Fortunately, there were no reported security breaches caused by this vulnerability.
+A similar vulnerability existed in many implementations of the library function calloc. These
+have since been patched. Unfortunately, many programmers call allocation functions, such as malloc,
+using arithmetic expressions as arguments, without checking these expressions for overﬂow. Writing a
+reliable version of calloc is left as an exercise (Problem 2.76).

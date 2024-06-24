@@ -1,0 +1,68 @@
+528
+Chapter 4
+Processor Architecture
+This code initializes register %rdx to 0x321. The conditional data transfer does
+not take place, and so the ﬁnal addq instruction should double the value in %rdx to
+0x642. With the altered design, however, the conditional move source value 0x321
+gets forwarded into ALU input valA, while input valB correctly gets operand value
+0x123. These inputs get added to produce result 0x444.
+Solution to Problem 4.36 (page 491)
+This code completes the computation of the status code for this instruction.
+## Update the status
+word m_stat = [
+dmem_error : SADR;
+1 : M_stat;
+];
+Solution to Problem 4.37 (page 497)
+The following test program is designed to set up control combination A (Figure
+4.67) and detect whether something goes wrong:
+1
+# Code to generate a combination of not-taken branch and ret
+2
+irmovq Stack, %rsp
+3
+irmovq rtnp,%rax
+4
+pushq %rax
+# Set up return pointer
+5
+xorq %rax,%rax
+# Set Z condition code
+6
+jne target
+# Not taken (First part of combination)
+7
+irmovq $1,%rax
+# Should execute this
+8
+halt
+9
+target: ret
+# Second part of combination
+10
+irmovq $2,%rbx
+# Should not execute this
+11
+halt
+12
+rtnp:
+irmovq $3,%rdx
+# Should not execute this
+13
+halt
+14
+.pos 0x40
+15
+Stack:
+This program is designed so that if something goes wrong (for example, if
+the ret instruction is actually executed), then the program will execute one of the
+extra irmovq instructions and then halt. Thus, an error in the pipeline would cause
+some register to be updated incorrectly. This code illustrates the care required to
+implement a test program. It must set up a potential error condition and then
+detect whether or not an error occurs.
+Solution to Problem 4.38 (page 498)
+The following test program is designed to set up control combination B (Figure
+4.67). The simulator will detect a case where the bubble and stall control signals
+for a pipeline register are both set to zero, and so our test program need only set
+up the combination for it to be detected. The biggest challenge is to make the
+program do something sensible when handled correctly.

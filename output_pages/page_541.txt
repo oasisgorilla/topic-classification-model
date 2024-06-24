@@ -1,0 +1,39 @@
+540
+Chapter 5
+Optimizing Program Performance
+Aside
+What is a least squares ﬁt?
+For a set of data points (x1, y1), . . . (xn, yn), we often try to draw a line that best approximates the X–
+Y trend represented by these data. With a least squares ﬁt, we look for a line of the form y = mx + b
+that minimizes the following error measure:
+E(m, b) =
+
+i=1,n
+(mxi + b −yi)2
+An algorithm for computing m and b can be derived by ﬁnding the derivatives of E(m, b) with respect
+to m and b and setting them to 0.
+procedure, plus a linear factor of 6.0 or 9.0 cycles per element. For large values
+of n (say, greater than 200), the run times will be dominated by the linear factors.
+We refer to the coefﬁcients in these terms as the effective number of cycles per
+element. We prefer measuring the number of cycles per element rather than the
+number of cycles per iteration, because techniques such as loop unrolling allow us
+to use fewer iterations to complete the computation, but our ultimate concern is
+how fast the procedure will run for a given vector length. We focus our efforts on
+minimizing the CPE for our computations. By this measure, psum2, with a CPE of
+6.0, is superior to psum1, with a CPE of 9.0.
+Practice Problem 5.2 (solution page 609)
+Later in this chapter we will start with a single function and generate many differ-
+ent variants that preserve the function’s behavior, but with different performance
+characteristics. For three of these variants, we found that the run times (in clock
+cycles) can be approximated by the following functions:
+Version 1: 60 + 35n
+Version 2: 136 + 4n
+Version 3: 157 + 1.25n
+For what values of n would each version be the fastest of the three? Remember
+that n will always be an integer.
+5.3
+Program Example
+To demonstrate how an abstract program can be systematically transformed into
+more efﬁcient code, we will use a running example based on the vector data
+structure shown in Figure 5.3. A vector is represented with two blocks of memory:
+the header and the data array. The header is a structure declared as follows:

@@ -1,0 +1,87 @@
+Section 3.7
+Procedures
+281
+Instruction
+State values (at beginning)
+Label
+PC
+Instruction
+%rdi
+%rsi
+%rax
+%rsp
+*%rsp
+Description
+M1
+0x400560
+callq
+10
+—
+—
+0x7fffffffe820
+—
+Call first(10)
+F1
+F2
+F3
+L1
+L2
+L3
+F4
+M2
+3.7.3
+Data Transfer
+In addition to passing control to a procedure when called, and then back again
+when the procedure returns, procedure calls may involve passing data as argu-
+ments, and returning from a procedure may also involve returning a value. With
+x86-64, most of these data passing to and from procedures take place via regis-
+ters. For example, we have already seen numerous examples of functions where
+arguments are passed in registers %rdi, %rsi, and others, and where values are re-
+turned in register %rax. When procedure P calls procedure Q, the code for P must
+ﬁrst copy the arguments into the proper registers. Similarly, when Q returns back
+to P, the code for P can access the returned value in register %rax. In this section,
+we explore these conventions in greater detail.
+With x86-64, up to six integral (i.e., integer and pointer) arguments can be
+passed via registers. The registers are used in a speciﬁed order, with the name
+used for a register depending on the size of the data type being passed. These are
+shown in Figure 3.28. Arguments are allocated to these registers according to their
+Argument number
+Operand
+size (bits)
+1
+2
+3
+4
+5
+6
+64
+%rdi
+%rsi
+%rdx
+%rcx
+%r8
+%r9
+32
+%edi
+%esi
+%edx
+%ecx
+%r8d
+%r9d
+16
+%di
+%si
+%dx
+%cx
+%r8w
+%r9w
+8
+%dil
+%sil
+%dl
+%cl
+%r8b
+%r9b
+Figure 3.28
+Registers for passing function arguments. The registers are used in a
+speciﬁed order and named according to the argument sizes.

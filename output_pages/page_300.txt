@@ -1,0 +1,55 @@
+Section 3.8
+Array Allocation and Access
+299
+Programmers requiring variable-size arrays had to allocate storage for these arrays
+using functions such as malloc or calloc, and they had to explicitly encode the
+mapping of multidimensional arrays into single-dimension ones via row-major in-
+dexing, as expressed in Equation 3.1. ISO C99 introduced the capability of having
+array dimension expressions that are computed as the array is being allocated.
+In the C version of variable-size arrays, we can declare an array
+int A[expr1][expr2]
+either as a local variable or as an argument to a function, and then the dimensions
+of the array are determined by evaluating the expressions expr1 and expr2 at the
+time the declaration is encountered. So, for example, we can write a function to
+access element i, j of an n × n array as follows:
+int var_ele(long n, int A[n][n], long i, long j) {
+return A[i][j];
+}
+The parameter n must precede the parameter A[n][n], so that the function can
+compute the array dimensions as the parameter is encountered.
+Gcc generates code for this referencing function as
+int var_ele(long n, int A[n][n], long i, long j)
+n in %rdi, A in %rsi, i in %rdx, j in %rcx
+1
+var_ele:
+2
+imulq
+%rdx, %rdi
+Compute n . i
+3
+leaq
+(%rsi,%rdi,4), %rax
+Compute xA + 4(n . i
+4
+movl
+(%rax,%rcx,4), %eax
+Read from M[xA + 4(n . i) + 4j]
+5
+ret
+As the annotations show, this code computes the address of element i, j as xA +
+4(n . i) + 4j = xA + 4(n . i + j). The address computation is similar to that of the
+ﬁxed-size array (Section 3.8.3), except that (1) the register usage changes due to
+added parameter n, and (2) a multiply instruction is used (line 2) to compute n . i,
+rather than an leaq instruction to compute 3i. We see therefore that referencing
+variable-size arrays requires only a slight generalization over ﬁxed-size ones. The
+dynamic version must use a multiplication instruction to scale i by n, rather than
+a series of shifts and adds. In some processors, this multiplication can incur a
+signiﬁcant performance penalty, but it is unavoidable in this case.
+When variable-size arrays are referenced within a loop, the compiler can often
+optimizetheindexcomputationsbyexploitingtheregularityoftheaccesspatterns.
+For example, Figure 3.38(a) shows C code to compute element i, k of the product
+of two n × n arrays A and B. Gcc generates assembly code, which we have recast
+into C (Figure 3.38(b)). This code follows a different style from the optimized
+code for the ﬁxed-size array (Figure 3.37), but that is more an artifact of the choices
+made by the compiler, rather than a fundamental requirement for the two different
+functions. The code of Figure 3.38(b) retains loop variable j, both to detect when

@@ -1,0 +1,76 @@
+Section 5.11
+Some Limiting Factors
+587
+combine4b. This code performs bounds checking and also references the vector
+elements through the vector data structure.
+1
+/* Include bounds check in loop */
+2
+void combine4b(vec_ptr v, data_t *dest)
+3
+{
+4
+long i;
+5
+long length = vec_length(v);
+6
+data_t acc = IDENT;
+7
+8
+for (i = 0; i < length; i++) {
+9
+if (i >= 0 && i < v->len) {
+10
+acc = acc OP v->data[i];
+11
+}
+12
+}
+13
+*dest = acc;
+14
+}
+We can then directly compare the CPE for the functions with and without bounds
+checking:
+Integer
+Floating point
+Function
+Page
+Method
++
+*
++
+*
+combine4
+551
+No bounds checking
+1.27
+3.01
+3.01
+5.01
+combine4b
+551
+Bounds checking
+2.02
+3.01
+3.01
+5.01
+The version with bounds checking is slightly slower for the case of integer addition,
+but it achieves the same performance for the other three cases. The performance
+of these cases is limited by the latencies of their respective combining operations.
+The additional computation required to perform bounds checking can take place
+in parallel with the combining operations. The processor is able to predict the
+outcomes of these branches, and so none of this evaluation has much effect on
+the fetching and processing of the instructions that form the critical path in the
+program execution.
+Write Code Suitable for Implementation with Conditional Moves
+Branch prediction is only reliable for regular patterns. Many tests in a program
+are completely unpredictable, dependent on arbitrary features of the data, such
+as whether a number is negative or positive. For these, the branch prediction logic
+will do very poorly. For inherently unpredictable cases, program performance can
+be greatly enhanced if the compiler is able to generate code using conditional
+data transfers rather than conditional control transfers. This cannot be controlled
+directly by the C programmer, but some ways of expressing conditional behavior
+can be more directly translated into conditional moves than others.
+We have found that gcc is able to generate conditional moves for code written
+in a more “functional” style, where we use conditional operations to compute

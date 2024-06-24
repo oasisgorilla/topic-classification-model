@@ -1,0 +1,65 @@
+Section 8.1
+Exceptions
+763
+Figure 8.5
+Interrupt handling.
+The interrupt handler
+returns control to the
+next instruction in the
+application program’s
+control ﬂow.
+(2) Control passes
+to handler after current
+instruction finishes
+(3) Interrupt
+handler runs
+(4) Handler
+returns to
+next instruction
+(1) Interrupt pin
+goes high during
+execution of
+current instruction
+Icurr
+Inext
+Figure 8.6
+Trap handling. The trap
+handler returns control
+to the next instruction in
+the application program’s
+control ﬂow.
+(2) Control passes
+to handler
+(3) Trap
+handler runs
+(4) Handler returns
+to instruction
+following the syscall
+(1) Application
+makes a
+system call
+syscall
+Inext
+After the current instruction ﬁnishes executing, the processor notices that the
+interrupt pin has gone high, reads the exception number from the system bus, and
+then calls the appropriate interrupt handler. When the handler returns, it returns
+control to the next instruction (i.e., the instruction that would have followed the
+current instruction in the control ﬂow had the interrupt not occurred). The effect is
+that the program continues executing as though the interrupt had never happened.
+The remaining classes of exceptions (traps, faults, and aborts) occur syn-
+chronously as a result of executing the current instruction. We refer to this in-
+struction as the faulting instruction.
+Traps and System Calls
+Traps are intentional exceptions that occur as a result of executing an instruction.
+Like interrupt handlers, trap handlers return control to the next instruction. The
+most important use of traps is to provide a procedure-like interface between user
+programs and the kernel, known as a system call.
+User programs often need to request services from the kernel such as reading
+a ﬁle (read), creating a new process (fork), loading a new program (execve), and
+terminating the current process (exit). To allow controlled access to such kernel
+services, processors provide a special syscall n instruction that user programs can
+execute when they want to request service n. Executing the syscall instruction
+causes a trap to an exception handler that decodes the argument and calls the
+appropriate kernel routine. Figure 8.6 summarizes the processing for a system call.
+From a programmer’s perspective, a system call is identical to a regular func-
+tion call. However, their implementations are quite different. Regular functions

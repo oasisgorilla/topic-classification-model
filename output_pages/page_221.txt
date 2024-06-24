@@ -1,0 +1,64 @@
+220
+Chapter 3
+Machine-Level Representation of Programs
+Aside
+Understanding how data movement changes a destination register
+As described, there are two different conventions regarding whether and how data movement instruc-
+tions modify the upper bytes of a destination register. This distinction is illustrated by the following
+code sequence:
+1
+movabsq $0x0011223344556677, %rax
+%rax = 0011223344556677
+2
+movb
+$-1, %al
+%rax = 00112233445566FF
+3
+movw
+$-1, %ax
+%rax = 001122334455FFFF
+4
+movl
+$-1, %eax
+%rax = 00000000FFFFFFFF
+5
+movq
+$-1, %rax
+%rax = FFFFFFFFFFFFFFFF
+In the following discussion, we use hexadecimal notation. In the example, the instruction on line 1
+initializes register %rax to the pattern 0011223344556677. The remaining instructions have immediate
+value −1 as their source values. Recall that the hexadecimal representation of −1 is of the form FF. . .F,
+where the number of F’s is twice the number of bytes in the representation. The movb instruction (line 2)
+therefore sets the low-order byte of %rax to FF, while the movw instruction (line 3) sets the low-order
+2 bytes to FFFF, with the remaining bytes unchanged. The movl instruction (line 4) sets the low-order
+4 bytes to FFFFFFFF, but it also sets the high-order 4 bytes to 00000000. Finally, the movq instruction
+(line 5) sets the complete register to FFFFFFFFFFFFFFFF.
+Instruction
+Effect
+Description
+movz
+S, R
+R ←ZeroExtend(S)
+Move with zero extension
+movzbw
+Move zero-extended byte to word
+movzbl
+Move zero-extended byte to double word
+movzwl
+Move zero-extended word to double word
+movzbq
+Move zero-extended byte to quad word
+movzwq
+Move zero-extended word to quad word
+Figure 3.5
+Zero-extending data movement instructions. These instructions have a
+register or memory location as the source and a register as the destination.
+in memory, to a register destination. Instructions in the movz class ﬁll out the
+remaining bytes of the destination with zeros, while those in the movs class ﬁll
+them out by sign extension, replicating copies of the most signiﬁcant bit of the
+source operand. Observe that each instruction name has size designators as its
+ﬁnal two characters—the ﬁrst specifying the source size, and the second specifying
+the destination size. As can be seen, there are three instructions in each of these
+classes, covering all cases of 1- and 2-byte source sizes and 2- and 4-byte destination
+sizes, considering only cases where the destination is larger than the source, of
+course.

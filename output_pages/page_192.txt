@@ -1,0 +1,47 @@
+Solutions to Practice Problems
+191
+1
+/* Determine whether the arguments can be multiplied
+2
+without overflow */
+3
+int tmult_ok(int x, int y) {
+4
+/* Compute product without overflow */
+5
+int64_t pll = (int64_t) x*y;
+6
+/* See if casting to int preserves value */
+7
+return pll == (int) pll;
+8
+}
+Note that the casting on the right-hand side of line 5 is critical. If we instead
+wrote the line as
+int64_t pll = x*y;
+the product would be computed as a 32-bit value (possibly overﬂowing) and then
+sign extended to 64 bits.
+Solution to Problem 2.37 (page 135)
+A. This change does not help at all. Even though the computation of asize will
+be accurate, the call to malloc will cause this value to be converted to a 32-bit
+unsigned number, and so the same overﬂow conditions will occur.
+B. With malloc having a 32-bit unsigned number as its argument, it cannot
+possibly allocate a block of more than 232 bytes, and so there is no point
+attempting to allocate or copy this much memory. Instead, the function
+should abort and return NULL, as illustrated by the following replacement
+to the original call to malloc (line 9):
+uint64_t required_size = ele_cnt * (uint64_t) ele_size;
+size_t request_size = (size_t) required_size;
+if (required_size != request_size)
+/* Overflow must have occurred. Abort operation */
+return NULL;
+void *result = malloc(request_size);
+if (result == NULL)
+/* malloc failed */
+return NULL;
+Solution to Problem 2.38 (page 138)
+In Chapter 3, we will see many examples of the lea instruction in action. The
+instruction is provided to support pointer arithmetic, but the C compiler often
+uses it as a way to perform multiplication by small constants.
+For each value of k, we can compute two multiples: 2k (when b is 0) and 2k + 1
+(when b is a). Thus, we can compute multiples 1, 2, 3, 4, 5, 8, and 9.

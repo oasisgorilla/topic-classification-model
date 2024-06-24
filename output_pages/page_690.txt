@@ -1,0 +1,71 @@
+Homework Problems
+689
+A. Address format (1 bit per box):
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+B. Memory reference:
+Parameter
+Value
+Block offset (CO)
+0x
+Index (CI)
+0x
+Cache tag (CT)
+0x
+Cache hit? (Y/N)
+Cache byte returned
+0x
+6.32 ◆◆
+Repeat Problem 6.31 for memory address 0x16E8.
+A. Address format (1 bit per box):
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+B. Memory reference:
+Parameter
+Value
+Cache offset (CO)
+0x
+Cache index (CI)
+0x
+Cache tag (CT)
+0x
+Cache hit? (Y/N)
+Cache byte returned
+0x
+6.33 ◆◆
+For the cache in Problem 6.30, list the eight memory addresses (in hex) that will
+hit in set 2.
+6.34 ◆◆
+Consider the following matrix transpose routine:
+1
+typedef int array[4][4];
+2
+3
+void transpose2(array dst, array src)
+4
+{
+5
+int i, j;
+6

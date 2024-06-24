@@ -1,0 +1,43 @@
+172
+Chapter 2
+Representing and Manipulating Information
+We generate arbitrary values x and y, and convert them to unsigned values as
+follows:
+/* Create some arbitrary values */
+int x = random();
+int y = random();
+/* Convert to unsigned */
+unsigned ux = (unsigned) x;
+unsigned uy = (unsigned) y;
+For each of the following C expressions, you are to indicate whether or
+not the expression always yields 1. If it always yields 1, describe the underlying
+mathematical principles. Otherwise, give an example of arguments that make it
+yield 0.
+A. (x<y) == (-x>-y)
+B. ((x+y)<<4) + y-x == 17*y+15*x
+C. ~x+~y+1 == ~(x+y)
+D. (ux-uy) == -(unsigned)(y-x)
+E. ((x >> 2) << 2) <= x
+2.83 ◆◆
+Consider numbers having a binary representation consisting of an inﬁnite string
+of the form 0.y y y y y y . . . , where y is a k-bit sequence. For example, the binary
+representation of 1
+3 is 0.01010101 . . . (y = 01), while the representation of 1
+5 is
+0.001100110011 . . . (y = 0011).
+A. Let Y = B2Uk(y), that is, the number having binary representation y. Give
+a formula in terms of Y and k for the value represented by the inﬁnite string.
+Hint: Consider the effect of shifting the binary point k positions to the right.
+B. What is the numeric value of the string for the following values of y?
+(a) 101
+(b) 0110
+(c) 010011
+2.84 ◆
+Fill in the return value for the following procedure, which tests whether its ﬁrst
+argument is less than or equal to its second. Assume the function f2u returns an
+unsigned 32-bit number having the same bit representation as its ﬂoating-point
+argument. You can assume that neither argument is NaN. The two ﬂavors of zero,
++0 and −0, are considered equal.
+int float_le(float x, float y) {
+unsigned ux = f2u(x);
+unsigned uy = f2u(y);

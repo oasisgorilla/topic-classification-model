@@ -1,0 +1,41 @@
+622
+Chapter 6
+The Memory Hierarchy
+CAS. The next three supercells are served directly from the row buffer,
+and thus are returned more quickly than the initial supercell.
+Extended data out DRAM (EDO DRAM). An enhanced form of FPM
+DRAM that allows the individual CAS signals to be spaced closer to-
+gether in time.
+Synchronous DRAM (SDRAM). Conventional, FPM, and EDO DRAMs are
+asynchronous in the sense that they communicate with the memory con-
+troller using a set of explicit control signals. SDRAM replaces many of
+these control signals with the rising edges of the same external clock sig-
+nal that drives the memory controller. Without going into detail, the net
+effect is that an SDRAM can output the contents of its supercells at a
+faster rate than its asynchronous counterparts.
+Double Data-Rate Synchronous DRAM (DDR SDRAM). DDR SDRAM is an
+enhancement of SDRAM that doubles the speed of the DRAM by using
+both clock edges as control signals. Different types of DDR SDRAMs
+are characterized by the size of a small prefetch buffer that increases the
+effective bandwidth: DDR (2 bits), DDR2 (4 bits), and DDR3 (8 bits).
+Video RAM (VRAM). Used in the frame buffers of graphics systems. VRAM
+is similar in spirit to FPM DRAM. Two major differences are that (1)
+VRAM output is produced by shifting the entire contents of the internal
+buffer in sequence and (2) VRAM allows concurrent reads and writes to
+the memory. Thus, the system can be painting the screen with the pixels
+in the frame buffer (reads) while concurrently writing new values for the
+next update (writes).
+Nonvolatile Memory
+DRAMs and SRAMs are volatile in the sense that they lose their information if the
+supply voltage is turned off. Nonvolatile memories, on the other hand, retain their
+information even when they are powered off. There are a variety of nonvolatile
+memories. For historical reasons, they are referred to collectively as read-only
+memories (ROMs), even though some types of ROMs can be written to as well as
+read. ROMs are distinguished by the number of times they can be reprogrammed
+(written to) and by the mechanism for reprogramming them.
+Aside
+Historical popularity of DRAM technologies
+Until 1995, most PCs were built with FPM DRAMs. From 1996 to 1999, EDO DRAMs dominated the
+market, while FPM DRAMs all but disappeared. SDRAMs ﬁrst appeared in 1995 in high-end systems,
+and by 2002 most PCs were built with SDRAMs and DDR SDRAMs. By 2010, most server and desktop
+systems were built with DDR3 SDRAMs. In fact, the Intel Core i7 supports only DDR3 SDRAM.

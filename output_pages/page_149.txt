@@ -1,0 +1,48 @@
+148
+Chapter 2
+Representing and Manipulating Information
+Accounting Ofﬁce (GAO) conducted a detailed analysis of the failure [76] and de-
+termined that the underlying cause was an imprecision in a numeric calculation.
+In this exercise, you will reproduce part of the GAO’s analysis.
+The Patriot system contains an internal clock, implemented as a counter
+that is incremented every 0.1 seconds. To determine the time in seconds, the
+program would multiply the value of this counter by a 24-bit quantity that was
+a fractional binary approximation to
+1
+10. In particular, the binary representation
+of 1
+10 is the nonterminating sequence 0.000110011[0011] . . .2, where the portion in
+brackets is repeated indeﬁnitely. The program approximated 0.1, as a value x, by
+considering just the ﬁrst 23 bits of the sequence to the right of the binary point:
+x = 0.00011001100110011001100. (See Problem 2.51 for a discussion of how they
+could have approximated 0.1 more precisely.)
+A. What is the binary representation of 0.1 −x?
+B. What is the approximate decimal value of 0.1 −x?
+C. The clock starts at 0 when the system is ﬁrst powered up and keeps counting
+up from there. In this case, the system had been running for around 100 hours.
+What was the difference between the actual time and the time computed by
+the software?
+D. The system predicts where an incoming missile will appear based on its
+velocity and the time of the last radar detection. Given that a Scud travels
+at around 2,000 meters per second, how far off was its prediction?
+Normally, a slight error in the absolute time reported by a clock reading would
+not affect a tracking computation. Instead, it should depend on the relative time
+between two successive readings. The problem was that the Patriot software had
+been upgraded to use a more accurate function for reading time, but not all of
+the function calls had been replaced by the new code. As a result, the tracking
+software used the accurate time for one reading and the inaccurate time for the
+other [103].
+2.4.2
+IEEE Floating-Point Representation
+Positional notation such as considered in the previous section would not be ef-
+ﬁcient for representing very large numbers. For example, the representation of
+5 × 2100 would consist of the bit pattern 101 followed by 100 zeros. Instead, we
+would like to represent numbers in a form x × 2y by giving the values of x and y.
+The IEEE ﬂoating-point standard represents a number in a form V = (−1)s ×
+M × 2E:
+. The sign s determines whether the number is negative (s = 1) or positive
+(s = 0), where the interpretation of the sign bit for numeric value 0 is handled
+as a special case.
+. The signiﬁcand M is a fractional binary number that ranges either between 1
+and 2 −ϵ or between 0 and 1 −ϵ.
+. The exponent E weights the value by a (possibly negative) power of 2.

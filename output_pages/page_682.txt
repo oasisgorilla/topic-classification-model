@@ -1,0 +1,133 @@
+Section 6.6
+Putting It Together: The Impact of Caches on Program Performance
+681
+(a) Version ijk
+code/mem/matmult/mm.c
+1
+for (i = 0; i < n; i++)
+2
+for (j = 0; j < n; j++) {
+3
+sum = 0.0;
+4
+for (k = 0; k < n; k++)
+5
+sum += A[i][k]*B[k][j];
+6
+C[i][j] += sum;
+7
+}
+code/mem/matmult/mm.c
+(c) Version jki
+code/mem/matmult/mm.c
+1
+for (j = 0; j < n; j++)
+2
+for (k = 0; k < n; k++) {
+3
+r = B[k][j];
+4
+for (i = 0; i < n; i++)
+5
+C[i][j] += A[i][k]*r;
+6
+}
+code/mem/matmult/mm.c
+(e) Version kij
+code/mem/matmult/mm.c
+1
+for (k = 0; k < n; k++)
+2
+for (i = 0; i < n; i++) {
+3
+r = A[i][k];
+4
+for (j = 0; j < n; j++)
+5
+C[i][j] += r*B[k][j];
+6
+}
+code/mem/matmult/mm.c
+(b) Version jik
+code/mem/matmult/mm.c
+1
+for (j = 0; j < n; j++)
+2
+for (i = 0; i < n; i++) {
+3
+sum = 0.0;
+4
+for (k = 0; k < n; k++)
+5
+sum += A[i][k]*B[k][j];
+6
+C[i][j] += sum;
+7
+}
+code/mem/matmult/mm.c
+(d) Version kji
+code/mem/matmult/mm.c
+1
+for (k = 0; k < n; k++)
+2
+for (j = 0; j < n; j++) {
+3
+r = B[k][j];
+4
+for (i = 0; i < n; i++)
+5
+C[i][j] += A[i][k]*r;
+6
+}
+code/mem/matmult/mm.c
+(f) Version ikj
+code/mem/matmult/mm.c
+1
+for (i = 0; i < n; i++)
+2
+for (k = 0; k < n; k++) {
+3
+r = A[i][k];
+4
+for (j = 0; j < n; j++)
+5
+C[i][j] += r*B[k][j];
+6
+}
+code/mem/matmult/mm.c
+Figure 6.44
+Six versions of matrix multiply. Each version is uniquely identiﬁed by the ordering of its loops.
+Per iteration
+Matrix multiply
+version (class)
+Loads
+Stores
+A misses
+B misses
+C misses
+Total misses
+ijk & jik (AB)
+2
+0
+0.25
+1.00
+0.00
+1.25
+jki & kji (AC)
+2
+1
+1.00
+0.00
+1.00
+2.00
+kij & ikj (BC)
+2
+1
+0.00
+0.25
+0.25
+0.50
+Figure 6.45
+Analysis of matrix multiply inner loops. The six versions partition into
+three equivalence classes, denoted by the pair of arrays that are accessed in the inner
+loop.

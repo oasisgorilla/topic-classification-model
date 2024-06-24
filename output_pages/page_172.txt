@@ -1,0 +1,39 @@
+Homework Problems
+171
+void *malloc(size_t size);
+void *memset(void *s, int c, size_t n);
+2.77 ◆◆
+Suppose we are given the task of generating code to multiply integer variable x
+by various different constant factors K. To be efﬁcient, we want to use only the
+operations +, -, and <<. For the following values of K, write C expressions to
+perform the multiplication using at most three operations per expression.
+A. K = 17
+B. K = −7
+C. K = 60
+D. K = −112
+2.78 ◆◆
+Write code for a function with the following prototype:
+/* Divide by power of 2. Assume 0 <= k < w-1 */
+int divide_power2(int x, int k);
+The function should compute x/2k with correct rounding, and it should follow
+the bit-level integer coding rules (page 164).
+2.79 ◆◆
+Write code for a function mul3div4 that, for integer argument x, computes 3 ∗
+x/4 but follows the bit-level integer coding rules (page 164). Your code should
+replicate the fact that the computation 3*x can cause overﬂow.
+2.80 ◆◆◆
+Write code for a function threefourths that, for integer argument x, computes
+the value of 3
+4x, rounded toward zero. It should not overﬂow. Your function should
+follow the bit-level integer coding rules (page 164).
+2.81 ◆◆
+Write C expressions to generate the bit patterns that follow, where ak represents
+k repetitions of symbol a. Assume a w-bit data type. Your code may contain
+references to parameters j and k, representing the values of j and k, but not a
+parameter representing w.
+A. 1w−k0k
+B. 0w−k−j1k0j
+2.82 ◆
+We are running programs where values of type int are 32 bits. They are repre-
+sented in two’s complement, and they are right shifted arithmetically. Values of
+type unsigned are also 32 bits.

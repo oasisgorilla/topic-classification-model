@@ -1,0 +1,40 @@
+Section 9.9
+Dynamic Memory Allocation
+877
+Aside
+How big is a word?
+Recall from our discussion of machine code in Chapter 3 that Intel refers to 4-byte objects as double
+words. However, throughout this section, we will assume that words are 4-byte objects and that
+double words are 8-byte objects, which is consistent with conventional terminology.
+The malloc function returns a pointer to a block of memory of at least size bytes
+that is suitably aligned for any kind of data object that might be contained in the
+block. In practice, the alignment depends on whether the code is compiled to run
+in 32-bit mode (gcc -m32) or 64-bit mode (the default). In 32-bit mode, malloc
+returns a block whose address is always a multiple of 8. In 64-bit mode, the address
+is always a multiple of 16.
+If malloc encounters a problem (e.g., the program requests a block of memory
+that is larger than the available virtual memory), then it returns NULL and sets
+errno. Malloc does not initialize the memory it returns. Applications that want
+initialized dynamic memory can use calloc, a thin wrapper around the malloc
+function that initializes the allocated memory to zero. Applications that want to
+change the size of a previously allocated block can use the realloc function.
+Dynamic memory allocators such as malloc can allocate or deallocate heap
+memory explicitly by using the mmap and munmap functions, or they can use the
+sbrk function:
+#include <unistd.h>
+void *sbrk(intptr_t incr);
+Returns: old brk pointer on success, −1 on error
+The sbrk function grows or shrinks the heap by adding incr to the kernel’s brk
+pointer. If successful, it returns the old value of brk, otherwise it returns −1 and
+sets errno to ENOMEM. If incr is zero, then sbrk returns the current value of
+brk. Calling sbrk with a negative incr is legal but tricky because the return value
+(the old value of brk) points to abs(incr) bytes past the new top of the heap.
+Programs free allocated heap blocks by calling the free function.
+#include <stdlib.h>
+void free(void *ptr);
+Returns: nothing
+The ptr argument must point to the beginning of an allocated block that was
+obtained from malloc, calloc, or realloc. If not, then the behavior of free
+is undeﬁned. Even worse, since it returns nothing, free gives no indication to
+the application that something is wrong. As we shall see in Section 9.11, this can
+produce some bafﬂing run-time errors.

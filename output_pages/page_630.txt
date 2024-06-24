@@ -1,0 +1,48 @@
+Section 6.1
+Storage Technologies
+629
+Spindle
+The disk surface
+spins at a fixed
+rotational rate.
+The read/write head
+is attached to the end
+of the arm and flies over
+the disk surface on
+a thin cushion of air.
+By moving radially, the arm
+can position the read/write
+head over any track.
+(a) Single-platter view
+Read/write heads
+Arm
+Spindle
+(b) Multiple-platter view
+Figure 6.10
+Disk dynamics.
+the arm back and forth along its radial axis, the drive can position the head over
+any track on the surface. This mechanical motion is known as a seek. Once the
+head is positioned over the desired track, then, as each bit on the track passes
+underneath, the head can either sense the value of the bit (read the bit) or alter
+the value of the bit (write the bit). Disks with multiple platters have a separate
+read/write head for each surface, as shown in Figure 6.10(b). The heads are lined
+up vertically and move in unison. At any point in time, all heads are positioned
+on the same cylinder.
+The read/write head at the end of the arm ﬂies (literally) on a thin cushion of
+air over the disk surface at a height of about 0.1 microns and a speed of about 80
+km/h. This is analogous to placing a skyscraper on its side and ﬂying it around the
+world at a height of 2.5 cm (1 inch) above the ground, with each orbit of the earth
+taking only 8 seconds! At these tolerances, a tiny piece of dust on the surface is like
+a huge boulder. If the head were to strike one of these boulders, the head would
+cease ﬂying and crash into the surface (a so-called head crash). For this reason,
+disks are always sealed in airtight packages.
+Disks read and write data in sector-size blocks. The access time for a sector
+has three main components: seek time, rotational latency, and transfer time:
+Seek time. To read the contents of some target sector, the arm ﬁrst positions the
+head over the track that contains the target sector. The time required to
+move the arm is called the seek time. The seek time, Tseek, depends on the
+previous position of the head and the speed that the arm moves across the
+surface. The average seek time in modern drives, Tavg seek, measured by
+taking the mean of several thousand seeks to random sectors, is typically
+on the order of 3 to 9 ms. The maximum time for a single seek, Tmax seek,
+can be as high as 20 ms.

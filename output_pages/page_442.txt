@@ -1,0 +1,59 @@
+Section 4.3
+Sequential Y86-64 Implementations
+441
+Figure 4.27
+SEQ fetch stage. Six
+bytes are read from the
+instruction memory using
+the PC as the starting
+address. From these bytes,
+we generate the different
+instruction ﬁelds. The PC
+increment block computes
+signal valP.
+icode
+ifun
+rA
+rB
+valC
+valP
+Need
+valC
+Need
+regids
+PC
+increment
+Align
+Bytes 1–9
+Byte 0
+imem_error
+Instruction
+memory
+PC
+Split
+Instr
+valid
+icode ifun
+referenced in the control logic are shown. The constants we use are documented
+in Figure 4.26. By convention, we use uppercase names for constant values.
+In addition to the instructions shown in Figures 4.18 to 4.21, we include the
+processing for the nop and halt instructions. The nop instruction simply ﬂows
+through stages without much processing, except to increment the PC by 1. The
+halt instruction causes the processor status to be set to HLT, causing it to halt
+operation.
+Fetch Stage
+As shown in Figure 4.27, the fetch stage includes the instruction memory hardware
+unit. This unit reads 10 bytes from memory at a time, using the PC as the address of
+the ﬁrst byte (byte 0). This byte is interpreted as the instruction byte and is split (by
+the unit labeled “Split”) into two 4-bit quantities. The control logic blocks labeled
+“icode” and “ifun” then compute the instruction and function codes as equaling
+either the values read from memory or, in the event that the instruction address
+is not valid (as indicated by the signal imem_error), the values corresponding to
+a nop instruction. Based on the value of icode, we can compute three 1-bit signals
+(shown as dashed lines):
+instr_valid. Does this byte correspond to a legal Y86-64 instruction? This signal
+is used to detect an illegal instruction.
+need_regids. Does this instruction include a register speciﬁer byte?
+need_valC. Does this instruction include a constant word?
+The signals instr_valid and imem_error (generated when the instruction address
+is out of bounds) are used to generate the status code in the memory stage.

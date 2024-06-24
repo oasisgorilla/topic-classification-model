@@ -1,0 +1,60 @@
+254
+Chapter 3
+Machine-Level Representation of Programs
+Not all conditional expressions can be compiled using conditional moves.
+Most signiﬁcantly, the abstract code we have shown evaluates both then-expr and
+else-expr regardless of the test outcome. If one of those two expressions could
+possibly generate an error condition or a side effect, this could lead to invalid
+behavior. Such is the case for our earlier example (Figure 3.16). Indeed, we put the
+side effects into this example speciﬁcally to force gcc to implement this function
+using conditional transfers.
+As a second illustration, consider the following C function:
+long cread(long *xp) {
+return (xp ? *xp : 0);
+}
+At ﬁrst, this seems like a good candidate to compile using a conditional move to
+set the result to zero when the pointer is null, as shown in the following assembly
+code:
+long cread(long *xp)
+Invalid implementation of function cread
+xp in register %rdi
+1
+cread:
+2
+movq
+(%rdi), %rax
+v = *xp
+3
+testq
+%rdi, %rdi
+Test x
+4
+movl
+$0, %edx
+Set ve = 0
+5
+cmove
+%rdx, %rax
+If x==0, v = ve
+6
+ret
+Return v
+This implementation is invalid, however, since the dereferencing of xp by the
+movq instruction (line 2) occurs even when the test fails, causing a null pointer
+dereferencing error. Instead, this code must be compiled using branching code.
+Using conditional moves also does not always improve code efﬁciency. For
+example, if either the then-expr or the else-expr evaluation requires a signiﬁcant
+computation, then this effort is wasted when the corresponding condition does
+not hold. Compilers must take into account the relative performance of wasted
+computation versus the potential for performance penalty due to branch mispre-
+diction. In truth, they do not really have enough information to make this decision
+reliably; for example, they do not know how well the branches will follow pre-
+dictable patterns. Our experiments with gcc indicate that it only uses conditional
+moves when the two expressions can be computed very easily, for example, with
+single add instructions. In our experience, gcc uses conditional control transfers
+even in many cases where the cost of branch misprediction would exceed even
+more complex computations.
+Overall, then, we see that conditional data transfers offer an alternative
+strategy to conditional control transfers for implementing conditional operations.
+They can only be used in restricted cases, but these cases are fairly common and
+provide a much better match to the operation of modern processors.

@@ -1,0 +1,43 @@
+Section 4.3
+Sequential Y86-64 Implementations
+433
+A
+B
+M
+E
+PC update
+Write back
+Memory
+Execute
+newPC
+valE, valM
+valM
+Data
+memory
+Addr, Data
+valE
+CC
+ALU
+Cnd
+aluA, aluB
+valA, valB
+srcA, srcB
+dstE, dstM
+Register
+file
+valP
+Decode
+icode, ifun
+rA, rB
+valC
+Fetch
+Instruction
+memory
+PC
+increment
+PC
+Figure 4.22
+Abstract view of SEQ, a sequential implementation. The information
+processed during execution of an instruction follows a clockwise ﬂow starting with an
+instruction fetch using the program counter (PC), shown in the lower left-hand corner
+of the ﬁgure.

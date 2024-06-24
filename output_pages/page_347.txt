@@ -1,0 +1,47 @@
+346
+Chapter 3
+Machine-Level Representation of Programs
+Machine-level programs, and their representation by assembly code, differ
+in many ways from C programs. There is minimal distinction between different
+data types. The program is expressed as a sequence of instructions, each of which
+performs a single operation. Parts of the program state, such as registers and the
+run-time stack, are directly visible to the programmer. Only low-level operations
+are provided to support data manipulation and program control. The compiler
+must use multiple instructions to generate and operate on different data structures
+and to implement control constructs such as conditionals, loops, and procedures.
+We have covered many different aspects of C and how it gets compiled. We
+have seen that the lack of bounds checking in C makes many programs prone to
+buffer overﬂows. This has made many systems vulnerable to attacks by malicious
+intruders, although recent safeguards provided by the run-time system and the
+compiler help make programs more secure.
+We have only examined the mapping of C onto x86-64, but much of what we
+have covered is handled in a similar way for other combinations of language and
+machine. For example, compiling C++ is very similar to compiling C. In fact, early
+implementations of C++ ﬁrst performed a source-to-source conversion from C++
+to C and generated object code by running a C compiler on the result. C++ objects
+are represented by structures, similar to a C struct. Methods are represented by
+pointers to the code implementing the methods. By contrast, Java is implemented
+in an entirely different fashion. The object code of Java is a special binary repre-
+sentation known as Java byte code. This code can be viewed as a machine-level
+program for a virtual machine. As its name suggests, this machine is not imple-
+mented directly in hardware. Instead, software interpreters process the byte code,
+simulating the behavior of the virtual machine. Alternatively, an approach known
+as just-in-time compilation dynamically translates byte code sequences into ma-
+chine instructions. This approach provides faster execution when code is executed
+multiple times, such as in loops. The advantage of using byte code as the low-level
+representation of a program is that the same code can be “executed” on many
+different machines, whereas the machine code we have considered runs only on
+x86-64 machines.
+Bibliographic Notes
+Both Intel and AMD provide extensive documentation on their processors. This
+includes general descriptions of an assembly-language programmer’s view of the
+hardware [2, 50], as well as detailed references about the individual instruc-
+tions [3, 51]. Reading the instruction descriptions is complicated by the facts that
+(1) all documentation is based on the Intel assembly-code format, (2) there are
+many variations for each instruction due to the different addressing and execution
+modes, and (3) there are no illustrative examples. Still, these remain the authori-
+tative references about the behavior of each instruction.
+The organization x86-64.org has been responsible for deﬁning the application
+binary interface (ABI) for x86-64 code running on Linux systems [77]. This inter-
+face describes details for procedure linkages, binary code ﬁles, and a number of
+other features that are required for machine-code programs to execute properly.

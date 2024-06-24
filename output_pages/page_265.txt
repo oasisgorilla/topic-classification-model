@@ -1,0 +1,59 @@
+264
+Chapter 3
+Machine-Level Representation of Programs
+code does not exactly match what would be obtained by a direct translation of the
+C code according to our translation rules. In particular, it has two different ret
+instructions (lines 10 and 13). However, you can ﬁll out the missing portions of
+the C code in a way that it will have equivalent behavior to the assembly code.
+Practice Problem 3.26 (solution page 372)
+A function test_one has the following overall structure:
+short test_one(unsigned short x) {
+short val = 1;
+while ( ... ) {
+.
+.
+.
+}
+return ...;
+}
+The gcc C compiler generates the following assembly code:
+short test_one(unsigned short x)
+x in %rdi
+1
+test_one:
+2
+movl
+$1, %eax
+3
+jmp
+.L5
+4
+.L6:
+5
+xorq
+%rdi, %rax
+6
+shrq
+%rdi
+Shift right by 1
+7
+.L5:
+8
+testq
+%rdi, %rdi
+9
+jne
+.L6
+10
+andl
+$0, %eax
+11
+ret
+Reverse engineer the operation of this code and then do the following:
+A. Determine what loop translation method was used.
+B. Use the assembly-code version to ﬁll in the missing parts of the C code.
+C. Describe in English what this function computes.
+For Loops
+The general form of a for loop is as follows:
+for (init-expr; test-expr; update-expr)
+body-statement

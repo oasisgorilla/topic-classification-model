@@ -1,0 +1,53 @@
+Section 2.1
+Information Storage
+93
+Expression
+Result
+!0x41
+0x00
+!0x00
+0x01
+!!0x41
+0x01
+0x69 && 0x55
+0x01
+0x69 || 0x55
+0x01
+Observe that a bitwise operation will have behavior matching that of its logical
+counterpart only in the special case in which the arguments are restricted to 0
+or 1.
+A second important distinction between the logical operators ‘&&’ and ‘||’
+versus their bit-level counterparts ‘&’ and ‘|’ is that the logical operators do not
+evaluate their second argument if the result of the expression can be determined
+by evaluating the ﬁrst argument. Thus, for example, the expression a && 5/a will
+never cause a division by zero, and the expression p && *p++ will never cause the
+dereferencing of a null pointer.
+Practice Problem 2.14 (solution page 183)
+Suppose that a and b have byte values 0x55 and 0x46, respectively. Fill in the
+following table indicating the byte values of the different C expressions:
+Expression
+Value
+Expression
+Value
+a & b
+a && b
+a | b
+a || b
+~a | ~b
+!a || !b
+a & !b
+a && ~b
+Practice Problem 2.15 (solution page 184)
+Using only bit-level and logical operations, write a C expression that is equivalent
+to x == y. In other words, it will return 1 when x and y are equal and 0 otherwise.
+2.1.9
+Shift Operations in C
+C also provides a set of shift operations for shifting bit patterns to the left and to
+the right. For an operand x having bit representation [xw−1, xw−2, . . . , x0], the C
+expression x << k yields a value with bit representation [xw−k−1, xw−k−2, . . . , x0,
+0, . . . , 0]. That is, x is shifted k bits to the left, dropping off the k most signiﬁcant
+bits and ﬁlling the right end with k zeros. The shift amount should be a value
+between 0 and w −1. Shift operations associate from left to right, so x << j << k
+is equivalent to (x << j) << k.
+There is a corresponding right shift operation, written in C as x >> k, but it has
+a slightly subtle behavior. Generally, machines support two forms of right shift:

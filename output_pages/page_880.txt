@@ -1,0 +1,56 @@
+Section 9.9
+Dynamic Memory Allocation
+879
+still points to the freed block. It is the responsibility of the application not
+to use p2 again until it is reinitialized by a new call to malloc.
+Figure 9.34(e). The program requests a two-word block. In this case, malloc
+allocates a portion of the block that was freed in the previous step and
+returns a pointer to this new block.
+9.9.2
+Why Dynamic Memory Allocation?
+The most important reason that programs use dynamic memory allocation is that
+often they do not know the sizes of certain data structures until the program
+actually runs. For example, suppose we are asked to write a C program that reads
+a list of n ASCII integers, one integer per line, from stdin into a C array. The
+input consists of the integer n, followed by the n integers to be read and stored
+into the array. The simplest approach is to deﬁne the array statically with some
+hard-coded maximum array size:
+1
+#include "csapp.h"
+2
+#define MAXN 15213
+3
+4
+int array[MAXN];
+5
+6
+int main()
+7
+{
+8
+int i, n;
+9
+10
+scanf("%d", &n);
+11
+if (n > MAXN)
+12
+app_error("Input file too big");
+13
+for (i = 0; i < n; i++)
+14
+scanf("%d", &array[i]);
+15
+exit(0);
+16
+}
+Allocating arrays with hard-coded sizes like this is often a bad idea. The value
+of MAXN is arbitrary and has no relation to the actual amount of available virtual
+memory on the machine. Further, if the user of this program wanted to read a ﬁle
+that was larger than MAXN, the only recourse would be to recompile the program
+with a larger value of MAXN. While not a problem for this simple example, the
+presence of hard-coded array bounds can become a maintenance nightmare for
+large software products with millions of lines of code and numerous users.
+A better approach is to allocate the array dynamically, at run time, after the
+value of n becomes known. With this approach, the maximum size of the array is
+limited only by the amount of available virtual memory.

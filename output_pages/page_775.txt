@@ -1,0 +1,56 @@
+774
+Chapter 8
+Exceptional Control Flow
+1
+void unix_error(char *msg) /* Unix-style error */
+2
+{
+3
+fprintf(stderr, "%s: %s\n", msg, strerror(errno));
+4
+exit(0);
+5
+}
+Given this function, our call to fork reduces from four lines to two lines:
+1
+if ((pid = fork()) < 0)
+2
+unix_error("fork error");
+We can simplify our code even further by using error-handling wrappers,
+as pioneered by Stevens in [110]. For a given base function foo, we deﬁne a
+wrapper function Foo with identical arguments but with the ﬁrst letter of the name
+capitalized. The wrapper calls the base function, checks for errors, and terminates
+if there are any problems. For example, here is the error-handling wrapper for the
+fork function:
+1
+pid_t Fork(void)
+2
+{
+3
+pid_t pid;
+4
+5
+if ((pid = fork()) < 0)
+6
+unix_error("Fork error");
+7
+return pid;
+8
+}
+Given this wrapper, our call to fork shrinks to a single compact line:
+1
+pid = Fork();
+We will use error-handling wrappers throughout the remainder of this book.
+They allow us to keep our code examples concise without giving you the mistaken
+impression that it is permissible to ignore error checking. Note that when we
+discuss system-level functions in the text, we will always refer to them by their
+lowercase base names, rather than by their uppercase wrapper names.
+See Appendix A for a discussion of Unix error handling and the error-
+handling wrappers used throughout this book. The wrappers are deﬁned in a ﬁle
+called csapp.c, and their prototypes are deﬁned in a header ﬁle called csapp.h.
+These are available online from the CS:APP Web site.
+8.4
+Process Control
+Unix provides a number of system calls for manipulating processes from C pro-
+grams. This section describes the important functions and gives examples of how
+they are used.

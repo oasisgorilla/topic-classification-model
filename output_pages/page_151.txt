@@ -1,0 +1,42 @@
+150
+Chapter 2
+Representing and Manipulating Information
+Aside
+Why set the bias this way for denormalized values?
+Having the exponent value be 1 −Bias rather than simply −Bias might seem counterintuitive. We will
+see shortly that it provides for smooth transition from denormalized to normalized values.
+s 0 0 0 0 0 0 0 0
+f
+≠ 0
+2. Denormalized
+s 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+3a. Infinity
+s 1 1 1 1 1 1 1 1
+3b. NaN
+s
+≠ 0 and ≠ 255
+f
+1. Normalized
+Figure 2.33
+Categories of single-precision ﬂoating-point values. The value of the
+exponent determines whether the number is (1) normalized, (2) denormalized, or (3) a
+special value.
+binary point to the left of the most signiﬁcant bit. The signiﬁcand is deﬁned to be
+M = 1 + f . This is sometimes called an implied leading 1 representation, because
+we can view M to be the number with binary representation 1.fn−1fn−2 . . . f0. This
+representation is a trick for getting an additional bit of precision for free, since we
+can always adjust the exponent E so that signiﬁcand M is in the range 1 ≤M < 2
+(assuming there is no overﬂow). We therefore do not need to explicitly represent
+the leading bit, since it always equals 1.
+Case 2: Denormalized Values
+When the exponent ﬁeld is all zeros, the represented number is in denormalized
+form. In this case, the exponent value is E = 1 −Bias, and the signiﬁcand value is
+M = f , that is, the value of the fraction ﬁeld without an implied leading 1.
+Denormalized numbers serve two purposes. First, they provide a way to
+represent numeric value 0, since with a normalized number we must always have
+M ≥1, and hence we cannot represent 0. In fact, the ﬂoating-point representation
+of +0.0 has a bit pattern of all zeros: the sign bit is 0, the exponent ﬁeld is all
+zeros (indicating a denormalized value), and the fraction ﬁeld is all zeros, giving
+M = f = 0. Curiously, when the sign bit is 1, but the other ﬁelds are all zeros, we
+get the value −0.0. With IEEE ﬂoating-point format, the values −0.0 and +0.0
+are considered different in some ways and the same in others.

@@ -1,0 +1,45 @@
+Section 2.4
+Floating Point
+159
+and y as real numbers, and some operation ⊙deﬁned over real numbers, the com-
+putation should yield Round(x ⊙y), the result of applying rounding to the exact
+result of the real operation. In practice, there are clever tricks ﬂoating-point unit
+designers use to avoid performing this exact computation, since the computation
+need only be sufﬁciently precise to guarantee a correctly rounded result. When
+one of the arguments is a special value, such as −0, ∞, or NaN, the standard spec-
+iﬁes conventions that attempt to be reasonable. For example, 1/−0 is deﬁned to
+yield −∞, while 1/+0 is deﬁned to yield +∞.
+One strength of the IEEE standard’s method of specifying the behavior of
+ﬂoating-point operations is that it is independent of any particular hardware or
+software realization. Thus, we can examine its abstract mathematical properties
+without considering how it is actually implemented.
+We saw earlier that integer addition, both unsigned and two’s complement,
+forms an abelian group. Addition over real numbers also forms an abelian group,
+but we must consider what effect rounding has on these properties. Let us deﬁne
+x +f y to be Round(x + y). This operation is deﬁned for all values of x and y,
+although it may yield inﬁnity even when both x and y are real numbers due to
+overﬂow. The operation is commutative, with x +f y = y +f x for all values of x and
+y. On the other hand, the operation is not associative. For example, with single-
+precision ﬂoating point the expression (3.14+1e10)-1e10 evaluates to 0.0—the
+value 3.14 is lost due to rounding. On the other hand, the expression 3.14+(1e10-
+1e10) evaluates to 3.14. As with an abelian group, most values have inverses
+under ﬂoating-point addition, that is, x +f −x = 0. The exceptions are inﬁnities
+(since +∞−∞= NaN), and NaNs, since NaN +f x = NaN for any x.
+The lack of associativity in ﬂoating-point addition is the most important group
+property that is lacking. It has important implications for scientiﬁc programmers
+and compiler writers. For example, suppose a compiler is given the following code
+fragment:
+x = a + b + c;
+y = b + c + d;
+The compiler might be tempted to save one ﬂoating-point addition by generating
+the following code:
+t = b + c;
+x = a + t;
+y = t + d;
+However, this computation might yield a different value for x than would the
+original, since it uses a different association of the addition operations. In most
+applications, the difference would be so small as to be inconsequential. Unfor-
+tunately, compilers have no way of knowing what trade-offs the user is willing to
+make between efﬁciency and faithfulness to the exact behavior of the original pro-
+gram. As a result, they tend to be very conservative, avoiding any optimizations
+that could have even the slightest effect on functionality.

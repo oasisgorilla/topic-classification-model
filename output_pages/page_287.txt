@@ -1,0 +1,116 @@
+286
+Chapter 3
+Machine-Level Representation of Programs
+(a) C code for calling function
+long call_proc()
+{
+long
+x1 = 1; int
+x2 = 2;
+short x3 = 3; char x4 = 4;
+proc(x1, &x1, x2, &x2, x3, &x3, x4, &x4);
+return (x1+x2)*(x3-x4);
+}
+(b) Generated assembly code
+long call_proc()
+1
+call_proc:
+Set up arguments to proc
+2
+subq
+$32, %rsp
+Allocate 32-byte stack frame
+3
+movq
+$1, 24(%rsp)
+Store 1 in &x1
+4
+movl
+$2, 20(%rsp)
+Store 2 in &x2
+5
+movw
+$3, 18(%rsp)
+Store 3 in &x3
+6
+movb
+$4, 17(%rsp)
+Store 4 in &x4
+7
+leaq
+17(%rsp), %rax
+Create &x4
+8
+movq
+%rax, 8(%rsp)
+Store &x4 as argument 8
+9
+movl
+$4, (%rsp)
+Store 4 as argument 7
+10
+leaq
+18(%rsp), %r9
+Pass &x3 as argument 6
+11
+movl
+$3, %r8d
+Pass 3 as argument 5
+12
+leaq
+20(%rsp), %rcx
+Pass &x2 as argument 4
+13
+movl
+$2, %edx
+Pass 2 as argument 3
+14
+leaq
+24(%rsp), %rsi
+Pass &x1 as argument 2
+15
+movl
+$1, %edi
+Pass 1 as argument 1
+Call proc
+16
+call
+proc
+Retrieve changes to memory
+17
+movslq
+20(%rsp), %rdx
+Get x2 and convert to long
+18
+addq
+24(%rsp), %rdx
+Compute x1+x2
+19
+movswl
+18(%rsp), %eax
+Get x3 and convert to int
+20
+movsbl
+17(%rsp), %ecx
+Get x4 and convert to int
+21
+subl
+%ecx, %eax
+Compute x3-x4
+22
+cltq
+Convert to long
+23
+imulq
+%rdx, %rax
+Compute (x1+x2) * (x3-x4)
+24
+addq
+$32, %rsp
+Deallocate stack frame
+25
+ret
+Return
+Figure 3.32
+Example of code to call function proc, deﬁned in Figure 3.29. This code
+creates a stack frame.

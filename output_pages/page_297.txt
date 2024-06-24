@@ -1,0 +1,61 @@
+296
+Chapter 3
+Machine-Level Representation of Programs
+long sum_element(long i, long j)
+i in %rdi, j in %rsi
+1
+sum_element:
+2
+leaq
+0(,%rdi,8), %rdx
+3
+subq
+%rdi, %rdx
+4
+addq
+%rsi, %rdx
+5
+leaq
+(%rsi,%rsi,4), %rax
+6
+addq
+%rax, %rdi
+7
+movq
+Q(,%rdi,8), %rax
+8
+addq
+P(,%rdx,8), %rax
+9
+ret
+Use your reverse engineering skills to determine the values of M and N based
+on this assembly code.
+3.8.4
+Fixed-Size Arrays
+The C compiler is able to make many optimizations for code operating on multi-
+dimensional arrays of ﬁxed size. Here we demonstrate some of the optimizations
+made by gcc when the optimization level is set with the ﬂag -O1. Suppose we
+declare data type fix_matrix to be 16 × 16 arrays of integers as follows:
+#define N 16
+typedef int fix_matrix[N][N];
+(This example illustrates a good coding practice. Whenever a program uses some
+constant as an array dimension or buffer size, it is best to associate a name with
+it via a #define declaration, and then use this name consistently, rather than
+the numeric value. That way, if an occasion ever arises to change the value, it
+can be done by simply modifying the #define declaration.) The code in Figure
+3.37(a) computes element i, k of the product of arrays A and B—that is, the
+inner product of row i from A and column k from B. This product is given by
+the formula 
+0≤j<N ai,j . bj,k. Gcc generates code that we then recoded into
+C, shown as function fix_prod_ele_opt in Figure 3.37(b). This code contains
+a number of clever optimizations. It removes the integer index j and converts all
+array references to pointer dereferences. This involves (1) generating a pointer,
+which we have named Aptr, that points to successive elements in row i of A,
+(2) generating a pointer, which we have named Bptr, that points to successive
+elements in column k of B, and (3) generating a pointer, which we have named
+Bend, that equals the value Bptr will have when it is time to terminate the loop.
+The initial value for Aptr is the address of the ﬁrst element of row i of A, given
+by the C expression &A[i][0]. The initial value for Bptr is the address of the ﬁrst
+element of column k of B, given by the C expression &B[0][k]. The value for Bend
+is the index of what would be the (n + 1)st element in column j of B, given by the
+C expression &B[N][k].

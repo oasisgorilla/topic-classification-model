@@ -1,0 +1,44 @@
+Section 7.10
+Dynamic Linking with Shared Libraries
+735
+Aside
+How do loaders really work?
+Our description of loading is conceptually correct but intentionally not entirely accurate. To understand
+how loading really works, you must understand the concepts of processes, virtual memory, and memory
+mapping, which we haven’t discussed yet. As we encounter these concepts later in Chapters 8 and 9,
+we will revisit loading and gradually reveal the mystery to you.
+For the impatient reader, here is a preview of how loading really works: Each program in a Linux
+system runs in the context of a process with its own virtual address space. When the shell runs a program,
+the parent shell process forks a child process that is a duplicate of the parent. The child process invokes
+the loader via the execve system call. The loader deletes the child’s existing virtual memory segments
+and creates a new set of code, data, heap, and stack segments. The new stack and heap segments are
+initialized to zero. The new code and data segments are initialized to the contents of the executable
+ﬁle by mapping pages in the virtual address space to page-size chunks of the executable ﬁle. Finally,
+the loader jumps to the _start address, which eventually calls the application’s main routine. Aside
+from some header information, there is no copying of data from disk to memory during loading. The
+copying is deferred until the CPU references a mapped virtual page, at which point the operating system
+automatically transfers the page from disk to memory using its paging mechanism.
+of how much there is in a system. Disk space and kitchen trash cans share this same
+property.)
+Shared libraries are modern innovations that address the disadvantages of
+static libraries. A shared library is an object module that, at either run time or load
+time, can be loaded at an arbitrary memory address and linked with a program in
+memory. This process is known as dynamic linking and is performed by a program
+called a dynamic linker. Shared libraries are also referred to as shared objects, and
+on Linux systems they are indicated by the .so sufﬁx. Microsoft operating systems
+make heavy use of shared libraries, which they refer to as DLLs (dynamic link
+libraries).
+Shared libraries are “shared” in two different ways. First, in any given ﬁle
+system, there is exactly one .so ﬁle for a particular library. The code and data in
+this .so ﬁle are shared by all of the executable object ﬁles that reference the library,
+as opposed to the contents of static libraries, which are copied and embedded in
+the executables that reference them. Second, a single copy of the .text section of
+a shared library in memory can be shared by different running processes. We will
+explore this in more detail when we study virtual memory in Chapter 9.
+Figure 7.16 summarizes the dynamic linking process for the example program
+in Figure 7.7. To build a shared library libvector.so of our example vector
+routines in Figure 7.6, we invoke the compiler driver with some special directives
+to the compiler and linker:
+linux> gcc -shared -fpic -o libvector.so addvec.c multvec.c
+The -fpic ﬂag directs the compiler to generate position-independent code (more
+on this in the next section). The -shared ﬂag directs the linker to create a shared

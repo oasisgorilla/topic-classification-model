@@ -1,0 +1,44 @@
+408
+Chapter 4
+Processor Architecture
+Aside
+Getting the details right: Inconsistencies across x86 models
+Practice Problems 4.7 and 4.8 are designed to help us devise a consistent set of conventions for instruc-
+tions that push or pop the stack pointer. There seems to be little reason why one would want to perform
+either of these operations, and so a natural question to ask is, “Why worry about such picky details?”
+Several useful lessons can be learned about the importance of consistency from the following
+excerpt from the Intel documentation of the push instruction [51]:
+For IA-32 processors from the Intel 286 on, the PUSH ESP instruction pushes the value of the ESP
+register as it existed before the instruction was executed. (This is also true for Intel 64 architecture,
+real-address and virtual-8086 modes of IA-32 architecture.) For the Intel® 8086 processor, the
+PUSH SP instruction pushes the new value of the SP register (that is the value after it has been
+decremented by 2).
+(PUSH ESP instruction. Intel Corporation. 50.)
+Although the exact details of this note may be difﬁcult to follow, we can see that it states that,
+depending on what mode an x86 processor operates under, it will do different things when instructed to
+push the stack pointer register. Some modes push the original value, while others push the decremented
+value. (Interestingly, there is no corresponding ambiguity about popping to the stack pointer register.)
+There are two drawbacks to this inconsistency:
+. It decreases code portability. Programs may have different behavior depending on the processor
+mode. Although the particular instruction is not at all common, even the potential for incompati-
+bility can have serious consequences.
+. It complicates the documentation. As we see here, a special note is required to try to clarify the
+differences. The documentation for x86 is already complex enough without special cases such as
+this one.
+We conclude, therefore, that working out details in advance and striving for complete consistency can
+save a lot of trouble in the long run.
+4.2
+Logic Design and the Hardware Control Language HCL
+In hardware design, electronic circuits are used to compute functions on bits and
+to store bits in different kinds of memory elements. Most contemporary circuit
+technology represents different bit values as high or low voltages on signal wires.
+In current technology, logic value 1 is represented by a high voltage of around 1.0
+volt, while logic value 0 is represented by a low voltage of around 0.0 volts. Three
+major components are required to implement a digital system: combinational logic
+to compute functions on the bits, memory elements to store bits, and clock signals
+to regulate the updating of the memory elements.
+In this section, we provide a brief description of these different components.
+We also introduce HCL (for “hardware control language”), the language that
+we use to describe the control logic of the different processor designs. We only
+describe HCL informally here. A complete reference for HCL can be found in
+Web Aside arch:hcl on page 508.

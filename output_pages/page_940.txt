@@ -1,0 +1,36 @@
+Section 10.6
+Reading File Metadata
+939
+Aside
+Origins of the Rio package
+The Rio functions are inspired by the readline, readn, and writen functions described by W. Richard
+Stevens in his classic network programming text [110]. The rio_readn and rio_writen functions are
+identical to the Stevens readn and writen functions. However, the Stevens readline function has some
+limitations that are corrected in Rio. First, because readline is buffered and readn is not, these two
+functions cannot be used together on the same descriptor. Second, because it uses a static buffer, the
+Stevens readline function is not thread-safe, which required Stevens to introduce a different thread-
+safe version called readline_r. We have corrected both of these ﬂaws with the rio_readlineb and
+rio_readnb functions, which are mutually compatible and thread-safe.
+10.6
+Reading File Metadata
+An application can retrieve information about a ﬁle (sometimes called the ﬁle’s
+metadata) by calling the stat and fstat functions.
+#include <unistd.h>
+#include <sys/stat.h>
+int stat(const char *filename, struct stat *buf);
+int fstat(int fd, struct stat *buf);
+Returns: 0 if OK, −1 on error
+The stat function takes as input a ﬁlename and ﬁlls in the members of a stat
+structure shown in Figure 10.9. The fstat function is similar, but it takes a ﬁle
+descriptor instead of a ﬁlename. We will need the st_mode and st_size members
+of the stat structure when we discuss Web servers in Section 11.5. The other
+members are beyond our scope.
+The st_size member contains the ﬁle size in bytes. The st_mode member
+encodes both the ﬁle permission bits (Figure 10.2) and the ﬁle type (Section 10.2).
+Linux deﬁnes macro predicates in sys/stat.h for determining the ﬁle type from
+the st_mode member:
+S_ISREG(m). Is this a regular ﬁle?
+S_ISDIR(m). Is this a directory ﬁle?
+S_ISSOCK(m). Is this a network socket?
+Figure 10.10 shows how we might use these macros and the stat function to read
+and interpret a ﬁle’s st_mode bits.

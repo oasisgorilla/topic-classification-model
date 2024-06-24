@@ -1,0 +1,62 @@
+Section 4.3
+Sequential Y86-64 Implementations
+443
+Figure 4.28
+SEQ decode and write-back
+stage. The instruction ﬁelds are
+decoded to generate register
+identiﬁers for four addresses (two
+read and two write) used by
+the register ﬁle. The values read
+from the register ﬁle become the
+signals valA and valB. The two
+write-back values valE and valM
+serve as the data for the writes.
+valA
+Cnd
+valB
+valM
+valE
+Register
+file
+A
+dstE
+dstM
+srcA
+srcB
+dstE dstM srcA srcB
+rA
+icode
+rB
+B
+M
+E
+The desired value depends on the instruction type, as shown in the ﬁrst row for the
+decode stage in Figures 4.18 to 4.21. Combining all of these entries into a single
+computation gives the following HCL description of srcA (recall that RESP is the
+register ID of %rsp):
+word srcA = [
+icode in { IRRMOVQ, IRMMOVQ, IOPQ, IPUSHQ
+} : rA;
+icode in { IPOPQ, IRET } : RRSP;
+1 : RNONE; # Don’t need register
+];
+Practice Problem 4.20 (solution page 524)
+The register signal srcB indicates which register should be read to generate the
+signal valB. The desired value is shown as the second step in the decode stage in
+Figures 4.18 to 4.21. Write HCL code for srcB.
+Register ID dstE indicates the destination register for write port E, where the
+computed value valE is stored. This is shown in Figures 4.18 to 4.21 as the ﬁrst
+step in the write-back stage. If we ignore for the moment the conditional move
+instructions, then we can combine the destination registers for all of the different
+instructions to give the following HCL description of dstE:
+# WARNING: Conditional move not implemented correctly here
+word dstE = [
+icode in { IRRMOVQ } : rB;
+icode in { IIRMOVQ, IOPQ} : rB;
+icode in { IPUSHQ, IPOPQ, ICALL, IRET } : RRSP;
+1 : RNONE;
+# Don’t write any register
+];
+We will revisit this signal and how to implement conditional moves when we
+examine the execute stage.

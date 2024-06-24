@@ -1,0 +1,56 @@
+898
+Chapter 9
+Virtual Memory
+static void place(void *bp, size_t asize)
+Your solution should place the requested block at the beginning of the free
+block, splitting only if the size of the remainder would equal or exceed the mini-
+mum block size.
+9.9.13
+Explicit Free Lists
+The implicit free list provides us with a simple way to introduce some basic
+allocator concepts. However, because block allocation time is linear in the total
+number of heap blocks, the implicit free list is not appropriate for a general-
+purpose allocator (although it might be ﬁne for a special-purpose allocator where
+the number of heap blocks is known beforehand to be small).
+A better approach is to organize the free blocks into some form of explicit
+data structure. Since by deﬁnition the body of a free block is not needed by the
+program, the pointers that implement the data structure can be stored within the
+bodies of the free blocks. For example, the heap can be organized as a doubly
+linked free list by including a pred (predecessor) and succ (successor) pointer in
+each free block, as shown in Figure 9.48.
+Using a doubly linked list instead of an implicit free list reduces the ﬁrst-ﬁt
+allocation time from linear in the total number of blocks to linear in the number
+of free blocks. However, the time to free a block can be either linear or constant,
+depending on the policy we choose for ordering the blocks in the free list.
+Block size
+Payload
+(a) Allocated block
+Padding (optional)
+a/f
+Block size
+a/f
+31
+3
+2
+1
+0
+Header
+Footer
+Block size
+pred (predecessor)
+(b) Free block
+succ (successor)
+Padding (optional)
+a/f
+Block size
+a/f
+31
+3
+2
+1
+0
+Header
+Old payload
+Footer
+Figure 9.48
+Format of heap blocks that use doubly linked free lists.

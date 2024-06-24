@@ -1,0 +1,168 @@
+1100
+Index
+GNU compiler collection. See gcc
+(GNU compiler collection)
+compiler
+GNU project, 42
+GOT (global offset table), 741,
+741–743
+goto [C] control transfer statement,
+246, 269
+goto code, 246
+gprof Unix proﬁler, 598, 598–599
+gradual underﬂow, 151
+granularity of concurrency, 1021
+graphic user interfaces for debuggers,
+315
+graphics adapters, 632
+graphs
+data-ﬂow, 561–566
+process, 777, 778
+progress. See progress graphs
+reachability, 902
+greater than signs >
+deferencing operation, 302
+“get from” operator, 926
+right hoinkies, 945
+groups
+abelian, 125
+process, 795
+guard values, 322
+guarded-do translation, 261
+.h header ﬁles, 722
+half-precision ﬂoating-point
+representation, 173, 173
+halt [Y86-64] halt instruction
+execution, 393
+code for, 440–441
+exceptions, 400, 480–483
+in pipelining, 498
+handlers
+exception, 760, 760
+interrupt, 762
+signal, 794, 799
+handling signals
+blocking and unblocking, 800–801
+portable, 810–811
+hardware caches. See caches and cache
+memory
+hardware control language (HCL),
+408
+Boolean expressions, 410–411
+integer expressions, 412–416
+logic gates, 409
+hardware description languages
+(HDLs), 409, 503
+hardware exceptions, 760
+hardware interrupts, 762
+hardware management, 50–51
+hardware organization, 44
+buses, 44
+I/O devices, 45
+main memory, 45
+processors, 45–46
+hardware registers, 417–420
+hardware structure for Y86-64,
+432–436
+hardware units, 432–434, 437
+hash tables, 603–604
+Haswell microarchitecture, 861
+Haswell microprocessors, 204, 251,
+330, 543, 557, 559
+hazards in pipelining, 390, 465
+avoiding, 477–480
+classes, 471
+forwarding for, 472–475
+load/use, 475–477
+overview, 465–469
+stalling for, 469–472
+HCL (hardware control language),
+408
+Boolean expressions, 410–411
+integer expressions, 412–416
+logic gates, 409
+HDLs (hardware description
+languages), 409, 503
+head crashes, 629
+HEAD method in HTTP, 987
+header ﬁles
+static libraries, 723
+system, 782
+header tables in ELF, 710, 732
+headers
+blocks, 883
+Ethernet, 956
+request, 987
+response, 988
+heap, 54, 54–55, 875
+dynamic memory allocation, 875–
+876
+Linux systems, 733
+referencing data in, 910–911
+requests, 886
+hello [CS:APP] C hello program, 38,
+46–48
+help command, 316
+helper functions, sockets interface,
+978–980
+Hennessy, John, 397, 507
+heterogeneous data structures, 301
+data alignment, 309–312
+structures, 301–305
+unions, 305–309
+hexadecimal (hex) notation, 72, 72–75
+hierarchies
+domain name, 963
+storage devices, 50, 50, 645–650
+high-level design performance
+strategies, 597
+hit rates, 667
+hit time, 667
+hits
+cache, 648, 667
+write, 666
+hlt [x86-64] halt instruction
+execution, 393
+HLT [Y86-64] status code indicating
+halt instruction, 400
+hoinkies, 945, 946
+holding mutexes, 1039
+Horner, William, 566
+Horner’s method, 566
+host bus adapters, 633
+host bus interfaces, 633
+host entries, 964
+host information program command,
+962
+hostname command, 962
+hosts
+client-server model, 955
+network, 958
+number of, 966
+sockets interface, 973–978
+htest script, 501
+HTML (hypertext markup language),
+984, 984–985
+htonl [Unix] convert host-to-network
+long, 961
+htons [Unix] convert host-to-network
+short, 961
+HTTP. See hypertext transfer protocol
+(HTTP)
+hubs, 956
+hyperlinks, 984
+hypertext markup language (HTML),
+984, 984–985
+hypertext transfer protocol (HTTP),
+984
+dynamic content, 989–990
+methods, 987–988
+requests, 987, 987–988
+responses, 988, 988–989
+transactions, 986–987
+hyperthreading, 60, 204
+HyperTransport interconnect, 624
+i-caches (instruction caches), 554, 667
+.i source ﬁles, 707
+i386 microprocessor, 203
+i486 microprocessor, 203

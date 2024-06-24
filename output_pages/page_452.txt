@@ -1,0 +1,134 @@
+Section 4.4
+General Principles of Pipelining
+451
+B
+A
+C
+B
+A
+Clock
+Clock
+Clock
+Clock
+Clock
+I1
+I2
+I3
+Time
+Time  239
+120
+240
+360
+2
+1
+1
+Time  241
+2
+Time  300
+3
+Time  359
+4
+3 4
+Comb.
+logic
+A
+R
+e
+g
+100 ps
+20 ps
+Comb.
+logic
+B
+R
+e
+g
+100 ps
+20 ps
+Comb.
+logic
+C
+R
+e
+g
+100 ps
+20 ps
+Comb.
+logic
+A
+R
+e
+g
+100 ps
+20 ps
+Comb.
+logic
+B
+R
+e
+g
+100 ps
+20 ps
+Comb.
+logic
+C
+R
+e
+g
+100 ps
+20 ps
+Comb.
+logic
+A
+R
+e
+g
+100 ps
+20 ps
+Comb.
+logic
+B
+R
+e
+g
+100 ps
+20 ps
+Comb.
+logic
+C
+R
+e
+g
+100 ps
+20 ps
+Comb.
+logic
+A
+R
+e
+g
+100 ps
+20 ps
+Comb.
+logic
+B
+R
+e
+g
+100 ps
+20 ps
+Comb.
+logic
+C
+R
+e
+g
+100 ps
+20 ps
+Figure 4.35
+One clock cycle of pipeline operation. Just before the clock rises at
+time 240 (point 1), instructions I1 (shown in dark gray) and I2 (shown in blue) have
+completed stages B and A. After the clock rises, these instructions begin propagating
+through stages C and B, while instruction I3 (shown in light gray) begins propagating
+through stage A (points 2 and 3). Just before the clock rises again, the results for the
+instructions have propagated to the inputs of the pipeline registers (point 4).

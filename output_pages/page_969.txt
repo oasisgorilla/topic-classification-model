@@ -1,0 +1,48 @@
+968
+Chapter 11
+Network Programming
+Aside
+Origins of the sockets interface
+The original sockets interface was developed by researchers at University of California, Berkeley, in
+the early 1980s. For this reason, it is often referred to as Berkeley sockets. The Berkeley researchers
+developed the sockets interface to work with any underlying protocol. The ﬁrst implementation was
+for TCP/IP
+, which they included in the Unix 4.2BSD kernel and distributed to numerous universities
+and labs. This was an important event in Internet history. Almost overnight, thousands of people had
+access to TCP/IP and its source codes. It generated tremendous excitement and sparked a ﬂurry of new
+research in networking and internetworking.
+11.4
+The Sockets Interface
+The sockets interface is a set of functions that are used in conjunction with the Unix
+I/O functions to build network applications. It has been implemented on most
+modern systems, including all Unix variants as well as Windows and Macintosh
+systems. Figure 11.12 gives an overview of the sockets interface in the context of a
+typical client-server transaction. You should use this picture as a road map when
+we discuss the individual functions.
+Client
+socket
+open_clientfd
+open_listenfd
+connect
+rio_writen
+rio_readlineb
+rio_readlineb
+close
+Server
+Connection
+request
+Await connection
+request from 
+next client
+EOF
+socket
+getaddrinfo
+getaddrinfo
+bind
+listen
+accept
+rio_writen
+rio_readlineb
+close
+Figure 11.12
+Overview of network applications based on the sockets interface.

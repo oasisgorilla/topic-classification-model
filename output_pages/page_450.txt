@@ -1,0 +1,61 @@
+Section 4.4
+General Principles of Pipelining
+449
+Figure 4.32
+Unpipelined computation
+hardware. On each 320
+ps cycle, the system
+spends 300 ps evaluating
+a combinational logic
+function and 20 ps storing
+the results in an output
+register.
+(a) Hardware: Unpipelined
+(b) Pipeline diagram
+300 ps
+20 ps
+Delay  320 ps
+Throughput  3.12 GIPS
+Combinational
+logic
+R
+e
+g
+Clock
+I1
+I2
+I3
+Time
+the logic decodes these to generate audio signals. The computational block in the
+ﬁgure is implemented as combinational logic, meaning that the signals will pass
+through a series of logic gates, with the outputs becoming some function of the
+inputs after some time delay.
+In contemporary logic design, we measure circuit delays in units of picosec-
+onds (abbreviated “ps”), or 10−12 seconds. In this example, we assume the com-
+binational logic requires 300 ps, while the loading of the register requires 20 ps.
+Figure 4.32 shows a form of timing diagram known as a pipeline diagram. In this
+diagram, time ﬂows from left to right. A series of instructions (here named I1, I2,
+and I3) are written from top to bottom. The solid rectangles indicate the times
+during which these instructions are executed. In this implementation, we must
+complete one instruction before beginning the next. Hence, the boxes do not over-
+lap one another vertically. The following formula gives the maximum rate at which
+we could operate the system:
+Throughput =
+1 instruction
+(20 + 300) picoseconds
+. 1,000 picoseconds
+1 nanosecond
+≈3.12 GIPS
+We express throughput in units of giga-instructions per second (abbreviated
+GIPS), or billions of instructions per second. The total time required to perform
+a single instruction from beginning to end is known as the latency. In this system,
+the latency is 320 ps, the reciprocal of the throughput.
+Suppose we could divide the computation performed by our system into three
+stages, A, B, and C, where each requires 100 ps, as illustrated in Figure 4.33. Then
+we could put pipeline registers between the stages so that each instruction moves
+through the system in three steps, requiring three complete clock cycles from
+beginning to end. As the pipeline diagram in Figure 4.33 illustrates, we could allow
+I2 to enter stage A as soon as I1 moves from A to B, and so on. In steady state, all
+three stages would be active, with one instruction leaving and a new one entering
+the system every clock cycle. We can see this during the third clock cycle in the
+pipeline diagram where I1 is in stage C, I2 is in stage B, and I3 is in stage A. In

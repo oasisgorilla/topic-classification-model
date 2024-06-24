@@ -1,0 +1,50 @@
+710
+Chapter 7
+Linking
+Figure 7.3
+Typical ELF relocatable
+object ﬁle.
+Section header table 
+Describes
+object file
+sections
+Sections
+.strtab
+.line
+.debug
+.rel.data
+.rel.text
+.symtab
+.bss
+.data
+.rodata
+.text
+ELF header
+0
+7.4
+Relocatable Object Files
+Figure 7.3 shows the format of a typical ELF relocatable object ﬁle. The ELF
+header begins with a 16-byte sequence that describes the word size and byte
+ordering of the system that generated the ﬁle. The rest of the ELF header contains
+information that allows a linker to parse and interpret the object ﬁle. This includes
+the size of the ELF header, the object ﬁle type (e.g., relocatable, executable, or
+shared), the machine type (e.g., x86-64), the ﬁle offset of the section header table,
+and the size and number of entries in the section header table. The locations
+and sizes of the various sections are described by the section header table, which
+contains a ﬁxed-size entry for each section in the object ﬁle.
+Sandwiched between the ELF header and the section header table are the
+sections themselves. A typical ELF relocatable object ﬁle contains the following
+sections:
+.text The machine code of the compiled program.
+.rodata Read-only data such as the format strings in printf statements, and
+jump tables for switch statements.
+.data Initialized global and static C variables. Local C variables are maintained
+at run time on the stack and do not appear in either the .data or .bss
+sections.
+.bss Uninitialized global and static C variables, along with any global or static
+variables that are initialized to zero. This section occupies no actual space
+in the object ﬁle; it is merely a placeholder. Object ﬁle formats distinguish
+between initialized and uninitialized variables for space efﬁciency: unini-
+tialized variables do not have to occupy any actual disk space in the object
+ﬁle. At run time, these variables are allocated in memory with an initial
+value of zero.

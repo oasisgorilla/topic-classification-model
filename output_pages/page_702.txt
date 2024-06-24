@@ -1,0 +1,79 @@
+Solutions to Practice Problems
+701
+Parameter
+Value
+Cache block offset
+0x1
+Cache set index
+0x4
+Cache tag
+0x51
+Cache hit? (Y/N)
+N
+Cache byte returned
+—-
+Solution to Problem 6.16 (page 666)
+This problem is a sort of inverse version of Practice Problems 6.12–6.15 that
+requires you to work backward from the contents of the cache to derive the
+addresses that will hit in a particular set. In this case, set 3 contains one valid
+line with a tag of 0x32. Since there is only one valid line in the set, four addresses
+will hit. These addresses have the binary form 0 0110 0100 11xx. Thus, the four
+hex addresses that hit in set 3 are
+0x064C, 0x064D, 0x064E, and 0x064F
+Solution to Problem 6.17 (page 672)
+A. The key to solving this problem is to visualize the picture in Figure 6.48.
+Notice that each cache line holds exactly one row of the array, that the cache
+is exactly large enough to hold one array, and that for all i, row i of src and
+dst maps to the same cache line. Because the cache is too small to hold both
+arrays, references to one array keep evicting useful lines from the other array.
+For example, the write to dst[0][0] evicts the line that was loaded when
+we read src[0][0]. So when we next read src[0][1], we have a miss.
+dst array
+src array
+Col. 0
+Col. 1
+Col. 0
+Col. 1
+Row 0
+m
+m
+Row 0
+m
+m
+Row 1
+m
+m
+Row 1
+m
+h
+B. When the cache is 32 bytes, it is large enough to hold both arrays. Thus, the
+only misses are the initial cold misses.
+dst array
+src array
+Col. 0
+Col. 1
+Col. 0
+Col. 1
+Row 0
+m
+h
+Row 0
+m
+h
+Row 1
+m
+h
+Row 1
+m
+h
+Figure 6.48
+Figure for solution to
+Problem 6.17.
+Main memory
+0
+ 16
+Line 0
+Line 1
+src
+dst
+Cache

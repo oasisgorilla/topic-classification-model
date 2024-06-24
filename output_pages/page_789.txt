@@ -1,0 +1,52 @@
+788
+Chapter 8
+Exceptional Control Flow
+Figure 8.22
+Typical organization of
+the user stack when a
+new program starts.
+Bottom of stack
+Top of stack
+Null-terminated
+environment variable strings
+Null-terminated
+command-line arg strings
+Stack frame for
+libc_start_main
+Future stack frame for
+main
+envp[n] == NULL
+envp[n-1]
+…
+…
+envp[0]
+argv[argc] = NULL
+argv[argc-1] 
+argv[0]
+environ
+(global var)
+envp
+(in %rdx)
+argv
+(in %rsi)
+argc
+(in %rdi)
+The getenv function searches the environment array for a string name=value. If
+found, it returns a pointer to value; otherwise, it returns NULL.
+#include <stdlib.h>
+int setenv(const char *name, const char *newvalue, int overwrite);
+Returns: 0 on success, −1 on error
+void unsetenv(const char *name);
+Returns: nothing
+If the environment array contains a string of the form name=oldvalue, then
+unsetenv deletes it and setenv replaces oldvalue with newvalue, but only if
+overwrite is nonzero. If name does not exist, then setenv adds name=newvalue
+to the array.
+Practice Problem 8.6 (solution page 833)
+Write a program called myecho that prints its command-line arguments and envi-
+ronment variables. For example:
+linux> ./myecho arg1 arg2
+Command-ine arguments:
+argv[ 0]: myecho
+argv[ 1]: arg1
+argv[ 2]: arg2

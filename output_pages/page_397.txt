@@ -1,0 +1,37 @@
+396
+Chapter 4
+Processor Architecture
+Aside
+Comparing x86-64 to Y86-64 instruction encodings
+Compared with the instruction encodings used in x86-64, the encoding of Y86-64 is much simpler but
+also less compact. The register ﬁelds occur only in ﬁxed positions in all Y86-64 instructions, whereas
+they are packed into various positions in the different x86-64 instructions. An x86-64 instruction can
+encode constant values in 1, 2, 4, or 8 bytes, whereas Y86-64 always requires 8 bytes.
+the instruction sequence as long as we start from the ﬁrst byte in the sequence.
+On the other hand, if we do not know the starting position of a code sequence, we
+cannot reliably determine how to split the sequence into individual instructions.
+This causes problems for disassemblers and other tools that attempt to extract
+machine-level programs directly from object-code byte sequences.
+Practice Problem 4.1 (solution page 516)
+Determine the byte encoding of the Y86-64 instruction sequence that follows. The
+line .pos 0x100 indicates that the starting address of the object code should be
+0x100.
+.pos 0x100
+# Start code at address 0x100
+irmovq $15,%rbx
+rrmovq %rbx,%rcx
+loop:
+rmmovq %rcx,-3(%rbx)
+addq
+%rbx,%rcx
+jmp loop
+Practice Problem 4.2 (solution page 517)
+For each byte sequence listed, determine the Y86-64 instruction sequence it en-
+codes. If there is some invalid byte in the sequence, show the instruction sequence
+up to that point and indicate where the invalid value occurs. For each sequence,
+we show the starting address, then a colon, and then the byte sequence.
+A. 0x100: 30f3fcffffffffffffff40630008000000000000
+B. 0x200: a06f800c020000000000000030f30a00000000000000
+C. 0x300: 5054070000000000000010f0b01f
+D. 0x400: 611373000400000000000000
+E. 0x500: 6362a0f0

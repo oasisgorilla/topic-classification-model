@@ -1,0 +1,59 @@
+Homework Problems
+347
+As we have discussed, the ATT format used by gcc is very different from the
+Intel format used in Intel documentation and by other compilers (including the
+Microsoft compilers).
+Muchnick’s book on compiler design [80] is considered the most comprehen-
+sive reference on code-optimization techniques. It covers many of the techniques
+we discuss here, such as register usage conventions.
+Much has been written about the use of buffer overﬂow to attack systems over
+the Internet. Detailed analyses of the 1988 Internet worm have been published
+by Spafford [105] as well as by members of the team at MIT who helped stop its
+spread [35]. Since then a number of papers and projects have generated ways both
+to create and to prevent buffer overﬂow attacks. Seacord’s book [97] provides a
+wealth of information about buffer overﬂow and other attacks on code generated
+by C compilers.
+Homework Problems
+3.58 ◆
+For a function with prototype
+long decode2(long x, long y, long z);
+gcc generates the following assembly code:
+1
+decode2:
+2
+subq
+%rdx, %rsi
+3
+imulq
+%rsi, %rdi
+4
+movq
+%rsi, %rax
+5
+salq
+$63, %rax
+6
+sarq
+$63, %rax
+7
+xorq
+%rdi, %rax
+8
+ret
+Parameters x, y, and z are passed in registers %rdi, %rsi, and %rdx. The code
+stores the return value in register %rax.
+Write C code for decode2 that will have an effect equivalent to the assembly
+code shown.
+3.59 ◆◆
+The following code computes the 128-bit product of two 64-bit signed values x and
+y and stores the result in memory:
+1
+typedef __int128 int128_t;
+2
+3
+void store_prod(int128_t *dest, int64_t x, int64_t y) {
+4
+*dest = x * (int128_t) y;
+5
+}
+Gcc generates the following assembly code implementing the computation:

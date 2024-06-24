@@ -1,0 +1,168 @@
+Index
+1107
+mrmovq instruction, 440
+mulq [x86-64] unsigned multiply, 234,
+234
+multi-core processors, 52, 60–61, 204,
+641, 1008
+multi-level page tables, 855–857
+multi-threading, 53–54, 61
+Multics, 52
+multicycle instructions, 504–505
+multidimensional arrays, 294–296
+multiple accumulators in parallelism,
+572–577
+multiple zone recording, 628
+multiplexing, I/O, 1009
+concurrent programming with,
+1014–1021
+event-driven servers based on,
+1016–1021
+pros and cons, 1021
+multiplexors, 410, 410–411
+HCL with case expression, 414
+word-level, 414–416
+multiplication
+constants, 137–139
+ﬂoating point, 160, 338
+instructions, 234
+matrices, 679–683
+two’s complement, 133–137
+unsigned, 132–133, 234, 234
+multiply instruction, 228
+multiported random access memory,
+418
+multiprocessor systems, 60
+multipurpose internet mail extensions
+(MIME) types, 985
+multitasking, 769
+multiway branch statements, 268–274
+munmap [Unix] unmap disk object, 875
+mutexes
+lock ordering rule, 1065
+Pthreads, 1046
+for semaphores, 1039
+mutual exclusion
+progress graphs, 1036
+semaphores for, 1038–1040
+mutually exclusive access, 1036
+\n (newline character), 39, 927
+n-gram statistics, 601
+named pipes, 928
+names
+domain, 961, 963–965
+mangling and demangling processes
+(C++ and Java), 716, 716
+protocols, 958
+types, 83
+Y86-64 pipelines, 463
+NaN (not a number)
+constants, 160
+ﬂoating point, 342
+representation, 150, 151
+nanoseconds (ns), 538
+National Science Foundation (NSF),
+967
+need_regids signal, 441
+need_valC signal, 441
+neg [instruction class] negate, 228
+negate instruction, 228
+negation, two’s complement, 131
+negative overﬂow, 126, 126–127
+nested arrays, 294–296
+nested structures, 304
+network adapters, 633
+network byte order, 961
+network clients, 57, 954
+Network File System (NFS), 646
+network programming, 954
+client-server model, 954–955
+Internet. See Internet
+networks, 955–959
+sockets interface. See sockets
+interface
+summary, 1000–1001
+Tiny Web server, 992–1000
+Web servers, 984–992
+network servers, 57, 954
+networks, 56–57
+acyclic, 410
+LANs, 956, 956–958
+WANs, 957, 957–958
+never taken (NT) branch prediction
+strategy, 464
+newline character (\n), 39, 927
+next-ﬁt block placement policy, 885,
+885
+nexti command, 316
+NFS (Network File System), 646
+nm tool, 749
+no-execute (NX) memory protection,
+325
+no operation nop instruction, 322, 440
+instruction code for, 441
+pipelining, 466–467
+in stack randomization, 322
+no-write-allocate approach, 666
+nodes, root, 902
+nondeterminism, 784
+nondeterministic behavior, 784
+nonexistent variables, referencing, 910
+nonlocal jumps, 759, 817, 817–822
+nonuniform partitioning, 452–454
+nonvolatile memory, 622
+nop [x86-64] no operation instruction,
+322, 440
+instruction code for, 441
+pipelining, 466–467
+in stack randomization, 322
+nop sleds, 322
+norace.c [CS:APP] Pthreads
+program without a race, 1063
+normal operation status code, 400, 440
+normalized values, ﬂoating-point, 149,
+149–150
+northbridge chipsets, 624
+not a number (NaN)
+constants, 160
+ﬂoating point, 342
+representation, 150, 151
+not [instruction class] complement,
+228
+not operation
+Boolean, 87–88
+C operators, 92–93
+logic gates, 409
+ns (nanoseconds), 538
+NSF (National Science Foundation),
+967
+NSFNET, 967
+nslookup program, 964
+ntohl [Unix] convert network-to-host
+long, 961
+ntohs [Unix] convert network-to-host
+short, 961
+number systems conversions. See
+conversions
+numeric limit declarations, 113
+numeric ranges
+C standards, 97
+integral types, 96–98
+Java standard, 104
+NX (no-execute) memory protection,
+325
+.o ﬁles, 209, 708
+-O1 optimization ﬂag, 206
+-O2 optimization ﬂag, 206
+objdump gnu machine-code ﬁle
+reader, 209, 315, 728, 749
+object code, 206, 209
+object ﬁles, 209
+executable. See executable object
+ﬁles
+formats, 709
+forms, 709
+relocatable, 41, 708, 709–711
+shared, 709
+tools, 749
+object modules, 709

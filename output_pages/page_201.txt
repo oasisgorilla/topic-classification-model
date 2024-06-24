@@ -1,0 +1,50 @@
+200
+Chapter 3
+Machine-Level Representation of Programs
+C
+omputers execute machine code, sequences of bytes encoding the low-level
+operations that manipulate data, manage memory, read and write data on
+storage devices, and communicate over networks. A compiler generates machine
+code through a series of stages, based on the rules of the programming language,
+the instruction set of the target machine, and the conventions followed by the op-
+erating system. The gcc C compiler generates its output in the form of assembly
+code, a textual representation of the machine code giving the individual instruc-
+tions in the program. Gcc then invokes both an assembler and a linker to generate
+the executable machine code from the assembly code. In this chapter, we will take
+a close look at machine code and its human-readable representation as assem-
+bly code.
+When programming in a high-level language such as C, and even more so
+in Java, we are shielded from the detailed machine-level implementation of our
+program. In contrast, when writing programs in assembly code (as was done in the
+early days of computing) a programmer must specify the low-level instructions
+the program uses to carry out a computation. Most of the time, it is much more
+productive and reliable to work at the higher level of abstraction provided by a
+high-level language. The type checking provided by a compiler helps detect many
+program errors and makes sure we reference and manipulate data in consistent
+ways. With modern optimizing compilers, the generated code is usually at least as
+efﬁcient as what a skilled assembly-language programmer would write by hand.
+Best of all, a program written in a high-level language can be compiled and
+executed on a number of different machines, whereas assembly code is highly
+machine speciﬁc.
+So why should we spend our time learning machine code? Even though com-
+pilers do most of the work in generating assembly code, being able to read and
+understand it is an important skill for serious programmers. By invoking the com-
+piler with appropriate command-line parameters, the compiler will generate a ﬁle
+showing its output in assembly-code form. By reading this code, we can under-
+stand the optimization capabilities of the compiler and analyze the underlying
+inefﬁciencies in the code. As we will experience in Chapter 5, programmers seek-
+ing to maximize the performance of a critical section of code often try different
+variations of the source code, each time compiling and examining the generated
+assembly code to get a sense of how efﬁciently the program will run. Furthermore,
+there are times when the layer of abstraction provided by a high-level language
+hides information about the run-time behavior of a program that we need to under-
+stand. For example, when writing concurrent programs using a thread package, as
+covered in Chapter 12, it is important to understand how program data are shared
+or kept private by the different threads and precisely how and where shared data
+are accessed. Such information is visible at the machine-code level. As another
+example, many of the ways programs can be attacked, allowing malware to in-
+fest a system, involve nuances of the way programs store their run-time control
+information. Many attacks involve exploiting weaknesses in system programs to
+overwrite information and thereby take control of the system. Understanding how
+these vulnerabilities arise and how to guard against them requires a knowledge of
+the machine-level representation of programs. The need for programmers to learn

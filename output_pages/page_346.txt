@@ -1,0 +1,62 @@
+Section 3.12
+Summary
+345
+8
+vunpcklps
+%xmm1, %xmm1, %xmm1
+9
+vcvtps2pd
+%xmm1, %xmm0
+10
+ret
+11
+.L8:
+12
+vaddss
+%xmm1, %xmm1, %xmm1
+13
+vcvtsi2ssq
+%rsi, %xmm0, %xmm0
+14
+vaddss
+%xmm1, %xmm0, %xmm0
+15
+vunpcklps
+%xmm0, %xmm0, %xmm0
+16
+vcvtps2pd
+%xmm0, %xmm0
+17
+ret
+Write a C version of funct3.
+3.11.7
+Observations about Floating-Point Code
+We see that the general style of machine code generated for operating on ﬂoating-
+point data with AVX2 is similar to what we have seen for operating on integer data.
+Both use a collection of registers to hold and operate on values, and they use these
+registers for passing function arguments.
+Of course, there are many complexities in dealing with the different data types
+and the rules for evaluating expressions containing a mixture of data types, and
+AVX2 code involves many more different instructions and formats than is usually
+seen with functions that perform only integer arithmetic.
+AVX2 also has the potential to make computations run faster by performing
+parallel operations on packed data. Compiler developers are working on automat-
+ing the conversion of scalar code to parallel code, but currently the most reliable
+way to achieve higher performance through parallelism is to use the extensions to
+the C language supported by gcc for manipulating vectors of data. See Web Aside
+opt:simd on page 582 to see how this can be done.
+3.12
+Summary
+In this chapter, we have peered beneath the layer of abstraction provided by the
+C language to get a view of machine-level programming. By having the compiler
+generate an assembly-code representation of the machine-level program, we gain
+insights into both the compiler and its optimization capabilities, along with the ma-
+chine, its data types, and its instruction set. In Chapter 5, we will see that knowing
+the characteristics of a compiler can help when trying to write programs that have
+efﬁcient mappings onto the machine. We have also gotten a more complete picture
+of how the program stores data in different memory regions. In Chapter 12, we
+will see many examples where application programmers need to know whether
+a program variable is on the run-time stack, in some dynamically allocated data
+structure, or part of the global program data. Understanding how programs map
+onto machines makes it easier to understand the differences between these kinds
+of storage.

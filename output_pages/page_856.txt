@@ -1,0 +1,46 @@
+Section 9.6
+Address Translation
+855
+Step 4. The MMU translates the virtual address to a physical address and sends
+it to the cache/main memory.
+Step 5. The cache/main memory returns the requested data word to the CPU.
+When there is a TLB miss, then the MMU must fetch the PTE from the L1
+cache, as shown in Figure 9.16(b). The newly fetched PTE is stored in the TLB,
+possibly overwriting an existing entry.
+9.6.3
+Multi-Level Page Tables
+Thus far, we have assumed that the system uses a single page table to do address
+translation. But if we had a 32-bit address space, 4 KB pages, and a 4-byte PTE,
+then we would need a 4 MB page table resident in memory at all times, even if
+the application referenced only a small chunk of the virtual address space. The
+problem is compounded for systems with 64-bit address spaces.
+The common approach for compacting the page table is to use a hierarchy
+of page tables instead. The idea is easiest to understand with a concrete example.
+Consider a 32-bit virtual address space partitioned into 4 KB pages, with page
+table entries that are 4 bytes each. Suppose also that at this point in time the virtual
+address space has the following form: The ﬁrst 2 K pages of memory are allocated
+for code and data, the next 6 K pages are unallocated, the next 1,023 pages are also
+unallocated, and the next page is allocated for the user stack. Figure 9.17 shows
+how we might construct a two-level page table hierarchy for this virtual address
+space.
+Each PTE in the level 1 table is responsible for mapping a 4 MB chunk of the
+virtual address space, where each chunk consists of 1,024 contiguous pages. For
+example, PTE 0 maps the ﬁrst chunk, PTE 1 the next chunk, and so on. Given that
+the address space is 4 GB, 1,024 PTEs are sufﬁcient to cover the entire space.
+If every page in chunk i is unallocated, then level 1 PTE i is null. For example,
+in Figure 9.17, chunks 2–7 are unallocated. However, if at least one page in chunk
+i is allocated, then level 1 PTE i points to the base of a level 2 page table. For
+example, in Figure 9.17, all or portions of chunks 0, 1, and 8 are allocated, so their
+level 1 PTEs point to level 2 page tables.
+Each PTE in a level 2 page table is responsible for mapping a 4-KB page of
+virtual memory, just as before when we looked at single-level page tables. Notice
+that with 4-byte PTEs, each level 1 and level 2 page table is 4 kilobytes, which
+conveniently is the same size as a page.
+This scheme reduces memory requirements in two ways. First, if a PTE in the
+level 1 table is null, then the corresponding level 2 page table does not even have
+to exist. This represents a signiﬁcant potential savings, since most of the 4 GB
+virtual address space for a typical program is unallocated. Second, only the level
+1 table needs to be in main memory at all times. The level 2 page tables can be
+created and paged in and out by the VM system as they are needed, which reduces
+pressure on main memory. Only the most heavily used level 2 page tables need to
+be cached in main memory.

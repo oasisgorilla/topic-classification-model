@@ -1,0 +1,55 @@
+Homework Problems
+349
+1
+long loop(long x, long n)
+2
+{
+3
+long result =
+;
+4
+long mask;
+5
+for (mask =
+; mask
+; mask =
+) {
+6
+result |=
+;
+7
+}
+8
+return result;
+9
+}
+Your task is to ﬁll in the missing parts of the C code to get a program equivalent
+to the generated assembly code. Recall that the result of the function is returned
+in register %rax. You will ﬁnd it helpful to examine the assembly code before,
+during, and after the loop to form a consistent mapping between the registers and
+the program variables.
+A. Which registers hold program values x, n, result, and mask?
+B. What are the initial values of result and mask?
+C. What is the test condition for mask?
+D. How does mask get updated?
+E. How does result get updated?
+F.
+Fill in all the missing parts of the C code.
+3.61 ◆◆
+In Section 3.6.6, we examined the following code as a candidate for the use of
+conditional data transfer:
+long cread(long *xp) {
+return (xp ? *xp : 0);
+}
+We showed a trial implementation using a conditional move instruction but argued
+that it was not valid, since it could attempt to read from a null address.
+Write a C function cread_alt that has the same behavior as cread, except
+that it can be compiled to use conditional data transfer. When compiled, the
+generated code should use a conditional move instruction rather than one of the
+jump instructions.
+3.62 ◆◆
+The code that follows shows an example of branching on an enumerated type
+value in a switch statement. Recall that enumerated types in C are simply a way
+to introduce a set of names having associated integer values. By default, the values
+assigned to the names count from zero upward. In our code, the actions associated
+with the different case labels have been omitted.

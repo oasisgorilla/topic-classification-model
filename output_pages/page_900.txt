@@ -1,0 +1,41 @@
+Section 9.9
+Dynamic Memory Allocation
+899
+One approach is to maintain the list in last-in ﬁrst-out (LIFO) order by in-
+serting newly freed blocks at the beginning of the list. With a LIFO ordering
+and a ﬁrst-ﬁt placement policy, the allocator inspects the most recently used
+blocks ﬁrst. In this case, freeing a block can be performed in constant time.
+If boundary tags are used, then coalescing can also be performed in constant
+time.
+Another approach is to maintain the list in address order, where the address
+of each block in the list is less than the address of its successor. In this case, freeing
+a block requires a linear-time search to locate the appropriate predecessor. The
+trade-off is that address-ordered ﬁrst ﬁt enjoys better memory utilization than
+LIFO-ordered ﬁrst ﬁt, approaching the utilization of best ﬁt.
+A disadvantage of explicit lists in general is that free blocks must be large
+enough to contain all of the necessary pointers, as well as the header and possibly
+a footer. This results in a larger minimum block size and increases the potential
+for internal fragmentation.
+9.9.14
+Segregated Free Lists
+As we have seen, an allocator that uses a single linked list of free blocks requires
+time linear in the number of free blocks to allocate a block. A popular approach for
+reducing the allocation time, known generally as segregated storage, is to maintain
+multiple free lists, where each list holds blocks that are roughly the same size. The
+general idea is to partition the set of all possible block sizes into equivalence classes
+called size classes. There are many ways to deﬁne the size classes. For example, we
+might partition the block sizes by powers of 2:
+{1}, {2}, {3, 4}, {5–8}, . . . , {1,025–2,048}, {2,049–4,096}, {4,097–∞}
+Or we might assign small blocks to their own size classes and partition large blocks
+by powers of 2:
+{1}, {2}, {3}, . . . , {1,023}, {1,024}, {1,025–2,048}, {2,049–4,096}, {4,097–∞}
+The allocator maintains an array of free lists, with one free list per size class,
+ordered by increasing size. When the allocator needs a block of size n, it searches
+the appropriate free list. If it cannot ﬁnd a block that ﬁts, it searches the next list,
+and so on.
+The dynamic storage allocation literature describes dozens of variants of seg-
+regated storage that differ in how they deﬁne size classes, when they perform
+coalescing, when they request additional heap memory from the operating sys-
+tem, whether they allow splitting, and so forth. To give you a sense of what is
+possible, we will describe two of the basic approaches: simple segregated storage
+and segregated ﬁts.

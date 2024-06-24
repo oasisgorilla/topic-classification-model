@@ -1,0 +1,83 @@
+660
+Chapter 6
+The Memory Hierarchy
+For example, instead of deﬁning x to be float x[8], we deﬁne it to be float
+x[12]. Assuming y starts immediately after x in memory, we have the following
+mapping of array elements to sets:
+Element
+Address
+Set index
+Element
+Address
+Set index
+x[0]
+0
+0
+y[0]
+48
+1
+x[1]
+4
+0
+y[1]
+52
+1
+x[2]
+8
+0
+y[2]
+56
+1
+x[3]
+12
+0
+y[3]
+60
+1
+x[4]
+16
+1
+y[4]
+64
+0
+x[5]
+20
+1
+y[5]
+68
+0
+x[6]
+24
+1
+y[6]
+72
+0
+x[7]
+28
+1
+y[7]
+76
+0
+With the padding at the end of x, x[i] and y[i] now map to different sets, which
+eliminates the thrashing conﬂict misses.
+Practice Problem 6.10 (solution page 699)
+In the previous dotprod example, what fraction of the total references to x and y
+will be hits once we have padded array x?
+Practice Problem 6.11 (solution page 699)
+Imagine a hypothetical cache that uses the high-order s bits of an address as the
+set index. For such a cache, contiguous chunks of memory blocks are mapped to
+the same cache set.
+A. How many blocks are in each of these contiguous array chunks?
+B. Consider the following code that runs on a system with a cache of the form
+(S, E, B, m) = (512, 1, 32, 32):
+int array[4096];
+for (i = 0; i < 4096; i++)
+sum += array[i];
+What is the maximum number of array blocks that are stored in the cache
+at any point in time?
+6.4.3
+Set Associative Caches
+The problem with conﬂict misses in direct-mapped caches stems from the con-
+straint that each set has exactly one line (or in our terminology, E = 1). A set
+associative cache relaxes this constraint so that each set holds more than one cache
+line. A cache with 1 < E < C/B is often called an E-way set associative cache. We

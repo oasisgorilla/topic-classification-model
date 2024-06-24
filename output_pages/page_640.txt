@@ -1,0 +1,180 @@
+Section 6.1
+Storage Technologies
+639
+Metric
+1985
+1990
+1995
+2000
+2005
+2010
+2015
+2015:1985
+$/MB
+2,900
+320
+256
+100
+75
+60
+25
+116
+Access (ns)
+150
+35
+15
+3
+2
+1.5
+1.3
+115
+(a) SRAM trends
+Metric
+1985
+1990
+1995
+2000
+2005
+2010
+2015
+2015:1985
+$/MB
+880
+100
+30
+1
+0.1
+0.06
+0.02
+44,000
+Access (ns)
+200
+100
+70
+60
+50
+40
+20
+10
+Typical size (MB)
+0.256
+4
+16
+64
+2,000
+8,000
+16,000
+62,500
+(b) DRAM trends
+Metric
+1985
+1990
+1995
+2000
+2005
+2010
+2015
+2015:1985
+$/GB
+100,000
+8,000
+300
+10
+5
+0.3
+0.03
+3,333,333
+Min. seek time (ms)
+75
+28
+10
+8
+5
+3
+3
+25
+Typical size (GB)
+0.01
+0.16
+1
+20
+160
+1,500
+3,000
+300,000
+(c) Rotating disk trends
+Metric
+1985
+1990
+1995
+2000
+2003
+2005
+2010
+2015
+2015:1985
+Intel CPU
+80286
+80386
+Pent.
+P-III
+Pent. 4
+Core 2
+Core i7 (n)
+Core i7 (h)
+—
+Clock rate (MHz)
+6
+20
+150
+600
+3,300
+2,000
+2,500
+3,000
+500
+Cycle time (ns)
+166
+50
+6
+1.6
+0.3
+0.5
+0.4
+0.33
+500
+Cores
+1
+1
+1
+1
+1
+2
+4
+4
+4
+Effective cycle
+166
+50
+6
+1.6
+0.30
+0.25
+0.10
+0.08
+2,075
+time (ns)
+(d) CPU trends
+Figure 6.15
+Storage and processing technology trends. The Core i7 circa 2010 uses the Nehalem processor
+core. The Core i7 circa 2015 uses the Haswell core.
+The split in the CPU performance curve around 2003 reﬂects the introduction
+of multi-core processors (see aside on page 641). After this split, cycle times of
+individual cores actually increased a bit before starting to decrease again, albeit
+at a slower rate than before.
+Note that while SRAM performance lags, it is roughly keeping up. However,
+the gap between DRAM and disk performance and CPU performance is actually
+widening. Until the advent of multi-core processors around 2003, this performance
+gap was a function of latency, with DRAM and disk access times decreasing
+more slowly than the cycle time of an individual processor. However, with the
+introduction of multiple cores, this performance gap is increasingly a function of

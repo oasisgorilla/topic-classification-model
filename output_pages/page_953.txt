@@ -1,0 +1,8 @@
+952
+Chapter 10
+System-Level I/O
+Solution to Problem 10.5 (page 946)
+At ﬁrst glance, you might think the output would be
+c = f
+but because we are redirecting fd1 to fd2, the output is really
+c = o

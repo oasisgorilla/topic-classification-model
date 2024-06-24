@@ -1,0 +1,81 @@
+Section 5.7
+Understanding Modern Processors
+561
+5.7.3
+An Abstract Model of Processor Operation
+As a tool for analyzing the performance of a machine-level program executing on a
+modern processor, we will use a data-ﬂow representation of programs, a graphical
+notation showing how the data dependencies between the different operations
+constrain the order in which they are executed. These constraints then lead to
+critical paths in the graph, putting a lower bound on the number of clock cycles
+required to execute a set of machine instructions.
+Before proceeding with the technical details, it is instructive to examine the
+CPE measurements obtained for function combine4, our fastest code up to this
+point:
+Integer
+Floating point
+Function
+Page
+Method
++
+*
++
+*
+combine4
+551
+Accumulate in temporary
+1.27
+3.01
+3.01
+5.01
+Latency bound
+1.00
+3.00
+3.00
+5.00
+Throughput bound
+0.50
+1.00
+1.00
+0.50
+We can see that these measurements match the latency bound for the proces-
+sor, except for the case of integer addition. This is not a coincidence—it indicates
+that the performance of these functions is dictated by the latency of the sum
+or product computation being performed. Computing the product or sum of n
+elements requires around L . n + K clock cycles, where L is the latency of the
+combining operation and K represents the overhead of calling the function and
+initiating and terminating the loop. The CPE is therefore equal to the latency
+bound L.
+From Machine-Level Code to Data-Flow Graphs
+Our data-ﬂow representation of programs is informal. We use it as a way to
+visualize how the data dependencies in a program dictate its performance. We
+present the data-ﬂow notation by working with combine4 (Figure 5.10) as an
+example. We focus just on the computation performed by the loop, since this is the
+dominating factor in performance for large vectors. We consider the case of data
+type double with multiplication as the combining operation. Other combinations
+of data type and operation yield similar code. The compiled code for this loop
+consists of four instructions, with registers %rdx holding a pointer to the ith
+element of array data, %rax holding a pointer to the end of the array, and %xmm0
+holding the accumulated value acc.
+Inner loop of combine4.
+data_t = double, OP = *
+acc in %xmm0, data+i in %rdx, data+length in %rax
+1
+.L25:
+loop:
+2
+vmulsd
+(%rdx), %xmm0, %xmm0
+Multiply acc by data[i]
+3
+addq
+$8, %rdx
+Increment data+i
+4
+cmpq
+%rax, %rdx
+Compare to data+length
+5
+jne
+.L25
+If !=, goto loop

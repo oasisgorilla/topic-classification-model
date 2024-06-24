@@ -1,0 +1,52 @@
+360
+Chapter 3
+Machine-Level Representation of Programs
+array p by calling library function alloca. This function is similar to the more com-
+monly used function malloc, except that it allocates space on the run-time stack.
+The space is automatically deallocated when the executing procedure returns.
+Figure 3.54(b) shows the part of the assembly code that sets up the frame
+pointer and allocates space for local variables i and p. It is very similar to the
+corresponding code for vframe. Let us use the same notation as in Problem 3.49:
+The stack pointer is set to values s1 at line 4 and s2 at line 7. The start address of
+array p is set to value p at line 9. Extra space e2 may arise between s2 and p, and
+extra space e1 may arise between the end of array p and s1.
+A. Explain, in mathematical terms, the logic in the computation of s2.
+B. Explain, in mathematical terms, the logic in the computation of p.
+C. Find values of n and s1 that lead to minimum and maximum values of e1.
+D. What alignment properties does this code guarantee for the values of s2
+and p?
+3.73 ◆
+Write a function in assembly code that matches the behavior of the function find_
+range in Figure 3.51. Your code should contain only one ﬂoating-point comparison
+instruction, and then it should use conditional branches to generate the correct
+result. Test your code on all 232 possible argument values. Web Aside asm:easm
+on page 214 describes how to incorporate functions written in assembly code into
+C programs.
+3.74 ◆◆
+Write a function in assembly code that matches the behavior of the function find_
+range in Figure 3.51. Your code should contain only one ﬂoating-point comparison
+instruction, and then it should use conditional moves to generate the correct result.
+You might want to make use of the instruction cmovp (move if even parity). Test
+your code on all 232 possible argument values. Web Aside asm:easm on page 214
+describes how to incorporate functions written in assembly code into C programs.
+3.75 ◆
+ISO C99 includes extensions to support complex numbers. Any ﬂoating-point type
+can be modiﬁed with the keyword complex. Here are some sample functions that
+work with complex data and that call some of the associated library functions:
+1
+#include <complex.h>
+2
+3
+double c_imag(double complex x) {
+4
+return cimag(x);
+5
+}
+6
+7
+double c_real(double complex x) {
+8
+return creal(x);
+9
+}
+10

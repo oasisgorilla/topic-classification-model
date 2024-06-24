@@ -1,0 +1,69 @@
+668
+Chapter 6
+The Memory Hierarchy
+Figure 6.38
+Intel Core i7 cache
+hierarchy.
+Processor package
+Core 0
+Core 3
+. . .
+Regs
+L1
+d-cache
+L2 unified cache
+L3 unified cache
+(shared by all cores)
+Main memory
+L1
+i-cache
+Regs
+L1
+d-cache
+L2 unified cache
+L1
+i-cache
+Cache type
+Access time (cycles)
+Cache size (C)
+Assoc. (E)
+Block size (B)
+Sets (S)
+L1 i-cache
+4
+32 KB
+8
+64 B
+64
+L1 d-cache
+4
+32 KB
+8
+64 B
+64
+L2 uniﬁed cache
+10
+256 KB
+8
+64 B
+512
+L3 uniﬁed cache
+40–75
+8 MB
+16
+64 B
+8,192
+Figure 6.39
+Characteristics of the Intel Core i7 cache hierarchy.
+Miss penalty. Any additional time required because of a miss. The penalty for
+L1 misses served from L2 is on the order of 10 cycles; from L3, 50 cycles;
+and from main memory, 200 cycles.
+Optimizing the cost and performance trade-offs of cache memories is a subtle
+exercise that requires extensive simulation on realistic benchmark codes and thus
+is beyond our scope. However, it is possible to identify some of the qualitative
+trade-offs.
+Impact of Cache Size
+On the one hand, a larger cache will tend to increase the hit rate. On the other
+hand, it is always harder to make large memories run faster. As a result, larger
+caches tend to increase the hit time. This explains why an L1 cache is smaller than
+an L2 cache, and an L2 cache is smaller than an L3 cache.

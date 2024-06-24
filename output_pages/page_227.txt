@@ -1,0 +1,70 @@
+226
+Chapter 3
+Machine-Level Representation of Programs
+Instruction
+Effect
+Description
+pushq
+S
+R[%rsp] ←R[%rsp] −8;
+Push quad word
+M[R[%rsp]] ←S
+popq
+D
+D ←M[R[%rsp]];
+Pop quad word
+R[%rsp] ←R[%rsp] + 8
+Figure 3.8
+Push and pop instructions.
+%rax
+%rdx
+%rsp
+0x108
+0
+0x123
+0x108
+%rax
+%rdx
+%rsp
+0x108
+0x100
+0
+0x123
+0x100
+%rax
+%rdx
+%rsp
+0x123
+0x123
+pushq %rax
+popq %rdx
+0x108
+Initially
+Stack “bottom”
+Increasing
+address
+Stack “top”
+Stack “bottom”
+0x123
+0x123
+Stack “top”
+Stack “top”
+0x108
+Stack “bottom”
+Figure 3.9
+Illustration of stack operation. By convention, we draw stacks upside down,
+so that the “top” of the stack is shown at the bottom. With x86-64, stacks grow toward
+lower addresses, so pushing involves decrementing the stack pointer (register %rsp) and
+storing to memory, while popping involves reading from memory and incrementing the
+stack pointer.
+end of the array. This end is called the top of the stack. With x86-64, the program
+stack is stored in some region of memory. As illustrated in Figure 3.9, the stack
+grows downward such that the top element of the stack has the lowest address of
+all stack elements. (By convention, we draw stacks upside down, with the stack
+“top” shown at the bottom of the ﬁgure.) The stack pointer %rsp holds the address
+of the top stack element.
+The pushq instruction provides the ability to push data onto the stack, while
+the popq instruction pops it. Each of these instructions takes a single operand—the
+data source for pushing and the data destination for popping.
+Pushing a quad word value onto the stack involves ﬁrst decrementing the
+stack pointer by 8 and then writing the value at the new top-of-stack address.

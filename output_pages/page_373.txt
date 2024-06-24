@@ -1,0 +1,44 @@
+372
+Chapter 3
+Machine-Level Representation of Programs
+Solution to Problem 3.26 (page 264)
+Being able to work backward from assembly code to C code is a prime example
+of reverse engineering.
+A. We can see that the code uses the jump-to-middle translation, using the jmp
+instruction on line 3.
+B. Here is the original C code:
+short test_one(unsigned short x) {
+short val = 1;
+while (x) {
+val ^= x;
+x >>= 1;
+}
+return val & 0;
+}
+C. This code computes the parity of argument x. That is, it returns 1 if there is
+an odd number of ones in x and 0 if there is an even number.
+Solution to Problem 3.27 (page 267)
+This exercise is intended to reinforce your understanding of how loops are imple-
+mented.
+long fibonacci_gd_goto(long n)
+{
+long i = 2;
+long next, first = 0, second = 1;
+if (n <= 1)
+goto done;
+loop:
+next = first + second;
+first = second; second = next;
+i++;
+if (i <= n)
+goto loop;
+done:
+return n;
+}
+Solution to Problem 3.28 (page 267)
+This problem is trickier than Problem 3.26, since the code within the loop is more
+complex and the overall operation is less familiar.
+A. Here is the original C code:
+long fun_b(unsigned long x) {
+long val = 0;
+long i;

@@ -1,0 +1,43 @@
+Section 7.5
+Symbols and Symbol Tables
+711
+Aside
+Why is uninitialized data called .bss?
+The use of the term .bss to denote uninitialized data is universal. It was originally an acronym for the
+“block started by symbol” directive from the IBM 704 assembly language (circa 1957) and the acronym
+has stuck. A simple way to remember the difference between the .data and .bss sections is to think
+of “bss” as an abbreviation for “Better Save Space!”
+.symtab A symbol table with information about functions and global variables
+that are deﬁned and referenced in the program. Some programmers mis-
+takenly believe that a program must be compiled with the -g option to
+get symbol table information. In fact, every relocatable object ﬁle has
+a symbol table in .symtab (unless the programmer has speciﬁcally re-
+moved it with the strip command). However, unlike the symbol table
+inside a compiler, the .symtab symbol table does not contain entries for
+local variables.
+.rel.text A list of locations in the .text section that will need to be modiﬁed
+when the linker combines this object ﬁle with others. In general, any
+instruction that calls an external function or references a global variable
+will need to be modiﬁed. On the other hand, instructions that call local
+functions do not need to be modiﬁed. Note that relocation information
+is not needed in executable object ﬁles, and is usually omitted unless the
+user explicitly instructs the linker to include it.
+.rel.data Relocation information for any global variables that are referenced
+or deﬁned by the module. In general, any initialized global variable whose
+initial value is the address of a global variable or externally deﬁned func-
+tion will need to be modiﬁed.
+.debug A debugging symbol table with entries for local variables and typedefs
+deﬁned in the program, global variables deﬁned and referenced in the
+program, and the original C source ﬁle. It is only present if the compiler
+driver is invoked with the -g option.
+.line A mapping between line numbers in the original C source program and
+machine code instructions in the .text section. It is only present if the
+compiler driver is invoked with the -g option.
+.strtab A string table for the symbol tables in the .symtab and .debug sec-
+tions and for the section names in the section headers. A string table is a
+sequence of null-terminated character strings.
+7.5
+Symbols and Symbol Tables
+Each relocatable object module, m, has a symbol table that contains information
+about the symbols that are deﬁned and referenced by m. In the context of a linker,
+there are three different kinds of symbols:

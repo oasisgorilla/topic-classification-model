@@ -1,0 +1,53 @@
+Section 9.1
+Physical and Virtual Addressing
+839
+This chapter looks at virtual memory from two angles. The ﬁrst half of the
+chapter describes how virtual memory works. The second half describes how
+virtual memory is used and managed by applications. There is no avoiding the
+fact that VM is complicated, and the discussion reﬂects this in places. The good
+news is that if you work through the details, you will be able to simulate the virtual
+memory mechanism of a small system by hand, and the virtual memory idea will
+be forever demystiﬁed.
+The second half builds on this understanding, showing you how to use and
+manage virtual memory in your programs. You will learn how to manage virtual
+memory via explicit memory mapping and calls to dynamic storage allocators such
+as the malloc package. You will also learn about a host of common memory-
+related errors in C programs and how to avoid them.
+9.1
+Physical and Virtual Addressing
+The main memory of a computer system is organized as an array of M contiguous
+byte-size cells. Each byte has a unique physical address (PA). The ﬁrst byte has
+an address of 0, the next byte an address of 1, the next byte an address of 2,
+and so on. Given this simple organization, the most natural way for a CPU to
+access memory would be to use physical addresses. We call this approach physical
+addressing. Figure 9.1 shows an example of physical addressing in the context of
+a load instruction that reads the 4-byte word starting at physical address 4. When
+the CPU executes the load instruction, it generates an effective physical address
+and passes it to main memory over the memory bus. The main memory fetches the
+4-byte word starting at physical address 4 and returns it to the CPU, which stores
+it in a register.
+Early PCs used physical addressing, and systems such as digital signal pro-
+cessors, embedded microcontrollers, and Cray supercomputers continue to do so.
+However, modern processors use a form of addressing known as virtual address-
+ing, as shown in Figure 9.2.
+Figure 9.1
+A system that uses
+physical addressing.
+. . .
+Main memory
+0:
+1:
+2:
+3:
+4:
+5:
+6:
+7:
+8:
+Physical
+address
+(PA)
+CPU
+4
+M1:
+Data word

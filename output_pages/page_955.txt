@@ -1,0 +1,51 @@
+954
+Chapter 11
+Network Programming
+N
+etwork applications are everywhere. Any time you browse the Web, send an
+email message, or play an online game, you are using a network application.
+Interestingly, all network applications are based on the same basic programming
+model, have similar overall logical structures, and rely on the same programming
+interface.
+Network applications rely on many of the concepts that you have already
+learned in our study of systems. For example, processes, signals, byte ordering,
+memory mapping, and dynamic storage allocation all play important roles. There
+are new concepts to master as well. You will need to understand the basic client-
+server programming model and how to write client-server programs that use the
+services provided by the Internet. At the end, we will tie all of these ideas together
+by developing a tiny but functional Web server that can serve both static and
+dynamic content with text and graphics to real Web browsers.
+11.1
+The Client-Server Programming Model
+Every network application is based on the client-server model. With this model, an
+application consists of a server process and one or more client processes. A server
+manages some resource, and it provides some service for its clients by manipulating
+that resource. For example, a Web server manages a set of disk ﬁles that it retrieves
+and executes on behalf of clients. An FTP server manages a set of disk ﬁles that it
+stores and retrieves for clients. Similarly, an email server manages a spool ﬁle that
+it reads and updates for clients.
+The fundamental operation in the client-server model is the transaction (Fig-
+ure 11.1). A client-server transaction consists of four steps:
+1. When a client needs service, it initiates a transaction by sending a request to
+the server. For example, when a Web browser needs a ﬁle, it sends a request
+to a Web server.
+2. The server receives the request, interprets it, and manipulates its resources in
+the appropriate way. For example, when a Web server receives a request from
+a browser, it reads a disk ﬁle.
+3. The server sends a response to the client and then waits for the next request.
+For example, a Web server sends the ﬁle back to a client.
+4. Client
+processes
+response
+1. Client sends request 
+3. Server sends response
+2. Server 
+processes
+request
+Client
+process
+Server
+process
+Resource
+Figure 11.1
+A client-server transaction.

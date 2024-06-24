@@ -1,0 +1,76 @@
+1004
+Chapter 11
+Network Programming
+16
+else if (rc < 0)
+17
+unix_error("inet_pton error");
+18
+19
+printf("0x%x\n", ntohs(inaddr.s_addr));
+20
+exit(0);
+21
+}
+code/netp/global-dd2hex.c
+Solution to Problem 11.4 (page 978)
+Here’s a solution. Notice how much more difﬁcult it is to use inet_ntop, which
+requires messy casting and deep structure references. The getnameinfo function
+is much simpler because it does all of that work for us.
+code/netp/hostinfo-ntop.c
+1
+#include "csapp.h"
+2
+3
+int main(int argc, char **argv)
+4
+{
+5
+struct addrinfo *p, *listp, hints;
+6
+struct sockaddr_in *sockp;
+7
+char buf[MAXLINE];
+8
+int rc;
+9
+10
+if (argc != 2) {
+11
+fprintf(stderr, "usage: %s <domain name>\n", argv[0]);
+12
+exit(0);
+13
+}
+14
+15
+/* Get a list of addrinfo records */
+16
+memset(&hints, 0, sizeof(struct addrinfo));
+17
+hints.ai_family = AF_INET;
+/* IPv4 only */
+18
+hints.ai_socktype = SOCK_STREAM; /* Connections only */
+19
+if ((rc = getaddrinfo(argv[1], NULL, &hints, &listp)) != 0) {
+20
+fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(rc));
+21
+exit(1);
+22
+}
+23
+24
+/* Walk the list and display each associated IP address */
+25
+for (p = listp; p; p = p->ai_next) {
+26
+sockp = (struct sockaddr_in *)p->ai_addr;
+27
+Inet_ntop(AF_INET, &(sockp->sin_addr), buf, MAXLINE);
+28
+printf("%s\n", buf);
+29
+}
+30

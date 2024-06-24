@@ -1,0 +1,48 @@
+462
+Chapter 4
+Processor Architecture
+The right side of the ﬁgure shows a pipeline diagram for this instruction
+sequence. As with the pipeline diagrams for the simple pipelined computation
+units of Section 4.4, this diagram shows the progression of each instruction through
+the pipeline stages, with time increasing from left to right. The numbers along the
+top identify the clock cycles at which the different stages occur. For example, in
+cycle 1, instruction I1 is fetched, and it then proceeds through the pipeline stages,
+with its result being written to the register ﬁle after the end of cycle 5. Instruction
+I2 is fetched in cycle 2, and its result is written back after the end of cycle 6, and
+so on. At the bottom, we show an expanded view of the pipeline for cycle 5. At
+this point, there is an instruction in each of the pipeline stages.
+From Figure 4.42, we can also justify our convention of drawing processors
+so that the instructions ﬂow from bottom to top. The expanded view for cycle 5
+shows the pipeline stages with the fetch stage on the bottom and the write-back
+stage on the top, just as do our diagrams of the pipeline hardware (Figure 4.41).
+If we look at the ordering of instructions in the pipeline stages, we see that they
+appear in the same order as they do in the program listing. Since normal program
+ﬂow goes from top to bottom of a listing, we preserve this ordering by having the
+pipeline ﬂow go from bottom to top. This convention is particularly useful when
+working with the simulators that accompany this text.
+4.5.3
+Rearranging and Relabeling Signals
+Our sequential implementations SEQ and SEQ+ only process one instruction at
+a time, and so there are unique values for signals such as valC, srcA, and valE. In
+our pipelined design, there will be multiple versions of these values associated
+with the different instructions ﬂowing through the system. For example, in the
+detailed structure of PIPE−, there are four white boxes labeled “Stat” that hold
+the status codes for four different instructions (see Figure 4.41). We need to take
+great care to make sure we use the proper version of a signal, or else we could
+have serious errors, such as storing the result computed for one instruction at the
+destination register speciﬁed by another instruction. We adopt a naming scheme
+where a signal stored in a pipeline register can be uniquely identiﬁed by preﬁxing
+its name with that of the pipe register written in uppercase. For example, the four
+status codes are named D_stat, E_stat, M_stat, and W_stat. We also need to refer
+to some signals that have just been computed within a stage. These are labeled
+by preﬁxing the signal name with the ﬁrst character of the stage name, written
+in lowercase. Using the status codes as examples, we can see control logic blocks
+labeled “Stat” in the fetch and memory stages. The outputs of these blocks are
+therefore named f_stat and m_stat. We can also see that the actual status of the
+overall processor Stat is computed by a block in the write-back stage, based on
+the status value in pipeline register W.
+The decode stages of SEQ+ and PIPE−both generate signals dstE and dstM
+indicating the destination register for values valE and valM. In SEQ+, we could
+connect these signals directly to the address inputs of the register ﬁle write ports.
+With PIPE−, these signals are carried along in the pipeline through the execute
+and memory stages and are directed to the register ﬁle only once they reach

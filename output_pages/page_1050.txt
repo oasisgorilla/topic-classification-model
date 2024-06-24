@@ -1,0 +1,46 @@
+Section 12.6
+Using Threads for Parallelism
+1049
+Aside
+Event-driven programs based on threads
+I/O multiplexing is not the only way to write an event-driven program. For example, you might have
+noticed that the concurrent prethreaded server that we just developed is really an event-driven server
+with simple state machines for the main and worker threads. The main thread has two states (“waiting
+for connection request” and “waiting for available buffer slot”), two I/O events (“connection request
+arrives” and “buffer slot becomes available”), and two transitions (“accept connection request” and
+“insert buffer item”). Similarly, each worker thread has one state (“waiting for available buffer item”),
+one I/O event (“buffer item becomes available”), and one transition (“remove buffer item”).
+Figure 12.30
+Relationships between
+the sets of sequential,
+concurrent, and parallel
+programs.
+All programs
+Concurrent programs
+Sequential programs
+Parallel
+programs
+12.6
+Using Threads for Parallelism
+Thus far in our study of concurrency, we have assumed concurrent threads exe-
+cuting on uniprocessor systems. However, most modern machines have multi-core
+processors. Concurrent programs often run faster on such machines because the
+operating system kernel schedules the concurrent threads in parallel on multi-
+ple cores, rather than sequentially on a single core. Exploiting such parallelism
+is critically important in applications such as busy Web servers, database servers,
+and large scientiﬁc codes, and it is becoming increasingly useful in mainstream
+applications such as Web browsers, spreadsheets, and document processors.
+Figure 12.30 shows the set relationships between sequential, concurrent, and
+parallel programs. The set of all programs can be partitioned into the disjoint
+sets of sequential and concurrent programs. A sequential program is written as a
+single logical ﬂow. A concurrent program is written as multiple concurrent ﬂows.
+A parallel program is a concurrent program running on multiple processors. Thus,
+the set of parallel programs is a proper subset of the set of concurrent programs.
+A detailed treatment of parallel programs is beyond our scope, but studying
+a few simple example programs will help you understand some important aspects
+of parallel programming. For example, consider how we might sum the sequence
+of integers 0, . . . , n −1 in parallel. Of course, there is a closed-form solution for
+this particular problem, but nonetheless it is a concise and easy-to-understand ex-
+emplar that will allow us to make some interesting points about parallel programs.
+The most straightforward approach for assigning work to different threads is
+to partition the sequence into t disjoint regions and then assign each of t different

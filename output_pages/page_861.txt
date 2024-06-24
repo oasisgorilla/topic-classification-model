@@ -1,0 +1,92 @@
+860
+Chapter 9
+Virtual Memory
+11
+Bit position
+PA = 0x354
+10
+9
+8
+0x0d
+0x05
+0x0
+7
+6
+5
+4
+3
+2
+1
+0
+0
+0
+1
+0
+1
+0
+1
+0
+1
+1
+0
+0
+0x0d
+0x14
+CT
+CI
+CO
+PPN
+PPO
+Since the tag in set 0x5 matches CT, the cache detects a hit, reads out the data
+byte (0x36) at offset CO, and returns it to the MMU, which then passes it back to
+the CPU.
+Other paths through the translation process are also possible. For example, if
+the TLB misses, then the MMU must fetch the PPN from a PTE in the page table.
+If the resulting PTE is invalid, then there is a page fault and the kernel must page
+in the appropriate page and rerun the load instruction. Another possibility is that
+the PTE is valid, but the necessary memory block misses in the cache.
+Practice Problem 9.4 (solution page 917)
+Show how the example memory system in Section 9.6.4 translates a virtual address
+into a physical address and accesses the cache. For the given virtual address,
+indicate the TLB entry accessed, physical address, and cache byte value returned.
+Indicate whether the TLB misses, whether a page fault occurs, and whether a cache
+miss occurs. If there is a cache miss, enter “—” for “Cache byte returned.” If there
+is a page fault, enter “—” for “PPN” and leave parts C and D blank.
+Virtual address: 0x03d7
+A. Virtual address format
+12
+11
+13
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+B. Address translation
+Parameter
+Value
+VPN
+TLB index
+TLB tag
+TLB hit? (Y/N)
+Page fault? (Y/N)
+PPN
+C. Physical address format
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0

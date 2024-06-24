@@ -1,0 +1,45 @@
+Section 9.3
+VM as a Tool for Caching
+841
+The concept of an address space is important because it makes a clean dis-
+tinction between data objects (bytes) and their attributes (addresses). Once we
+recognize this distinction, then we can generalize and allow each data object to
+have multiple independent addresses, each chosen from a different address space.
+This is the basic idea of virtual memory. Each byte of main memory has a virtual
+address chosen from the virtual address space, and a physical address chosen from
+the physical address space.
+Practice Problem 9.1 (solution page 916)
+Complete the following table, ﬁlling in the missing entries and replacing each
+question mark with the appropriate integer. Use the following units: K = 210
+(kilo), M = 220 (mega), G = 230 (giga), T = 240 (tera), P = 250 (peta), or E = 260
+(exa).
+Number of
+Number of
+virtual address bits (n)
+virtual addresses (N)
+Largest possible virtual address
+4
+2? = 16 K
+224 −1 =? M −1
+2? = 64 T
+54
+9.3
+VM as a Tool for Caching
+Conceptually, a virtual memory is organized as an array of N contiguous byte-size
+cells stored on disk. Each byte has a unique virtual address that serves as an index
+into the array. The contents of the array on disk are cached in main memory. As
+with any other cache in the memory hierarchy, the data on disk (the lower level)
+is partitioned into blocks that serve as the transfer units between the disk and
+the main memory (the upper level). VM systems handle this by partitioning the
+virtual memory into ﬁxed-size blocks called virtual pages (VPs). Each virtual page
+is P = 2p bytes in size. Similarly, physical memory is partitioned into physical pages
+(PPs), also P bytes in size. (Physical pages are also referred to as page frames.)
+At any point in time, the set of virtual pages is partitioned into three disjoint
+subsets:
+Unallocated. Pages that have not yet been allocated (or created) by the VM
+system. Unallocated blocks do not have any data associated with them,
+and thus do not occupy any space on disk.
+Cached. Allocated pages that are currently cached in physical memory.
+Uncached. Allocated pages that are not cached in physical memory.
+The example in Figure 9.3 shows a small virtual memory with eight virtual
+pages. Virtual pages 0 and 3 have not been allocated yet, and thus do not yet exist

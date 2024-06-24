@@ -1,0 +1,58 @@
+Section 9.6
+Address Translation
+853
+CPU chip 
+Processor
+MMU
+Memory
+VA
+Data
+L1
+cache
+PA
+PTEA
+PTE
+PTE
+PTEA
+PA
+Data
+PTEA
+hit
+PA
+hit
+PTEA
+miss
+PA
+miss
+Figure 9.14
+Integrating VM with a physically addressed cache. VA: virtual address.
+PTEA: page table entry address. PTE: page table entry. PA: physical address.
+9.6.1
+Integrating Caches and VM
+In any system that uses both virtual memory and SRAM caches, there is the
+issue of whether to use virtual or physical addresses to access the SRAM cache.
+Although a detailed discussion of the trade-offs is beyond our scope here, most
+systems opt for physical addressing. With physical addressing, it is straightforward
+for multiple processes to have blocks in the cache at the same time and to share
+blocks from the same virtual pages. Further, the cache does not have to deal
+with protection issues, because access rights are checked as part of the address
+translation process.
+Figure 9.14 shows how a physically addressed cache might be integrated with
+virtual memory. The main idea is that the address translation occurs before the
+cache lookup. Notice that page table entries can be cached, just like any other
+data words.
+9.6.2
+Speeding Up Address Translation with a TLB
+As we have seen, every time the CPU generates a virtual address, the MMU must
+refer to a PTE in order to translate the virtual address into a physical address. In
+the worst case, this requires an additional fetch from memory, at a cost of tens to
+hundreds of cycles. If the PTE happens to be cached in L1, then the cost goes down
+to a handful of cycles. However, many systems try to eliminate even this cost by
+including a small cache of PTEs in the MMU called a translation lookaside buffer
+(TLB).
+A TLB is a small, virtually addressed cache where each line holds a block
+consisting of a single PTE. A TLB usually has a high degree of associativity. As
+shown in Figure 9.15, the index and tag ﬁelds that are used for set selection and line
+matching are extracted from the virtual page number in the virtual address. If the
+TLB has T = 2t sets, then the TLB index (TLBI) consists of the t least signiﬁcant
+bits of the VPN, and the TLB tag (TLBT)consists of the remaining bits in the VPN.

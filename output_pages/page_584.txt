@@ -1,0 +1,114 @@
+Section 5.10
+Summary of Results for Optimizing Combining Code
+583
+Web Aside OPT:SIMD
+Achieving greater parallelism with vector instructions (continued)
+Integer
+Floating point
+int
+long
+int
+long
+Method
++
+*
++
+*
++
+*
++
+*
+Scalar 10 × 10
+0.54
+1.01
+0.55
+1.00
+1.01
+0.51
+1.01
+0.52
+Scalar throughput bound
+0.50
+0.50
+1.00
+1.00
+1.00
+1.00
+0.50
+0.50
+Vector 8 × 8
+0.05
+0.24
+0.13
+1.51
+0.12
+0.08
+0.25
+0.16
+Vector throughput bound
+0.06
+0.12
+0.12
+—
+0.12
+0.06
+0.25
+0.12
+In this chart, the ﬁrst set of numbers is for conventional, scalar code written in the style of combine6,
+unrolling by a factor of 10 and maintaining 10 accumulators. The second set of numbers is for code
+written in a form that gcc can compile into AVX vector code. In addition to using vector operations,
+this version unrolls the main loop by a factor of 8 and maintains eight separate vector accumulators. We
+show results for both 32-bit and 64-bit numbers, since the vector instructions achieve 8-way parallelism
+in the ﬁrst case, but only 4-way parallelism in the second.
+We can see that the vector code achieves almost an eightfold improvement on the four 32-bit cases,
+and a fourfold improvement on three of the four 64-bit cases. Only the long integer multiplication code
+does not perform well when we attempt to express it in vector code. The AVX instruction set does not
+include one to do parallel multiplication of 64-bit integers, and so gcc cannot generate vector code
+for this case. Using vector instructions creates a new throughput bound for the combining operations.
+These are eight times lower for 32-bit operations and four times lower for 64-bit operations than the
+scalar limits. Our code comes close to achieving these bounds for several combinations of data type
+and operation.
+5.10
+Summary of Results for Optimizing Combining Code
+Our efforts at maximizing the performance of a routine that adds or multiplies the
+elements of a vector have clearly paid off. The following summarizes the results
+we obtain with scalar code, not making use of the vector parallelism provided by
+AVX vector instructions:
+Integer
+Floating point
+Function
+Page
+Method
++
+*
++
+*
+combine1
+543
+Abstract -O1
+10.12
+10.12
+10.17
+11.14
+combine6
+573
+2 × 2 unrolling
+0.81
+1.51
+1.51
+2.51
+10 × 10 unrolling
+0.55
+1.00
+1.01
+0.52
+Latency bound
+1.00
+3.00
+3.00
+5.00
+Throughput bound
+0.50
+1.00
+1.00
+0.50

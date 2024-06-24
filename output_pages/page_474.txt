@@ -1,0 +1,79 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+473
+. . .
+F
+0x000: irmovq $10,%rdx
+# prog3
+# prog3
+0x00a: irmovq  $3,%rax
+0x014: nop
+0x005: addq %rdx,%rax
+0x017: halt
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+1
+2
+3
+4
+5
+6
+7
+8
+9
+srcA = %rdx
+srcB = %rax
+W_dstE = %rdx
+W_valE = 10
+valA      W_valE = 10
+valB      M_valE = 3
+Cycle 5
+R[%rdx]      10
+D
+W
+M_dstE = %rax
+M_valE = 3
+M
+Figure 4.50
+Pipelined execution of prog3 using forwarding. In cycle 5, the decode-
+stage logic detects a pending write to register %rdx in the write-back stage and to
+register %rax in the memory stage. It uses these as the values for valA and valB rather
+than the values read from the register ﬁle.
+%rax is the source register for operand valB, and that there is also a pending
+write to %rax on write port E. It can therefore avoid stalling by simply using the
+data word supplied to port E (signal W_valE) as the value for operand valB. This
+technique of passing a result value directly from one pipeline stage to an earlier
+one is commonly known as data forwarding (or simply forwarding, and sometimes
+bypassing). It allows the instructions of prog2 to proceed through the pipeline
+without any stalling. Data forwarding requires adding additional data connections
+and control logic to the basic hardware structure.
+As Figure 4.50 illustrates, data forwarding can also be used when there is
+a pending write to a register in the memory stage, avoiding the need to stall
+for program prog3. In cycle 5, the decode-stage logic detects a pending write to
+register %rdx on port E in the write-back stage, as well as a pending write to register
+%rax that is on its way to port E but is still in the memory stage. Rather than stalling
+until the writes have occurred, it can use the value in the write-back stage (signal
+W_valE) for operand valA and the value in the memory stage (signal M_valE) for
+operand valB.

@@ -1,0 +1,54 @@
+Section 2.3
+Integer Arithmetic
+129
+Normal
+Negative
+overflow
+Positive
+overflow
+8
+6
+4
+2
+0
+22
+24
+26
+28
+28
+28
+26
+22
+24
+0
+2
+4
+6
+26
+24
+22
+0
+2
+4
+6
+Figure 2.26
+Two’s-complement addition. With a 4-bit word size, addition can have a
+negative overﬂow when x + y < −8 and a positive overﬂow when x + y ≥8.
+derivation: Detecting overﬂow of two’s-complement addition
+Let us ﬁrst do the analysis for positive overﬂow. If both x > 0 and y > 0 but s ≤0,
+then clearly positive overﬂow has occurred. Conversely, positive overﬂow requires
+(1) that x > 0 and y > 0 (otherwise, x + y < TMaxw) and (2) that s ≤0 (from
+Equation 2.13). A similar set of arguments holds for negative overﬂow.
+Practice Problem 2.29 (solution page 188)
+Fill in the following table in the style of Figure 2.25. Give the integer values of
+the 5-bit arguments, the values of both their integer and two’s-complement sums,
+the bit-level representation of the two’s-complement sum, and the case from the
+derivation of Equation 2.13.
+x
+y
+x + y
+x +t
+5 y
+Case
+[10100]
+[10001]

@@ -1,0 +1,76 @@
+468
+Chapter 4
+Processor Architecture
+M
+M_valE = 3
+M_dstE = %rax
+D
+valA      R[%rdx] = 0
+valB      R[%rax] = 0
+F
+0x000: irmovq $10,%rdx
+# prog3
+# prog3
+0x00a: irmovq  $3,%rax
+0x014: nop
+0x015: addq %rdx,%rax
+0x017: halt
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+Cycle 5
+1
+2
+3
+4
+5
+6
+7
+8
+9
+W
+R[%rdx]     10
+Error
+. . .
+Figure 4.45
+Pipelined execution of prog3 without special pipeline control. In cycle
+5, the addq instruction reads its source operands from the register ﬁle. The pending
+write to register %rdx is still in the write-back stage, and the pending write to register
+%rax is still in the memory stage. Both operands valA and valB get incorrect values.
+write to register %rdx is still in the write-back stage, and the pending write to
+%rax is still in the memory stage. Therefore, the addq instruction would get the
+incorrect values for both operands.
+Figure 4.46 shows what happens when we remove all of the nop instructions
+between the irmovq instructions and the addq instruction, yielding a program
+prog4. Now we must examine the behavior of the pipeline during cycle 4 as the
+addq instruction passes through the decode stage. Unfortunately, the pending
+write to register %rdx is still in the memory stage, and the new value for %rax
+is just being computed in the execute stage. Therefore, the addq instruction would
+get the incorrect values for both operands.
+These examples illustrate that a data hazard can arise for an instruction
+when one of its operands is updated by any of the three preceding instructions.
+These hazards occur because our pipelined processor reads the operands for an
+instruction from the register ﬁle in the decode stage but does not write the results
+for the instruction to the register ﬁle until three cycles later, after the instruction
+passes through the write-back stage.

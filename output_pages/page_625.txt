@@ -1,0 +1,47 @@
+624
+Chapter 6
+The Memory Hierarchy
+Aside
+A note on bus designs
+Bus design is a complex and rapidly changing aspect of computer systems. Different vendors develop
+different bus architectures as a way to differentiate their products. For example, some Intel systems use
+chipsets known as the northbridge and the southbridge to connect the CPU to memory and I/O devices,
+respectively. In older Pentium and Core 2 systems, a front side bus (FSB) connects the CPU to the
+northbridge. Systems from AMD replace the FSB with the HyperTransport interconnect, while newer
+Intel Core i7 systems use the QuickPath interconnect. The details of these different bus architectures
+are beyond the scope of this text. Instead, we will use the high-level bus architecture from Figure 6.6
+as a running example throughout. It is a simple but useful abstraction that allows us to be concrete. It
+captures the main ideas without being tied too closely to the detail of any proprietary designs.
+Figure 6.6
+Example bus structure
+that connects the CPU
+and main memory.
+CPU chip
+Register file
+System bus
+Memory bus
+Main
+memory
+Bus interface
+I/O
+bridge
+ALU
+bridge to the main memory. The I/O bridge translates the electrical signals of the
+system bus into the electrical signals of the memory bus. As we will see, the I/O
+bridge also connects the system bus and memory bus to an I/O bus that is shared
+by I/O devices such as disks and graphics cards. For now, though, we will focus on
+the memory bus.
+Consider what happens when the CPU performs a load operation such as
+movq A,%rax
+where the contents of address A are loaded into register %rax. Circuitry on the
+CPU chip called the bus interface initiates a read transaction on the bus. The
+read transaction consists of three steps. First, the CPU places the address A
+on the system bus. The I/O bridge passes the signal along to the memory bus
+(Figure 6.7(a)). Next, the main memory senses the address signal on the memory
+bus, reads the address from the memory bus, fetches the data from the DRAM,
+and writes the data to the memory bus. The I/O bridge translates the memory bus
+signal into a system bus signal and passes it along to the system bus (Figure 6.7(b)).
+Finally, the CPU senses the data on the system bus, reads the data from the bus,
+and copies the data to register %rax (Figure 6.7(c)).
+Conversely, when the CPU performs a store operation such as
+movq %rax,A

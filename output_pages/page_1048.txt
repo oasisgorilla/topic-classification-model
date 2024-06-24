@@ -1,0 +1,91 @@
+Section 12.5
+Synchronizing Threads with Semaphores
+1047
+code/conc/echoservert-pre.c
+1
+#include "csapp.h"
+2
+#include "sbuf.h"
+3
+#define NTHREADS
+4
+4
+#define SBUFSIZE
+16
+5
+6
+void echo_cnt(int connfd);
+7
+void *thread(void *vargp);
+8
+9
+sbuf_t sbuf; /* Shared buffer of connected descriptors */
+10
+11
+int main(int argc, char **argv)
+12
+{
+13
+int i, listenfd, connfd;
+14
+socklen_t clientlen;
+15
+struct sockaddr_storage clientaddr;
+16
+pthread_t tid;
+17
+18
+if (argc != 2) {
+19
+fprintf(stderr, "usage: %s <port>\n", argv[0]);
+20
+exit(0);
+21
+}
+22
+listenfd = Open_listenfd(argv[1]);
+23
+24
+sbuf_init(&sbuf, SBUFSIZE);
+25
+for (i = 0; i < NTHREADS; i++)
+/* Create worker threads */
+26
+Pthread_create(&tid, NULL, thread, NULL);
+27
+28
+while (1) {
+29
+clientlen = sizeof(struct sockaddr_storage);
+30
+connfd = Accept(listenfd, (SA *) &clientaddr, &clientlen);
+31
+sbuf_insert(&sbuf, connfd); /* Insert connfd in buffer */
+32
+}
+33
+}
+34
+35
+void *thread(void *vargp)
+36
+{
+37
+Pthread_detach(pthread_self());
+38
+while (1) {
+39
+int connfd = sbuf_remove(&sbuf); /* Remove connfd from buffer */
+40
+echo_cnt(connfd);
+/* Service client */
+41
+Close(connfd);
+42
+}
+43
+}
+code/conc/echoservert-pre.c
+Figure 12.28
+A prethreaded concurrent echo server. The server uses a producer-consumer model with
+one producer and multiple consumers.

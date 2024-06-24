@@ -1,0 +1,61 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+487
+Data word
+Register ID
+Source description
+e_valE
+e_dstE
+ALU output
+m_valM
+M_dstM
+Memory output
+M_valE
+M_dstE
+Pending write to port E in memory stage
+W_valM
+W_dstM
+Pending write to port M in write-back stage
+W_valE
+W_dstE
+Pending write to port E in write-back stage
+If none of the forwarding conditions hold, the block should select d_rvalA, the
+value read from register port A, as its output.
+Putting all of this together, we get the following HCL description for the new
+value of valA for pipeline register E:
+word d_valA = [
+D_icode in { ICALL, IJXX } : D_valP; # Use incremented PC
+d_srcA == e_dstE : e_valE;
+# Forward valE from execute
+d_srcA == M_dstM : m_valM;
+# Forward valM from memory
+d_srcA == M_dstE : M_valE;
+# Forward valE from memory
+d_srcA == W_dstM : W_valM;
+# Forward valM from write back
+d_srcA == W_dstE : W_valE;
+# Forward valE from write back
+1 : d_rvalA;
+# Use value read from register file
+];
+The priority given to the ﬁve forwarding sources in the above HCL code is
+very important. This priority is determined in the HCL code by the order in which
+the ﬁve destination register IDs are tested. If any order other than the one shown
+were chosen, the pipeline would behave incorrectly for some programs. Figure 4.59
+shows an example of a program that requires a correct setting of priority among
+the forwarding sources in the execute and memory stages. In this program, the
+ﬁrst two instructions write to register %rdx, while the third uses this register as its
+source operand. When the rrmovq instruction reaches the decode stage in cycle
+4, the forwarding logic must choose between two values destined for its source
+register. Which one should it choose? To set the priority, we must consider the
+behavior of the machine-language program when it is executed one instruction
+at a time. The ﬁrst irmovq instruction would set register %rdx to 10, the second
+would set the register to 3, and then the rrmovq instruction would read 3 from
+%rdx. To imitate this behavior, our pipelined implementation should always give
+priority to the forwarding source in the earliest pipeline stage, since it holds the
+latest instruction in the program sequence setting the register. Thus, the logic in the
+HCL code above ﬁrst tests the forwarding source in the execute stage, then those in
+the memory stage, and ﬁnally the sources in the write-back stage. The forwarding
+priority between the two sources in either the memory or the write-back stages
+is only a concern for the instruction popq %rsp, since only this instruction can
+attempt two simultaneous writes to the same register.

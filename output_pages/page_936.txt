@@ -1,0 +1,90 @@
+Section 10.5
+Robust Reading and Writing with the Rio Package
+935
+code/src/csapp.c
+1
+ssize_t rio_readn(int fd, void *usrbuf, size_t n)
+2
+{
+3
+size_t nleft = n;
+4
+ssize_t nread;
+5
+char *bufp = usrbuf;
+6
+7
+while (nleft > 0) {
+8
+if ((nread = read(fd, bufp, nleft)) < 0) {
+9
+if (errno == EINTR) /* Interrupted by sig handler return */
+10
+nread = 0;
+/* and call read() again */
+11
+else
+12
+return -1;
+/* errno set by read() */
+13
+}
+14
+else if (nread == 0)
+15
+break;
+/* EOF */
+16
+nleft -= nread;
+17
+bufp += nread;
+18
+}
+19
+return (n - nleft);
+/* Return >= 0 */
+20
+}
+code/src/csapp.c
+code/src/csapp.c
+1
+ssize_t rio_writen(int fd, void *usrbuf, size_t n)
+2
+{
+3
+size_t nleft = n;
+4
+ssize_t nwritten;
+5
+char *bufp = usrbuf;
+6
+7
+while (nleft > 0) {
+8
+if ((nwritten = write(fd, bufp, nleft)) <= 0) {
+9
+if (errno == EINTR)
+/* Interrupted by sig handler return */
+10
+nwritten = 0;
+/* and call write() again */
+11
+else
+12
+return -1;
+/* errno set by write() */
+13
+}
+14
+nleft -= nwritten;
+15
+bufp += nwritten;
+16
+}
+17
+return n;
+18
+}
+code/src/csapp.c
+Figure 10.4
+The rio_readn and rio_writen functions.

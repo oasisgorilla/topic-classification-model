@@ -1,0 +1,49 @@
+Section 2.3
+Integer Arithmetic
+133
+principle: Unsigned multiplication
+For x and y such that 0 ≤x, y ≤UMaxw:
+x *u
+w y = (x . y) mod 2w
+(2.16)
+2.3.5
+Two’s-Complement Multiplication
+Integers x and y in the range −2w−1 ≤x, y ≤2w−1 −1 can be represented as w-bit
+two’s-complement numbers, but their product x . y can range between −2w−1 .
+(2w−1 −1) = −22w−2 + 2w−1 and −2w−1 . −2w−1 = 22w−2. This could require as
+many as 2w bits to represent in two’s-complement form. Instead, signed multi-
+plication in C generally is performed by truncating the 2w-bit product to w bits.
+We denote this value as x *t
+w y. Truncating a two’s-complement number to w bits
+is equivalent to ﬁrst computing its value modulo 2w and then converting from
+unsigned to two’s complement, giving the following:
+principle: Two’s-complement multiplication
+For x and y such that TMinw ≤x, y ≤TMaxw:
+x *t
+w y = U2Tw((x . y) mod 2w)
+(2.17)
+We claim that the bit-level representation of the product operation is identical
+for both unsigned and two’s-complement multiplication, as stated by the following
+principle:
+principle: Bit-level equivalence of unsigned and two’s-complement multipli-
+cation
+Let ⃗
+x and ⃗
+y be bit vectors of length w. Deﬁne integers x and y as the values repre-
+sented by these bits in two’s-complement form: x = B2Tw(⃗
+x) and y = B2Tw(⃗
+y).
+Deﬁne nonnegative integers x′ and y′ as the values represented by these bits in
+unsigned form: x′ = B2Uw(⃗
+x) and y′ = B2Uw(⃗
+y). Then
+T2Bw(x *t
+w y) = U2Bw(x′ *u
+w y′)
+As illustrations, Figure 2.27 shows the results of multiplying different 3-bit
+numbers. For each pair of bit-level operands, we perform both unsigned and
+two’s-complement multiplication, yielding 6-bit products, and then truncate these
+to 3 bits. The unsigned truncated product always equals x . y mod 8. The bit-
+level representations of both truncated products are identical for both unsigned
+and two’s-complement multiplication, even though the full 6-bit representations
+differ.

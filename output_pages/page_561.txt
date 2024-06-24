@@ -1,0 +1,59 @@
+560
+Chapter 5
+Optimizing Program Performance
+A more common way of expressing issue time is to specify the maximum
+throughput of the unit, deﬁned as the reciprocal of the issue time. A fully pipelined
+functional unit has a maximum throughput of 1 operation per clock cycle, while
+units with higher issue times have lower maximum throughput. Having multiple
+functional units can increase throughput even further. For an operation with
+capacity C and issue time I, the processor can potentially achieve a throughput of
+C/I operations per clock cycle. For example, our reference machine is capable of
+performing ﬂoating-point multiplication operations at a rate of 2 per clock cycle.
+We will see how this capability can be exploited to increase program performance.
+Circuit designers can create functional units with wide ranges of performance
+characteristics. Creating a unit with short latency or with pipelining requires
+more hardware, especially for more complex functions such as multiplication
+and ﬂoating-point operations. Since there is only a limited amount of space for
+these units on the microprocessor chip, CPU designers must carefully balance
+the number of functional units and their individual performance to achieve op-
+timal overall performance. They evaluate many different benchmark programs
+and dedicate the most resources to the most critical operations. As Figure 5.12
+indicates, integer multiplication and ﬂoating-point multiplication and addition
+were considered important operations in the design of the Core i7 Haswell pro-
+cessor, even though a signiﬁcant amount of hardware is required to achieve the
+low latencies and high degree of pipelining shown. On the other hand, division
+is relatively infrequent and difﬁcult to implement with either short latency or full
+pipelining.
+The latencies, issue times, and capacities of these arithmetic operations can
+affect the performance of our combining functions. We can express these effects
+in terms of two fundamental bounds on the CPE values:
+Integer
+Floating point
+Bound
++
+*
++
+*
+Latency
+1.00
+3.00
+3.00
+5.00
+Throughput
+0.50
+1.00
+1.00
+0.50
+The latency bound gives a minimum value for the CPE for any function that must
+perform the combining operation in a strict sequence. The throughput bound
+gives a minimum bound for the CPE based on the maximum rate at which the
+functional units can produce results. For example, since there is only one integer
+multiplier, and it has an issue time of 1 clock cycle, the processor cannot possibly
+sustain a rate of more than 1 multiplication per clock cycle. On the other hand,
+with four functional units capable of performing integer addition, the processor
+can potentially sustain a rate of 4 operations per cycle. Unfortunately, the need
+to read elements from memory creates an additional throughput bound. The
+two load units limit the processor to reading at most 2 data values per clock
+cycle, yielding a throughput bound of 0.50. We will demonstrate the effect of
+both the latency and throughput bounds with different versions of the combining
+functions.

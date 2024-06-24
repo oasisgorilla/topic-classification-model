@@ -1,0 +1,170 @@
+Index
+1109
+symbol references, 726, 728–729
+Y86-64, 395
+PC selection stage in PIPE processor,
+483–485
+PC update stage
+instruction processing, 421, 423–431
+sequential processing, 436
+sequential Y86-64 implementation,
+447
+PCI (peripheral component
+interconnect), 634
+PCIe (PCI express), 634
+PE (Portable Executable) format, 709
+peak utilization metric, 880–881, 881
+peer threads, 1022
+pending bit vectors, 795
+pending signals, 794
+Pentium II microprocessor, 203
+Pentium III microprocessor, 203–204
+Pentium 4 microprocessor, 204
+Pentium 4E microprocessor, 204
+Pentium microprocessor, 203
+PentiumPro microprocessor, 203, 558
+performance, 42
+Amdahl’s law, 58–60
+basic strategies, 597–598
+bottlenecks, 598–604
+branch prediction and mispredic-
+tion penalties, 585–589
+caches, 589, 667–669, 675–683
+compiler capabilities and
+limitations, 534–538
+expressing, 538–540
+limiting factors, 584–589
+loop inefﬁciencies, 544–548
+loop unrolling, 567, 567–571
+memory, 589–597
+memory references, 550–553
+modern processors, 554–567
+overview, 532–534
+parallelism. See parallelism
+procedure calls, 548–549
+program example, 540–544
+program proﬁling, 598–600
+register spilling, 584–585
+results summary, 583–584
+sequential Y86-64 implementation,
+448
+summary, 604–605
+Y86-64 pipelining, 500–504
+periods (.) in dotted-decimal notation,
+962
+persistent connections in HTTP, 988
+PF [x86-64] parity ﬂag condition code,
+214, 342
+physical address spaces, 840
+physical addresses (PA), 839
+vs. virtual, 839–840
+Y86-64, 392
+physical page numbers (PPNs), 850
+physical page offset (PPO), 850
+physical pages (PPs), 841, 841–842
+pi in ﬂoating-point representation, 176
+PIC (position-independent code), 740
+data references, 740–741
+function calls, 741–743
+picoseconds (ps), 449, 538
+PIDs (process IDs), 775
+pins, DRAM, 618–619
+PIPE−processor, 457, 458, 462–466
+PIPE processor stages, 475–476, 483
+decode and write-back, 485–489
+execute, 489–490
+memory, 490–491
+PC selection and fetch, 483–485
+pipelining, 62, 251, 448
+bubble, 470
+combinational, 448–450
+deep, 454–455
+diagram, 449
+ﬁve-stage, 507
+functional units, 559–560
+instruction, 585
+limitations, 452–454
+nonuniform partitioning, 452–454
+operation, 450–452
+registers, 449, 463
+store operation, 591–592
+systems with feedback, 455–457
+Y86-64. See Y86-64 pipelined
+implementations
+pipes, 1013
+Pisano, Leonardo (Fibonacci), 68
+placement
+memory blocks, 883, 885
+policies, 648, 885
+platters, disk, 626, 627
+PLT (procedure linkage table), 742,
+742–743
+pmap tool, 822
+point-to-point connections, 965
+pointers, 70
+arithmetic, 293–294, 909
+arrays relationship to, 84, 313
+block, 892
+creating, 84, 224
+declaring, 77
+dereferencing, 84, 224, 293, 313,
+906–907
+examples, 224
+to functions, 314
+machine-level data, 213
+principles, 314
+role, 72
+stack, 275
+to structures, 302
+virtual memory, 906–909
+void*, 84
+polynomial evaluation, 566, 566,
+608–609
+pools of peer threads, 1023
+pop instructions in x86-64 models, 408
+pop operations on stack, 225, 225–227
+popq [Y86-64] pop instruction, 226,
+226, 393
+behavior of, 407
+code for, 440
+run-time stack, 275
+portability and data type size, 77
+Portable Executable (PE) format, 709
+portable signal handling, 810–811
+ports
+Ethernet, 956
+Internet, 966
+I/O, 634
+register ﬁles, 418
+.pos [Y86-64] directive, 402
+position-independent code (PIC), 740
+data references, 740–741
+function calls, 741–743
+positive overﬂow, 126, 126–127
+posix_error [CS:APP] reports
+Posix-style errors, 1079
+Posix standards, 52
+Posix-style error handling, 1078, 1079
+Posix threads, 1023, 1023–1024
+POST method, 987–989
+PowerPC
+processor family, 388, 397
+RISC design, 397–399
+powers of 2, division by, 139–143
+PPNs (physical page numbers), 850
+PPO (physical page offset), 850
+PPs (physical pages), 841, 841–842
+precedence of shift operations, 95
+precision, ﬂoating-point, 149, 173
+prediction
+branch, 251
+misprediction penalties, 585–589
+Y86-64 pipelining, 458, 463–465
+preempted processes, 769
+prefetching mechanism, 677–678
+preﬁx sums, 538, 539, 597, 609
+prepare stack for return instruction,
+328
+preprocessors, 41, 206
+prethreading, 1041–1049, 1044
+primary inputs in logic gates, 410

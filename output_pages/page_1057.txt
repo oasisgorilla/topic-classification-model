@@ -1,0 +1,53 @@
+1056
+Chapter 12
+Concurrent Programming
+Weak scaling is often a truer measure than strong scaling because it more
+accurately reﬂects our desire to use bigger machines to do more work. This is
+particularly true for scientiﬁc codes, where the problem size can be easily increased
+and where bigger problem sizes translate directly to better predictions of nature.
+However, there exist applications whose sizes are not so easily increased, and for
+these applications strong scaling is more appropriate. For example, the amount of
+work performed by real-time signal-processing applications is often determined
+by the properties of the physical sensors that are generating the signals. Changing
+the total amount of work requires using different physical sensors, which might not
+be feasible or necessary. For these applications, we typically want to use parallelism
+to accomplish a ﬁxed amount of work as quickly as possible.
+Practice Problem 12.11 (solution page 1074)
+Fill in the blanks for the parallel program in the following table. Assume strong
+scaling.
+Threads (t)
+1
+4
+8
+Cores (p)
+1
+4
+8
+Running time (Tp)
+16
+8
+4
+Speedup (Sp)
+1
+Efﬁciency (Ep)
+100%
+12.7
+Other Concurrency Issues
+You probably noticed that life got much more complicated once we were asked
+to synchronize accesses to shared data. So far, we have looked at techniques for
+mutual exclusion and producer-consumer synchronization, but this is only the tip
+of the iceberg. Synchronization is a fundamentally difﬁcult problem that raises
+issues that simply do not arise in ordinary sequential programs. This section is a
+survey (by no means complete) of some of the issues you need to be aware of
+when you write concurrent programs. To keep things concrete, we will couch our
+discussion in terms of threads. Keep in mind, however, that these are typical of the
+issues that arise when concurrent ﬂows of any kind manipulate shared resources.
+12.7.1
+Thread Safety
+When we program with threads, we must be careful to write functions that have a
+property called thread safety. A function is said to be thread-safe if and only if it will
+always produce correct results when called repeatedly from multiple concurrent
+threads. If a function is not thread-safe, then we say it is thread-unsafe.
+We can identify four (nondisjoint) classes of thread-unsafe functions:
+Class 1: Functions that do not protect shared variables. We have already en-
+countered this problem with the thread function in Figure 12.16, which

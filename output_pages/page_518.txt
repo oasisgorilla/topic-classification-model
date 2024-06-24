@@ -1,0 +1,76 @@
+Solutions to Practice Problems
+517
+. Decimal −3 (line 5) has hex representation 0xfffffffffffffffd. Writing
+the bytes in reverse order gives fd ff ff ff ff ff ff ff.
+. The code starts at address 0x100. The ﬁrst instruction requires 10 bytes, while
+the second requires 2. Thus, the loop target will be 0x0000010c. Writing these
+bytes in reverse order gives 0c 01 00 00 00 00 00 00.
+Solution to Problem 4.2 (page 396)
+Decoding a byte sequence by hand helps you understand the task faced by a
+processor. It must read byte sequences and determine what instructions are to
+be executed. In the following, we show the assembly code used to generate each
+of the byte sequences. To the left of the assembly code, you can see the address
+and byte sequence for each instruction.
+A. Some operations with immediate data and address displacements:
+0x100: 30f3fcffffffffffffff |
+irmovq $-4,%rbx
+0x10a: 40630008000000000000 |
+rmmovq %rsi,0x800(%rbx)
+0x114: 00
+|
+halt
+B. Code including a function call:
+0x200: a06f
+|
+pushq %rsi
+0x202: 800c02000000000000
+|
+call proc
+0x20b: 00
+|
+halt
+0x20c:
+| proc:
+0x20c: 30f30a00000000000000 |
+irmovq $10,%rbx
+0x216: 90
+|
+ret
+C. Code containing illegal instruction speciﬁer byte 0xf0:
+0x300: 50540700000000000000 |
+mrmovq 7(%rsp),%rbp
+0x30a: 10
+|
+nop
+0x30b: f0
+| .byte 0xf0
+# Invalid instruction code
+0x30c: b01f
+|
+popq %rcx
+D. Code containing a jump operation:
+0x400:
+| loop:
+0x400: 6113
+|
+subq %rcx, %rbx
+0x402: 730004000000000000
+|
+je loop
+0x40b: 00
+|
+halt
+E. Code containing an invalid second byte in a pushq instruction:
+0x500: 6362
+|
+xorq %rsi,%rdx
+0x502: a0
+|
+.byte 0xa0
+# pushq instruction
+code
+0x503: f0
+|
+.byte 0xf0
+# Invalid register
+specifier byte

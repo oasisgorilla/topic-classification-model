@@ -1,0 +1,61 @@
+174
+Chapter 2
+Representing and Manipulating Information
+Hex: The four hexadecimal digits describing the encoded form.
+M: The value of the signiﬁcand. This should be a number of the form x or x
+y ,
+where x is an integer and y is an integral power of 2. Examples include 0,
+67
+64, and
+1
+256.
+E: The integer value of the exponent.
+V : The numeric value represented. Use the notation x or x × 2z, where x and
+z are integers.
+D: The (possibly approximate) numerical value, as is printed using the %f
+formatting speciﬁcation of printf.
+As an example, to represent the number 7
+8, we would have s = 0, M = 7
+4,
+and E = −1. Our number would therefore have an exponent ﬁeld of 011102
+(decimal value 15 −1 = 14) and a signiﬁcand ﬁeld of 11000000002, giving a hex
+representation 3B00. The numerical value is 0.875.
+You need not ﬁll in entries marked —.
+Description
+Hex
+M
+E
+V
+D
+−0
+−0
+−0.0
+Smallest value > 2
+512
+512
+512.0
+Largest denormalized
+−∞
+—
+—
+−∞
+−∞
+Number with hex
+representation 3BB0
+3BB0
+2.88 ◆◆
+Consider the following two 9-bit ﬂoating-point representations based on the IEEE
+ﬂoating-point format.
+1. Format A
+There is 1 sign bit.
+There are k = 5 exponent bits. The exponent bias is 15.
+There are n = 3 fraction bits.
+2. Format B
+There is 1 sign bit.
+There are k = 4 exponent bits. The exponent bias is 7.
+There are n = 4 fraction bits.
+In the following table, you are given some bit patterns in format A, and your
+task is to convert them to the closest value in format B. If rounding is necessary
+you should round toward +∞. In addition, give the values of numbers given by
+the format A and format B bit patterns. Give these as whole numbers (e.g., 17) or
+as fractions (e.g., 17/64 or 17/26).

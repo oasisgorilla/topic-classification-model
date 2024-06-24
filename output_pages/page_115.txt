@@ -1,0 +1,72 @@
+114
+Chapter 2
+Representing and Manipulating Information
+11
+show_bytes((byte_pointer) &x, sizeof(int));
+12
+printf("ux
+= %u:\t", ux);
+13
+show_bytes((byte_pointer) &ux, sizeof(unsigned));
+When run as a 32-bit program on a big-endian machine that uses a two’s-
+complement representation, this code prints the output
+sx
+= -12345:
+cf c7
+usx = 53191:
+cf c7
+x
+= -12345:
+ff ff cf c7
+ux
+= 53191:
+00 00 cf c7
+We see that, although the two’s-complement representation of −12,345 and the
+unsigned representation of 53,191 are identical for a 16-bit word size, they dif-
+fer for a 32-bit word size. In particular, −12,345 has hexadecimal representation
+0xFFFFCFC7, while 53,191 has hexadecimal representation 0x0000CFC7. The for-
+mer has been sign extended—16 copies of the most signiﬁcant bit 1, having hexa-
+decimal representation 0xFFFF, have been added as leading bits. The latter has
+been extended with 16 leading zeros, having hexadecimal representation 0x0000.
+As an illustration, Figure 2.20 shows the result of expanding from word size
+w = 3to w = 4 by sign extension. Bit vector [101]represents the value −4 + 1= −3.
+Applying sign extension gives bit vector [1101] representing the value −8 + 4 +
+1 = −3. We can see that, for w = 4, the combined value of the two most signiﬁcant
+bits, −8 + 4 = −4, matches the value of the sign bit for w = 3. Similarly, bit vectors
+[111] and [1111] both represent the value −1.
+With this as intuition, we can now show that sign extension preserves the value
+of a two’s-complement number.
+Figure 2.20
+Examples of sign
+extension from w = 3
+to w = 4. For w = 4, the
+combined weight of the
+upper 2 bits is −8 + 4 = −4,
+matching that of the sign
+bit for w = 3.
+8
+7
+6
+5
+4
+3
+2
+1
+0
+–1
+–2
+–3
+–4
+–5
+–6
+–7
+–8
+20 = 1
+21 = 2
+22 = 4
+–23 = –8
+[101]
+[1101]
+[111]
+[1111]
+–22 = –4

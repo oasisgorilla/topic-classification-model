@@ -1,0 +1,39 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+485
+The PC prediction logic chooses valC for the fetched instruction when it is
+either a call or a jump, and valP otherwise:
+word f_predPC = [
+f_icode in { IJXX, ICALL } : f_valC;
+1 : f_valP;
+];
+The logic blocks labeled “Instr valid,” “Need regids,” and “Need valC” are
+the same as for SEQ, with appropriately named source signals.
+Unlike in SEQ, we must split the computation of the instruction status into
+two parts. In the fetch stage, we can test for a memory error due to an out-of-range
+instruction address, and we can detect an illegal instruction or a halt instruction.
+Detecting an invalid data address must be deferred to the memory stage.
+Practice Problem 4.30 (solution page 526)
+Write HCL code for the signal f_stat, providing the provisional status for the
+fetched instruction.
+Decode and Write-Back Stages
+Figure 4.58 gives a detailed view of the decode and write-back logic for PIPE. The
+blocks labeled dstE, dstM, srcA, and srcB are very similar to their counterparts
+in the implementation of SEQ. Observe that the register IDs supplied to the
+write ports come from the write-back stage (signals W_dstE and W_dstM), rather
+than from the decode stage. This is because we want the writes to occur to the
+destination registers speciﬁed by the instruction in the write-back stage.
+Practice Problem 4.31 (solution page 526)
+The block labeled “dstE” in the decode stage generates the register ID for the E
+port of the register ﬁle, based on ﬁelds from the fetched instruction in pipeline
+register D. The resulting signal is named d_dstE in the HCL description of PIPE.
+Write HCL code for this signal, based on the HCL description of the SEQ signal
+dstE. (See the decode stage for SEQ in Section 4.3.4.) Do not concern yourself
+with the logic to implement conditional moves yet.
+Most of the complexity of this stage is associated with the forwarding logic.
+As mentioned earlier, the block labeled “Sel+Fwd A” serves two roles. It merges
+the valP signal into the valA signal for later stages in order to reduce the amount
+of state in the pipeline register. It also implements the forwarding logic for source
+operand valA.
+The merging of signals valA and valP exploits the fact that only the call and
+jump instructions need the value of valP in later stages, and these instructions

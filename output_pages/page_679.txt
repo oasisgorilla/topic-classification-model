@@ -1,0 +1,61 @@
+678
+Chapter 6
+The Memory Hierarchy
+14,000
+12,000
+10,000
+8,000
+6,000
+4,000
+2,000
+0
+64 M
+128 M
+32 M
+16 M
+8 M
+4 M
+2 M
+1,024 K
+512 K
+256 K
+128 K
+64 K
+32 K
+16 K
+Working set size (bytes)
+Read throughput (MB/s)
+L1 cache
+region
+L2 cache
+region
+L3 cache
+region
+Main memory
+region
+Figure 6.42
+Ridges of temporal locality in the memory mountain. The graph shows
+a slice through Figure 6.41 with stride = 8.
+details of the particular prefetching algorithm are not documented, it is clear from
+the memory mountain that the algorithm works best for small strides—yet another
+reason to favor sequential stride-1 accesses in your code.
+If we take a slice through the mountain, holding the stride constant as in Fig-
+ure 6.42, we can see the impact of cache size and temporal locality on performance.
+For sizes up to 32 KB, the working set ﬁts entirely in the L1 d-cache, and thus
+reads are served from L1 at throughput of about 12 GB/s. For sizes up to 256 KB,
+the working set ﬁts entirely in the uniﬁed L2 cache, and for sizes up to 8 MB, the
+working set ﬁts entirely in the uniﬁed L3 cache. Larger working set sizes are served
+primarily from main memory.
+The dips in read throughputs at the leftmost edges of the L2 and L3 cache
+regions—where the working set sizes of 256 KB and 8 MB are equal to their
+respective cache sizes—are interesting. It is not entirely clear why these dips occur.
+The only way to be sure is to perform a detailed cache simulation, but it is likely
+that the drops are caused by conﬂicts with other code and data lines.
+Slicing through the memory mountain in the opposite direction, holding the
+working set size constant, gives us some insight into the impact of spatial locality on
+the read throughput. For example, Figure 6.43 shows the slice for a ﬁxed working
+set size of 4 MB. This slice cuts along the L3 ridge in Figure 6.41, where the working
+set ﬁts entirely in the L3 cache but is too large for the L2 cache.
+Notice how the read throughput decreases steadily as the stride increases from
+one to eight words. In this region of the mountain, a read miss in L2 causes a
+block to be transferred from L3 to L2. This is followed by some number of hits

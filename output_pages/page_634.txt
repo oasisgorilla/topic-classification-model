@@ -1,0 +1,56 @@
+Section 6.1
+Storage Technologies
+633
+Figure 6.11
+Example bus structure
+that connects the CPU,
+main memory, and I/O
+devices.
+CPU
+Register file
+System bus
+Memory bus
+I/O bus
+Monitor
+Key-
+board
+Mouse
+Disk drive
+Main
+memory
+Expansion slots for
+other devices such
+as network adapters
+Bus interface
+I/O
+bridge
+USB
+controller
+Graphics
+adapter
+Disk
+controller
+Host bus
+adapter
+(SCSI/SATA)
+ALU
+Solid
+state
+disk
+. A graphics card (or adapter) contains hardware and software logic that is re-
+sponsible for painting the pixels on the display monitor on behalf of the CPU.
+. A host bus adapter that connects one or more disks to the I/O bus using
+a communication protocol deﬁned by a particular host bus interface. The
+two most popular such interfaces for disks are SCSI (pronounced “scuzzy”)
+and SATA (pronounced “sat-uh”). SCSI disks are typically faster and more
+expensive than SATA drives. A SCSI host bus adapter (often called a SCSI
+controller) can support multiple disk drives, as opposed to SATA adapters,
+which can only support one drive.
+Additional devices such as network adapters can be attached to the I/O bus by
+plugging the adapter into empty expansion slots on the motherboard that provide
+a direct electrical connection to the bus.
+Accessing Disks
+While a detailed description of how I/O devices work and how they are pro-
+grammed is outside our scope here, we can give you a general idea. For example,
+Figure 6.12 summarizes the steps that take place when a CPU reads data from a
+disk.

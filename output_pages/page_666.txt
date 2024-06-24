@@ -1,0 +1,75 @@
+Section 6.4
+Cache Memories
+665
+value returned in hexadecimal notation. Indicate whether a cache miss occurs. If
+there is a cache miss, enter “—” for “Cache byte returned.”
+A. Address format (1 bit per box):
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+B. Memory reference:
+Parameter
+Value
+Cache block offset (CO)
+0x
+Cache set index (CI)
+0x
+Cache tag (CT)
+0x
+Cache hit? (Y/N)
+Cache byte returned
+0x
+Practice Problem 6.14 (solution page 700)
+Repeat Problem 6.13 for memory address 0x0CB4.
+A. Address format (1 bit per box):
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+B. Memory reference:
+Parameter
+Value
+Cache block offset (CO)
+0x
+Cache set index (CI)
+0x
+Cache tag (CT)
+0x
+Cache hit? (Y/N)
+Cache byte returned
+0x
+Practice Problem 6.15 (solution page 700)
+Repeat Problem 6.13 for memory address 0x0A31.
+A. Address format (1 bit per box):
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0

@@ -1,0 +1,40 @@
+978
+Chapter 11
+Network Programming
+that can be used as end points of connections (line 17). Since we are only asking
+getaddrinfo to convert domain names, we call it with a NULL service argument.
+After the call to getaddrinfo, we walk the list of addrinfo structures, using
+getnameinfo to convert each socket address to a dotted-decimal address string.
+After walking the list, we are careful to free it by calling freeaddrinfo (although
+for this simple program it is not strictly necessary).
+When we run hostinfo, we see that twitter.com maps to four IP addresses,
+which is what we saw using nslookup in Section 11.3.2.
+linux> ./hostinfo twitter.com
+199.16.156.102
+199.16.156.230
+199.16.156.6
+199.16.156.70
+Practice Problem 11.4 (solution page 1004)
+The getaddrinfo and getnameinfo functions subsume the functionality of inet_
+pton and inet_ntop, respectively, and they provide a higher-level of abstraction
+that is independent of any particular address format. To convince yourself how
+handy this is, write a version of hostinfo (Figure 11.17) that uses inet_ntop in-
+stead of getnameinfo to convert each socket address to a dotted-decimal address
+string.
+11.4.8
+Helper Functions for the Sockets Interface
+The getaddrinfo function and the sockets interface can seem somewhat daunting
+when you ﬁrst learn about them. We ﬁnd it convenient to wrap them with higher-
+level helper functions, called open_clientfd and open_listenfd, that clients and
+servers can use when they want to communicate with each other.
+The open_clientfd Function
+A client establishes a connection with a server by calling open_clientfd.
+#include "csapp.h"
+int open_clientfd(char *hostname, char *port);
+Returns: descriptor if OK, −1 on error
+The open_clientfd function establishes a connection with a server running on
+host hostname and listening for connection requests on port number port. It
+returns an open socket descriptor that is ready for input and output using the
+Unix I/O functions. Figure 11.18 shows the code for open_clientfd.
+We call getaddrinfo, which returns a list of addrinfo structures, each of
+which points to a socket address structure that is suitable for establishing a con-

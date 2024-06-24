@@ -1,0 +1,63 @@
+Section 6.4
+Cache Memories
+653
+Parameter
+Description
+Fundamental parameters
+S = 2s
+Number of sets
+E
+Number of lines per set
+B = 2b
+Block size (bytes)
+m = log2(M)
+Number of physical (main memory) address bits
+Derived quantities
+M = 2m
+Maximum number of unique memory addresses
+s = log2(S)
+Number of set index bits
+b = log2(B)
+Number of block offset bits
+t = m −(s + b)
+Number of tag bits
+C = B × E × S
+Cache size (bytes), not including overhead such as the valid and tag bits
+Figure 6.26
+Summary of cache parameters.
+Figure 6.27
+Direct-mapped cache
+(E = 1). There is exactly
+one line per set.
+Valid
+Tag
+Cache block
+Set 0:
+Valid
+Tag
+Cache block
+Set 1:
+Valid
+Tag
+Cache block
+Set S–1:
+. . .
+E = 1 line per set
+6.4.2
+Direct-Mapped Caches
+Caches are grouped into different classes based on E, the number of cache lines
+per set. A cache with exactly one line per set (E = 1) is known as a direct-mapped
+cache (see Figure 6.27). Direct-mapped caches are the simplest both to implement
+and to understand, so we will use them to illustrate some general concepts about
+how caches work.
+Suppose we have a system with a CPU, a register ﬁle, an L1 cache, and a main
+memory. When the CPU executes an instruction that reads a memory word w,
+it requests the word from the L1 cache. If the L1 cache has a cached copy of w,
+then we have an L1 cache hit, and the cache quickly extracts w and returns it to
+the CPU. Otherwise, we have a cache miss, and the CPU must wait while the L1
+cache requests a copy of the block containing w from the main memory. When
+the requested block ﬁnally arrives from memory, the L1 cache stores the block in
+one of its cache lines, extracts word w from the stored block, and returns it to the
+CPU. The process that a cache goes through of determining whether a request is a
+hit or a miss and then extracting the requested word consists of three steps: (1) set
+selection, (2) line matching, and (3) word extraction.

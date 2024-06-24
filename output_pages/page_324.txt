@@ -1,0 +1,91 @@
+Section 3.10
+Combining Control and Data in Machine-Level Programs
+323
+Stack frame
+for caller
+Stack frame
+for echo
+Return address
+Canary
+%rsp+24
+[7]
+buf = %rsp
+[6][5][4][3][2][1][0]
+Figure 3.42
+Stack organization for echo function with stack protector enabled. A
+special “canary” value is positioned between array buf and the saved state. The code
+checks the canary value to determine whether or not the stack state has been corrupted.
+easy way for an attacker to determine what it is. Before restoring the register state
+and returning from the function, the program checks if the canary has been altered
+by some operation of this function or one that it has called. If so, the program
+aborts with an error.
+Recent versions of gcc try to determine whether a function is vulnerable to
+a stack overﬂow and insert this type of overﬂow detection automatically. In fact,
+for our earlier demonstration of stack overﬂow, we had to give the command-line
+option -fno-stack-protector to prevent gcc from inserting this code. Compiling
+the function echo without this option, and hence with the stack protector enabled,
+gives the following assembly code:
+void echo()
+1
+echo:
+2
+subq
+$24, %rsp
+Allocate 24 bytes on stack
+3
+movq
+%fs:40, %rax
+Retrieve canary
+4
+movq
+%rax, 8(%rsp)
+Store on stack
+5
+xorl
+%eax, %eax
+Zero out register
+6
+movq
+%rsp, %rdi
+Compute buf as %rsp
+7
+call
+gets
+Call gets
+8
+movq
+%rsp, %rdi
+Compute buf as %rsp
+9
+call
+puts
+Call puts
+10
+movq
+8(%rsp), %rax
+Retrieve canary
+11
+xorq
+%fs:40, %rax
+Compare to stored value
+12
+je
+.L9
+If =, goto ok
+13
+call
+__stack_chk_fail
+Stack corrupted!
+14
+.L9:
+ok:
+15
+addq
+$24, %rsp
+Deallocate stack space
+16
+ret
+We see that this version of the function retrieves a value from memory (line 3)
+and stores it on the stack at offset 8 from %rsp, just beyond the region allocated for
+buf. The instruction argument %fs:40 is an indication that the canary value is read
+from memory using segmented addressing, an addressing mechanism that dates

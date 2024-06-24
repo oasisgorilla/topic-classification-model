@@ -1,0 +1,167 @@
+Index
+1103
+static libraries, 720–724
+isPtr function, 905
+issue time for arithmetic operations,
+559
+issuing instructions, 463–464
+iterative servers, 982
+iterative sorting routines, 603
+ja [x86-64] jump if unsigned greater,
+242
+jae [x86-64] jump if unsigned greater
+or equal, 242
+Java language, 713
+byte code, 346
+linker symbols, 716
+numeric ranges, 104
+objects, 302–303
+software exceptions, 759–760, 822
+threads, 1066
+Java monitors, 1046
+Java Native Interface (JNI), 740
+jb [x86-64] jump if unsigned less, 242
+jbe [x86-64] jump if unsigned less or
+equal, 242
+je [Y86-64] jump when equal, 393,
+430
+jg [x86-64] jump if greater, 242, 393
+jge [x86-64] jump if greater or equal,
+242, 393
+jik matrix multiplication, 680–682, 681
+jki matrix multiplication, 680–682, 681
+jl [x86-64] jump if less, 242, 393
+jle [x86-64] jump if less or equal, 242,
+393
+jmp [x86-64] jump unconditionally,
+242, 393
+jna [x86-64] jump if not unsigned
+greater, 242
+jnae [x86-64] jump if unsigned greater
+or equal, 242
+jnb [x86-64] jump if not unsigned less,
+242
+jnbe [x86-64] jump if not unsigned
+less or equal, 242
+jne [x86-64] jump if not equal, 242,
+393
+jng [x86-64] jump if not greater, 242
+jnge [x86-64] jump if not greater or
+equal, 242
+JNI (Java Native Interface), 740
+jnl [x86-64] jump if not less, 242
+jnle [x86-64] jump if not less or equal,
+242
+jns [x86-64] jump if nonnegative, 242
+jnz [x86-64] jump if not zero, 242
+jobs, 796
+joinable threads, 1025
+jp [x86-64] jump when parity ﬂag set,
+342
+js [x86-64] jump if negative, 242
+jtest script, 501
+jump if greater instruction, 242, 393
+jump if greater or equal instruction,
+242, 393
+jump if less instruction, 242, 393
+jump if less or equal instruction, 242,
+393
+jump if negative instruction, 242
+jump if nonnegative instruction, 242
+jump if not equal instruction, 242, 393
+jump if not greater instruction, 242
+jump if not greater or equal
+instruction, 242
+jump if not less instruction, 242
+jump if not less or equal instruction,
+242
+jump if not unsigned greater
+instruction, 242
+jump if not unsigned less instruction,
+242
+jump if not unsigned less or equal
+instruction, 242
+jump if not zero instruction, 242
+jump if unsigned greater instruction,
+242
+jump if unsigned greater or equal
+instruction, 242
+jump if unsigned less instruction, 242
+jump if unsigned less or equal
+instruction, 242
+jump if zero instruction, 242
+jump instructions, 46, 241–245, 440
+direct, 242
+indirect, 242, 270
+instruction code for, 440
+nonlocal, 759, 817, 817–822
+targets, 242
+jump tables, 269, 270–271, 761
+jump-to-middle translation, 259
+jump unconditionally instruction, 242,
+242
+jump when equal instruction, 393
+jump when parity ﬂag set instruction,
+342
+just-in-time compilation, 326, 346
+jz [x86-64] jump if zero, 242
+k × 1 loop unrolling, 567
+k × 1a loop unrolling, 580
+k × k loop unrolling, 575–576
+K&R (C book), 40
+Kahan, William, 145
+Kahn, Robert, 967
+kernel mode
+exception handlers, 762
+processes, 770–772, 771
+system calls, 764
+kernels, 53, 55, 734
+exception numbers, 761
+virtual memory, 866–867
+Kernighan, Brian, 38, 40, 52, 71, 314, 950
+Kerrisk, Michael, 950
+keyboard, signals from, 796–797
+kij matrix multiplication, 680–682, 681
+kill [Unix] send signal, 797
+kill command in gdb debugger, 316
+kill.c [CS:APP] kill example, 797
+kji matrix multiplication, 680–682, 681
+Knuth, Donald, 885, 887
+ksh [Unix] Unix shell program, 789
+l sufﬁx, 215
+L1 cache, 49, 651
+L2 cache, 49, 651
+L3 cache, 651
+labels for jump instructions, 241
+LANs (local area networks), 956,
+956–958
+last-in, ﬁrst out discipline, 225
+last-in ﬁrst-out (LIFO) free list order,
+899
+latency
+arithmetic operations, 559, 560
+disks, 630
+instruction, 449
+load operations, 590–591
+pipelining, 448
+latency bounds, 554, 560
+lazy binding, 742
+ld Unix static linker, 708
+ld-linux.so linker, 735
+LD_PRELOAD environment variable,
+746–748
+ldd tool, 749
+LEA instruction, 138
+leaf procedures, 277
+leaks, memory, 911, 1028
+leaq [x86-64] load effective address,
+227, 227–228, 313
+least-frequently-used (LFU)
+replacement policies, 662
+least-recently-used (LRU) replace-
+ment policies, 648, 662
+least squares ﬁt, 538, 540
+leave [x86-64] prepare stack for
+return instruction, 328
+left hoinkies (<), 946
+length of strings, 119

@@ -1,0 +1,56 @@
+426
+Chapter 4
+Processor Architecture
+Aside
+Tracing the execution of an rmmovq instruction
+Let us trace the processing of the rmmovq instruction on line 5 of the object code shown in Figure 4.17.
+We can see that the previous instruction initialized register %rsp to 128, while %rbx still holds 12, as
+computed by the subq instruction (line 3). We can also see that the instruction is located at address
+0x020 and consists of 10 bytes. The ﬁrst 2 bytes have values 0x40 and 0x43, while the ﬁnal 8 bytes are
+a byte-reversed version of the number 0x0000000000000064 (decimal 100). The stages would proceed
+as follows:
+Generic
+Speciﬁc
+Stage
+rmmovq rA, D(rB)
+rmmovq %rsp, 100(%rbx)
+Fetch
+icode:ifun ←M1[PC]
+icode:ifun ←M1[0x020] = 4:0
+rA :rB ←M1[PC + 1]
+rA :rB ←M1[0x021] = 4:3
+valC ←M8[PC + 2]
+valC ←M8[0x022] = 100
+valP ←PC + 10
+valP ←0x020 + 10 = 0x02a
+Decode
+valA ←R[rA]
+valA ←R[%rsp] = 128
+valB ←R[rB]
+valB ←R[%rbx] = 12
+Execute
+valE ←valB + valC
+valE ←12 + 100 = 112
+Memory
+M8[valE] ←valA
+M8[112] ←128
+Write back
+PC update
+PC ←valP
+PC ←0x02a
+As this trace shows, the instruction has the effect of writing 128 to memory address 112 and
+incrementing the PC by 10.
+(and x86-64) convention that popq should ﬁrst read memory and then increment
+the stack pointer.
+Practice Problem 4.14 (solution page 522)
+Fill in the right-hand column of the following table to describe the processing of
+the popq instruction on line 7 of the object code in Figure 4.17.
+Generic
+Speciﬁc
+Stage
+popq rA
+popq %rax
+Fetch
+icode:ifun ←M1[PC]
+rA :rB ←M1[PC + 1]
+valP ←PC + 2

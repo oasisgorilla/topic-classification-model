@@ -1,0 +1,116 @@
+492
+Chapter 4
+Processor Architecture
+This was illustrated by a simpliﬁed pipeline diagram in Figure 4.55 for processing
+the following program:
+0x000:
+irmovq stack,%rsp
+#
+Initialize stack pointer
+0x00a:
+call proc
+#
+Procedure call
+0x013:
+irmovq $10,%rdx
+#
+Return point
+0x01d:
+halt
+0x020: .pos 0x20
+0x020: proc:
+# proc:
+0x020:
+ret
+#
+Return immediately
+0x021:
+rrmovq %rdx,%rbx
+#
+Not executed
+0x030: .pos 0x30
+0x030: stack:
+# stack: Stack pointer
+Figure 4.62 provides a detailed view of the processing of the ret instruction
+for the example program. The key observation here is that there is no way to
+inject a bubble into the fetch stage of our pipeline. On every cycle, the fetch stage
+reads some instruction from the instruction memory. Looking at the HCL code
+for implementing the PC prediction logic in Section 4.5.7, we can see that for the
+ret instruction, the new value of the PC is predicted to be valP, the address of the
+following instruction. In our example program, this would be 0x021, the address
+of the rrmovq instruction following the ret. This prediction is not correct for this
+example, nor would it be for most cases, but we are not attempting to predict return
+addresses correctly in our design. For three clock cycles, the fetch stage stalls,
+causing the rrmovq instruction to be fetched but then replaced by a bubble in the
+decode stage. This process is illustrated in Figure 4.62 by the three fetches, with an
+arrow leading down to the bubbles passing through the remaining pipeline stages.
+Finally, the irmovq instruction is fetched on cycle 7. Comparing Figure 4.62 with
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+F
+E
+M
+W
+F
+D
+E
+M
+W
+0x000: irmovq Stack,%rsp
+0x00a: call proc
+0x020: ret
+0x021: rrmovq %rdx,%rbx # Not executed
+       
+0x021: rrmovq %rdx,%rbx # Not executed
+       
+0x021: rrmovq %rdx,%rbx # Not executed
+       
+0x013: irmovq $10,%rdx # Return point
+bubble
+bubble
+bubble
+bubble
+bubble
+bubble
+# prog6
+# prog6
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+D
+E
+M
+W
+Figure 4.62
+Detailed processing of the ret instruction. The fetch stage repeatedly
+fetches the rrmovq instruction following the ret instruction, but then the pipeline
+control logic injects a bubble into the decode stage rather than allowing the rrmovq
+instruction to proceed. The resulting behavior is equivalent to that shown in Figure 4.55.

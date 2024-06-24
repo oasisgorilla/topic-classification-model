@@ -1,0 +1,52 @@
+398
+Chapter 4
+Processor Architecture
+Aside
+RISC and CISC instruction sets (continued)
+CISC
+Early RISC
+Multiple formats for specifying operands. In x86-
+64, a memory operand speciﬁer can have many
+different combinations of displacement, base
+and index registers, and scale factors.
+Simple addressing formats. Typically just base
+and displacement addressing.
+Arithmetic and logical operations can be applied
+to both memory and register operands.
+Arithmetic and logical operations only use
+register operands. Memory referencing is only
+allowed by load instructions, reading from
+memory into a register, and store instructions,
+writing from a register to memory. This
+convention is referred to as a load/store
+architecture.
+Implementation artifacts hidden from machine-
+level programs. The ISA provides a clean
+abstraction between programs and how they
+get executed.
+Implementation artifacts exposed to machine-
+level programs. Some RISC machines prohibit
+particular instruction sequences and have
+jumps that do not take effect until the following
+instruction is executed. The compiler is given
+the task of optimizing performance within these
+constraints.
+Condition codes. Special ﬂags are set as a
+side effect of instructions and then used for
+conditional branch testing.
+No condition codes. Instead, explicit test
+instructions store the test results in normal
+registers for use in conditional evaluation.
+Stack-intensive procedure linkage. The stack
+is used for procedure arguments and return
+addresses.
+Register-intensive procedure linkage. Registers
+are used for procedure arguments and return
+addresses. Some procedures can thereby avoid
+any memory references. Typically, the processor
+has many more (up to 32) registers.
+The Y86-64 instruction set includes attributes of both CISC and RISC instruction sets. On the
+CISC side, it has condition codes and variable-length instructions, and it uses the stack to store return
+addresses. On the RISC side, it uses a load/store architecture and a regular instruction encoding, and it
+passes procedure arguments through registers. It can be viewed as taking a CISC instruction set (x86)
+and simplifying it by applying some of the principles of RISC.

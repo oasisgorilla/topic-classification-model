@@ -1,0 +1,44 @@
+202
+Chapter 3
+Machine-Level Representation of Programs
+Web Aside ASM:IA32
+IA32 programming
+IA32, the 32-bit predecessor to x86-64, was introduced by Intel in 1985. It served as the machine
+language of choice for several decades. Most x86 microprocessors sold today, and most operating
+systems installed on these machines, are designed to run x86-64. However, they can also execute IA32
+programs in a backward compatibility mode. As a result, many application programs are still based on
+IA32. In addition, many existing systems cannot execute x86-64, due to limitations of their hardware
+or system software. IA32 continues to be an important machine language. You will ﬁnd that having a
+background in x86-64 will enable you to learn the IA32 machine language quite readily.
+passing of data and control between procedures, as well as storage for local vari-
+ables. Next, we consider how data structures such as arrays, structures, and unions
+are implemented at the machine level. With this background in machine-level pro-
+gramming, we can examine the problems of out-of-bounds memory references and
+the vulnerability of systems to buffer overﬂow attacks. We ﬁnish this part of the
+presentation with some tips on using the gdb debugger for examining the run-time
+behavior of a machine-level program. The chapter concludes with a presentation
+on machine-program representations of code involving ﬂoating-point data and
+operations.
+The computer industry has recently made the transition from 32-bit to 64-
+bit machines. A 32-bit machine can only make use of around 4 gigabytes (232
+bytes) of random access memory, With memory prices dropping at dramatic
+rates, and our computational demands and data sizes increasing, it has become
+both economically feasible and technically desirable to go beyond this limitation.
+Current 64-bit machines can use up to 256 terabytes (248 bytes) of memory, and
+could readily be extended to use up to 16 exabytes (264 bytes). Although it is
+hard to imagine having a machine with that much memory, keep in mind that
+4 gigabytes seemed like an extreme amount of memory when 32-bit machines
+became commonplace in the 1970s and 1980s.
+Our presentation focuses on the types of machine-level programs generated
+when compiling C and similar programming languages targeting modern oper-
+ating systems. As a consequence, we make no attempt to describe many of the
+features of x86-64 that arise out of its legacy support for the styles of programs
+written in the early days of microprocessors, when much of the code was writ-
+ten manually and where programmers had to struggle with the limited range of
+addresses allowed by 16-bit machines.
+3.1
+A Historical Perspective
+The Intel processor line, colloquially referred to as x86, has followed a long evo-
+lutionary development. It started with one of the ﬁrst single-chip 16-bit micropro-
+cessors, where many compromises had to be made due to the limited capabilities
+of integrated circuit technology at the time. Since then, it has grown to take ad-

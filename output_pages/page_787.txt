@@ -1,0 +1,36 @@
+786
+Chapter 8
+Exceptional Control Flow
+returns prematurely because it was interrupted by a signal. We will discuss signals
+in detail in Section 8.5.
+Another function that we will ﬁnd useful is the pause function, which puts the
+calling function to sleep until a signal is received by the process.
+#include <unistd.h>
+int pause(void);
+Always returns −1
+Practice Problem 8.5 (solution page 833)
+Write a wrapper function for sleep, called wakeup, with the following interface:
+unsigned int wakeup(unsigned int secs);
+The wakeup function behaves exactly as the sleep function, except that it prints
+a message describing when the process actually woke up:
+Woke up at 4 secs.
+8.4.5
+Loading and Running Programs
+The execve function loads and runs a new program in the context of the current
+process.
+#include <unistd.h>
+int execve(const char *filename, const char *argv[],
+const char *envp[]);
+Does not return if OK; returns −1 on error
+The execve function loads and runs the executable object ﬁle filename with the
+argument list argv and the environment variable list envp. Execve returns to the
+calling program only if there is an error, such as not being able to ﬁnd filename.
+So unlike fork, which is called once but returns twice, execve is called once and
+never returns.
+The argument list is represented by the data structure shown in Figure 8.20.
+The argv variable points to a null-terminated array of pointers, each of which
+pointstoanargumentstring.Byconvention, argv[0]isthenameoftheexecutable
+object ﬁle. The list of environment variables is represented by a similar data
+structure, shown in Figure 8.21. The envp variable points to a null-terminated array
+of pointers to environment variable strings, each of which is a name-value pair of
+the form name=value.

@@ -1,0 +1,63 @@
+Section 5.1
+Capabilities and Limitations of Optimizing Compilers
+535
+the compiler to perform only safe optimizations eliminates possible sources of
+undesired run-time behavior, but it also means that the programmer must make
+more of an effort to write programs in a way that the compiler can then transform
+into efﬁcient machine-level code. To appreciate the challenges of deciding which
+program transformations are safe or not, consider the following two procedures:
+1
+void twiddle1(long *xp, long *yp)
+2
+{
+3
+*xp += *yp;
+4
+*xp += *yp;
+5
+}
+6
+7
+void twiddle2(long *xp, long *yp)
+8
+{
+9
+*xp += 2* *yp;
+10
+}
+At ﬁrst glance, both procedures seem to have identical behavior. They both
+add twice the value stored at the location designated by pointer yp to that desig-
+nated by pointer xp. On the other hand, function twiddle2 is more efﬁcient. It
+requires only three memory references (read *xp, read *yp, write *xp), whereas
+twiddle1 requires six (two reads of *xp, two reads of *yp, and two writes of *xp).
+Hence, if a compiler is given procedure twiddle1 to compile, one might think
+it could generate more efﬁcient code based on the computations performed by
+twiddle2.
+Consider, however, the case in which xp and yp are equal. Then function
+twiddle1 will perform the following computations:
+3
+*xp += *xp;
+/* Double value at xp */
+4
+*xp += *xp;
+/* Double value at xp */
+The result will be that the value at xp will be increased by a factor of 4. On the
+other hand, function twiddle2 will perform the following computation:
+9
+*xp += 2* *xp;
+/* Triple value at xp */
+The result will be that the value at xp will be increased by a factor of 3. The compiler
+knows nothing about how twiddle1 will be called, and so it must assume that
+arguments xp and yp can be equal. It therefore cannot generate code in the style
+of twiddle2 as an optimized version of twiddle1.
+The case where two pointers may designate the same memory location is
+known as memory aliasing. In performing only safe optimizations, the compiler
+must assume that different pointers may be aliased. As another example, for a
+program with pointer variables p and q, consider the following code sequence:
+x = 1000; y = 3000;
+*q = y;
+/* 3000 */
+*p = x;
+/* 1000 */
+t1 = *q;
+/* 1000 or 3000 */

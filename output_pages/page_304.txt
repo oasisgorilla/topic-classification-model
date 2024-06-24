@@ -1,0 +1,57 @@
+Section 3.9
+Heterogeneous Data Structures
+303
+New to C?
+Representing an object as a struct (continued)
+The objects of C++ and Java are more elaborate than structures in C, in that they also associate
+a set of methods with an object that can be invoked to perform computation. In C, we would simply
+write these as ordinary functions, such as the functions area and rotate_left shown previously.
+of type struct rec * is in register %rdi. Then the following code copies element
+r->i to element r->j:
+Registers: r in %rdi
+1
+movl
+(%rdi), %eax
+Get r->i
+2
+movl
+%eax, 4(%rdi)
+Store in r->j
+Since the offset of ﬁeld i is 0, the address of this ﬁeld is simply the value of r. To
+store into ﬁeld j, the code adds offset 4 to the address of r.
+To generate a pointer to an object within a structure, we can simply add the
+ﬁeld’s offset to the structure address. For example, we can generate the pointer
+&(r->a[1]) by adding offset 8 + 4 . 1 = 12. For pointer r in register %rdi and long
+integer variable i in register %rsi, we can generate the pointer value &(r->a[i])
+with the single instruction
+Registers: r in %rdi, i %rsi
+1
+leaq
+8(%rdi,%rsi,4), %rax
+Set %rax to &r->a[i]
+As a ﬁnal example, the following code implements the statement
+r->p = &r->a[r->i + r->j];
+starting with r in register %rdi:
+Registers: r in %rdi
+1
+movl
+4(%rdi), %eax
+Get r->j
+2
+addl
+(%rdi), %eax
+Add r->i
+3
+cltq
+Extend to 8 bytes
+4
+leaq
+8(%rdi,%rax,4), %rax
+Compute &r->a[r->i + r->j]
+5
+movq
+%rax, 16(%rdi)
+Store in r->p
+As these examples show, the selection of the different ﬁelds of a structure is
+handled completely at compile time. The machine code contains no information
+about the ﬁeld declarations or the names of the ﬁelds.

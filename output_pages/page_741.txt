@@ -1,0 +1,45 @@
+740
+Chapter 7
+Linking
+Aside
+Shared libraries and the Java Native Interface
+Java deﬁnes a standard calling convention called Java Native Interface (JNI) that allows “native” C
+and C++ functions to be called from Java programs. The basic idea of JNI is to compile the native C
+function, say, foo, into a shared library, say, foo.so. When a running Java program attempts to invoke
+function foo, the Java interpreter uses the dlopen interface (or something like it) to dynamically link
+and load foo.so and then call foo.
+7.12
+Position-Independent Code (PIC)
+A key purpose of shared libraries is to allow multiple running processes to share
+the same library code in memory and thus save precious memory resources. So
+how can multiple processes share a single copy of a program? One approach would
+be to assign a priori a dedicated chunk of the address space to each shared library,
+and then require the loader to always load the shared library at that address.
+While straightforward, this approach creates some serious problems. It would
+be an inefﬁcient use of the address space because portions of the space would
+be allocated even if a process didn’t use the library. It would also be difﬁcult to
+manage. We would have to ensure that none of the chunks overlapped. Each time
+a library was modiﬁed, we would have to make sure that it still ﬁt in its assigned
+chunk. If not, then we would have to ﬁnd a new chunk. And if we created a
+new library, we would have to ﬁnd room for it. Over time, given the hundreds
+of libraries and versions of libraries in a system, it would be difﬁcult to keep the
+address space from fragmenting into lots of small unused but unusable holes. Even
+worse, the assignment of libraries to memory would be different for each system,
+thus creating even more management headaches.
+To avoid these problems, modern systems compile the code segments of
+shared modules so that they can be loaded anywhere in memory without having to
+be modiﬁed by the linker. With this approach, a single copy of a shared module’s
+code segment can be shared by an unlimited number of processes. (Of course, each
+process will still get its own copy of the read/write data segment.)
+Code that can be loaded without needing any relocations is known as position-
+independent code (PIC). Users direct GNU compilation systems to generate PIC
+code with the -fpic option to gcc. Shared libraries must always be compiled with
+this option.
+On x86-64 systems, references to symbols in the same executable object mod-
+ule require no special treatment to be PIC. These references can be compiled using
+PC-relative addressing and relocated by the static linker when it builds the object
+ﬁle. However, references to external procedures and global variables that are de-
+ﬁned by shared modules require some special techniques, which we describe next.
+PIC Data References
+Compilers generate PIC references to global variables by exploiting the following
+interesting fact: no matter where we load an object module (including shared

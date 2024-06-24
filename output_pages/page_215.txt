@@ -1,0 +1,66 @@
+214
+Chapter 3
+Machine-Level Representation of Programs
+Web Aside ASM:EASM
+Combining assembly code with C programs
+Although a C compiler does a good job of converting the computations expressed in a program into
+machine code, there are some features of a machine that cannot be accessed by a C program. For
+example, every time an x86-64 processor executes an arithmetic or logical operation, it sets a 1-bit
+condition code ﬂag, named PF (for “parity ﬂag”), to 1 when the lower 8 bits in the resulting computation
+have an even number of ones and to 0 otherwise. Computing this information in C requires at least
+seven shifting, masking, and exclusive-or operations (see Problem 2.65). Even though the hardware
+performs this computation as part of every arithmetic or logical operation, there is no way for a C
+program to determine the value of the PF condition code ﬂag. This task can readily be performed by
+incorporating a small number of assembly-code instructions into the program.
+There are two ways to incorporate assembly code into C programs. First, we can write an entire
+function as a separate assembly-code ﬁle and let the assembler and linker combine this with code we
+have written in C. Second, we can use the inline assemblyfeature of gcc, where brief sections of assembly
+code can be incorporated into a C program using the asm directive. This approach has the advantage
+that it minimizes the amount of machine-speciﬁc code.
+Of course, including assembly code in a C program makes the code speciﬁc to a particular class of
+machines (such as x86-64), and so it should only be used when the desired feature can only be accessed
+in this way.
+C declaration
+Intel data type
+Assembly-code sufﬁx
+Size (bytes)
+char
+Byte
+b
+1
+short
+Word
+w
+2
+int
+Double word
+l
+4
+long
+Quad word
+q
+8
+char *
+Quad word
+q
+8
+float
+Single precision
+s
+4
+double
+Double precision
+l
+8
+Figure 3.1
+Sizes of C data types in x86-64. With a 64-bit machine, pointers are 8 bytes
+long.
+types, and so they will operate on quad words. The x86-64 instruction set includes
+a full complement of instructions for bytes, words, and double words as well.
+Floating-point numbers come in two principal formats: single-precision (4-
+byte) values, corresponding to C data type float, and double-precision (8-byte)
+values, corresponding to C data type double. Microprocessors in the x86 family
+historically implemented all ﬂoating-point operations with a special 80-bit (10-
+byte) ﬂoating-point format (see Problem 2.86). This format can be speciﬁed in C
+programs using the declaration long double. We recommend against using this
+format, however. It is not portable to other classes of machines, and it is typically

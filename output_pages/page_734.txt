@@ -1,0 +1,43 @@
+Section 7.9
+Loading Executable Object Files
+733
+vaddr mod align = 0x600df8 mod 0x200000 = 0xdf8
+and
+off mod align = 0xdf8 mod 0x200000 = 0xdf8
+This alignment requirement is an optimization that enables segments in the object
+ﬁle to be transferred efﬁciently to memory when the program executes. The reason
+is somewhat subtle and is due to the way that virtual memory is organized as large
+contiguous power-of-2 chunks of bytes. You will learn all about virtual memory in
+Chapter 9.
+7.9
+Loading Executable Object Files
+To run an executable object ﬁle prog, we can type its name to the Linux shell’s
+command line:
+linux> ./prog
+Since prog does not correspond to a built-in shell command, the shell assumes that
+prog is an executable object ﬁle, which it runs for us by invoking some memory-
+resident operating system code known as the loader. Any Linux program can
+invoke the loader by calling the execve function, which we will describe in detail in
+Section 8.4.6. The loader copies the code and data in the executable object ﬁle from
+disk into memory and then runs the program by jumping to its ﬁrst instruction, or
+entry point. This process of copying the program into memory and then running
+it is known as loading.
+Every running Linux program has a run-time memory image similar to the
+one in Figure 7.15. On Linux x86-64 systems, the code segment starts at address
+0x400000, followed by the data segment. The run-time heap follows the data
+segment and grows upward via calls to the malloc library. (We will describe malloc
+and the heap in detail in Section 9.9.) This is followed by a region that is reserved
+for shared modules. The user stack starts below the largest legal user address
+(248 −1) and grows down, toward smaller memory addresses. The region above
+the stack, starting at address 248, is reserved for the code and data in the kernel,
+which is the memory-resident part of the operating system.
+For simplicity, we’ve drawn the heap, data, and code segments as abutting
+each other, and we’ve placed the top of the stack at the largest legal user ad-
+dress. In practice, there is a gap between the code and data segments due to the
+alignment requirement on the .data segment (Section 7.8). Also, the linker uses
+address-space layout randomization (ASLR, Section 3.10.4) when it assigns run-
+time addresses to the stack, shared library, and heap segments. Even though the
+locations of these regions change each time the program is run, their relative po-
+sitions are the same.
+When the loader runs, it creates a memory image similar to the one shown
+in Figure 7.15. Guided by the program header table, it copies chunks of the

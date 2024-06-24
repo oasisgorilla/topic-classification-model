@@ -1,0 +1,68 @@
+Section 9.9
+Dynamic Memory Allocation
+897
+code/vm/malloc/mm.c
+1
+void *mm_malloc(size_t size)
+2
+{
+3
+size_t asize;
+/* Adjusted block size */
+4
+size_t extendsize; /* Amount to extend heap if no fit */
+5
+char *bp;
+6
+7
+/* Ignore spurious requests */
+8
+if (size == 0)
+9
+return NULL;
+10
+11
+/* Adjust block size to include overhead and alignment reqs. */
+12
+if (size <= DSIZE)
+13
+asize = 2*DSIZE;
+14
+else
+15
+asize = DSIZE * ((size + (DSIZE) + (DSIZE-1)) / DSIZE);
+16
+17
+/* Search the free list for a fit */
+18
+if ((bp = find_fit(asize)) != NULL) {
+19
+place(bp, asize);
+20
+return bp;
+21
+}
+22
+23
+/* No fit found. Get more memory and place the block */
+24
+extendsize = MAX(asize,CHUNKSIZE);
+25
+if ((bp = extend_heap(extendsize/WSIZE)) == NULL)
+26
+return NULL;
+27
+place(bp, asize);
+28
+return bp;
+29
+}
+code/vm/malloc/mm.c
+Figure 9.47 mm_malloc allocates a block from the free list.
+Practice Problem 9.8 (solution page 920)
+Implement a find_fit function for the simple allocator described in Section
+9.9.12.
+static void *find_fit(size_t asize)
+Your solution should perform a ﬁrst-ﬁt search of the implicit free list.
+Practice Problem 9.9 (solution page 920)
+Implement a place function for the example allocator.

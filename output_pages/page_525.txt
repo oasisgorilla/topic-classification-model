@@ -1,0 +1,44 @@
+524
+Chapter 4
+Processor Architecture
+Solution to Problem 4.20 (page 443)
+This code is similar to the code for srcA.
+word srcB = [
+icode in { IOPQ, IRMMOVQ, IMRMOVQ
+} : rB;
+icode in { IPUSHQ, IPOPQ, ICALL, IRET } : RRSP;
+1 : RNONE;
+# Don’t need register
+];
+Solution to Problem 4.21 (page 444)
+This code is similar to the code for dstE.
+word dstM = [
+icode in { IMRMOVQ, IPOPQ } : rA;
+1 : RNONE;
+# Don’t write any register
+];
+Solution to Problem 4.22 (page 444)
+As we found in Practice Problem 4.16, we want the write via the M port to take
+priority over the write via the E port in order to store the value read from memory
+into %rsp.
+Solution to Problem 4.23 (page 445)
+This code is similar to the code for aluA.
+word aluB = [
+icode in { IRMMOVQ, IMRMOVQ, IOPQ, ICALL,
+IPUSHQ, IRET, IPOPQ } : valB;
+icode in { IRRMOVQ, IIRMOVQ } : 0;
+# Other instructions don’t need ALU
+];
+Solution to Problem 4.24 (page 445)
+Implementing conditional moves is surprisingly simple: we disable writing to the
+register ﬁle by setting the destination register to RNONE when the condition does
+not hold.
+word dstE = [
+icode in { IRRMOVQ } && Cnd : rB;
+icode in { IIRMOVQ, IOPQ} : rB;
+icode in { IPUSHQ, IPOPQ, ICALL, IRET } : RRSP;
+1 : RNONE;
+# Don’t write any register
+];
+Solution to Problem 4.25 (page 446)
+This code is similar to the code for mem_addr.

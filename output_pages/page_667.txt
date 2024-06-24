@@ -1,0 +1,48 @@
+666
+Chapter 6
+The Memory Hierarchy
+B. Memory reference:
+Parameter
+Value
+Cache block offset (CO)
+0x
+Cache set index (CI)
+0x
+Cache tag (CT)
+0x
+Cache hit? (Y/N)
+Cache byte returned
+0x
+Practice Problem 6.16 (solution page 701)
+For the cache in Problem 6.12, list all of the hexadecimal memory addresses that
+will hit in set 3.
+6.4.5
+Issues with Writes
+As we have seen, the operation of a cache with respect to reads is straightforward.
+First, look for a copy of the desired word w in the cache. If there is a hit, return
+w immediately. If there is a miss, fetch the block that contains w from the next
+lower level of the memory hierarchy, store the block in some cache line (possibly
+evicting a valid line), and then return w.
+The situation for writes is a little more complicated. Suppose we write a word
+w that is already cached (a write hit). After the cache updates its copy of w, what
+does it do about updating the copy of w in the next lower level of the hierarchy?
+The simplest approach, known as write-through, is to immediately write w’s cache
+block to the next lower level. While simple, write-through has the disadvantage
+of causing bus trafﬁc with every write. Another approach, known as write-back,
+defers the update as long as possible by writing the updated block to the next lower
+level only when it is evicted from the cache by the replacement algorithm. Because
+of locality, write-back can signiﬁcantly reduce the amount of bus trafﬁc, but it has
+the disadvantage of additional complexity. The cache must maintain an additional
+dirty bit for each cache line that indicates whether or not the cache block has been
+modiﬁed.
+Another issue is how to deal with write misses. One approach, known as write-
+allocate, loads the corresponding block from the next lower level into the cache
+and then updates the cache block. Write-allocate tries to exploit spatial locality
+of writes, but it has the disadvantage that every miss results in a block transfer
+from the next lower level to the cache. The alternative, known as no-write-allocate,
+bypasses the cache and writes the word directly to the next lower level. Write-
+through caches are typically no-write-allocate. Write-back caches are typically
+write-allocate.
+Optimizing caches for writes is a subtle and difﬁcult issue, and we are only
+scratching the surface here. The details vary from system to system and are often
+proprietary and poorly documented. To the programmer trying to write reason-

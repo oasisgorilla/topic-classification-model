@@ -1,0 +1,49 @@
+670
+Chapter 6
+The Memory Hierarchy
+Aside
+Cache lines, sets, and blocks: What’s the difference?
+It is easy to confuse the distinction between cache lines, sets, and blocks. Let’s review these ideas and
+make sure they are clear:
+. A block is a ﬁxed-size packet of information that moves back and forth between a cache and main
+memory (or a lower-level cache).
+. A line is a container in a cache that stores a block, as well as other information such as the valid
+bit and the tag bits.
+. A set is a collection of one or more lines. Sets in direct-mapped caches consist of a single line. Sets
+in set associative and fully associative caches consist of multiple lines.
+In direct-mapped caches, sets and lines are indeed equivalent. However, in associative caches, sets and
+lines are very different things and the terms cannot be used interchangeably.
+Since a line always stores a single block, the terms “line” and “block” are often used interchange-
+ably. For example, systems professionals usually refer to the “line size” of a cache, when what they
+really mean is the block size. This usage is very common and shouldn’t cause any confusion as long as
+you understand the distinction between blocks and lines.
+write code that is cache friendly, in the sense that it has good locality. Here is the
+basic approach we use to try to ensure that our code is cache friendly.
+1. Make the common case go fast. Programs often spend most of their time in a
+few core functions. These functions often spend most of their time in a few
+loops. So focus on the inner loops of the core functions and ignore the rest.
+2. Minimize the number of cache misses in each inner loop.All other things being
+equal, such as the total number of loads and stores, loops with better miss rates
+will run faster.
+To see how this works in practice, consider the sumvec function from Sec-
+tion 6.2:
+1
+int sumvec(int v[N])
+2
+{
+3
+int i, sum = 0;
+4
+5
+for (i = 0; i < N; i++)
+6
+sum += v[i];
+7
+return sum;
+8
+}
+Is this function cache friendly? First, notice that there is good temporal locality in
+the loop body with respect to the local variables i and sum. In fact, because these
+are local variables, any reasonable optimizing compiler will cache them in the
+register ﬁle, the highest level of the memory hierarchy. Now consider the stride-
+1 references to vector v. In general, if a cache has a block size of B bytes, then a

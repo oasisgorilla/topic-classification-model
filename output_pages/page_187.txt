@@ -1,0 +1,78 @@
+186
+Chapter 2
+Representing and Manipulating Information
+becomes 2,147,483,648. In addition, if either operand is unsigned, then the other
+operand will be cast to unsigned before comparing.
+Expression
+Type
+Evaluation
+-2147483647-1 == 2147483648U
+Unsigned
+1
+-2147483647-1 < 2147483647
+Signed
+1
+-2147483647-1U < 2147483647
+Unsigned
+0
+-2147483647-1 < -2147483647
+Signed
+1
+-2147483647-1U < -2147483647
+Unsigned
+1
+Solution to Problem 2.22 (page 115)
+This exercise provides a concrete demonstration of how sign extension preserves
+the numeric value of a two’s-complement representation.
+A.
+[1100]
+−23 + 22
+=
+−8 + 4
+=
+−4
+B.
+[11100]
+−24 + 23 + 22
+=
+−16 + 8 + 4
+=
+−4
+C.
+[111100]
+−25 + 24 + 23 + 22
+=
+−32 + 16 + 8 + 4
+=
+−4
+Solution to Problem 2.23 (page 116)
+The expressions in these functions are common program “idioms” for extracting
+values from a word in which multiple bit ﬁelds have been packed. They exploit
+the zero-ﬁlling and sign-extending properties of the different shift operations.
+Note carefully the ordering of the cast and shift operations. In fun1, the shifts
+are performed on unsigned variable word and hence are logical. In fun2, shifts
+are performed after casting word to int and hence are arithmetic.
+A.
+w
+fun1(w)
+fun2(w)
+0x00000076
+0x00000076
+0x00000076
+0x87654321
+0x00000021
+0x00000021
+0x000000C9
+0x000000C9
+0xFFFFFFC9
+0xEDCBA987
+0x00000087
+0xFFFFFF87
+B. Function fun1 extracts a value from the low-order 8 bits of the argument,
+giving an integer ranging between 0 and 255. Function fun2 extracts a value
+from the low-order 8 bits of the argument, but it also performs sign extension.
+The result will be a number between −128 and 127.
+Solution to Problem 2.24 (page 118)
+The effect of truncation is fairly intuitive for unsigned numbers, but not for two’s-
+complement numbers. This exercise lets you explore its properties using very small
+word sizes.

@@ -1,0 +1,62 @@
+764
+Chapter 8
+Exceptional Control Flow
+Figure 8.7
+Fault handling.
+Depending on whether the
+fault can be repaired or
+not, the fault handler either
+re-executes the faulting
+instruction or aborts.
+(2) Control passes
+to handler
+(3) Fault
+handler runs
+(4) Handler either re-executes
+current instruction or aborts
+(1) Current
+instruction
+causes a fault
+Icurr
+abort
+Figure 8.8
+Abort handling. The abort
+handler passes control to a
+kernel abort routine that
+terminates the application
+program.
+(2) Control passes
+to handler
+(3) Abort
+handler runs
+(4) Handler returns
+to abort routine
+(1) Fatal hardware
+error occurs
+Icurr
+abort
+run in user mode, which restricts the types of instructions they can execute, and
+they access the same stack as the calling function. A system call runs in kernel
+mode, which allows it to execute privileged instructions and access a stack deﬁned
+in the kernel. Section 8.2.4 discusses user and kernel modes in more detail.
+Faults
+Faults result from error conditions that a handler might be able to correct. When
+a fault occurs, the processor transfers control to the fault handler. If the handler
+is able to correct the error condition, it returns control to the faulting instruction,
+thereby re-executing it. Otherwise, the handler returns to an abort routine in the
+kernel that terminates the application program that caused the fault. Figure 8.7
+summarizes the processing for a fault.
+A classic example of a fault is the page fault exception, which occurs when
+an instruction references a virtual address whose corresponding page is not res-
+ident in memory and must therefore be retrieved from disk. As we will see in
+Chapter 9, a page is a contiguous block (typically 4 KB) of virtual memory. The
+page fault handler loads the appropriate page from disk and then returns control
+to the instruction that caused the fault. When the instruction executes again, the
+appropriate page is now resident in memory and the instruction is able to run to
+completion without faulting.
+Aborts
+Aborts result from unrecoverable fatal errors, typically hardware errors such
+as parity errors that occur when DRAM or SRAM bits are corrupted. Abort
+handlers never return control to the application program. As shown in Figure 8.8,
+the handler returns control to an abort routine that terminates the application
+program.

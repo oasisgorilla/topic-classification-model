@@ -1,0 +1,223 @@
+194
+Chapter 2
+Representing and Manipulating Information
+One simple way to think about fractional binary representations is to repre-
+sent a number as a fraction of the form x
+2k . We can write this in binary using the
+binary representation of x, with the binary point inserted k positions from the
+right. As an example, for 25
+16, we have 2510 = 110012. We then put the binary point
+four positions from the right to get 1.10012.
+Solution to Problem 2.46 (page 147)
+In most cases, the limited precision of ﬂoating-point numbers is not a major
+problem, because the relative error of the computation is still fairly low. In this
+example, however, the system was sensitive to the absolute error.
+A. We can see that 0.1 −x has the binary representation
+0.000000000000000000000001100[1100] . . . 2
+B. Comparing this to the binary representation of 1
+10, we can see that it is simply
+2−20 × 1
+10, which is around 9.54 × 10−8.
+C. 9.54 × 10−8 × 100 × 60 × 60 × 10 ≈0.343 seconds.
+D. 0.343 × 2,000 ≈687 meters.
+Solution to Problem 2.47 (page 153)
+Working through ﬂoating-point representations for very small word sizes helps
+clarify how IEEE ﬂoating point works. Note especially the transition between
+denormalized and normalized values.
+Bits
+e
+E
+2E
+f
+M
+2E × M
+V
+Decimal
+0 00 00
+0
+0
+1
+0
+4
+0
+4
+0
+4
+0
+0.0
+0 00 01
+0
+0
+1
+1
+4
+1
+4
+1
+4
+1
+4
+0.25
+0 00 10
+0
+0
+1
+2
+4
+2
+4
+2
+4
+1
+2
+0.5
+0 00 11
+0
+0
+1
+3
+4
+3
+4
+3
+4
+3
+4
+0.75
+0 01 00
+1
+0
+1
+0
+4
+4
+4
+4
+4
+1
+1.0
+0 01 01
+1
+0
+1
+1
+4
+5
+4
+5
+4
+5
+4
+1.25
+0 01 10
+1
+0
+1
+2
+4
+6
+4
+6
+4
+3
+2
+1.5
+0 01 11
+1
+0
+1
+3
+4
+7
+4
+7
+4
+7
+4
+1.75
+0 10 00
+2
+1
+2
+0
+4
+4
+4
+8
+4
+2
+2.0
+0 10 01
+2
+1
+2
+1
+4
+5
+4
+10
+4
+5
+2
+2.5
+0 10 10
+2
+1
+2
+2
+4
+6
+4
+12
+4
+3
+3.0
+0 10 11
+2
+1
+2
+3
+4
+7
+4
+14
+4
+7
+2
+3.5
+0 11 00
+—
+—
+—
+—
+—
+—
+∞
+—
+0 11 01
+—
+—
+—
+—
+—
+—
+NaN
+—
+0 11 10
+—
+—
+—
+—
+—
+—
+NaN
+—
+0 11 11
+—
+—
+—
+—
+—
+—
+NaN
+—

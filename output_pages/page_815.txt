@@ -1,0 +1,44 @@
+814
+Chapter 8
+Exceptional Control Flow
+deletejob in the handler. If addjob wins the race, then the answer is correct. If
+not, the answer is incorrect. Such errors are enormously difﬁcult to debug because
+it is often impossible to test every interleaving. You might run the code a billion
+times without a problem, but then the next test results in an interleaving that
+triggers the race.
+Figure 8.40 shows one way to eliminate the race in Figure 8.39. By blocking
+SIGCHLD signals before the call to fork and then unblocking them only after we
+have called addjob, we guarantee that the child will be reaped after it is added to
+the job list. Notice that children inherit the blocked set of their parents, so we must
+be careful to unblock the SIGCHLD signal in the child before calling execve.
+8.5.7
+Explicitly Waiting for Signals
+Sometimes a main program needs to explicitly wait for a certain signal handler to
+run. For example, when a Linux shell creates a foreground job, it must wait for
+the job to terminate and be reaped by the SIGCHLD handler before accepting
+the next user command.
+Figure 8.41 shows the basic idea. The parent installs handlers for SIGINT and
+SIGCHLD and then enters an inﬁnite loop. It blocks SIGCHLD to avoid the race
+between parent and child that we discussed in Section 8.5.6. After creating the
+child, it resets pid to zero, unblocks SIGCHLD, and then waits in a spin loop for
+pid to become nonzero. After the child terminates, the handler reaps it and assigns
+its nonzero PID to the global pid variable. This terminates the spin loop, and the
+parent continues with additional work before starting the next iteration.
+While this code is correct, the spin loop is wasteful of processor resources. We
+might be tempted to ﬁx this by inserting a pause in the body of the spin loop:
+while (!pid)
+/* Race! */
+pause();
+Notice that we still need a loop because pause might be interrupted by the
+receipt of one or more SIGINT signals. However, this code has a serious race
+condition: if the SIGCHLD is received after the while test but before the pause,
+the pause will sleep forever.
+Another option is to replace the pause with sleep:
+while (!pid) /* Too slow! */
+sleep(1);
+While correct, this code is too slow. If the signal is received after the while
+and before the sleep, the program must wait a (relatively) long time before it
+can check the loop termination condition again. Using a higher-resolution sleep
+function such as nanosleep isn’t acceptable, either, because there is no good rule
+for determining the sleep interval. Make it too small and the loop is too wasteful.
+Make it too high and the program is too slow.

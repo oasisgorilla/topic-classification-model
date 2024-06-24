@@ -1,0 +1,81 @@
+642
+Chapter 6
+The Memory Hierarchy
+1
+int sumvec(int v[N])
+2
+{
+3
+int i, sum = 0;
+4
+5
+for (i = 0; i < N; i++)
+6
+sum += v[i];
+7
+return sum;
+8
+}
+(a)
+Address
+0
+4
+8
+12
+16
+20
+24
+28
+Contents
+v0
+v1
+v2
+v3
+v4
+v5
+v6
+v7
+Access order
+1
+2
+3
+4
+5
+6
+7
+8
+(b)
+Figure 6.17
+(a) A function with good locality. (b) Reference pattern for vector v (N = 8). Notice how
+the vector elements are accessed in the same order that they are stored in memory.
+6.2.1
+Locality of References to Program Data
+Consider the simple function in Figure 6.17(a) that sums the elements of a vector.
+Does this function have good locality? To answer this question, we look at the
+reference pattern for each variable. In this example, the sum variable is referenced
+once in each loop iteration, and thus there is good temporal locality with respect
+to sum. On the other hand, since sum is a scalar, there is no spatial locality with
+respect to sum.
+As we see in Figure 6.17(b), the elements of vector v are read sequentially, one
+after the other, in the order they are stored in memory (we assume for convenience
+that the array starts at address 0). Thus, with respect to variable v, the function
+has good spatial locality but poor temporal locality since each vector element
+is accessed exactly once. Since the function has either good spatial or temporal
+locality with respect to each variable in the loop body, we can conclude that the
+sumvec function enjoys good locality.
+A function such as sumvec that visits each element of a vector sequentially
+is said to have a stride-1 reference pattern (with respect to the element size).
+We will sometimes refer to stride-1 reference patterns as sequential reference
+patterns. Visiting every kth element of a contiguous vector is called a stride-k
+reference pattern. Stride-1 reference patterns are a common and important source
+of spatial locality in programs. In general, as the stride increases, the spatial locality
+decreases.
+Stride is also an important issue for programs that reference multidimensional
+arrays. For example, consider the sumarrayrows function in Figure 6.18(a) that
+sums the elements of a two-dimensional array.
+The doubly nested loop reads the elements of the array in row-major order.
+That is, the inner loop reads the elements of the ﬁrst row, then the second row,
+and so on. The sumarrayrows function enjoys good spatial locality because it
+references the array in the same row-major order that the array is stored (Fig-
+ure 6.18(b)). The result is a nice stride-1 reference pattern with excellent spatial
+locality.

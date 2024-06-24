@@ -1,0 +1,57 @@
+Section 5.3
+Program Example
+543
+1
+/* Implementation with maximum use of data abstraction */
+2
+void combine1(vec_ptr v, data_t *dest)
+3
+{
+4
+long i;
+5
+6
+*dest = IDENT;
+7
+for (i = 0; i < vec_length(v); i++) {
+8
+data_t val;
+9
+get_vec_element(v, i, &val);
+10
+*dest = *dest OP val;
+11
+}
+12
+}
+Figure 5.5
+Initial implementation of combining operation. Using different decla-
+rations of identity element IDENT and combining operation OP, we can measure the
+routine for different operations.
+we measured the CPE performance of the functions on a machine with an Intel
+Core i7 Haswell processor, which we refer to as our reference machine. Some
+characteristics of this processor were given in Section 3.1. These measurements
+characterize performance in terms of how the programs run on just one particular
+machine, and so there is no guarantee of comparable performance on other
+combinations of machine and compiler. However, we have compared the results
+with those for a number of different compiler/processor combinations, and we
+have found them generally consistent with those presented here.
+As we proceed through a set of transformations, we will ﬁnd that many
+lead to only minimal performance gains, while others have more dramatic ef-
+fects. Determining which combinations of transformations to apply is indeed
+part of the “black art” of writing fast code. Some combinations that do not pro-
+vide measurable beneﬁts are indeed ineffective, while others are important as
+ways to enable further optimizations by the compiler. In our experience, the
+best approach involves a combination of experimentation and analysis: repeat-
+edly attempting different approaches, performing measurements, and examining
+the assembly-code representations to identify underlying performance bottle-
+necks.
+As a starting point, the following table shows CPE measurements for
+combine1 running on our reference machine, with different combinations of
+operation (addition or multiplication) and data type (long integer and double-
+precision ﬂoating point). Our experiments with many different programs showed
+that operations on 32-bit and 64-bit integers have identical performance, with
+the exception of code involving division operations. Similarly, we found identical
+performance for programs operating on single- or double-precision ﬂoating-point
+data. In our tables, we will therefore show only separate results for integer data
+and for ﬂoating-point data.

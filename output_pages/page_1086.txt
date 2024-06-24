@@ -1,0 +1,118 @@
+References
+1085
+lelism in Algorithms and Architectures (SPAA),
+pages 271–280. ACM, 2006.
+[40]
+G. Gibson, D. Nagle, K. Amiri, J. Butler,
+F. Chang, H. Gobioff, C. Hardin, E. Riedel,
+D. Rochberg, and J. Zelenka. A cost-effective,
+high-bandwidth storage architecture. In
+Proceedings of the 8th International Conference
+on Architectural Support for Programming
+Languages and Operating Systems (ASPLOS),
+pages 92–103. ACM, October 1998.
+[41]
+G. Gibson and R. Van Meter. Network attached
+storage architecture. Communications of the
+ACM 43(11):37–45, November 2000.
+[42]
+Google. IPv6 Adoption. Available at http://
+www.google.com/intl/en/ipv6/statistics.html.
+[43]
+J. Gustafson. Reevaluating Amdahl’s law.
+Communications of the ACM 31(5):532–533,
+August 1988.
+[44]
+L. Gwennap. New algorithm improves branch
+prediction. Microprocessor Report 9(4), March
+1995.
+[45]
+S. P. Harbison and G. L. Steele, Jr. C, A
+Reference Manual, Fifth Edition. Prentice Hall,
+2002.
+[46]
+J. L. Hennessy and D. A. Patterson. Computer
+Architecture: A Quantitative Approach, Fifth
+Edition. Morgan Kaufmann, 2011.
+[47]
+M. Herlihy and N. Shavit. The Art of Multi-
+processor Programming. Morgan Kaufmann,
+2008.
+[48]
+C. A. R. Hoare. Monitors: An operating system
+structuring concept. Communications of the
+ACM 17(10):549–557, October 1974.
+[49]
+Intel Corporation. Intel 64 and IA-32 Ar-
+chitectures Optimization Reference Manual.
+Available at http://www.intel.com/content/
+www/us/en/processors/architectures-software-
+developer-manuals.html.
+[50]
+Intel Corporation. Intel 64 and IA-32 Ar-
+chitectures Software Developer’s Manual,
+Volume 1: Basic Architecture. Available at
+http://www.intel.com/content/www/us/en/
+processors/architectures-software-developer-
+manuals.html.
+[51]
+Intel Corporation. Intel 64 and IA-32 Ar-
+chitectures Software Developer’s Manual,
+Volume 2: Instruction Set Reference. Available
+at http://www.intel.com/content/www/us/en/
+processors/architectures-software-developer-
+manuals.html.
+[52]
+Intel Corporation. Intel 64 and IA-32 Architec-
+tures Software Developer’s Manual, Volume 3a:
+System Programming Guide, Part 1. Available
+at http://www.intel.com/content/www/us/en/
+processors/architectures-software-developer-
+manuals.html.
+[53]
+Intel Corporation. Intel Solid-State Drive 730
+Series: Product Speciﬁcation. Available at
+http://www.intel.com/content/www/us/en/solid-
+state-drives/ssd-730-series-spec.html.
+[54]
+Intel Corporation. Tool Interface Standards
+Portable Formats Speciﬁcation, Version 1.1,
+1993. Order number 241597.
+[55]
+F. Jones, B. Prince, R. Norwood, J. Hartigan,
+W. Vogley, C. Hart, and D. Bondurant.
+Memory—a new era of fast dynamic RAMs
+(for video applications). IEEE Spectrum, pages
+43–45, October 1992.
+[56]
+R. Jones and R. Lins. Garbage Collection:
+Algorithms for Automatic Dynamic Memory
+Management. Wiley, 1996.
+[57]
+M. Kaashoek, D. Engler, G. Ganger, H. Briceo,
+R. Hunt, D. Maziers, T. Pinckney, R. Grimm,
+J. Jannotti, and K. MacKenzie. Application
+performance and ﬂexibility on Exokernel
+systems. In Proceedings of the 16th ACM
+Symposium on Operating System Principles
+(SOSP), pages 52–65. ACM, October 1997.
+[58]
+R. Katz and G. Borriello. Contemporary Logic
+Design, Second Edition. Prentice Hall, 2005.
+[59]
+B. W. Kernighan and R. Pike. The Practice of
+Programming. Addison-Wesley, 1999.
+[60]
+B. Kernighan and D. Ritchie. The C Program-
+ming Language, First Edition. Prentice Hall,
+1978.
+[61]
+B. Kernighan and D. Ritchie. The C Program-
+ming Language, Second Edition. Prentice Hall,
+1988.
+[62]
+Michael Kerrisk. The Linux Programming
+Interface. No Starch Press, 2010.
+[63]
+T. Kilburn, B. Edwards, M. Lanigan, and
+F. Sumner. One-level storage system. IRE

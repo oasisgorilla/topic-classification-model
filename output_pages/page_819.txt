@@ -1,0 +1,82 @@
+818
+Chapter 8
+Exceptional Control Flow
+code/ecf/sigsuspend.c
+1
+#include "csapp.h"
+2
+3
+volatile sig_atomic_t pid;
+4
+5
+void sigchld_handler(int s)
+6
+{
+7
+int olderrno = errno;
+8
+pid = Waitpid(-1, NULL, 0);
+9
+errno = olderrno;
+10
+}
+11
+12
+void sigint_handler(int s)
+13
+{
+14
+}
+15
+16
+int main(int argc, char **argv)
+17
+{
+18
+sigset_t mask, prev;
+19
+20
+Signal(SIGCHLD, sigchld_handler);
+21
+Signal(SIGINT, sigint_handler);
+22
+Sigemptyset(&mask);
+23
+Sigaddset(&mask, SIGCHLD);
+24
+25
+while (1) {
+26
+Sigprocmask(SIG_BLOCK, &mask, &prev); /* Block SIGCHLD */
+27
+if (Fork() == 0) /* Child */
+28
+exit(0);
+29
+30
+/* Wait for SIGCHLD to be received */
+31
+pid = 0;
+32
+while (!pid)
+33
+sigsuspend(&prev);
+34
+35
+/* Optionally unblock SIGCHLD */
+36
+Sigprocmask(SIG_SETMASK, &prev, NULL);
+37
+38
+/* Do some work after receiving SIGCHLD */
+39
+printf(".");
+40
+}
+41
+exit(0);
+42
+}
+code/ecf/sigsuspend.c
+Figure 8.42
+Waiting for a signal with sigsuspend.

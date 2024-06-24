@@ -1,0 +1,54 @@
+68
+Chapter 2
+Representing and Manipulating Information
+M
+odern computers store and process information represented as two-valued
+signals. These lowly binary digits, or bits, form the basis of the digital revo-
+lution. The familiar decimal, or base-10, representation has been in use for over
+1,000 years, having been developed in India, improved by Arab mathematicians in
+the 12th century, and brought to the West in the 13th century by the Italian mathe-
+matician Leonardo Pisano (ca. 1170 to ca. 1250), better known as Fibonacci. Using
+decimal notation is natural for 10-ﬁngered humans, but binary values work better
+when building machines that store and process information. Two-valued signals
+can readily be represented, stored, and transmitted—for example, as the presence
+or absence of a hole in a punched card, as a high or low voltage on a wire, or as a
+magnetic domain oriented clockwise or counterclockwise. The electronic circuitry
+for storing and performing computations on two-valued signals is very simple and
+reliable, enabling manufacturers to integrate millions, or even billions, of such
+circuits on a single silicon chip.
+In isolation, a single bit is not very useful. When we group bits together and
+apply some interpretation that gives meaning to the different possible bit patterns,
+however, we can represent the elements of any ﬁnite set. For example, using a
+binary number system, we can use groups of bits to encode nonnegative numbers.
+By using a standard character code, we can encode the letters and symbols in a
+document. We cover both of these encodings in this chapter, as well as encodings
+to represent negative numbers and to approximate real numbers.
+We consider the three most important representations of numbers. Unsigned
+encodings are based on traditional binary notation, representing numbers greater
+than or equal to 0. Two’s-complement encodings are the most common way to
+represent signed integers, that is, numbers that may be either positive or negative.
+Floating-point encodings are a base-2 version of scientiﬁc notation for represent-
+ing real numbers. Computers implement arithmetic operations, such as addition
+and multiplication, with these different representations, similar to the correspond-
+ing operations on integers and real numbers.
+Computer representations use a limited number of bits to encode a number,
+and hence some operations can overﬂow when the results are too large to be rep-
+resented. This can lead to some surprising results. For example, on most of today’s
+computers (those using a 32-bit representation for data type int), computing the
+expression
+200 * 300 * 400 * 500
+yields −884,901,888. This runs counter to the properties of integer arithmetic—
+computing the product of a set of positive numbers has yielded a negative result.
+On the other hand, integer computer arithmetic satisﬁes many of the familiar
+properties of true integer arithmetic. For example, multiplication is associative
+and commutative, so that computing any of the following C expressions yields
+−884,901,888:
+(500
+*
+400) * (300 * 200)
+((500 *
+400) * 300) * 200
+((200 *
+500) * 300) * 400
+400
+* (200 * (300 * 500))

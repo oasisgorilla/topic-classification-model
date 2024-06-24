@@ -1,0 +1,96 @@
+994
+Chapter 11
+Network Programming
+code/netp/tiny/tiny.c
+1
+void doit(int fd)
+2
+{
+3
+int is_static;
+4
+struct stat sbuf;
+5
+char buf[MAXLINE], method[MAXLINE], uri[MAXLINE], version[MAXLINE];
+6
+char filename[MAXLINE], cgiargs[MAXLINE];
+7
+rio_t rio;
+8
+9
+/* Read request line and headers */
+10
+Rio_readinitb(&rio, fd);
+11
+Rio_readlineb(&rio, buf, MAXLINE);
+12
+printf("Request headers:\n");
+13
+printf("%s", buf);
+14
+sscanf(buf, "%s %s %s", method, uri, version);
+15
+if (strcasecmp(method, "GET")) {
+16
+clienterror(fd, method, "501", "Not implemented",
+17
+"Tiny does not implement this method");
+18
+return;
+19
+}
+20
+read_requesthdrs(&rio);
+21
+22
+/* Parse URI from GET request */
+23
+is_static = parse_uri(uri, filename, cgiargs);
+24
+if (stat(filename, &sbuf) < 0) {
+25
+clienterror(fd, filename, "404", "Not found",
+26
+"Tiny couldn’t find this file");
+27
+return;
+28
+}
+29
+30
+if (is_static) { /* Serve static content */
+31
+if (!(S_ISREG(sbuf.st_mode)) || !(S_IRUSR & sbuf.st_mode)) {
+32
+clienterror(fd, filename, "403", "Forbidden",
+33
+"Tiny couldn’t read the file");
+34
+return;
+35
+}
+36
+serve_static(fd, filename, sbuf.st_size);
+37
+}
+38
+else { /* Serve dynamic content */
+39
+if (!(S_ISREG(sbuf.st_mode)) || !(S_IXUSR & sbuf.st_mode)) {
+40
+clienterror(fd, filename, "403", "Forbidden",
+41
+"Tiny couldn’t run the CGI program");
+42
+return;
+43
+}
+44
+serve_dynamic(fd, filename, cgiargs);
+45
+}
+46
+}
+code/netp/tiny/tiny.c
+Figure 11.30
+Tiny doit handles one HTTP transaction.

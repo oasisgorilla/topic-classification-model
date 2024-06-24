@@ -1,0 +1,59 @@
+Homework Problems
+751
+15
+int temp;
+16
+17
+incr();
+18
+bufp1 = &buf[1];
+19
+temp = *bufp0;
+20
+*bufp0 = *bufp1;
+21
+*bufp1 = temp;
+22
+}
+For each symbol that is deﬁned and referenced in swap.o, indicate if it will
+have a symbol table entry in the .symtab section in module swap.o. If so, indicate
+the module that deﬁnes the symbol (swap.o or m.o), the symbol type (local, global,
+or extern), and the section (.text, .data, or .bss) it occupies in that module.
+Symbol
+swap.o .symtab entry?
+Symbol type
+Module where deﬁned
+Section
+buf
+bufp0
+bufp1
+swap
+temp
+incr
+count
+7.7 ◆
+Without changing any variable names, modify bar5.c on page 719 so that foo5.c
+prints the correct values of x and y (i.e., the hex representations of integers 15213
+and 15212).
+7.8 ◆
+In this problem, let REF(x.i) →DEF(x.k) denote that the linker will associate an
+arbitrary reference to symbol x in module i to the deﬁnition of x in module k. For
+each example below, use this notation to indicate how the linker would resolve
+references to the multiply-deﬁned symbol in each module. If there is a link-time
+error (rule 1), write “error”. If the linker arbitrarily chooses one of the deﬁnitions
+(rule 3), write “unknown”.
+A. /* Module 1 */
+/* Module 2 */
+int main()
+static int main=1[
+{
+int p2()
+}
+{
+}
+(a) REF(main.1) →DEF(
+.
+)
+(b) REF(main.2) →DEF(
+.
+)

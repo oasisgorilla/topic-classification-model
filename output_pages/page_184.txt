@@ -1,0 +1,37 @@
+Solutions to Practice Problems
+183
+A. x & 0xFF
+B. x ^ ~0xFF
+C. x | 0xFF
+These expressions are typical of the kind commonly found in performing low-level
+bit operations. The expression ~0xFF creates a mask where the 8 least-signiﬁcant
+bits equal 0 and the rest equal 1. Observe that such a mask will be generated
+regardless of the word size. By contrast, the expression 0xFFFFFF00 would only
+work when data type int is 32 bits.
+Solution to Problem 2.13 (page 92)
+These problems help you think about the relation between Boolean operations
+and typical ways that programmers apply masking operations. Here is the code:
+/* Declarations of functions implementing operations bis and bic */
+int bis(int x, int m);
+int bic(int x, int m);
+/* Compute x|y using only calls to functions bis and bic */
+int bool_or(int x, int y) {
+int result = bis(x,y);
+return result;
+}
+/* Compute x^y using only calls to functions bis and bic */
+int bool_xor(int x, int y) {
+int result = bis(bic(x,y), bic(y,x));
+return result;
+}
+The bis operation is equivalent to Boolean or—a bit is set in z if either this
+bit is set in x or it is set in m. On the other hand, bic(x, m) is equivalent to x & ~m;
+we want the result to equal 1 only when the corresponding bit of x is 1 and of m is
+0.
+Given that, we can implement | with a single call to bis. To implement ^, we
+take advantage of the property
+x ^ y = (x & ~y) | (~x & y)
+Solution to Problem 2.14 (page 93)
+This problem highlights the relation between bit-level Boolean operations and
+logical operations in C. A common programming error is to use a bit-level oper-
+ation when a logical one is intended, or vice versa.

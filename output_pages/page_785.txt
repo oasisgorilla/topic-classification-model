@@ -1,0 +1,60 @@
+784
+Chapter 8
+Exceptional Control Flow
+linux> ./waitpid1
+child 22966 terminated normally with exit status=100
+child 22967 terminated normally with exit status=101
+Notice that the program reaps its children in no particular order. The order that
+they were reaped is a property of this speciﬁc computer system. On another
+system, or even another execution on the same system, the two children might
+have been reaped in the opposite order. This is an example of the nondeterministic
+behavior that can make reasoning about concurrency so difﬁcult. Either of the two
+possible outcomes is equally correct, and as a programmer you may never assume
+that one outcome will always occur, no matter how unlikely the other outcome
+appears to be. The only correct assumption is that each possible outcome is equally
+likely.
+Figure 8.19 shows a simple change that eliminates this nondeterminism in the
+output order by reaping the children in the same order that they were created by
+the parent. In line 11, the parent stores the PIDs of its children in order and then
+waits for each child in this same order by calling waitpid with the appropriate
+PID in the ﬁrst argument.
+Practice Problem 8.4 (solution page 833)
+Consider the following program:
+code/ecf/global-waitprob1.c
+1
+int main()
+2
+{
+3
+int status;
+4
+pid_t pid;
+5
+6
+printf("Start\n");
+7
+pid = Fork();
+8
+printf("%d\n", !pid);
+9
+if (pid == 0) {
+10
+printf("Child\n");
+11
+}
+12
+else if ((waitpid(-1, &status, 0) > 0) &&
+(WIFEXITED(status) != 0)) {
+13
+printf("%d\n", WEXITSTATUS(status));
+14
+}
+15
+printf("Stop\n");
+16
+exit(2);
+17
+}
+code/ecf/global-waitprob1.c
+A. How many output lines does this program generate?
+B. What is one possible ordering of these output lines?

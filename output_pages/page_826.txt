@@ -1,0 +1,71 @@
+Homework Problems
+825
+8.12 ◆
+How many “Example” output lines does this program print?
+code/ecf/global-forkprob4.c
+1
+#include "csapp.h"
+2
+3
+void try()
+4
+{
+5
+Fork();
+6
+printf("Example\n");
+7
+Fork();
+8
+return;
+9
+}
+10
+11
+int main()
+12
+{
+13
+try(); Fork();
+14
+printf("Example\n");
+15
+exit(0);
+16
+}
+code/ecf/global-forkprob4.c
+8.13 ◆
+What is one possible output of the following program?
+code/ecf/global-forkprob3.c
+1
+#include "csapp.h"
+2
+3
+int main()
+4
+{
+5
+int a = 5;
+6
+7
+if (Fork() != 0)
+8
+printf("a=%d\n", --a);
+9
+10
+printf("a=%d\n", ++a);
+11
+exit(0);
+12
+}
+code/ecf/global-forkprob3.c
+8.14 ◆
+How many “Example” output lines does this program print?
+code/ecf/global-forkprob5.c
+1
+#include "csapp.h"
+2
+3
+void try()
+4
+{

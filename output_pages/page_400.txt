@@ -1,0 +1,46 @@
+Section 4.1
+The Y86-64 Instruction Set Architecture
+399
+Aside
+The RISC versus CISC controversy
+Through the 1980s, battles raged in the computer architecture community regarding the merits of RISC
+versus CISC instruction sets. Proponents of RISC claimed they could get more computing power for
+a given amount of hardware through a combination of streamlined instruction set design, advanced
+compiler technology, and pipelined processor implementation. CISC proponents countered that fewer
+CISC instructions were required to perform a given task, and so their machines could achieve higher
+overall performance.
+Major companies introduced RISC processor lines, including Sun Microsystems (SPARC), IBM
+and Motorola (PowerPC), and Digital Equipment Corporation (Alpha). A British company, Acorn
+Computers Ltd., developed its own architecture, ARM (originally an acronym for “Acorn RISC
+machine”), which has become widely used in embedded applications, such as cell phones.
+In the early 1990s, the debate diminished as it became clear that neither RISC nor CISC in their
+purest forms were better than designs that incorporated the best ideas of both. RISC machines evolved
+and introduced more instructions, many of which take multiple cycles to execute. RISC machines
+today have hundreds of instructions in their repertoire, hardly ﬁtting the name “reduced instruction
+set machine.” The idea of exposing implementation artifacts to machine-level programs proved to be
+shortsighted. As new processor models were developed using more advanced hardware structures,
+many of these artifacts became irrelevant, but they still remained part of the instruction set. Still, the
+core of RISC design is an instruction set that is well suited to execution on a pipelined machine.
+More recent CISC machines also take advantage of high-performance pipeline structures. As we
+will discuss in Section 5.7, they fetch the CISC instructions and dynamically translate them into a
+sequence of simpler, RISC-like operations. For example, an instruction that adds a register to memory
+is translated into three operations: one to read the original memory value, one to perform the addition,
+and a third to write the sum to memory. Since the dynamic translation can generally be performed well
+in advance of the actual instruction execution, the processor can sustain a very high execution rate.
+Marketing issues, apart from technological ones, have also played a major role in determining the
+success of different instruction sets. By maintaining compatibility with its existing processors, Intel with
+x86 made it easy to keep moving from one generation of processor to the next. As integrated-circuit
+technology improved, Intel and other x86 processor manufacturers could overcome the inefﬁciencies
+created by the original 8086 instruction set design, using RISC techniques to produce performance
+comparable to the best RISC machines. As we saw in Section 3.1, the evolution of IA32 into x86-64
+provided an opportunity to incorporate several features of RISC into the x86 family. In the areas of
+desktop, laptop, and server-based computing, x86 has achieved near total domination.
+RISC processors have done very well in the market for embedded processors, controlling such
+systems as cellular telephones, automobile brakes, and Internet appliances. In these applications, saving
+on cost and power is more important than maintaining backward compatibility. In terms of the number
+of processors sold, this is a very large and growing market.
+4.1.4
+Y86-64 Exceptions
+The programmer-visible state for Y86-64 (Figure 4.1) includes a status code Stat
+describing the overall state of the executing program. The possible values for this
+code are shown in Figure 4.5. Code value 1, named AOK, indicates that the program

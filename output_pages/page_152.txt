@@ -1,0 +1,64 @@
+Section 2.4
+Floating Point
+151
+A second function of denormalized numbers is to represent numbers that are
+very close to 0.0. They provide a property known as gradual underﬂow in which
+possible numeric values are spaced evenly near 0.0.
+Case 3: Special Values
+A ﬁnal category of values occurs when the exponent ﬁeld is all ones. When the
+fraction ﬁeld is all zeros, the resulting values represent inﬁnity, either +∞when
+s = 0 or −∞when s = 1. Inﬁnity can represent results that overﬂow, as when we
+multiply two very large numbers, or when we divide by zero. When the fraction
+ﬁeld is nonzero, the resulting value is called a NaN, short for “not a number.” Such
+values are returned as the result of an operation where the result cannot be given
+as a real number or as inﬁnity, as when computing
+√
+−1 or ∞−∞. They can also
+be useful in some applications for representing uninitialized data.
+2.4.3
+Example Numbers
+Figure 2.34 shows the set of values that can be represented in a hypothetical 6-bit
+format having k = 3 exponent bits and n = 2 fraction bits. The bias is 23−1 −1 = 3.
+Part (a) of the ﬁgure shows all representable values (other than NaN). The two
+inﬁnities are at the extreme ends. The normalized numbers with maximum mag-
+nitude are ±14. The denormalized numbers are clustered around 0. These can be
+seen more clearly in part (b) of the ﬁgure, where we show just the numbers be-
+tween −1.0 and +1.0. The two zeros are special cases of denormalized numbers.
+Observe that the representable numbers are not uniformly distributed—they are
+denser nearer the origin.
+Figure 2.35 shows some examples for a hypothetical 8-bit ﬂoating-point for-
+mat having k = 4 exponent bits and n = 3 fraction bits. The bias is 24−1 −1 = 7.
+The ﬁgure is divided into three regions representing the three classes of numbers.
+The different columns show how the exponent ﬁeld encodes the exponent E,
+while the fraction ﬁeld encodes the signiﬁcand M, and together they form the
+10
+0.8
+0.6
+0.4
+0.2
+0.2
+0
+0
+0.4
+0.6
+0.8
+1
+0
+1
+5
+0
+5
+10
+
+
+Denormalized
+Normalized
+Infinity
+Denormalized
+Normalized
+Infinity
+(a) Complete range
+(b) Values between 1.0 and 1.0
+Figure 2.34
+Representable values for 6-bit ﬂoating-point format. There are k = 3
+exponent bits and n = 2 fraction bits. The bias is 3.

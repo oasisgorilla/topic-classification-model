@@ -1,0 +1,71 @@
+488
+Chapter 4
+Processor Architecture
+W
+F
+0x000: irmovq $10,%rdx
+0x00a: irmovq  $3,%rdx
+0x014: rrmovq %rdx,%rax
+0x016: halt
+# prog8
+# prog8
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+F
+D
+E
+M
+W
+1
+2
+3
+4
+5
+6
+7
+8
+D
+valA      e_valE = 3
+Cycle 4
+M_dstE = %rdx
+M_valE = 10
+srcA = %rdx
+M
+E_dstE = %rdx
+e_valE       0 + 3 = 3
+E
+Figure 4.59
+Demonstration of forwarding priority. In cycle 4, values for %rdx are
+available from both the execute and memory stages. The forwarding logic should choose
+the one in the execute stage, since it represents the most recently generated value for
+this register.
+Practice Problem 4.32 (solution page 526)
+Suppose the order of the third and fourth cases (the two forwarding sources
+from the memory stage) in the HCL code for d_valA were reversed. Describe the
+resulting behavior of the rrmovq instruction (line 5) for the following program:
+1
+irmovq $5, %rdx
+2
+irmovq $0x100,%rsp
+3
+rmmovq %rdx,0(%rsp)
+4
+popq %rsp
+5
+rrmovq %rsp,%rax
+Practice Problem 4.33 (solution page 527)
+Suppose the order of the ﬁfth and sixth cases (the two forwarding sources from
+the write-back stage) in the HCL code for d_valA were reversed. Write a Y86-64
+program that would be executed incorrectly. Describe how the error would occur
+and its effect on the program behavior.

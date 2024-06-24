@@ -1,0 +1,49 @@
+616
+Chapter 6
+The Memory Hierarchy
+T
+o this point in our study of systems, we have relied on a simple model of a
+computer system as a CPU that executes instructions and a memory system
+that holds instructions and data for the CPU. In our simple model, the memory
+system is a linear array of bytes, and the CPU can access each memory location in
+a constant amount of time. While this is an effective model up to a point, it does
+not reﬂect the way that modern systems really work.
+In practice, a memory system is a hierarchy of storage devices with different
+capacities, costs, and access times. CPU registers hold the most frequently used
+data. Small, fast cache memories nearby the CPU act as staging areas for a subset
+of the data and instructions stored in the relatively slow main memory. The main
+memory stages data stored on large, slow disks, which in turn often serve as
+staging areas for data stored on the disks or tapes of other machines connected by
+networks.
+Memory hierarchies work because well-written programs tend to access the
+storage at any particular level more frequently than they access the storage at the
+next lower level. So the storage at the next level can be slower, and thus larger
+and cheaper per bit. The overall effect is a large pool of memory that costs as
+much as the cheap storage near the bottom of the hierarchy but that serves data
+to programs at the rate of the fast storage near the top of the hierarchy.
+As a programmer, you need to understand the memory hierarchy because it
+has a big impact on the performance of your applications. If the data your program
+needs are stored in a CPU register, then they can be accessed in 0 cycles during
+the execution of the instruction. If stored in a cache, 4 to 75 cycles. If stored in
+main memory, hundreds of cycles. And if stored in disk, tens of millions of cycles!
+Here, then, is a fundamental and enduring idea in computer systems: if you
+understand how the system moves data up and down the memory hierarchy, then
+you can write your application programs so that their data items are stored higher
+in the hierarchy, where the CPU can access them more quickly.
+This idea centers around a fundamental property of computer programs
+known as locality. Programs with good locality tend to access the same set of
+data items over and over again, or they tend to access sets of nearby data items.
+Programs with good locality tend to access more data items from the upper levels
+of the memory hierarchy than programs with poor locality, and thus run faster.
+For example, on our Core i7 system, the running times of different matrix mul-
+tiplication kernels that perform the same number of arithmetic operations, but
+have different degrees of locality, can vary by a factor of almost 40!
+In this chapter, we will look at the basic storage technologies—SRAM mem-
+ory, DRAM memory, ROM memory, and rotating and solid state disks—and
+describe how they are organized into hierarchies. In particular, we focus on the
+cache memories that act as staging areas between the CPU and main memory, be-
+cause they have the most impact on application program performance. We show
+you how to analyze your C programs for locality, and we introduce techniques for
+improving the locality in your programs. You will also learn an interesting way to
+characterize the performance of the memory hierarchy on a particular machine
+as a “memory mountain” that shows read access times as a function of locality.

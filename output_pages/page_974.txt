@@ -1,0 +1,39 @@
+Section 11.4
+The Sockets Interface
+973
+Aside
+Why the distinction between listening and connected descriptors?
+You might wonder why the sockets interface makes a distinction between listening and connected
+descriptors. At ﬁrst glance, it appears to be an unnecessary complication. However, distinguishing
+between the two turns out to be quite useful, because it allows us to build concurrent servers that can
+process many client connections simultaneously. For example, each time a connection request arrives
+on the listening descriptor, we might fork a new process that communicates with the client over its
+connected descriptor. You’ll learn more about concurrent servers in Chapter 12.
+client also returns from the connect, and from this point, the client and server
+can pass data back and forth by reading and writing clientfd and connfd, re-
+spectively.
+11.4.7
+Host and Service Conversion
+Linux provides some powerful functions, called getaddrinfo and getnameinfo,
+for converting back and forth between binary socket address structures and the
+string representations of hostnames, host addresses, service names, and port
+numbers. When used in conjunction with the sockets interface, they allow us to
+write network programs that are independent of any particular version of the IP
+protocol.
+The getaddrinfo Function
+The getaddrinfo function converts string representations of hostnames, host
+addresses, service names, and port numbers into socket address structures. It is
+the modern replacement for the obsolete gethostbyname and getservbyname
+functions. Unlike these functions, it is reentrant (see Section 12.7.2) and works
+with any protocol.
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+int getaddrinfo(const char *host, const char *service,
+const struct addrinfo *hints,
+struct addrinfo **result);
+Returns: 0 if OK, nonzero error code on error
+void freeaddrinfo(struct addrinfo *result);
+Returns: nothing
+const char *gai_strerror(int errcode);
+Returns: error message

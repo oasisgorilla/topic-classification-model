@@ -1,0 +1,85 @@
+250
+Chapter 3
+Machine-Level Representation of Programs
+3.6.6
+Implementing Conditional Branches with Conditional Moves
+The conventional way to implement conditional operations is through a condi-
+tional transfer of control, where the program follows one execution path when
+a condition holds and another when it does not. This mechanism is simple and
+general, but it can be very inefﬁcient on modern processors.
+An alternate strategy is through a conditional transfer of data. This approach
+computes both outcomes of a conditional operation and then selects one based on
+whether or not the condition holds. This strategy makes sense only in restricted
+cases, but it can then be implemented by a simple conditional move instruction
+that is better matched to the performance characteristics of modern processors.
+Here, we examine this strategy and its implementation with x86-64.
+Figure 3.17(a) shows an example of code that can be compiled using a condi-
+tional move. The function computes the absolute value of its arguments x and y,
+as did our earlier example (Figure 3.16). Whereas the earlier example had side ef-
+fects in the branches, modifying the value of either lt_cnt or ge_cnt, this version
+simply computes the value to be returned by the function.
+(a) Original C code
+long absdiff(long x, long y)
+{
+long result;
+if (x < y)
+result = y - x;
+else
+result = x - y;
+return result;
+}
+(b) Implementation using conditional assignment
+1
+long cmovdiff(long x, long y)
+2
+{
+3
+long rval = y-x;
+4
+long eval = x-y;
+5
+long ntest = x >= y;
+6
+/* Line below requires
+7
+single instruction: */
+8
+if (ntest) rval = eval;
+9
+return rval;
+10
+}
+(c) Generated assembly code
+long absdiff(long x, long y)
+x in %rdi, y in %rsi
+1
+absdiff:
+2
+movq
+%rsi, %rax
+3
+subq
+%rdi, %rax
+rval = y-x
+4
+movq
+%rdi, %rdx
+5
+subq
+%rsi, %rdx
+eval = x-y
+6
+cmpq
+%rsi, %rdi
+Compare x:y
+7
+cmovge
+%rdx, %rax
+If >=, rval = eval
+8
+ret
+Return tval
+Figure 3.17
+Compilation of conditional statements using conditional assignment. (a) C function
+absdiff contains a conditional expression. The generated assembly code is shown (c), along with (b) a
+C function cmovdiff that mimics the operation of the assembly code.

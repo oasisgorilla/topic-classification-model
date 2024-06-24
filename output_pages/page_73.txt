@@ -1,0 +1,90 @@
+72
+Chapter 2
+Representing and Manipulating Information
+New to C?
+The role of pointers in C
+Pointers are a central feature of C. They provide the mechanism for referencing elements of data
+structures, including arrays. Just like a variable, a pointer has two aspects: its value and its type. The
+value indicates the location of some object, while its type indicates what kind of object (e.g., integer or
+ﬂoating-point number) is stored at that location.
+Truly understanding pointers requires examining their representation and implementation at the
+machine level. This will be a major focus in Chapter 3, culminating in an in-depth presentation in Section
+3.10.1.
+2.1.1
+Hexadecimal Notation
+A single byte consists of 8 bits. In binary notation, its value ranges from 000000002
+to 111111112. When viewed as a decimal integer, its value ranges from 010 to 25510.
+Neither notation is very convenient for describing bit patterns. Binary notation
+is too verbose, while with decimal notation it is tedious to convert to and from
+bit patterns. Instead, we write bit patterns as base-16, or hexadecimal numbers.
+Hexadecimal (or simply “hex”) uses digits ‘0’ through ‘9’ along with characters
+‘A’ through ‘F’ to represent 16 possible values. Figure 2.2 shows the decimal and
+binary values associated with the 16 hexadecimal digits. Written in hexadecimal,
+the value of a single byte can range from 0016 to FF16.
+In C, numeric constants starting with 0x or 0X are interpreted as being in
+hexadecimal. The characters ‘A’ through ‘F’ may be written in either upper- or
+lowercase. For example, we could write the number FA1D37B16 as 0xFA1D37B, as
+0xfa1d37b, or even mixing upper- and lowercase (e.g., 0xFa1D37b). We will use
+the C notation for representing hexadecimal values in this book.
+A common task in working with machine-level programs is to manually con-
+vert between decimal, binary, and hexadecimal representations of bit patterns.
+Converting between binary and hexadecimal is straightforward, since it can be
+performed one hexadecimal digit at a time. Digits can be converted by referring
+to a chart such as that shown in Figure 2.2. One simple trick for doing the conver-
+sion in your head is to memorize the decimal equivalents of hex digits A, C, and F.
+Hex digit
+0
+1
+2
+3
+4
+5
+6
+7
+Decimal value
+0
+1
+2
+3
+4
+5
+6
+7
+Binary value
+0000
+0001
+0010
+0011
+0100
+0101
+0110
+0111
+Hex digit
+8
+9
+A
+B
+C
+D
+E
+F
+Decimal value
+8
+9
+10
+11
+12
+13
+14
+15
+Binary value
+1000
+1001
+1010
+1011
+1100
+1101
+1110
+1111
+Figure 2.2
+Hexadecimal notation. Each hex digit encodes one of 16 values.

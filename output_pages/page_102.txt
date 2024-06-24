@@ -1,0 +1,66 @@
+Section 2.2
+Integer Representations
+101
+Figure 2.13
+Two’s-complement
+number examples for
+w = 4. Bit 3 serves as a
+sign bit; when set to 1, it
+contributes −23 = −8 to
+the value. This weighting
+is shown as a leftward-
+pointing gray bar.
+8
+7
+6
+5
+4
+3
+2
+1
+0
+–1
+–2
+–3
+–4
+–5
+–6
+–7
+–8
+20 = 1
+21 = 2
+22 = 4
+–23 = –8
+[0001]
+[0101]
+[1011]
+[1111]
+We see that the bit patterns are identical for Figures 2.12 and 2.13 (as well as
+for Equations 2.2 and 2.4), but the values differ when the most signiﬁcant bit is 1,
+since in one case it has weight +8, and in the other case it has weight −8.
+Let us consider the range of values that can be represented as a w-bit two’s-
+complement number. The least representable value is given by bit vector [10 . . . 0]
+(set the bit with negative weight but clear all others), having integer value
+TMinw .
+= −2w−1. The greatest value is given by bit vector [01 . . . 1] (clear the bit
+with negative weight but set all others), having integer value TMaxw .
+=
+w−2
+i=0 2i =
+2w−1 −1. Using the 4-bit case as an example, we have TMin4 = B2T4([1000]) =
+−23 = −8 and TMax4 = B2T4([0111]) = 22 + 21 + 20 = 4 + 2 + 1 = 7.
+We can see that B2Tw is a mapping of bit patterns of length w to numbers be-
+tween TMinw and TMaxw, written as B2Tw: {0, 1}w →{TMinw, . . . , TMaxw}. As
+we saw with the unsigned representation, every number within the representable
+range has a unique encoding as a w-bit two’s-complement number. This leads to
+a principle for two’s-complement numbers similar to that for unsigned numbers:
+principle: Uniqueness of two’s-complement encoding
+Function B2Tw is a bijection.
+We deﬁne function T2Bw (for “two’s complement to binary”) to be the inverse
+of B2Tw. That is, for a number x, such that TMinw ≤x ≤TMaxw, T2Bw(x) is the
+(unique) w-bit pattern that encodes x.
+Practice Problem 2.17 (solution page 184)
+Assuming w = 4, we can assign a numeric value to each possible hexadecimal
+digit, assuming either an unsigned or a two’s-complement interpretation. Fill in
+the following table according to these interpretations by writing out the nonzero
+powers of 2 in the summations shown in Equations 2.1 and 2.3:

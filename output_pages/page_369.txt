@@ -1,0 +1,43 @@
+368
+Chapter 3
+Machine-Level Representation of Programs
+long gotodiff_se_alt(long x, long y) {
+long result;
+if (x < y)
+goto x_lt_y;
+ge_cnt++;
+result = x - y;
+return result;
+x_lt_y:
+lt_cnt++;
+result =
+y - x;
+return result;
+}
+B. In most respects, the choice is arbitrary. But the original rule works better
+for the common case where there is no else statement. For this case, we can
+simply modify the translation rule to be as follows:
+t = test-expr;
+if (!t)
+goto done;
+then-statement
+done:
+A translation based on the alternate rule is more cumbersome.
+Solution to Problem 3.18 (page 249)
+This problem requires that you work through a nested branch structure, where
+you will see how our rule for translating if statements has been applied. On the
+whole, the machine code is a straightforward translation of the C code.
+short test(short x, short y, short z) {
+short val = z+y-x;
+if (z > 5) {
+if (y > 2)
+val = x/z;
+else
+val = x/y;
+} else if (z < 3)
+val = z/y;
+return val;
+}
+Solution to Problem 3.19 (page 252)
+This problem reinforces our method of computing the misprediction penalty.
+A. We can apply our formula directly to get TMP = 2(45 −25) = 40.

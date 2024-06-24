@@ -1,0 +1,42 @@
+120
+Chapter 2
+Representing and Manipulating Information
+program, data type size_t is deﬁned (via typedef) in header ﬁle stdio.h to be
+unsigned.
+A. For what cases will this function produce an incorrect result?
+B. Explain how this incorrect result comes about.
+C. Show how to ﬁx the code so that it will work reliably.
+We have seen multiple ways in which the subtle features of unsigned arith-
+metic, and especially the implicit conversion of signed to unsigned, can lead to
+errors or vulnerabilities. One way to avoid such bugs is to never use unsigned
+numbers. In fact, few languages other than C support unsigned integers. Appar-
+ently, these other language designers viewed them as more trouble than they are
+worth. For example, Java supports only signed integers, and it requires that they
+be implemented with two’s-complement arithmetic. The normal right shift oper-
+ator >> is guaranteed to perform an arithmetic shift. The special operator >>> is
+deﬁned to perform a logical right shift.
+Unsigned values are very useful when we want to think of words as just col-
+lections of bits with no numeric interpretation. This occurs, for example, when
+packing a word with ﬂags describing various Boolean conditions. Addresses are
+naturally unsigned, so systems programmers ﬁnd unsigned types to be helpful.
+Unsigned values are also useful when implementing mathematical packages for
+modular arithmetic and for multiprecision arithmetic, in which numbers are rep-
+resented by arrays of words.
+2.3
+Integer Arithmetic
+Many beginning programmers are surprised to ﬁnd that adding two positive num-
+bers can yield a negative result, and that the comparison x < y can yield a different
+result than the comparison x-y < 0. These properties are artifacts of the ﬁnite na-
+ture of computer arithmetic. Understanding the nuances of computer arithmetic
+can help programmers write more reliable code.
+2.3.1
+Unsigned Addition
+Consider two nonnegative integers x and y, such that 0 ≤x, y < 2w. Each of
+these values can be represented by a w-bit unsigned number. If we compute their
+sum, however, we have a possible range 0 ≤x + y ≤2w+1 −2. Representing this
+sum could require w + 1 bits. For example, Figure 2.21 shows a plot of the func-
+tion x + y when x and y have 4-bit representations. The arguments (shown on
+the horizontal axes) range from 0 to 15, but the sum ranges from 0 to 30. The
+shape of the function is a sloping plane (the function is linear in both dimen-
+sions). If we were to maintain the sum as a (w + 1)-bit number and add it to
+another value, we may require w + 2 bits, and so on. This continued “word size

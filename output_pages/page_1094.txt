@@ -1,0 +1,167 @@
+Index
+1093
+security vulnerability, 136–137
+callq [x86-64] procedure call, 277
+calls, 53, 763–764
+error handling, 773–774
+Linux/x86-64 systems, 766–767
+in performance, 548–549
+canary values, 322–323
+canceling mispredicted branch
+handling, 480
+capacity
+caches, 651
+disks, 627, 627–628
+functional units, 559
+capacity misses, 649
+cards, graphics, 633
+carriage return (CR) characters, 928
+carry ﬂag condition code, 237, 342
+CAS (column access strobe) requests,
+619
+case expressions in HCL, 414, 414
+casting, 80
+explicit, 111
+ﬂoating-point values, 161
+pointers, 314, 890
+signed values, 106–107
+catching signals, 794, 797, 799
+cells
+DRAM, 618, 619
+SRAM, 617
+central processing units (CPUs), 45,
+45–46
+Core i7. See Core i7 microproces-
+sors
+early instruction sets, 397
+effective cycle time, 638
+embedded, 399
+Intel. See Intel microprocessors
+logic design. See logic design
+many-core, 507
+multi-core, 52, 60–61, 204, 641, 1008
+overview, 388–390
+pipelining. See pipelining
+RAM, 420
+sequential Y86 implementation.
+See sequential Y86-64
+implementation
+superscalar, 62, 507, 554
+trends, 638–639
+Y86. See Y86-64 instruction set
+architecture
+Cerf, Vinton, 967
+CERT (Computer Emergency
+Response Team), 136
+CF [x86-64] carry ﬂag condition code,
+237, 342
+CGI (common gateway interface)
+program, 989, 989–991
+CGI adder function, 991
+chains, proxy, 988
+char [C] data types, 76, 97
+character codes, 85
+character devices, 928
+check_clients function, 1017, 1020
+child processes, 776
+creating, 777–779
+default behavior, 780
+error conditions, 781–782
+exit status, 781
+reaping, 779, 779–785
+waitpid function, 782–785
+CI (cache set index), 859
+circuits
+combinational, 410, 410–416
+retiming, 457
+sequential, 417
+CISC (complex instruction set
+computers), 397, 397–399
+%cl [x86-64] low order 8 of register
+%rcx, 216
+Clarke, Dave, 967
+classes
+data hazards, 471
+exceptions, 762–764
+instructions, 218
+size, 899
+storage, 1030–1031
+clear bit in descriptor set macro, 1014
+clear descriptor set macro, 1014
+clear signal set instruction, 801
+client-server model, 954, 954–955
+clienterror [CS:APP] Tiny helper
+function, 995–996
+clients
+client-server model, 954
+telnet, 57
+clock signals, 417
+clocked registers, 437–438
+clocking in logic design, 417–420
+close [Unix] close ﬁle, 930, 930–931
+close operations for ﬁles, 927, 930–931
+close shared library function, 738
+closedir functions, 941
+cltq [x86-64] Sign extend %eax to
+%rax, 221
+cmova [x86-64] move if unsigned
+greater, 253
+cmovae [x86-64] move if unsigned
+greater or equal, 253
+cmovb [x86-64] move if unsigned less,
+253
+cmovbe [x86-64] move if unsigned less
+or equal, 253
+cmove [Y86-64] move when equal, 393
+cmovg [x86-64] move if greater, 253,
+393
+cmovge [x86-64] move if greater or
+equal, 253, 393
+cmovl [x86-64] move if less, 253, 393
+cmovle [x86-64] move if less or equal,
+253, 393
+cmovna [x86-64] move if not unsigned
+greater, 253
+cmovnae [x86-64] move if unsigned
+greater or equal, 253
+cmovnb [x86-64] move if not unsigned
+less, 253
+cmovnbe [x86-64] move if not unsigned
+less or equal, 253
+cmovne [x86-64] move if not equal,
+253, 393
+cmovng [x86-64] move if not greater,
+253
+cmovnge [x86-64] move if not greater
+or equal, 253
+cmovnl [x86-64] move if not less, 253
+cmovnle [x86-64] move if not less or
+equal, 253
+cmovns [x86-64] move if nonnegative,
+253
+cmovnz [x86-64] move if not zero, 253
+cmovp [x86-64] move if even parity,
+360
+cmovs [x86-64] move if negative, 253
+cmovz [x86-64] move if zero, 253
+cmp [instruction class] Compare, 238
+cmpb [x86-64] compare byte, 238
+cmpl [x86-64] compare double word,
+238
+cmpq [x86-64] compare double word,
+238
+cmpw [x86-64] compare word, 238
+cmtest script, 501
+CO (cache block offset), 859
+coalescing blocks, 896
+with boundary tags, 887–890
+free, 886
+memory, 883
+Cocke, John, 397
+code
+performance strategies, 597–598
+proﬁlers, 598–600
+representing, 85–86
+self-modifying, 471
+Y86 instructions, 394, 395–396
+code motion, 544

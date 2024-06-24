@@ -1,0 +1,48 @@
+Section 9.8
+Memory Mapping
+873
+Figure 9.31
+How the loader maps the
+areas of the user address
+space.
+Memory-mapped region
+for shared libraries
+User stack
+0
+Run-time heap (via malloc)
+Uninitialized data (.bss)
+Initialized data (.data)
+Code (.text)
+Private, demand-zero
+Shared, file-backed
+Private, demand-zero
+Private, demand-zero
+Private, file-backed
+.data
+.text
+libc.so
+.data
+.text
+a.out
+1. Delete existing user areas. Delete the existing area structs in the user portion
+of the current process’s virtual address.
+2. Map private areas. Create new area structs for the code, data, bss, and stack
+areas of the new program. All of these new areas are private copy-on-write.
+The code and data areas are mapped to the .text and .data sections of the
+a.out ﬁle. The bss area is demand-zero, mapped to an anonymous ﬁle whose
+size is contained in a.out. The stack and heap area are also demand-zero,
+initially of zero length. Figure 9.31 summarizes the different mappings of the
+private areas.
+3. Map shared areas. If the a.out program was linked with shared objects, such
+as the standard C library libc.so, then these objects are dynamically linked
+into the program, and then mapped into the shared region of the user’s virtual
+address space.
+4. Set the program counter (PC). The last thing that execve does is to set the
+program counter in the current process’s context to point to the entry point
+in the code area.
+The next time this process is scheduled, it will begin execution from the entry
+point. Linux will swap in code and data pages as needed.
+9.8.4
+User-Level Memory Mapping with the mmap Function
+Linux processes can use the mmap function to create new areas of virtual memory
+and to map objects into these areas.

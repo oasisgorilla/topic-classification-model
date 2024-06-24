@@ -1,0 +1,74 @@
+Solutions to Practice Problems
+187
+Hex
+Unsigned
+Two’s complement
+Original
+Truncated
+Original
+Truncated
+Original
+Truncated
+1
+1
+1
+1
+1
+1
+3
+3
+3
+3
+3
+3
+5
+5
+5
+5
+5
+5
+C
+4
+12
+4
+−4
+4
+E
+6
+14
+6
+−2
+6
+As Equation 2.9 states, the effect of this truncation on unsigned values is to
+simply ﬁnd their residue, modulo 8. The effect of the truncation on signed values
+is a bit more complex. According to Equation 2.10, we ﬁrst compute the modulo 8
+residue of the argument. This will give values 0 through 7 for arguments 0 through
+7, and also for arguments −8 through −1. Then we apply function U2T3 to these
+residues, giving two repetitions of the sequences 0 through 3 and −4 through −1.
+Solution to Problem 2.25 (page 119)
+This problem is designed to demonstrate how easily bugs can arise due to the
+implicit casting from signed to unsigned. It seems quite natural to pass parameter
+length as an unsigned, since one would never want to use a negative length. The
+stopping criterion i <= length-1 also seems quite natural. But combining these
+two yields an unexpected outcome!
+Since parameter length is unsigned, the computation 0 −1is performed using
+unsigned arithmetic, which is equivalent to modular addition. The result is then
+UMax. The ≤comparison is also performed using an unsigned comparison, and
+since any number is less than or equal to UMax, the comparison always holds!
+Thus, the code attempts to access invalid elements of array a.
+The code can be ﬁxed either by declaring length to be an int or by changing
+the test of the for loop to be i < length.
+Solution to Problem 2.26 (page 119)
+This example demonstrates a subtle feature of unsigned arithmetic, and also the
+property that we sometimes perform unsigned arithmetic without realizing it. This
+can lead to very tricky bugs.
+A. For what cases will this function produce an incorrect result? The function
+will incorrectly return 1 when s is shorter than t.
+B. Explain how this incorrect result comes about. Since strlen is deﬁned to
+yield an unsigned result, the difference and the comparison are both com-
+puted using unsigned arithmetic. When s is shorter than t, the difference
+strlen(s) - strlen(t) should be negative, but instead becomes a large,
+unsigned number, which is greater than 0.
+C. Show how to ﬁx the code so that it will work reliably. Replace the test with
+the following:
+return strlen(s) > strlen(t);

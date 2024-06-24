@@ -1,0 +1,78 @@
+Section 9.7
+Case Study: The Intel Core i7/Linux Memory System
+863
+R/W
+U/S
+WT
+CD
+A
+PS
+G
+Page table physical base addr Unused
+Unused
+P=1
+Available for OS (page table location on disk)
+P=0
+0
+1
+2
+3
+XD
+63
+4
+5
+6
+7
+8
+9
+11
+12
+51
+52
+62
+Field
+Description
+P
+Child page table present in physical memory (1) or not (0).
+R/W
+Read-only or read-write access permission for all reachable pages.
+U/S
+User or supervisor (kernel) mode access permission for all reachable pages.
+WT
+Write-through or write-back cache policy for the child page table.
+CD
+Caching disabled or enabled for the child page table.
+A
+Reference bit (set by MMU on reads and writes, cleared by software).
+PS
+Page size either 4 KB or 4 MB (deﬁned for level 1 PTEs only).
+Base addr
+40 most signiﬁcant bits of physical base address of child page table.
+XD
+Disable or enable instruction fetches from all pages reachable from this PTE.
+Figure 9.23
+Format of level 1, level 2, and level 3 page table entries. Each entry
+references a 4 KB child page table.
+Figure 9.23 shows the format of an entry in a level 1, level 2, or level 3
+page table. When P = 1 (which is always the case with Linux), the address ﬁeld
+contains a 40-bit physical page number (PPN) that points to the beginning of the
+appropriate page table. Notice that this imposes a 4 KB alignment requirement
+on page tables.
+Figure 9.24 shows the format of an entry in a level 4 page table. When P = 1,
+the address ﬁeld contains a 40-bit PPN that points to the base of some page in
+physical memory. Again, this imposes a 4 KB alignment requirement on physical
+pages.
+The PTE has three permission bits that control access to the page. TheR/W bit
+determines whether the contents of a page are read/write or read-only. The U/S
+bit, which determines whether the page can be accessed in user mode, protects
+code and data in the operating system kernel from user programs. The XD (exe-
+cute disable) bit, which was introduced in 64-bit systems, can be used to disable
+instruction fetches from individual memory pages. This is an important new fea-
+ture that allows the operating system kernel to reduce the risk of buffer overﬂow
+attacks by restricting execution to the read-only code segment.
+As the MMU translates each virtual address, it also updates two other bits that
+can be used by the kernel’s page fault handler. The MMU sets the A bit, which
+is known as a reference bit, each time a page is accessed. The kernel can use the
+reference bit to implement its page replacement algorithm. The MMU sets the D
+bit, or dirty bit, each time the page is written to. A page that has been modiﬁed is
+sometimes called a dirty page. The dirty bit tells the kernel whether or not it must

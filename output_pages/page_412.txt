@@ -1,0 +1,44 @@
+Section 4.2
+Logic Design and the Hardware Control Language HCL
+411
+Figure 4.11
+Single-bit multiplexor
+circuit. The output will
+equal input a if the control
+signal s is 1 and will equal
+input b when s is 0.
+s
+b
+a
+Bit MUX
+out
+selects a value from among a set of different data signals, depending on the value
+of a control input signal. In this single-bit multiplexor, the two data signals are the
+input bits a and b, while the control signal is the input bit s. The output will equal
+a when s is 1, and it will equal b when s is 0. In this circuit, we can see that the two
+and gates determine whether to pass their respective data inputs to the or gate.
+The upper and gate passes signal b when s is 0 (since the other input to the gate
+is !s), while the lower and gate passes signal a when s is 1. Again, we can write an
+HCL expression for the output signal, using the same operations as are present in
+the combinational circuit:
+bool out = (s && a) || (!s && b);
+Our HCL expressions demonstrate a clear parallel between combinational
+logic circuits and logical expressions in C. They both use Boolean operations to
+compute functions over their inputs. Several differences between these two ways
+of expressing computation are worth noting:
+. Since a combinational circuit consists of a series of logic gates, it has the
+property that the outputs continually respond to changes in the inputs. If
+some input to the circuit changes, then after some delay, the outputs will
+change accordingly. By contrast, a C expression is only evaluated when it is
+encountered during the execution of a program.
+. Logical expressions in C allow arguments to be arbitrary integers, interpreting
+0 as false and anything else as true. In contrast, our logic gates only operate
+over the bit values 0 and 1.
+. Logical expressions in C have the property that they might only be partially
+evaluated. If the outcome of an and or or operation can be determined by just
+evaluating the ﬁrst argument, then the second argument will not be evaluated.
+For example, with the C expression
+(a && !a) && func(b,c)
+the function func will not be called, because the expression (a && !a) evalu-
+ates to 0. In contrast, combinational logic does not have any partial evaluation
+rules. The gates simply respond to changing inputs.

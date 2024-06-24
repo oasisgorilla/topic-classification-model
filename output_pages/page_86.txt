@@ -1,0 +1,46 @@
+Section 2.1
+Information Storage
+85
+Practice Problem 2.6 (solution page 181)
+Using show_int and show_float, we determine that the integer 2607352 has hexa-
+decimal representation 0x0027C8F8, while the ﬂoating-point number 3510593.0
+has hexadecimal representation 0x4A1F23E0.
+A. Write the binary representations of these two hexadecimal values.
+B. Shift these two strings relative to one another to maximize the number of
+matching bits. How many bits match?
+C. What parts of the strings do not match?
+2.1.4
+Representing Strings
+A string in C is encoded by an array of characters terminated by the null (having
+value 0) character. Each character is represented by some standard encoding, with
+the most common being the ASCII character code. Thus, if we run our routine
+show_bytes with arguments "12345" and 6 (to include the terminating character),
+we get the result 31 32 33 34 35 00. Observe that the ASCII code for decimal digit
+x happens to be 0x3x, and that the terminating byte has the hex representation
+0x00. This same result would be obtained on any system using ASCII as its
+character code, independent of the byte ordering and word size conventions. As
+a consequence, text data are more platform independent than binary data.
+Practice Problem 2.7 (solution page 181)
+What would be printed as a result of the following call to show_bytes?
+const char *m = "mnopqr";
+show_bytes((byte_pointer) m, strlen(m));
+Note that letters ‘a’ through ‘z’ have ASCII codes 0x61 through 0x7A.
+2.1.5
+Representing Code
+Consider the following C function:
+1
+int sum(int x, int y) {
+2
+return x + y;
+3
+}
+When compiled on our sample machines, we generate machine code having
+the following byte representations:
+Linux 32
+55 89 e5 8b 45 0c 03 45 08 c9 c3
+Windows
+55 89 e5 8b 45 0c 03 45 08 5d c3
+Sun
+81 c3 e0 08 90 02 00 09
+Linux 64
+55 48 89 e5 89 7d fc 89 75 f8 03 45 fc c9 c3

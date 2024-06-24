@@ -1,0 +1,63 @@
+Solutions to Practice Problems
+529
+1
+# Test instruction that modifies %esp followed by ret
+2
+irmovq mem,%rbx
+3
+mrmovq
+0(%rbx),%rsp # Sets %rsp to point to return point
+4
+ret
+# Returns to return point
+5
+halt
+#
+6
+rtnpt:
+irmovq $5,%rsi
+# Return point
+7
+halt
+8
+.pos 0x40
+9
+mem:
+.quad stack
+# Holds desired stack pointer
+10
+.pos 0x50
+11
+stack:
+.quad rtnpt
+# Top of stack: Holds return point
+This program uses two initialized words in memory. The ﬁrst word (mem) holds
+the address of the second (stack—the desired stack pointer). The second word
+holds the address of the desired return point for the ret instruction. The program
+loads the stack pointer into %rsp and executes the ret instruction.
+Solution to Problem 4.39 (page 499)
+From Figure 4.66, we can see that pipeline register D must be stalled for a load/use
+hazard:
+bool D_stall =
+# Conditions for a load/use hazard
+E_icode in { IMRMOVQ, IPOPQ } &&
+E_dstM in { d_srcA, d_srcB };
+Solution to Problem 4.40 (page 500)
+From Figure 4.66, we can see that pipeline register E must be set to bubble for a
+load/use hazard or for a mispredicted branch:
+bool E_bubble =
+# Mispredicted branch
+(E_icode == IJXX && !e_Cnd) ||
+# Conditions for a load/use hazard
+E_icode in { IMRMOVQ, IPOPQ } &&
+E_dstM in { d_srcA, d_srcB};
+Solution to Problem 4.41 (page 500)
+This control requires examining the code of the executing instruction and checking
+for exceptions further down the pipeline.
+## Should the condition codes be updated?
+bool set_cc = E_icode == IOPQ &&
+# State changes only during normal operation
+!m_stat in { SADR, SINS, SHLT } && !W_stat in { SADR, SINS, SHLT };
+Solution to Problem 4.42 (page 500)
+Injecting a bubble into the memory stage on the next cycle involves checking for
+an exception in either the memory or the write-back stage during the current cycle.

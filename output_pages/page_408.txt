@@ -1,0 +1,73 @@
+Section 4.1
+The Y86-64 Instruction Set Architecture
+407
+simpler approach is to conduct an experiment on an actual machine. The C com-
+piler would not normally generate this instruction, so we must use hand-generated
+assembly code for this task. Here is a test function we have written (Web Aside
+asm:easm on page 214 describes how to write programs that combine C code with
+handwritten assembly code):
+1
+.text
+2
+.globl pushtest
+3
+pushtest:
+4
+movq
+%rsp, %rax
+Copy stack pointer
+5
+pushq
+%rsp
+Push stack pointer
+6
+popq
+%rdx
+Pop it back
+7
+subq
+%rdx, %rax
+Return 0 or 4
+8
+ret
+In our experiments, we ﬁnd that function pushtest always returns 0. What
+does this imply about the behavior of the instruction pushq %rsp under x86-64?
+A similar ambiguity occurs for the instruction popq %rsp. It could either set
+%rsp to the value read from memory or to the incremented stack pointer. As with
+Problem 4.7, let us run an experiment to determine how an x86-64 machine would
+handle this instruction, and then design our Y86-64 machine to follow the same
+convention.
+Practice Problem 4.8 (solution page 520)
+The following assembly-code function lets us determine the behavior of the in-
+struction popq %rsp for x86-64:
+1
+.text
+2
+.globl poptest
+3
+poptest:
+4
+movq
+%rsp, %rdi
+Save stack pointer
+5
+pushq
+$0xabcd
+Push test value
+6
+popq
+%rsp
+Pop to stack pointer
+7
+movq
+%rsp, %rax
+Set popped value as return value
+8
+movq
+%rdi, %rsp
+Restore stack pointer
+9
+ret
+We ﬁnd this function always returns 0xabcd. What does this imply about the
+behavior of popq %rsp? What other Y86-64 instruction would have the exact same
+behavior?

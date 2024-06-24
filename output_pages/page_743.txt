@@ -1,0 +1,95 @@
+742
+Chapter 7
+Linking
+the dynamic linker could then resolve when the program was loaded. However,
+this approach would not be PIC, since it would require the linker to modify the
+code segment of the calling module. GNU compilation systems solve this problem
+using an interesting technique, called lazy binding, that defers the binding of each
+procedure address until the ﬁrst time the procedure is called.
+The motivation for lazy binding is that a typical application program will
+call only a handful of the hundreds or thousands of functions exported by a
+shared library such as libc.so. By deferring the resolution of a function’s address
+until it is actually called, the dynamic linker can avoid hundreds or thousands
+of unnecessary relocations at load time. There is a nontrivial run-time overhead
+the ﬁrst time the function is called, but each call thereafter costs only a single
+instruction and a memory reference for the indirection.
+Lazy binding is implemented with a compact yet somewhat complex interac-
+tion between two data structures: the GOT and the procedure linkage table (PLT).
+If an object module calls any functions that are deﬁned in shared libraries, then it
+has its own GOT and PLT. The GOT is part of the data segment. The PLT is part
+of the code segment.
+Figure 7.19 shows how the PLT and GOT work together to resolve the address
+of a function at run time. First, let’s examine the contents of each of these tables.
+Procedure linkage table (PLT). The PLT is an array of 16-byte code entries.
+PLT[0] is a special entry that jumps into the dynamic linker. Each shared
+library function called by the executable has its own PLT entry. Each of
+Global offset table (GOT) 
+Data segment 
+GOT[0]: 
+GOT[1]: 
+GOT[2]: 
+GOT[3]: 0x4005b6
+GOT[4]: 0x4005c6
+GOT[5]: 0x4005d6
+addr of .dynamic
+addr of reloc entries
+addr of dynamic linker
+# sys startup
+# addvec()
+# printf()  
+addr of .dynamic
+addr of reloc entries
+addr of dynamic linker
+# sys startup
+&addvec()
+&addvec()
+# printf()  
+ 
+Procedure linkage table (PLT) 
+Code segment
+  callq 0x4005c0
+# call addvec() 
+# PLT[0]: call dynamic linker
+4005a0: pushq *GOT[1]
+4005a6: jmpq  *GOT[2]
+…  
+# PLT[2]: call addvec()
+4005c0: jmpq  *GOT[4]
+4005c6: pushq $0x1
+4005cb: jmpq  4005a0  
+ 
+Procedure linkage table (PLT) 
+Code segment
+  callq 0x4005c0
+# call addvec() 
+# PLT[0]: call dynamic linker
+4005a0: pushq *GOT[1]
+4005a6: jmpq  *GOT[2]
+…  
+# PLT[2]: call addvec()
+4005c0: jmpq  *GOT[4]
+4005c6: pushq $0x1
+4005cb: jmpq  4005a0  
+ 
+Global offset table (GOT) 
+Data segment 
+GOT[0]: 
+GOT[1]: 
+GOT[2]: 
+GOT[3]: 0x4005b6  
+GOT[4]: 
+GOT[4]: 
+GOT[5]: 0x4005d6  
+ 
+ 
+1
+1
+2
+2
+4
+3
+(a) First invocation of addvec
+(b) Subsequent invocations of addvec
+Figure 7.19
+Using the PLT and GOT to call external functions. The dynamic linker resolves the address of
+addvec the ﬁrst time it is called.

@@ -1,0 +1,46 @@
+634
+Chapter 6
+The Memory Hierarchy
+Aside
+Advances in I/O bus designs
+The I/O bus in Figure 6.11 is a simple abstraction that allows us to be concrete, without being tied too
+closely to the details of any speciﬁc system. It is based on the peripheral component interconnect (PCI)
+bus, which was popular until around 2010. In the PCI model, each device in the system shares the bus,
+and only one device at a time can access these wires. In modern systems, the shared PCI bus has been
+replaced by a PCI express (PCIe) bus, which is a set of high-speed serial, point-to-point links connected
+by switches, akin to the switched Ethernets that you will learn about in Chapter 11. A PCIe bus, with a
+maximum throughput of 16 GB/s, is an order of magnitude faster than a PCI bus, which has a maximum
+throughput of 533 MB/s. Except for measured I/O performance, the differences between the different
+bus designs are not visible to application programs, so we will use the simple shared bus abstraction
+throughout the text.
+The CPU issues commands to I/O devices using a technique called memory-
+mapped I/O (Figure 6.12(a)). In a system with memory-mapped I/O, a block of
+addresses in the address space is reserved for communicating with I/O devices.
+Each of these addresses is known as an I/O port. Each device is associated with
+(or mapped to) one or more ports when it is attached to the bus.
+As a simple example, suppose that the disk controller is mapped to port 0xa0.
+Then the CPU might initiate a disk read by executing three store instructions to
+address 0xa0: The ﬁrst of these instructions sends a command word that tells the
+disk to initiate a read, along with other parameters such as whether to interrupt
+the CPU when the read is ﬁnished. (We will discuss interrupts in Section 8.1.) The
+second instruction indicates the logical block number that should be read.
+The third instruction indicates the main memory address where the contents of
+the disk sector should be stored.
+After it issues the request, the CPU will typically do other work while the
+disk is performing the read. Recall that a 1 GHz processor with a 1 ns clock cycle
+can potentially execute 16 million instructions in the 16 ms it takes to read the
+disk. Simply waiting and doing nothing while the transfer is taking place would be
+enormously wasteful.
+After the disk controller receives the read command from the CPU, it trans-
+lates the logical block number to a sector address, reads the contents of the sector,
+and transfers the contents directly to main memory, without any intervention from
+the CPU (Figure 6.12(b)). This process, whereby a device performs a read or write
+bus transaction on its own, without any involvement of the CPU, is known as direct
+memory access (DMA). The transfer of data is known as a DMA transfer.
+After the DMA transfer is complete and the contents of the disk sector are
+safely stored in main memory, the disk controller notiﬁes the CPU by sending an
+interrupt signal to the CPU (Figure 6.12(c)). The basic idea is that an interrupt
+signals an external pin on the CPU chip. This causes the CPU to stop what it is
+currently working on and jump to an operating system routine. The routine records
+the fact that the I/O has ﬁnished and then returns control to the point where the
+CPU was interrupted.

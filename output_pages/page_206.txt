@@ -1,0 +1,59 @@
+Section 3.2
+Program Encodings
+205
+Aside
+Moore’s Law
+Intel microprocessor complexity
+1.0E+10
+1.0E+09
+1.0E+08
+1.0E+07
+1.0E+06
+1.0E+05
+1.0E+04
+1975
+1980
+8086
+80286
+i386
+i486
+Pentium
+Pentium 4
+Pentium 4e
+Core 2 Duo
+Sandybridge
+Nehalem
+Haswell
+Pentium II
+Pentium III
+1985
+1990
+1995
+2000
+2005
+2010
+2015
+Year
+Transistors
+PentiumPro
+If we plot the number of transistors in the different Intel processors versus the year of introduction, and
+use a logarithmic scale for the y-axis, we can see that the growth has been phenomenal. Fitting a line
+through the data, we see that the number of transistors increases at an annual rate of approximately
+37%, meaning that the number of transistors doubles about every 26 months. This growth has been
+sustained over the multiple-decade history of x86 microprocessors.
+In 1965, Gordon Moore, a founder of Intel Corporation, extrapolated from the chip technology of
+the day (by which they could fabricate circuits with around 64 transistors on a single chip) to predict
+that the number of transistors per chip would double every year for the next 10 years. This prediction
+became known as Moore’s Law. As it turns out, his prediction was just a little bit optimistic, but also too
+short-sighted. Over more than 50 years, the semiconductor industry has been able to double transistor
+counts on average every 18 months.
+Similar exponential growth rates have occurred for other aspects of computer technology, including
+the storage capacities of magnetic disks and semiconductor memories. These remarkable growth rates
+have been the major driving forces of the computer revolution.
+with the introduction of SSE2. Although we see vestiges of the historical evolu-
+tion of x86 in x86-64 programs, many of the most arcane features of x86 do not
+appear.
+3.2
+Program Encodings
+Suppose we write a C program as two ﬁles p1.c and p2.c. We can then compile
+this code using a Unix command line:

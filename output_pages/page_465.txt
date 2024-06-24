@@ -1,0 +1,45 @@
+464
+Chapter 4
+Processor Architecture
+Aside
+Other branch prediction strategies
+Our design uses an always taken branch prediction strategy. Studies show this strategy has around a
+60% success rate [44, 122]. Conversely, a never taken (NT) strategy has around a 40% success rate. A
+slightly more sophisticated strategy, known as backward taken, forward not taken (BTFNT), predicts
+that branches to lower addresses than the next instruction will be taken, while those to higher addresses
+will not be taken. This strategy has a success rate of around 65%. This improvement stems from the fact
+that loops are closed by backward branches and loops are generally executed multiple times. Forward
+branches are used for conditional operations, and these are less likely to be taken. In Problems 4.55
+and 4.56, you can modify the Y86-64 pipeline processor to implement the NT and BTFNT branch
+prediction strategies.
+As we saw in Section 3.6.6, mispredicted branches can degrade the performance of a program
+considerably, thus motivating the use of conditional data transfer rather than conditional control
+transfer when possible.
+yield a throughput of one instruction per cycle. To do this, we must determine
+the location of the next instruction right after fetching the current instruction.
+Unfortunately, if the fetched instruction is a conditional branch, we will not
+know whether or not the branch should be taken until several cycles later, after
+the instruction has passed through the execute stage. Similarly, if the fetched
+instruction is a ret, we cannot determine the return location until the instruction
+has passed through the memory stage.
+With the exception of conditional jump instructions and ret, we can deter-
+mine the address of the next instruction based on information computed during
+the fetch stage. For call and jmp (unconditional jump), it will be valC, the con-
+stant word in the instruction, while for all others it will be valP, the address of the
+next instruction. We can therefore achieve our goal of issuing a new instruction
+every clock cycle in most cases by predicting the next value of the PC. For most in-
+struction types, our prediction will be completely reliable. For conditional jumps,
+we can predict either that a jump will be taken, so that the new PC value would be
+valC, or that it will not be taken, so that the new PC value would be valP. In either
+case, we must somehow deal with the case where our prediction was incorrect and
+therefore we have fetched and partially executed the wrong instructions. We will
+return to this matter in Section 4.5.8.
+This technique of guessing the branch direction and then initiating the fetching
+of instructions according to our guess is known as branch prediction. It is used in
+some form by virtually all processors. Extensive experiments have been conducted
+on effective strategies for predicting whether or not branches will be taken [46,
+Section 2.3]. Some systems devote large amounts of hardware to this task. In our
+design, we will use the simple strategy of predicting that conditional branches are
+always taken, and so we predict the new value of the PC to be valC.
+We are still left with predicting the new PC value resulting from a ret in-
+struction. Unlike conditional jumps, we have a nearly unbounded set of possible

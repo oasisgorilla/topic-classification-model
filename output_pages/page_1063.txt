@@ -1,0 +1,41 @@
+1062
+Chapter 12
+Concurrent Programming
+ID passed in its argument to a local variable (line 22) and then prints a message
+containing the ID. It looks simple enough, but when we run this program on our
+system, we get the following incorrect result:
+linux> ./race
+Hello from thread 1
+Hello from thread 3
+Hello from thread 2
+Hello from thread 3
+The problem is caused by a race between each peer thread and the main
+thread. Can you spot the race? Here is what happens. When the main thread
+creates a peer thread in line 13, it passes a pointer to the local stack variable
+i. At this point, the race is on between the next increment of i in line 12 and
+the dereferencing and assignment of the argument in line 22. If the peer thread
+executes line 22 before the main thread increments i in line 12, then the myid
+variable gets the correct ID. Otherwise, it will contain the ID of some other thread.
+The scary thing is that whether we get the correct answer depends on how the
+kernel schedules the execution of the threads. On our system it fails, but on other
+systems it might work correctly, leaving the programmer blissfully unaware of a
+serious bug.
+To eliminate the race, we can dynamically allocate a separate block for each
+integer ID and pass the thread routine a pointer to this block, as shown in Fig-
+ure 12.43 (lines 12–14). Notice that the thread routine must free the block in order
+to avoid a memory leak.
+When we run this program on our system, we now get the correct result:
+linux> ./norace
+Hello from thread 0
+Hello from thread 1
+Hello from thread 2
+Hello from thread 3
+Practice Problem 12.13 (solution page 1075)
+In Figure 12.43, we might be tempted to free the allocated memory block immedi-
+ately after line 14 in the main thread, instead of freeing it in the peer thread. But
+this would be a bad idea. Why?
+Practice Problem 12.14 (solution page 1075)
+A. In Figure 12.43, we eliminated the race by allocating a separate block for
+each integer ID. Outline a different approach that does not call the malloc
+or free functions.
+B. What are the advantages and disadvantages of this approach?

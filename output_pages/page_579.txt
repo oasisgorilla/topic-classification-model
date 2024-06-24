@@ -1,0 +1,65 @@
+578
+Chapter 5
+Optimizing Program Performance
+1
+/* 2 x 1a loop unrolling */
+2
+void combine7(vec_ptr v, data_t *dest)
+3
+{
+4
+long i;
+5
+long length = vec_length(v);
+6
+long limit = length-1;
+7
+data_t *data = get_vec_start(v);
+8
+data_t acc = IDENT;
+9
+10
+/* Combine 2 elements at a time */
+11
+for (i = 0; i < limit; i+=2) {
+12
+acc = acc OP (data[i] OP data[i+1]);
+13
+}
+14
+15
+/* Finish any remaining elements */
+16
+for (; i < length; i++) {
+17
+acc = acc OP data[i];
+18
+}
+19
+*dest = acc;
+20
+}
+Figure 5.26
+Applying 2 × 1a unrolling. By reassociating the arithmetic, this approach
+increases the number of operations that can be performed in parallel.
+The integer addition case matches the performance of k × 1 unrolling
+(combine5), while the other three cases match the performance of the versions
+with parallel accumulators (combine6), doubling the performance relative to k × 1
+unrolling. These cases have broken through the barrier imposed by the latency
+bound.
+Figure 5.27 illustrates how the code for the inner loop of combine7 (for the
+case of multiplication as the combining operation and double as data type) gets
+decoded into operations and the resulting data dependencies. We see that the load
+operations resulting from the vmovsd and the ﬁrst vmulsd instructions load vector
+elements i and i + 1 from memory, and the ﬁrst mul operation multiplies them
+together. The second mul operation then multiples this result by the accumulated
+value acc. Figure 5.28(a) shows how we rearrange, reﬁne, and abstract the op-
+erations of Figure 5.27 to get a template representing the data dependencies for
+one iteration (Figure 5.28(b)). As with the templates for combine5 and combine7,
+we have two load and two mul operations, but only one of the mul operations
+forms a data-dependency chain between loop registers. When we then replicate
+this template n/2 times to show the computations performed in multiplying n vec-
+tor elements (Figure 5.29), we see that we only have n/2 operations along the
+critical path. The ﬁrst multiplication within each iteration can be performed with-
+out waiting for the accumulated value from the previous iteration. Thus, we reduce
+the minimum possible CPE by a factor of around 2.

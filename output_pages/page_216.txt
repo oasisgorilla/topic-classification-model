@@ -1,0 +1,46 @@
+Section 3.4
+Accessing Information
+215
+not implemented with the same high-performance hardware as is the case for
+single- and double-precision arithmetic.
+As the table of Figure 3.1 indicates, most assembly-code instructions gener-
+ated by gcc have a single-character sufﬁx denoting the size of the operand. For
+example, the data movement instruction has four variants: movb (move byte),
+movw (move word), movl (move double word), and movq (move quad word). The
+sufﬁx ‘l’ is used for double words, since 32-bit quantities are considered to be
+“long words.” The assembly code uses the sufﬁx ‘l’ to denote a 4-byte integer as
+well as an 8-byte double-precision ﬂoating-point number. This causes no ambigu-
+ity, since ﬂoating-point code involves an entirely different set of instructions and
+registers.
+3.4
+Accessing Information
+An x86-64 central processing unit (CPU) contains a set of 16 general-purpose
+registers storing 64-bit values. These registers are used to store integer data as well
+as pointers. Figure 3.2 diagrams the 16 registers. Their names all begin with %r, but
+otherwise follow multiple different naming conventions, owing to the historical
+evolution of the instruction set. The original 8086 had eight 16-bit registers, shown
+in Figure 3.2 as registers %ax through %bp. Each had a speciﬁc purpose, and hence
+they were given names that reﬂected how they were to be used. With the extension
+to IA32, these registers were expanded to 32-bit registers, labeled %eax through
+%ebp. In the extension to x86-64, the original eight registers were expanded to 64
+bits, labeled %rax through %rbp. In addition, eight new registers were added, and
+these were given labels according to a new naming convention: %r8 through %r15.
+As the nested boxes in Figure 3.2 indicate, instructions can operate on data
+of different sizes stored in the low-order bytes of the 16 registers. Byte-level
+operations can access the least signiﬁcant byte, 16-bit operations can access the
+least signiﬁcant 2 bytes, 32-bit operations can access the least signiﬁcant 4 bytes,
+and 64-bit operations can access entire registers.
+In later sections, we will present a number of instructions for copying and
+generating 1-, 2-, 4-, and 8-byte values. When these instructions have registers as
+destinations, two conventions arise for what happens to the remaining bytes in
+the register for instructions that generate less than 8 bytes: Those that generate 1-
+or 2-byte quantities leave the remaining bytes unchanged. Those that generate 4-
+byte quantities set the upper 4 bytes of the register to zero. The latter convention
+was adopted as part of the expansion from IA32 to x86-64.
+As the annotations along the right-hand side of Figure 3.2 indicate, different
+registers serve different roles in typical programs. Most unique among them is the
+stack pointer, %rsp, used to indicate the end position in the run-time stack. Some
+instructions speciﬁcally read and write this register. The other 15 registers have
+more ﬂexibility in their uses. A small number of instructions make speciﬁc use of
+certain registers. More importantly, a set of standard programming conventions
+governs how the registers are to be used for managing the stack, passing function

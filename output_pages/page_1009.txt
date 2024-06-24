@@ -1,0 +1,47 @@
+1008
+Chapter 12
+Concurrent Programming
+A
+s we learned in Chapter 8, logical control ﬂows are concurrent if they overlap
+in time. This general phenomenon, known as concurrency, shows up at many
+different levels of a computer system. Hardware exception handlers, processes,
+and Linux signal handlers are all familiar examples.
+Thus far, we have treated concurrency mainly as a mechanism that the oper-
+ating system kernel uses to run multiple application programs. But concurrency is
+not just limited to the kernel. It can play an important role in application programs
+as well. For example, we have seen how Linux signal handlers allow applications
+to respond to asynchronous events such as the user typing Ctrl+C or the program
+accessing an undeﬁned area of virtual memory. Application-level concurrency is
+useful in other ways as well:
+. Accessing slow I/O devices. When an application is waiting for data to arrive
+from a slow I/O device such as a disk, the kernel keeps the CPU busy by
+running other processes. Individual applications can exploit concurrency in a
+similar way by overlapping useful work with I/O requests.
+. Interacting with humans.People who interact with computers demand the abil-
+ity to perform multiple tasks at the same time. For example, they might want
+to resize a window while they are printing a document. Modern windowing
+systems use concurrency to provide this capability. Each time the user requests
+some action (say, by clicking the mouse), a separate concurrent logical ﬂow is
+created to perform the action.
+. Reducing latency by deferring work. Sometimes, applications can use concur-
+rency to reduce the latency of certain operations by deferring other operations
+and performing them concurrently. For example, a dynamic storage allocator
+might reduce the latency of individual free operations by deferring coalesc-
+ing to a concurrent “coalescing” ﬂow that runs at a lower priority, soaking up
+spare CPU cycles as they become available.
+. Servicing multiple network clients.The iterative network servers that we stud-
+ied in Chapter 11 are unrealistic because they can only service one client at
+a time. Thus, a single slow client can deny service to every other client. For a
+real server that might be expected to service hundreds or thousands of clients
+per second, it is not acceptable to allow one slow client to deny service to the
+others. A better approach is to build a concurrent server that creates a separate
+logical ﬂow for each client. This allows the server to service multiple clients
+concurrently and precludes slow clients from monopolizing the server.
+. Computing in parallel on multi-core machines. Many modern systems are
+equipped with multi-core processors that contain multiple CPUs. Applica-
+tions that are partitioned into concurrent ﬂows often run faster on multi-core
+machines than on uniprocessor machines because the ﬂows execute in parallel
+rather than being interleaved.
+Applications that use application-level concurrency are known as concurrent
+programs. Modern operating systems provide three basic approaches for building
+concurrent programs:

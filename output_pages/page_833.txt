@@ -1,0 +1,72 @@
+832
+Chapter 8
+Exceptional Control Flow
+linux> ./shell
+Run your shell program
+>bogus
+bogus: Command not found.
+Execve can’t find executable
+>foo 10
+Job 5035 terminated by signal: Interrupt
+User types Ctrl+C
+>foo 100 &
+[1] 5036 foo 100 &
+>foo 200 &
+[2] 5037 foo 200 &
+>jobs
+[1] 5036 Running
+foo 100 &
+[2] 5037 Running
+foo 200 &
+>fg %1
+Job [1] 5036 stopped by signal: Stopped
+User types Ctrl+Z
+>jobs
+[1] 5036 Stopped
+foo 100 &
+[2] 5037 Running
+foo 200 &
+>bg 5035
+5035: No such process
+>bg 5036
+[1] 5036 foo 100 &
+>/bin/kill 5036
+Job 5036 terminated by signal: Terminated
+> fg %2
+Wait for fg job to finish
+>quit
+linux>
+Back to the Unix shell
+Figure 8.46
+Sample shell session for Problem 8.26.
+Figure 8.47
+Process graph for Practice
+Problem 8.2.
+fork
+fork
+main
+main
+printf
+printf
+exit
+exit
+p1: a=8
+p2: a=9
+Child
+Parent
+a==9
+p2: a=10
+printf
+printf
+printf
+printf
+exit
+exit
+A. The key idea here is that the child executes both printf statements. After
+the fork returns, it executes the printf in line 6. Then it falls out of the if
+statement and executes the printf in line 7. Here is the output produced by
+the child:
+p1: a=8
+p2: a=9
+B. The parent executes only the printf in line 7:
+p1: a=10

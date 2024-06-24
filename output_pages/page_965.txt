@@ -1,0 +1,48 @@
+964
+Chapter 11
+Network Programming
+mil
+edu
+gov
+com
+cmu
+mit
+cs
+ece
+whaleshark
+128.2.210.175
+ics
+Unnamed root
+pdl
+www
+128.2.131.66
+amazon
+www
+176.32.98.166
+First-level domain names
+Second-level domain names
+Third-level domain names
+berkeley
+Figure 11.10
+Subset of the Internet domain name hierarchy.
+At the next level are second-level domain names such as cmu.edu, which are
+assigned on a ﬁrst-come ﬁrst-serve basis by various authorized agents of ICANN.
+Once an organization has received a second-level domain name, then it is free to
+create any other new domain name within its subdomain, such as cs.cmu.edu.
+The Internet deﬁnes a mapping between the set of domain names and the
+set of IP addresses. Until 1988, this mapping was maintained manually in a sin-
+gle text ﬁle called HOSTS.TXT. Since then, the mapping has been maintained in a
+distributed worldwide database known as DNS (Domain Name System). Concep-
+tually, the DNS database consists of millions of host entries, each of which deﬁnes
+the mapping between a set of domain names and a set of IP addresses. In a math-
+ematical sense, think of each host entry as an equivalence class of domain names
+and IP addresses. We can explore some of the properties of the DNS mappings
+with the Linux nslookup program, which displays the IP addresses associated with
+a domain name.1
+Each Internet host has the locally deﬁned domain name localhost, which
+always maps to the loopback address 127.0.0.1:
+linux> nslookup localhost
+Address: 127.0.0.1
+The localhost name provides a convenient and portable way to reference clients
+and servers that are running on the same machine, which can be especially useful
+1. We’ve reformatted the output of nslookup to improve readability.

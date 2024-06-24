@@ -1,0 +1,53 @@
+Section 2.1
+Information Storage
+83
+New to C?
+Naming data types with typedef
+The typedef declaration in C provides a way of giving a name to a data type. This can be a great help
+in improving code readability, since deeply nested type declarations can be difﬁcult to decipher.
+The syntax for typedef is exactly like that of declaring a variable, except that it uses a type name
+rather than a variable name. Thus, the declaration of byte_pointer in Figure 2.4 has the same form as
+the declaration of a variable of type unsigned char *.
+For example, the declaration
+typedef int *int_pointer;
+int_pointer ip;
+deﬁnes type int_pointer to be a pointer to an int, and declares a variable ip of this type. Alternatively,
+we could declare this variable directly as
+int *ip;
+New to C?
+Formatted printing with printf
+The printf function (along with its cousins fprintf and sprintf) provides a way to print information
+with considerable control over the formatting details. The ﬁrst argument is a format string, while any
+remaining arguments are values to be printed. Within the format string, each character sequence
+starting with ‘%’ indicates how to format the next argument. Typical examples include %d to print a
+decimal integer, %f to print a ﬂoating-point number, and %c to print a character having the character
+code given by the argument.
+Specifying the formatting of ﬁxed-size data types, such as int_32t, is a bit more involved, as is
+described in the aside on page 103.
+Observe that although the ﬂoating-point and the integer data both encode
+the numeric value 12,345, they have very different byte patterns: 0x00003039
+for the integer and 0x4640E400 for ﬂoating point. In general, these two formats
+use different encoding schemes. If we expand these hexadecimal patterns into
+binary form and shift them appropriately, we ﬁnd a sequence of 13 matching bits,
+indicated by a sequence of asterisks, as follows:
+0
+0
+0
+0
+3
+0
+3
+9
+00000000000000000011000000111001
+*************
+4
+6
+4
+0
+E
+4
+0
+0
+01000110010000001110010000000000
+This is not coincidental. We will return to this example when we study ﬂoating-
+point formats.

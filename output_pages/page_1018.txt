@@ -1,0 +1,51 @@
+Section 12.2
+Concurrent Programming with I/O Multiplexing
+1017
+Figure 12.7
+State machine for
+a logical ﬂow in a
+concurrent event-driven
+echo server.
+Input event:
+“descriptor dk
+is ready for reading”
+Transition:
+“read a text line from
+descriptor dk”
+State:
+“waiting for descriptor dk to
+be ready for reading”
+The server uses the I/O multiplexing, courtesy of the select function, to
+detect the occurrence of input events. As each connected descriptor becomes
+ready for reading, the server executes the transition for the corresponding state
+machine—in this case, reading and echoing a text line from the descriptor.
+Figure 12.8 shows the complete example code for a concurrent event-driven
+server based on I/O multiplexing. The set of active clients is maintained in a pool
+structure (lines 3–11). After initializing the pool by calling init_pool (line 27),
+the server enters an inﬁnite loop. During each iteration of this loop, the server calls
+the select function to detect two different kinds of input events: (1) a connection
+request arriving from a new client, and (2) a connected descriptor for an existing
+client being ready for reading. When a connection request arrives (line 35), the
+server opens the connection (line 37) and calls the add_client function to add the
+client to the pool (line 38). Finally, the server calls the check_clients function to
+echo a single text line from each ready connected descriptor (line 42).
+The init_pool function (Figure 12.9) initializes the client pool. The clientfd
+array represents a set of connected descriptors, with the integer −1 denoting an
+available slot. Initially, the set of connected descriptors is empty (lines 5–7), and
+the listening descriptor is the only descriptor in the select read set (lines 10–12).
+The add_client function (Figure 12.10) adds a new client to the pool of active
+clients. After ﬁnding an empty slot in the clientfd array, the server adds the
+connected descriptor to the array and initializes a corresponding Rio read buffer
+so that we can call rio_readlineb on the descriptor (lines 8–9). We then add
+the connected descriptor to the select read set (line 12), and we update some
+global properties of the pool. The maxfd variable (lines 15–16) keeps track of the
+largest ﬁle descriptor for select. The maxi variable (lines 17–18) keeps track of
+the largest index into the clientfd array so that the check_clients function does
+not have to search the entire array.
+The check_clients function in Figure 12.11 echoes a text line from each
+ready connected descriptor. If we are successful in reading a text line from the
+descriptor, then we echo that line back to the client (lines 15–18). Notice that in
+line 15, we are maintaining a cumulative count of total bytes received from all
+clients. If we detect EOF because the client has closed its end of the connection,
+then we close our end of the connection (line 23) and remove the descriptor from
+the pool (lines 24–25).

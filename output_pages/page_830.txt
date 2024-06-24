@@ -1,0 +1,50 @@
+Homework Problems
+829
+4
+if (fork() != 0) {
+5
+printf("q"); fflush(stdout);
+6
+return 0;
+7
+}
+8
+else {
+9
+printf("r"); fflush(stdout);
+10
+waitpid(-1, NULL, 0);
+11
+}
+12
+return 0;
+13
+}
+code/ecf/global-waitprob3.c
+8.22 ◆◆◆
+Write your own version of the Unix system function
+int mysystem(char *command);
+The mysystem function executes command by invoking /bin/sh -c command, and
+then returns after command has completed. If command exits normally (by calling
+the exit function or executing a return statement), then mysystem returns the
+command exit status. For example, if command terminates by calling exit(8), then
+mysystem returns the value 8. Otherwise, if command terminates abnormally, then
+mysystem returns the status returned by the shell.
+8.23 ◆◆
+One of your colleagues is thinking of using signals to allow a parent process to
+count events that occur in a child process. The idea is to notify the parent each
+time an event occurs by sending it a signal and letting the parent’s signal handler
+increment a global counter variable, which the parent can then inspect after the
+child has terminated. However, when he runs the test program in Figure 8.45 on
+his system, he discovers that when the parent calls printf, counter always has a
+value of 2, even though the child has sent ﬁve signals to the parent. Perplexed, he
+comes to you for help. Can you explain the bug?
+8.24 ◆◆◆
+Modify the program in Figure 8.18 so that the following two conditions are met:
+1. Each child terminates abnormally after attempting to write to a location in
+the read-only text segment.
+2. The parent prints output that is identical (except for the PIDs) to the fol-
+lowing:
+child 12255 terminated by signal 11: Segmentation fault
+child 12254 terminated by signal 11: Segmentation fault
+Hint: Read the man page for psignal(3).

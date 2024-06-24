@@ -1,0 +1,55 @@
+Homework Problems
+915
+C. Physical memory reference
+Parameter
+Value
+Byte offset
+Cache index
+Cache tag
+Cache hit? (Y/N)
+Cache byte returned
+9.14 ◆◆
+Given an input ﬁle hello.txt that consists of the string Hello, world!\n, write
+a C program that uses mmap to change the contents of hello.txt to Jello,
+world!\n.
+9.15 ◆
+Determine the block sizes and header values that would result from the fol-
+lowing sequence of malloc requests. Assumptions: (1) The allocator maintains
+double-word alignment and uses an implicit free list with the block format from
+Figure 9.35. (2) Block sizes are rounded up to the nearest multiple of 8 bytes.
+Request
+Block size (decimal bytes)
+Block header (hex)
+malloc(4)
+malloc(7)
+malloc(19)
+malloc(22)
+9.16 ◆
+Determine the minimum block size for each of the following combinations of
+alignment requirements and block formats. Assumptions: Explicit free list, 4-byte
+pred and succ pointers in each free block, zero-size payloads are not allowed, and
+headers and footers are stored in 4-byte words.
+Minimum block
+Alignment
+Allocated block
+Free block
+size (bytes)
+Single word
+Header and footer
+Header and footer
+Single word
+Header, but no footer
+Header and footer
+Double word
+Header and footer
+Header and footer
+Double word
+Header, but no footer
+Header and footer
+9.17 ◆◆◆
+Develop a version of the allocator in Section 9.9.12 that performs a next-ﬁt search
+instead of a ﬁrst-ﬁt search.
+9.18 ◆◆◆
+The allocator in Section 9.9.12 requires both a header and a footer for each block
+in order to perform constant-time coalescing. Modify the allocator so that free
+blocks require a header and a footer, but allocated blocks require only a header.

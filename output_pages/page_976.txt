@@ -1,0 +1,59 @@
+Section 11.4
+The Sockets Interface
+975
+code/netp/netpfragments.c
+struct addrinfo {
+int
+ai_flags;
+/* Hints argument flags */
+int
+ai_family;
+/* First arg to socket function */
+int
+ai_socktype;
+/* Second arg to socket function */
+int
+ai_protocol;
+/* Third arg to socket function
+*/
+char
+*ai_canonname; /* Canonical hostname */
+size_t
+ai_addrlen;
+/* Size of ai_addr struct */
+struct sockaddr *ai_addr;
+/* Ptr to socket address structure */
+struct addrinfo *ai_next;
+/* Ptr to next item in linked list */
+};
+code/netp/netpfragments.c
+Figure 11.16
+The addrinfo structure used by getaddrinfo.
+. By default, for each unique address associated with host, the getaddrinfo
+function can return up to three addrinfo structures, each with a different ai_
+socktype ﬁeld: one for connections, one for datagrams (not covered), and
+one for raw sockets (not covered). Setting ai_socktype to SOCK_STREAM
+restricts the list to at most one addrinfo structure for each unique address,
+one whose socket address can be used as the end point of a connection. This
+is the desired behavior for all of our example programs.
+. The ai_flags ﬁeld is a bit mask that further modiﬁes the default behavior.
+You create it by oring combinations of various values. Here are some that we
+ﬁnd useful:
+AI_ADDRCONFIG. This ﬂag is recommended if you are using connec-
+tions [34]. It asks getaddrinfo to return IPv4 addresses only if the
+local host is conﬁgured for IPv4. Similarly for IPv6.
+AI_CANONNAME. By default, the ai_canonname ﬁeld is NULL. If this
+ﬂag is set, it instructs getaddrinfo to point the ai_canonname ﬁeld in
+the ﬁrst addrinfo structure in the list to the canonical (ofﬁcial) name
+of host (see Figure 11.15).
+AI_NUMERICSERV. By default, the service argument can be a service
+name or a port number. This ﬂag forces the service argument to be
+a port number.
+AI_PASSIVE. By default, getaddrinfo returns socket addresses that can
+be used by clients as active sockets in calls to connect. This ﬂag
+instructs it to return socket addresses that can be used by servers as
+listening sockets. In this case, the host argument should be NULL.
+The address ﬁeld in the resulting socket address structure(s) will be
+the wildcard address, which tells the kernel that this server will accept
+requests to any of the IP addresses for this host. This is the desired
+behavior for all of our example servers.

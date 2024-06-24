@@ -1,0 +1,109 @@
+Section 3.6
+Control
+239
+Instruction
+Synonym
+Effect
+Set condition
+sete
+D
+setz
+D ←ZF
+Equal / zero
+setne
+D
+setnz
+D ←
+~ ZF
+Not equal / not zero
+sets
+D
+D ←SF
+Negative
+setns
+D
+D ←
+~ SF
+Nonnegative
+setg
+D
+setnle
+D ←
+~ (SF ^ OF) & ~ZF
+Greater (signed >)
+setge
+D
+setnl
+D ←
+~ (SF ^ OF)
+Greater or equal (signed >=)
+setl
+D
+setnge
+D ←SF ^ OF
+Less (signed <)
+setle
+D
+setng
+D ←(SF ^ OF) | ZF
+Less or equal (signed <=)
+seta
+D
+setnbe
+D ←
+~ CF & ~ZF
+Above (unsigned >)
+setae
+D
+setnb
+D ←
+~ CF
+Above or equal (unsigned >=)
+setb
+D
+setnae
+D ←CF
+Below (unsigned <)
+setbe
+D
+setna
+D ←CF | ZF
+Below or equal (unsigned <=)
+Figure 3.14
+The set instructions. Each instruction sets a single byte to 0 or 1 based on
+some combination of the condition codes. Some instructions have “synonyms,” that is,
+alternate names for the same machine instruction.
+int comp(data_t a, data_t b)
+a in %rdi, b in %rsi
+1
+comp:
+2
+cmpq
+%rsi, %rdi
+Compare a:b
+3
+setl
+%al
+Set low-order byte of %eax to 0 or 1
+4
+movzbl
+%al, %eax
+Clear rest of %eax (and rest of %rax)
+5
+ret
+Note the comparison order of the cmpq instruction (line 2). Although the
+arguments are listed in the order %rsi (b), then %rdi (a), the comparison is
+really between a and b. Recall also, as discussed in Section 3.4.2, that the movzbl
+instruction (line 4) clears not just the high-order 3 bytes of %eax, but the upper 4
+bytes of the entire register, %rax, as well.
+For some of the underlying machine instructions, there are multiple possible
+names, which we list as “synonyms.” For example, both setg (for “set greater”)
+and setnle (for “set not less or equal”) refer to the same machine instruction.
+Compilers and disassemblers make arbitrary choices of which names to use.
+Although all arithmetic and logical operations set the condition codes, the de-
+scriptions of the different set instructions apply to the case where a comparison
+instruction has been executed, setting the condition codes according to the com-
+putation t = a-b. More speciﬁcally, let a, b, and t be the integers represented in
+two’s-complement form by variables a, b, and t, respectively, and so t = a -t
+w b,
+where w depends on the sizes associated with a and b.

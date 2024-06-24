@@ -1,0 +1,43 @@
+138
+Chapter 2
+Representing and Manipulating Information
+but this is also the case when performing multiplication on ﬁxed-size words. We
+can therefore see that shifting a value left is equivalent to performing unsigned
+multiplication by a power of 2:
+principle: Unsigned multiplication by a power of 2
+For C variables x and k with unsigned values x and k, such that 0 ≤k < w, the C
+expression x << k yields the value x *u
+w 2k.
+Since the bit-level operation of ﬁxed-size two’s-complement arithmetic is
+equivalent to that for unsigned arithmetic, we can make a similar statement about
+the relationship between left shifts and multiplication by a power of 2 for two’s-
+complement arithmetic:
+principle: Two’s-complement multiplication by a power of 2
+For C variables x and k with two’s-complement value x and unsigned value k, such
+that 0 ≤k < w, the C expression x << k yields the value x *t
+w 2k.
+Note that multiplying by a power of 2 can cause overﬂow with either unsigned
+or two’s-complement arithmetic. Our result shows that even then we will get the
+same effect by shifting. Returning to our earlier example, we shifted the 4-bit
+pattern [1011] (numeric value 11) left by two positions to get [101100] (numeric
+value 44). Truncating this to 4 bits gives [1100] (numeric value 12 = 44 mod 16).
+Given that integer multiplication is more costly than shifting and adding, many
+C compilers try to remove many cases where an integer is being multiplied by a
+constant with combinations of shifting, adding, and subtracting. For example, sup-
+pose a program contains the expression x*14. Recognizing that 14 = 23 + 22 + 21,
+the compiler can rewrite the multiplication as (x<<3) + (x<<2) + (x<<1), replac-
+ing one multiplication with three shifts and two additions. The two computations
+will yield the same result, regardless of whether x is unsigned or two’s comple-
+ment, and even if the multiplication would cause an overﬂow. Even better, the
+compiler can also use the property 14 = 24 −21 to rewrite the multiplication as
+(x<<4) - (x<<1), requiring only two shifts and a subtraction.
+Practice Problem 2.38 (solution page 191)
+As we will see in Chapter 3, the lea instruction can perform computations of
+the form (a<<k) + b, where k is either 0, 1, 2, or 3, and b is either 0 or some
+program value. The compiler often uses this instruction to perform multiplications
+by constant factors. For example, we can compute 3*a as (a<<1) + a.
+Considering cases where b is either 0 or equal to a, and all possible values of k,
+what multiples of a can be computed with a single lea instruction?
+Generalizing from our example, consider the task of generating code for
+the expression x * K, for some constant K. The compiler can express the binary
+representation of K as an alternating sequence of zeros and ones:

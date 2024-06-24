@@ -1,0 +1,67 @@
+588
+Chapter 5
+Optimizing Program Performance
+values and then update the program state with these values, as opposed to a more
+“imperative” style, where we use conditionals to selectively update program state.
+There are no strict rules for these two styles, and so we illustrate with an
+example. Suppose we are given two arrays of integers a and b, and at each position
+i, we want to set a[i] to the minimum of a[i] and b[i], and b[i] to the maximum.
+An imperative style of implementing this function is to check at each position
+i and swap the two elements if they are out of order:
+1
+/* Rearrange two vectors so that for each i, b[i] >= a[i] */
+2
+void minmax1(long a[], long b[], long n) {
+3
+long i;
+4
+for (i = 0; i < n; i++) {
+5
+if (a[i] > b[i]) {
+6
+long t = a[i];
+7
+a[i] = b[i];
+8
+b[i] = t;
+9
+}
+10
+}
+11
+}
+Our measurements for this function show a CPE of around 13.5 for random data
+and 2.5–3.5 for predictable data, an indication of a misprediction penalty of around
+20 cycles.
+A functional style of implementing this function is to compute the minimum
+and maximum values at each position i and then assign these values to a[i] and
+b[i], respectively:
+1
+/* Rearrange two vectors so that for each i, b[i] >= a[i] */
+2
+void minmax2(long a[], long b[], long n) {
+3
+long i;
+4
+for (i = 0; i < n; i++) {
+5
+long min = a[i] < b[i] ? a[i] : b[i];
+6
+long max = a[i] < b[i] ? b[i] : a[i];
+7
+a[i] = min;
+8
+b[i] = max;
+9
+}
+10
+}
+Our measurements for this function show a CPE of around 4.0 regardless of
+whether the data are arbitrary or predictable. (We also examined the generated
+assembly code to make sure that it indeed uses conditional moves.)
+As discussed in Section 3.6.6, not all conditional behavior can be implemented
+with conditional data transfers, and so there are inevitably cases where program-
+mers cannot avoid writing code that will lead to conditional branches for which
+the processor will do poorly with its branch prediction. But, as we have shown, a
+little cleverness on the part of the programmer can sometimes make code more
+amenable to translation into conditional data transfers. This requires some amount

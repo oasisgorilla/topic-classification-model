@@ -1,0 +1,98 @@
+Section 6.3
+The Memory Hierarchy
+645
+(a) An array of structs
+1
+#define N 1000
+2
+3
+typedef struct {
+4
+int vel[3];
+5
+int acc[3];
+6
+} point;
+7
+8
+point p[N];
+(b) The clear1 function
+1
+void clear1(point *p, int n)
+2
+{
+3
+int i, j;
+4
+5
+for (i = 0; i < n; i++) {
+6
+for (j = 0; j < 3; j++)
+7
+p[i].vel[j] = 0;
+8
+for (j = 0; j < 3; j++)
+9
+p[i].acc[j] = 0;
+10
+}
+11
+}
+(c) The clear2 function
+1
+void clear2(point *p, int n)
+2
+{
+3
+int i, j;
+4
+5
+for (i = 0; i < n; i++) {
+6
+for (j = 0; j < 3; j++) {
+7
+p[i].vel[j] = 0;
+8
+p[i].acc[j] = 0;
+9
+}
+10
+}
+11
+}
+(d) The clear3 function
+1
+void clear3(point *p, int n)
+2
+{
+3
+int i, j;
+4
+5
+for (j = 0; j < 3; j++) {
+6
+for (i = 0; i < n; i++)
+7
+p[i].vel[j] = 0;
+8
+for (i = 0; i < n; i++)
+9
+p[i].acc[j] = 0;
+10
+}
+11
+}
+Figure 6.20
+Code examples for Practice Problem 6.8.
+Practice Problem 6.8 (solution page 699)
+The three functions in Figure 6.20 perform the same operation with varying de-
+grees of spatial locality. Rank-order the functions with respect to the spatial local-
+ity enjoyed by each. Explain how you arrived at your ranking.
+6.3
+The Memory Hierarchy
+Sections 6.1 and 6.2 described some fundamental and enduring properties of
+storage technology and computer software:
+Storage technology. Different storage technologies have widely different access
+times. Faster technologies cost more per byte than slower ones and have
+less capacity. The gap between CPU and main memory speed is widening.
+Computer software. Well-written programs tend to exhibit good locality.

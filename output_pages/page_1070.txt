@@ -1,0 +1,81 @@
+Homework Problems
+1069
+12.26 ◆◆◆
+Use the lock-and-copy technique to implement a thread-safe non-reentrant ver-
+sion of gethostbyname called gethostbyname_ts. A correct solution will use a
+deep copy of the hostent structure protected by a mutex.
+12.27 ◆◆
+Some network programming texts suggest the following approach for reading and
+writing sockets: Before interacting with the client, open two standard I/O streams
+on the same open connected socket descriptor, one for reading and one for writing:
+FILE *fpin, *fpout;
+fpin = fdopen(sockfd, "r");
+fpout = fdopen(sockfd, "w");
+When the server ﬁnishes interacting with the client, close both streams as follows:
+fclose(fpin);
+fclose(fpout);
+However, if you try this approach in a concurrent server based on threads,
+you will create a deadly race condition. Explain.
+12.28 ◆
+In Figure 12.45, does swapping the order of the two V operations have any effect
+on whether or not the program deadlocks? Justify your answer by drawing the
+progress graphs for the four possible cases:
+Case 1
+Case 2
+Case 3
+Case 4
+Thread 1
+Thread 2
+Thread 1
+Thread 2
+Thread 1
+Thread 2
+Thread 1
+Thread 2
+P(s)
+P(s)
+P(s)
+P(s)
+P(s)
+P(s)
+P(s)
+P(s)
+P(t)
+P(t)
+P(t)
+P(t)
+P(t)
+P(t)
+P(t)
+P(t)
+V(s)
+V(s)
+V(s)
+V(t)
+V(t)
+V(s)
+V(t)
+V(t)
+V(t)
+V(t)
+V(t)
+V(s)
+V(s)
+V(t)
+V(s)
+V(s)
+12.29 ◆
+Can the following program deadlock? Why or why not?
+Initially: a = 1, b = 1, c = 1.
+Thread 1:
+Thread 2:
+P(a);
+P(c);
+P(b);
+P(b);
+V(b);
+V(b);
+P(c);
+V(c);
+V(c);
+V(a);

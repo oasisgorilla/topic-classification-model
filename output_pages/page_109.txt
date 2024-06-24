@@ -1,0 +1,50 @@
+108
+Chapter 2
+Representing and Manipulating Information
+x
+T2U4(x)
+−1
+−5
+−6
+−4
+1
+8
+The relationship we have seen, via several examples, between the two’s-
+complement and unsigned values for a given bit pattern can be expressed as a
+property of the function T2U:
+principle: Conversion from two’s complement to unsigned
+For x such that TMinw ≤x ≤TMaxw:
+T2Uw(x) =
+ x + 2w,
+x < 0
+x,
+x ≥0
+(2.5)
+For example, we saw that T2U16(−12,345) = −12,345 + 216 = 53,191, and also
+that T2Uw(−1) = −1 + 2w = UMaxw.
+This property can be derived by comparing Equations 2.1 and 2.3.
+derivation: Conversion from two’s complement to unsigned
+Comparing Equations 2.1 and 2.3, we can see that for bit pattern ⃗
+x, if we compute
+the difference B2Uw(⃗
+x) −B2Tw(⃗
+x), the weighted sums for bits from 0 to w −2 will
+cancel each other, leaving a value B2Uw(⃗
+x) −B2Tw(⃗
+x) = xw−1(2w−1 −−2w−1) =
+xw−12w. This gives a relationship B2Uw(⃗
+x) = B2Tw(⃗
+x) + xw−12w. We therefore
+have
+B2Uw(T2Bw(x)) = T2Uw(x) = x + xw−12w
+(2.6)
+In a two’s-complement representation of x, bit xw−1 determines whether or not x
+is negative, giving the two cases of Equation 2.5.
+As examples, Figure 2.16 compares how functions B2U and B2T assign values
+to bit patterns for w = 4. For the two’s-complement case, the most signiﬁcant bit
+serves as the sign bit, which we diagram as a leftward-pointing gray bar. For the
+unsigned case, this bit has positive weight, which we show as a rightward-pointing
+black bar. In going from two’s complement to unsigned, the most signiﬁcant bit
+changes its weight from −8 to +8. As a consequence, the values that are nega-
+tive in a two’s-complement representation increase by 24 = 16 with an unsigned
+representation. Thus, −5 becomes +11, and −1 becomes +15.

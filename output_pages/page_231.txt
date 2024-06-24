@@ -1,0 +1,58 @@
+230
+Chapter 3
+Machine-Level Representation of Programs
+3.5.2
+Unary and Binary Operations
+Operations in the second group are unary operations, with the single operand
+serving as both source and destination. This operand can be either a register or
+a memory location. For example, the instruction incq (%rsp) causes the 8-byte
+element on the top of the stack to be incremented. This syntax is reminiscent of
+the C increment (++) and decrement (--) operators.
+The third group consists of binary operations, where the second operand
+is used as both a source and a destination. This syntax is reminiscent of the C
+assignment operators, such as x -= y. Observe, however, that the source operand
+is given ﬁrst and the destination second. This looks peculiar for noncommutative
+operations. For example, the instruction subq %rax,%rdx decrements register
+%rdx by the value in %rax. (It helps to read the instruction as “Subtract %rax from
+%rdx.”) The ﬁrst operand can be either an immediate value, a register, or a memory
+location. The second can be either a register or a memory location. As with the
+mov instructions, the two operands cannot both be memory locations. Note that
+when the second operand is a memory location, the processor must read the value
+from memory, perform the operation, and then write the result back to memory.
+Practice Problem 3.8 (solution page 364)
+Assume the following values are stored at the indicated memory addresses and
+registers:
+Address
+Value
+Register
+Value
+0x100
+0xFF
+%rax
+0x100
+0x108
+0xAB
+%rcx
+0x1
+0x110
+0x13
+%rdx
+0x3
+0x118
+0x11
+Fill in the following table showing the effects of the following instructions,
+in terms of both the register or memory location that will be updated and the
+resulting value:
+Instruction
+Destination
+Value
+addq %rcx,(%rax)
+subq %rdx,8(%rax)
+imulq $16,(%rax,%rdx,8)
+incq 16(%rax)
+decq %rcx
+subq %rdx,%rax
+3.5.3
+Shift Operations
+The ﬁnal group consists of shift operations, where the shift amount is given ﬁrst
+and the value to shift is given second. Both arithmetic and logical right shifts are

@@ -1,0 +1,72 @@
+Section 9.6
+Address Translation
+857
+determine the PPN. As with a single-level hierarchy, the PPO is identical to the
+VPO.
+Accessing k PTEs may seem expensive and impractical at ﬁrst glance. How-
+ever, the TLB comes to the rescue here by caching PTEs from the page tables at
+the different levels. In practice, address translation with multi-level page tables is
+not signiﬁcantly slower than with single-level page tables.
+9.6.4
+Putting It Together: End-to-End Address Translation
+In this section, we put it all together with a concrete example of end-to-end
+address translation on a small system with a TLB and L1 d-cache. To keep things
+manageable, we make the following assumptions:
+. The memory is byte addressable.
+. Memory accesses are to 1-byte words (not 4-byte words).
+. Virtual addresses are 14 bits wide (n = 14).
+. Physical addresses are 12 bits wide (m = 12).
+. The page size is 64 bytes (P = 64).
+. The TLB is 4-way set associative with 16 total entries.
+. The L1 d-cache is physically addressed and direct mapped, with a 4-byte line
+size and 16 total sets.
+Figure 9.19 shows the formats of the virtual and physical addresses. Since each
+page is 26 = 64 bytes, the low-order 6 bits of the virtual and physical addresses serve
+as the VPO and PPO, respectively. The high-order 8 bits of the virtual address
+serve as the VPN. The high-order 6 bits of the physical address serve as the PPN.
+Figure 9.20 shows a snapshot of our little memory system, including the TLB
+(Figure 9.20(a)), a portion of the page table (Figure 9.20(b)), and the L1 cache
+(Figure 9.20(c)). Above the ﬁgures of the TLB and cache, we have also shown
+how the bits of the virtual and physical addresses are partitioned by the hardware
+as it accesses these devices.
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+VPN
+(Virtual page number)
+VPO
+(Virtual page offset)
+Virtual
+address
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+PPN
+(Physical page number)
+PPO
+(Physical page offset)
+Physical
+address
+Figure 9.19
+Addressing for small memory system. Assume 14-bit virtual addresses
+(n = 14), 12-bit physical addresses (m = 12), and 64-byte pages (P = 64).

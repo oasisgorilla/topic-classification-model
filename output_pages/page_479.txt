@@ -1,0 +1,111 @@
+478
+Chapter 4
+Processor Architecture
+W_dstE = %rbx
+W_valE = 10
+W
+M_dstM = %rax
+m_valM      M[128] = 3
+M
+F
+0x000: irmovq $128,%rdx
+0x00a: irmovq  $3,%rcx
+0x014: rmmovq %rcx, 0(%rdx)
+0x01e: irmovq $10,%rbx
+0x028: mrmovq 0(%rdx),%rax # Load %rax
+0x032: addq %rbx,%rax # Use %rax
+0x034: halt
+# prog5
+# prog5
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+E
+M
+W
+D
+F
+D
+E
+M
+W
+F
+F
+D
+E
+M
+W
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+D
+valA      W_valE = 10
+valB      m_valM = 3
+Cycle 8
+. . .
+bubble
+bubble
+Figure 4.54
+Handling a load/use hazard by stalling. By stalling the addq instruction for one cycle in the
+decode stage, the value for valB can be forwarded from the mrmovq instruction in the memory stage to the
+addq instruction in the decode stage.
+0x000:
+irmovq stack,%rsp
+#
+Initialize stack pointer
+0x00a:
+call proc
+#
+Procedure call
+0x013:
+irmovq $10,%rdx
+#
+Return point
+0x01d:
+halt
+0x020: .pos 0x20
+0x020: proc:
+# proc:
+0x020:
+ret
+#
+Return immediately
+0x021:
+rrmovq %rdx,%rbx
+#
+Not executed
+0x030: .pos 0x30
+0x030: stack:
+# stack: Stack pointer
+Figure 4.55 shows how we want the pipeline to process the ret instruction.
+As with our earlier pipeline diagrams, this ﬁgure shows the pipeline activity with

@@ -1,0 +1,46 @@
+Section 5.7
+Understanding Modern Processors
+557
+microprocessor chip has grown over time, successive models of microprocessors
+have increased the total number of functional units, the combinations of opera-
+tions each unit can perform, and the performance of each of these units. The arith-
+metic units are intentionally designed to be able to perform a variety of different
+operations, since the required operations vary widely across different programs.
+For example, some programs might involve many integer operations, while others
+require many ﬂoating-point operations. If one functional unit were specialized to
+perform integer operations while another could only perform ﬂoating-point oper-
+ations, then none of these programs would get the full beneﬁt of having multiple
+functional units.
+For example, our Intel Core i7 Haswell reference machine has eight functional
+units, numbered 0–7. Here is a partial list of each one’s capabilities:
+0. Integer arithmetic, ﬂoating-point multiplication, integer and ﬂoating-point
+division, branches
+1. Integer arithmetic, ﬂoating-point addition, integer multiplication, ﬂoating-
+point multiplication
+2. Load, address computation
+3. Load, address computation
+4. Store
+5. Integer arithmetic
+6. Integer arithmetic, branches
+7. Store address computation
+In the above list, “integer arithmetic” refers to basic operations, such as addition,
+bitwise operations, and shifting. Multiplication and division require more special-
+ized resources. We see that a store operation requires two functional units—one
+to compute the store address and one to actually store the data. We will discuss
+the mechanics of store (and load) operations in Section 5.12.
+We can see that this combination of functional units has the potential to
+perform multiple operations of the same type simultaneously. It has four units
+capable of performing integer operations, two that can perform load operations,
+and two that can perform ﬂoating-point multiplication. We will later see the impact
+these resources have on the maximum performance our programs can achieve.
+Within the ICU, the retirement unit keeps track of the ongoing processing and
+makes sure that it obeys the sequential semantics of the machine-level program.
+Our ﬁgure shows a register ﬁle containing the integer, ﬂoating-point, and, more
+recently, SSE and AVX registers as part of the retirement unit, because this unit
+controls the updating of these registers. As an instruction is decoded, information
+about it is placed into a ﬁrst-in, ﬁrst-out queue. This information remains in
+the queue until one of two outcomes occurs. First, once the operations for the
+instruction have completed and any branch points leading to this instruction are
+conﬁrmed as having been correctly predicted, the instruction can be retired, with
+any updates to the program registers being made. If some branch point leading
+to this instruction was mispredicted, on the other hand, the instruction will be

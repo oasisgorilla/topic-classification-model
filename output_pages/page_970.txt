@@ -1,0 +1,54 @@
+Section 11.4
+The Sockets Interface
+969
+Aside
+What does the _in sufﬁx mean?
+The _in sufﬁx is short for internet, not input.
+code/netp/netpfragments.c
+/* IP socket address structure */
+struct sockaddr_in
+{
+uint16_t
+sin_family;
+/* Protocol family (always AF_INET) */
+uint16_t
+sin_port;
+/* Port number in network byte order */
+struct in_addr
+sin_addr;
+/* IP address in network byte order */
+unsigned char
+sin_zero[8]; /* Pad to sizeof(struct sockaddr) */
+};
+/* Generic socket address structure (for connect, bind, and accept) */
+struct sockaddr {
+uint16_t
+sa_family;
+/* Protocol family */
+char
+sa_data[14];
+/* Address data
+*/
+};
+code/netp/netpfragments.c
+Figure 11.13
+Socket address structures.
+11.4.1
+Socket Address Structures
+From the perspective of the Linux kernel, a socket is an end point for communi-
+cation. From the perspective of a Linux program, a socket is an open ﬁle with a
+corresponding descriptor.
+Internet socket addresses are stored in 16-byte structures having the type
+sockaddr_in, shown in Figure 11.13. For Internet applications, the sin_family
+ﬁeld is AF_INET, the sin_port ﬁeld is a 16-bit port number, and the sin_addr
+ﬁeld contains a 32-bit IP address. The IP address and port number are always
+stored in network (big-endian) byte order.
+The connect, bind, and accept functions require a pointer to a protocol-
+speciﬁc socket address structure. The problem faced by the designers of the sockets
+interface was how to deﬁne these functions to accept any kind of socket address
+structure. Today, we would use the generic void * pointer, which did not exist in
+C at that time. Their solution was to deﬁne sockets functions to expect a pointer to
+a generic sockaddr structure (Figure 11.13) and then require applications to cast
+any pointers to protocol-speciﬁc structures to this generic structure. To simplify
+our code examples, we follow Stevens’s lead and deﬁne the following type:
+typedef struct sockaddr SA;

@@ -1,0 +1,87 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+461
+E sits between the decode and execute stages. It holds information about the
+most recently decoded instruction and the values read from the register
+ﬁle for processing by the execute stage.
+M sits between the execute and memory stages. It holds the results of the
+most recently executed instruction for processing by the memory stage.
+It also holds information about branch conditions and branch targets for
+processing conditional jumps.
+W sits between the memory stage and the feedback paths that supply the
+computed results to the register ﬁle for writing and the return address
+to the PC selection logic when completing a ret instruction.
+Figure 4.42 shows how the following code sequence would ﬂow through our
+ﬁve-stage pipeline, where the comments identify the instructions as I1 to I5 for
+reference:
+1
+irmovq
+$1,%rax
+# I1
+2
+irmovq
+$2,%rbx
+# I2
+3
+irmovq
+$3,%rcx
+# I3
+4
+irmovq
+$4,%rdx
+# I4
+5
+halt
+# I5
+irmovq     $1,%rax    #Il
+irmovq     $2,%rbx    #I2
+irmovq     $3,%rcx    #I3
+irmovq     $4,%rdx    #I4
+halt                  #I5
+F
+D
+E
+M
+W
+1
+2
+3
+4
+5
+F
+D
+E
+M
+W
+6
+F
+D
+E
+M
+W
+7
+F
+D
+E
+M
+W
+8
+F
+D
+E
+M
+W
+9
+Cycle 5
+W
+Il
+M
+I2
+E
+I3
+D
+I4
+F
+I5
+Figure 4.42
+Example of instruction ﬂow through pipeline.

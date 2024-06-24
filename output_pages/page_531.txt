@@ -1,0 +1,36 @@
+530
+Chapter 4
+Processor Architecture
+# Start injecting bubbles as soon as exception passes through memory stage
+bool M_bubble = m_stat in { SADR, SINS, SHLT } || W_stat in { SADR, SINS, SHLT };
+For stalling the write-back stage, we check only the status of the instruction
+in this stage. If we also stalled when an excepting instruction was in the memory
+stage, then this instruction would not be able to enter the write-back stage.
+bool W_stall = W_stat in { SADR, SINS, SHLT };
+Solution to Problem 4.43 (page 504)
+We would then have a misprediction frequency of 0.35, giving mp = 0.20 × 0.35 ×
+2 = 0.14, giving an overall CPI of 1.25. This seems like a fairly marginal gain, but
+it would be worthwhile if the cost of implementing the new branch prediction
+strategy were not too high.
+Solution to Problem 4.44 (page 504)
+This simpliﬁed analysis, where we focus on the inner loop, is a useful way to
+estimate program performance. As long as the array is sufﬁciently large, the time
+spent in other parts of the code will be negligible.
+A. The inner loop of the code using the conditional jump has 11 instructions, all
+of which are executed when the array element is zero or negative, and 10 of
+which are executed when the array element is positive. The average is 10.5.
+The inner loop of the code using the conditional move has 10 instructions,
+all of which are executed every time.
+B. The loop-closing jump will be predicted correctly, except when the loop
+terminates. For a very long array, this one misprediction will have a negligible
+effect on the performance. The only other source of bubbles for the jump-
+based code is the conditional jump, depending on whether or not the array
+element is positive. This will cause two bubbles, but it only occurs 50% of
+the time, so the average is 1.0. There are no bubbles in the conditional move
+code.
+C. Our conditional jump code requires an average of 10.5 + 1.0 = 11.5 cycles
+per array element (11 cycles in the best case and 12 cycles in the worst),
+while our conditional move code requires 10.0 cycles in all cases.
+Our pipeline has a branch misprediction penalty of only two cycles—far better
+than those for the deep pipelines of higher-performance processors. As a result,
+using conditional moves does not affect program performance very much.

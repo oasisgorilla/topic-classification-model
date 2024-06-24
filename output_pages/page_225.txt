@@ -1,0 +1,45 @@
+224
+Chapter 3
+Machine-Level Representation of Programs
+New to C?
+Some examples of pointers
+Function exchange (Figure 3.7(a)) provides a good illustration of the use of pointers in C. Argument
+xp is a pointer to a long integer, while y is a long integer itself. The statement
+long x = *xp;
+indicates that we should read the value stored in the location designated by xp and store it as a local
+variable named x. This read operation is known as pointer dereferencing. The C operator ‘*’ performs
+pointer dereferencing.
+The statement
+*xp = y;
+does the reverse—it writes the value of parameter y at the location designated by xp. This is also a form
+of pointer dereferencing (and hence the operator *), but it indicates a write operation since it is on the
+left-hand side of the assignment.
+The following is an example of exchange in action:
+long a = 4;
+long b = exchange(&a, 3);
+printf("a = %ld, b = %ld\verb@\@n", a, b);
+This code will print
+a = 3, b = 4
+The C operator ‘&’ (called the “address of” operator) creates a pointer, in this case to the location
+holding local variable a. Function exchange overwrites the value stored in a with 3 but returns the
+previous value, 4, as the function value. Observe how by passing a pointer to exchange, it could modify
+data held at some remote location.
+Assume that the values of sp and dp are stored in registers %rdi and %rsi,
+respectively. For each entry in the table, show the two instructions that implement
+the speciﬁed data movement. The ﬁrst instruction in the sequence should read
+from memory, do the appropriate conversion, and set the appropriate portion of
+register %rax. The second instruction should then write the appropriate portion
+of %rax to memory. In both cases, the portions may be %rax, %eax, %ax, or %al,
+and they may differ from one another.
+Recall that when performing a cast that involves both a size change and a
+change of “signedness” in C, the operation should change the size ﬁrst (Section
+2.2.6).
+src_t
+dest_t
+Instruction
+long
+long
+movq (%rdi), %rax
+movq %rax, (%rsi)
+char
+int

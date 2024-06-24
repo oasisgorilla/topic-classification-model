@@ -1,0 +1,49 @@
+932
+Chapter 10
+System-Level I/O
+Aside
+What’s the difference between ssize_t and size_t?
+You might have noticed that the read function has a size_t input argument and an ssize_t return
+value. So what’s the difference between these two types? On x86-64 systems, a size_t is deﬁned as an
+unsigned long, and an ssize_t (signed size) is deﬁned as a long. The read function returns a signed
+size rather than an unsigned size because it must return a −1 on error. Interestingly, the possibility of
+returning a single −1 reduces the maximum size of a read by a factor of 2.
+code/io/cpstdin.c
+1
+#include "csapp.h"
+2
+3
+int main(void)
+4
+{
+5
+char c;
+6
+7
+while(Read(STDIN_FILENO, &c, 1) != 0)
+8
+Write(STDOUT_FILENO, &c, 1);
+9
+exit(0);
+10
+}
+code/io/cpstdin.c
+Figure 10.3
+Using read and write to copy standard input to standard output 1 byte
+at a time.
+Encountering EOF on reads. Suppose that we are ready to read from a ﬁle that
+contains only 20 more bytes from the current ﬁle position and that we are
+reading the ﬁle in 50-byte chunks. Then the next read will return a short
+count of 20, and the read after that will signal EOF by returning a short
+count of 0.
+Reading text lines from a terminal. If the open ﬁle is associated with a terminal
+(i.e., a keyboard and display), then each read function will transfer one
+text line at a time, returning a short count equal to the size of the text line.
+Reading and writing network sockets. If the open ﬁle corresponds to a network
+socket (Section 11.4), then internal buffering constraints and long net-
+work delays can cause read and write to return short counts. Short counts
+can also occur when you call read and write on a Linux pipe, an inter-
+process communication mechanism that is beyond our scope.
+In practice, you will never encounter short counts when you read from disk
+ﬁles except on EOF, and you will never encounter short counts when you write
+to disk ﬁles. However, if you want to build robust (reliable) network applications

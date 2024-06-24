@@ -1,0 +1,170 @@
+1112
+Index
+referencing (continued)
+nonexistent variables, 910
+refresh, DRAM, 618
+regions, deadlock, 1063–1064, 1064
+register ﬁles, 46, 394
+contents, 418–419, 557
+purpose, 394–395
+SEQ timing, 437
+register identiﬁer (ID), 394–395
+register operands, 217
+register speciﬁer bytes in Y86-64
+instruction, 394
+register to memory move instruction,
+392
+register to register move instruction,
+392
+registers, 45
+clocked, 417
+data hazards, 471
+data transfer, 281–284
+hardware, 417–420
+local, 563
+local storage, 287–289
+loop, 563
+pipeline, 449, 463
+program, 391–392, 417–420, 471
+read-only, 563
+register ﬁles, 207
+renaming, 558
+spilling, 584–585
+updating conventions, 215
+write-only, 563
+x86-64 integer, 215, 215–216
+Y86-64, 395, 458–462
+regular ﬁles, 869, 927
+.rel.data section, 711
+.rel.text section, 711
+relabeling signals, 462–463
+relative pathnames, 929
+relative speedup in parallel programs,
+1055
+reliable connections, 966
+relocatable object ﬁles, 41, 708, 709–
+711
+relocation, 709, 725–726
+algorithm, 727
+entries, 726, 726–727
+PC-relative references, 728–729
+practice problems, 730–731
+remove item from bounded buffer
+function, 1043
+renaming registers, 558
+rep [x86-64] string repeat instruction
+used as no-op, 244
+replacement policies, 649
+replacing blocks, 648
+report shared library error function,
+738
+reporting errors, 1079
+request headers in HTTP, 987
+request lines in HTTP, 987
+requests
+client-server model, 954
+HTTP, 987, 987–988
+requests for comments (RFCs), 1001
+reset conﬁguration in pipelining, 496
+resident sets, 846
+resources
+client-server model, 954
+shared, 1040–1044
+RESP [Y86-64] register ID for %rsp,
+440
+response bodies in HTTP, 988
+response headers in HTTP, 988
+response lines in HTTP, 988
+responses
+client-server model, 954
+HTTP, 988, 988–989
+restart.c [CS:APP] nonlocal jump
+example, 821
+restrictions, alignment, 309–312
+ret [Y86-64] procedure return, 393
+ret [x86-64] return from procedure
+call, 244, 277–278
+ret instruction, 440
+processing steps, 431
+Y86-64 pipelining, 464–465, 491–
+493, 497–498
+retiming circuits, 457
+retirement units, 557
+retq [x86-64] return from procedure,
+277
+return addresses, 277
+predicting, 465
+procedures, 276
+return penalty in CPI, 503
+reverse engineering
+loops, 258
+machine code, 201
+revolutions per minute (RPM), 626
+RFCs (requests for comments), 1001
+ridges in memory mountains, 677
+right hoinkies (>), 946
+right shift operations, 93–94, 228
+rings, Boolean, 88
+rio [CS:APP] Robust I/O package,
+933
+buffered functions, 934–938
+origins, 939
+unbuffered functions, 933–934
+rio_read [CS:APP] internal read
+function, 937
+rio_readinitb [CS:APP] init read
+buffer, 934, 936
+rio_readlineb [CS:APP] robust
+buffered read, 934, 938
+rio_readn [CS:APP] robust
+unbuffered read, 933, 933–935,
+937, 939
+rio_readnb [CS:APP] robust
+buffered read, 934, 938
+rio_t [CS:APP] read buffer, 936
+rio_writen [CS:APP] robust
+unbuffered write, 933, 933–935,
+939
+rip [x86-64] program counter, 207
+%rip program counter, 207
+RISC (reduced instruction set
+computers), 397
+vs. CISC, 397–399
+SPARC processors, 507
+Ritchie, Dennis, 38, 40, 52, 71, 950
+rmdir command, 928
+rmmovq [Y86-64] register to memory
+move, 392, 426, 440
+RNONE [Y86-64] ID for indicating no
+register, 440
+Roberts, Lawrence, 967
+robust buffered read functions, 934,
+938
+Robust I/O (rio) package, 933
+buffered functions, 934–938
+origins, 939
+unbuffered functions, 933–934
+robust unbuffered read function, 933,
+933–935
+robust unbuffered write function, 933,
+933–935
+.rodata section, 710
+ROM (read-only memory), 622
+root directory, 928
+root nodes, 902
+rotating disks term, 627
+rotational latency of disks, 630
+rotational rate of disks, 626
+round-down mode, 157, 157
+round-to-even mode, 156, 156–157,
+160
+round-to-nearest mode, 156, 156
+round-toward-zero mode, 156, 156–
+157
+round-up mode, 157, 157
+rounding
+in division, 141–142
+ﬂoating-point representation,
+156–158
+rounding modes, 156, 156–158
+routers, Ethernet, 957

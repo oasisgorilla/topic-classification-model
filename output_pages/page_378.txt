@@ -1,0 +1,110 @@
+Solutions to Practice Problems
+377
+Solution to Problem 3.36 (page 292)
+This exercise tests your understanding of data sizes and array indexing. Observe
+that a pointer of any kind is 8 bytes long. Data type short requires 2 bytes, while
+int requires 4.
+Array
+Element size
+Total size
+Start address
+Element i
+P
+4
+20
+xP
+xP + 4i
+Q
+2
+4
+xQ
+xQ + 2i
+R
+8
+72
+xR
+xR + 8i
+S
+8
+80
+xS
+xS + 8i
+T
+8
+16
+xT
+xT + 8i
+Solution to Problem 3.37 (page 294)
+This problem is a variant of the one shown for integer array E. It is important to
+understand the difference between a pointer and the object being pointed to. Since
+data type short requires 2 bytes, all of the array indices are scaled by a factor of
+2. Rather than using movl, as before, we now use movw.
+Expression
+Type
+Value
+Assembly Code
+P[1]
+short
+M[xP + 2]
+movw 2(%rdx),%ax
+P+3+i
+short *
+xP + 6 + 2i
+leaq 6(%rdx,%rcx,2),%rax
+P[i*6-5]
+short
+M[xP + 12i −10]
+movw -10(%rdx,%rcx,12),%ax
+P[2]
+short
+M[xP + 4]
+movw 4(%rdx),%ax
+&P[i+2]
+short *
+xP + 2i + 4
+leaq 4(%rdx,%rcx,2),%rax
+Solution to Problem 3.38 (page 295)
+This problem requires you to work through the scaling operations to determine
+the address computations, and to apply Equation 3.1 for row-major indexing. The
+ﬁrst step is to annotate the assembly code to determine how the address references
+are computed:
+long sum_element(long i, long j)
+i in %rdi, j in %rsi
+1
+sum_element:
+2
+leaq
+0(,%rdi,8), %rdx
+Compute 8i
+3
+subq
+%rdi, %rdx
+Compute 7i
+4
+addq
+%rsi, %rdx
+Compute 7i + j
+5
+leaq
+(%rsi,%rsi,4), %rax
+Compute 5j
+6
+addq
+%rax, %rdi
+Compute i
++ 5j
+7
+movq
+Q(,%rdi,8), %rax
+Retrieve M[xQ + 8 (5j
++ i)]
+8
+addq
+P(,%rdx,8), %rax
+Add M[xP + 8 (7i
++ j)]
+9
+ret
+We can see that the reference to matrix P is at byte offset 8 . (7i + j), while
+the reference to matrix Q is at byte offset 8 . (5j + i). From this, we can determine
+that P has 7 columns, while Q has 5, giving M = 5 and N = 7.

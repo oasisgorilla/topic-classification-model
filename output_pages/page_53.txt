@@ -1,0 +1,46 @@
+52
+Chapter 1
+A Tour of Computer Systems
+Aside
+Unix, Posix, and the Standard Unix Speciﬁcation
+The 1960s was an era of huge, complex operating systems, such as IBM’s OS/360 and Honeywell’s
+Multics systems. While OS/360 was one of the most successful software projects in history, Multics
+dragged on for years and never achieved wide-scale use. Bell Laboratories was an original partner in
+the Multics project but dropped out in 1969 because of concern over the complexity of the project
+and the lack of progress. In reaction to their unpleasant Multics experience, a group of Bell Labs
+researchers—Ken Thompson, Dennis Ritchie, Doug McIlroy, and Joe Ossanna—began work in 1969
+on a simpler operating system for a Digital Equipment Corporation PDP-7 computer, written entirely
+in machine language. Many of the ideas in the new system, such as the hierarchical ﬁle system and the
+notion of a shell as a user-level process, were borrowed from Multics but implemented in a smaller,
+simpler package. In 1970, Brian Kernighan dubbed the new system “Unix” as a pun on the complexity
+of “Multics.” The kernel was rewritten in C in 1973, and Unix was announced to the outside world in
+1974 [93].
+Because Bell Labs made the source code available to schools with generous terms, Unix developed
+a large following at universities. The most inﬂuential work was done at the University of California
+at Berkeley in the late 1970s and early 1980s, with Berkeley researchers adding virtual memory and
+the Internet protocols in a series of releases called Unix 4.xBSD (Berkeley Software Distribution).
+Concurrently, Bell Labs was releasing their own versions, which became known as System V Unix.
+Versions from other vendors, such as the Sun Microsystems Solaris system, were derived from these
+original BSD and System V versions.
+Trouble arose in the mid 1980s as Unix vendors tried to differentiate themselves by adding new
+and often incompatible features. To combat this trend, IEEE (Institute for Electrical and Electron-
+ics Engineers) sponsored an effort to standardize Unix, later dubbed “Posix” by Richard Stallman.
+The result was a family of standards, known as the Posix standards, that cover such issues as the C
+language interface for Unix system calls, shell programs and utilities, threads, and network program-
+ming. More recently, a separate standardization effort, known as the “Standard Unix Speciﬁcation,”
+has joined forces with Posix to create a single, uniﬁed standard for Unix systems. As a result of these
+standardization efforts, the differences between Unix versions have largely disappeared.
+Traditional systems could only execute one program at a time, while newer multi-
+core processors can execute several programs simultaneously. In either case, a
+single CPU can appear to execute multiple processes concurrently by having the
+processor switch among them. The operating system performs this interleaving
+with a mechanism known as context switching. To simplify the rest of this discus-
+sion, we consider only a uniprocessor system containing a single CPU. We will
+return to the discussion of multiprocessor systems in Section 1.9.2.
+The operating system keeps track of all the state information that the process
+needs in order to run. This state, which is known as the context, includes informa-
+tion such as the current values of the PC, the register ﬁle, and the contents of main
+memory. At any point in time, a uniprocessor system can only execute the code
+for a single process. When the operating system decides to transfer control from
+the current process to some new process, it performs a context switch by saving
+the context of the current process, restoring the context of the new process, and

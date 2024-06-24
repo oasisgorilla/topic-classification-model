@@ -1,0 +1,44 @@
+Section 7.13
+Library Interpositioning
+747
+If the LD_PRELOAD environment variable is set to a list of shared library
+pathnames (separated by spaces or colons), then when you load and execute a
+program, the dynamic linker (ld-linux.so) will search the LD_PRELOAD libraries
+ﬁrst, before any other shared libraries, when it resolves undeﬁned references. With
+this mechanism, you can interpose on any function in any shared library, including
+libc.so, when you load and execute any executable.
+Figure 7.22 shows the wrappers for malloc and free. In each wrapper, the
+call to dlsym returns the pointer to the target libc function. The wrapper then
+calls the target function, prints a trace, and returns.
+Here is how to build the shared library that contains the wrapper functions:
+linux> gcc -DRUNTIME -shared -fpic -o mymalloc.so mymalloc.c -ldl
+Here is how to compile the main program:
+linux> gcc -o intr int.c
+Here is how to run the program from the bash shell:3
+linux> LD_PRELOAD="./mymalloc.so" ./intr
+malloc(32) = 0x1bf7010
+free(0x1bf7010)
+And here is how to run it from the csh or tcsh shells:
+linux> (setenv LD_PRELOAD "./mymalloc.so"; ./intr; unsetenv LD_PRELOAD)
+malloc(32) = 0x2157010
+free(0x2157010)
+Notice that you can use LD_PRELOAD to interpose on the library calls of any
+executable program!
+linux> LD_PRELOAD="./mymalloc.so" /usr/bin/uptime
+malloc(568) = 0x21bb010
+free(0x21bb010)
+malloc(15) = 0x21bb010
+malloc(568) = 0x21bb030
+malloc(2255) = 0x21bb270
+free(0x21bb030)
+malloc(20) = 0x21bb030
+malloc(20) = 0x21bb050
+malloc(20) = 0x21bb070
+malloc(20) = 0x21bb090
+malloc(20) = 0x21bb0b0
+malloc(384) = 0x21bb0d0
+20:47:36 up 85 days,
+6:04,
+1 user,
+load average: 0.10, 0.04, 0.05
+3. If you don’t know what shell you are running, type printenv SHELL at the command line.

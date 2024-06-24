@@ -1,0 +1,103 @@
+Section 6.2
+Locality
+643
+1
+int sumarrayrows(int a[M][N])
+2
+{
+3
+int i, j, sum = 0;
+4
+5
+for (i = 0; i < M; i++)
+6
+for (j = 0; j < N; j++)
+7
+sum += a[i][j];
+8
+return sum;
+9
+}
+(a)
+Address
+0
+4
+8
+12
+16
+20
+Contents
+a00
+a01
+a02
+a10
+a11
+a12
+Access order
+1
+2
+3
+4
+5
+6
+(b)
+Figure 6.18
+(a) Another function with good locality. (b) Reference pattern for array a (M = 2, N = 3).
+There is good spatial locality because the array is accessed in the same row-major order in which it is stored
+in memory.
+1
+int sumarraycols(int a[M][N])
+2
+{
+3
+int i, j, sum = 0;
+4
+5
+for (j = 0; j < N; j++)
+6
+for (i = 0; i < M; i++)
+7
+sum += a[i][j];
+8
+return sum;
+9
+}
+(a)
+Address
+0
+4
+8
+12
+16
+20
+Contents
+a00
+a01
+a02
+a10
+a11
+a12
+Access order
+1
+3
+5
+2
+4
+6
+(b)
+Figure 6.19
+(a) A function with poor spatial locality. (b) Reference pattern for array a (M = 2, N = 3).
+The function has poor spatial locality because it scans memory with a stride-N reference pattern.
+Seemingly trivial changes to a program can have a big impact on its locality.
+For example, the sumarraycols function in Figure 6.19(a) computes the same
+result as the sumarrayrows function in Figure 6.18(a). The only difference is that
+we have interchanged the i and j loops. What impact does interchanging the loops
+have on its locality?
+The sumarraycols function suffers from poor spatial locality because it scans
+the array column-wise instead of row-wise. Since C arrays are laid out in memory
+row-wise, the result is a stride-N reference pattern, as shown in Figure 6.19(b).
+6.2.2
+Locality of Instruction Fetches
+Since program instructions are stored in memory and must be fetched (read)
+by the CPU, we can also evaluate the locality of a program with respect to its
+instruction fetches. For example, in Figure 6.17 the instructions in the body of the

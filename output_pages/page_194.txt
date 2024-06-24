@@ -1,0 +1,63 @@
+Solutions to Practice Problems
+193
+Solution to Problem 2.43 (page 143)
+We have found that people have difﬁculty with this exercise when working di-
+rectly with assembly code. It becomes more clear when put in the form shown in
+optarith.
+We can see that M is 31; x*M is computed as (x<<5)-x.
+We can see that N is 8; a bias value of 7 is added when y is negative, and the
+right shift is by 3.
+Solution to Problem 2.44 (page 144)
+These “C puzzle” problems provide a clear demonstration that programmers must
+understand the properties of computer arithmetic:
+A. (x > 0) || (x-1 < 0)
+False. Let x be −2,147,483,648 (TMin32). We will then have x-1 equal to
+2,147,483,647 (TMax32).
+B. (x & 7) != 7 || (x<<29 < 0)
+True. If (x & 7) != 7 evaluates to 0, then we must have bit x2 equal to 1.
+When shifted left by 29, this will become the sign bit.
+C. (x * x) >= 0
+False. When x is 65,535 (0xFFFF), x*x is −131,071 (0xFFFE0001).
+D. x < 0 || -x <= 0
+True. If x is nonnegative, then -x is nonpositive.
+E. x > 0 || -x >= 0
+False. Let x be −2,147,483,648 (TMin32). Then both x and -x are negative.
+F.
+x+y == uy+ux
+True. Two’s-complement and unsigned addition have the same bit-level be-
+havior, and they are commutative.
+G. x*~y + uy*ux == -x
+True. ~y equals -y-1. uy*ux equals x*y. Thus, the left-hand side is equivalent
+to x*-y-x+x*y.
+Solution to Problem 2.45 (page 147)
+Understanding fractional binary representations is an important step to under-
+standing ﬂoating-point encodings. This exercise lets you try out some simple ex-
+amples.
+1
+8
+0.001
+0.125
+3
+4
+0.11
+0.75
+25
+16
+1.1001
+1.5625
+43
+16
+10.1011
+2.6875
+9
+8
+1.001
+1.125
+47
+8
+101.111
+5.875
+51
+16
+11.0011
+3.1875

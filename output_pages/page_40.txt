@@ -1,0 +1,191 @@
+Section 1.1
+Information Is Bits + Context
+39
+#
+i
+n
+c
+l
+u
+d
+e
+SP
+<
+s
+t
+d
+i
+o
+.
+35
+105
+110
+99
+108
+117
+100
+101
+32
+60
+115
+116
+100
+105
+111
+46
+h
+>
+\n
+\n
+i
+n
+t
+SP
+m
+a
+i
+n
+(
+)
+\n
+{
+104
+62
+10
+10
+105
+110
+116
+32
+109
+97
+105
+110
+40
+41
+10
+123
+\n
+SP
+SP
+SP
+SP
+p
+r
+i
+n
+t
+f
+(
+"
+h
+e
+l
+10
+32
+32
+32
+32
+112
+114
+105
+110
+116
+102
+40
+34
+104
+101
+108
+l
+o
+,
+SP
+w
+o
+r
+l
+d
+\
+n
+"
+)
+;
+\n
+SP
+108
+111
+44
+32
+119
+111
+114
+108
+100
+92
+110
+34
+41
+59
+10
+32
+SP
+SP
+SP
+r
+e
+t
+u
+r
+n
+SP
+0
+;
+\n
+}
+\n
+32
+32
+32
+114
+101
+116
+117
+114
+110
+32
+48
+59
+10
+125
+10
+Figure 1.2
+The ASCII text representation of hello.c.
+1.1
+Information Is Bits + Context
+Our hello program begins life as a source program (or source ﬁle) that the
+programmer creates with an editor and saves in a text ﬁle called hello.c. The
+source program is a sequence of bits, each with a value of 0 or 1, organized in 8-bit
+chunks called bytes. Each byte represents some text character in the program.
+Most computer systems represent text characters using the ASCII standard
+that represents each character with a unique byte-size integer value.1 For example,
+Figure 1.2 shows the ASCII representation of the hello.c program.
+The hello.c program is stored in a ﬁle as a sequence of bytes. Each byte has
+an integer value that corresponds to some character. For example, the ﬁrst byte
+has the integer value 35, which corresponds to the character ‘#’. The second byte
+has the integer value 105, which corresponds to the character ‘i’, and so on. Notice
+that each text line is terminated by the invisible newline character ‘\n’, which is
+represented by the integer value 10. Files such as hello.c that consist exclusively
+of ASCII characters are known as text ﬁles. All other ﬁles are known as binary
+ﬁles.
+The representation of hello.c illustrates a fundamental idea: All information
+in a system—including disk ﬁles, programs stored in memory, user data stored in
+memory, and data transferred across a network—is represented as a bunch of bits.
+The only thing that distinguishes different data objects is the context in which
+we view them. For example, in different contexts, the same sequence of bytes
+might represent an integer, ﬂoating-point number, character string, or machine
+instruction.
+As programmers, we need to understand machine representations of numbers
+because they are not the same as integers and real numbers. They are ﬁnite
+1. Other encoding methods are used to represent text in non-English languages. See the aside on page
+86 for a discussion on this.

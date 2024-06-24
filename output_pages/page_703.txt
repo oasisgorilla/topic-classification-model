@@ -1,0 +1,42 @@
+702
+Chapter 6
+The Memory Hierarchy
+Solution to Problem 6.18 (page 673)
+Each 32-byte cache line holds two contiguous algae_position structures. Each
+loop visits these structures in memory order, reading one integer element each
+time. So the pattern for each loop is miss, hit, miss, hit, and so on. Notice that for
+this problem we could have predicted the miss rate without actually enumerating
+the total number of reads and misses.
+A. What is the total number of read accesses? 2,048 reads.
+B. What is the total number of read accesses that miss in the cache? 1,024 misses.
+C. What is the miss rate? 1024/2048 = 50%.
+Solution to Problem 6.19 (page 674)
+The key to this problem is noticing that the cache can only hold 1/2 of the ar-
+ray. So the column-wise scan of the second half of the array evicts the lines that
+were loaded during the scan of the ﬁrst half. For example, reading the ﬁrst ele-
+ment of grid[8][0] evicts the line that was loaded when we read elements from
+grid[0][0]. This line also contained grid[0][1]. So when we begin scanning the
+next column, the reference to the ﬁrst element of grid[0][1] misses.
+A. What is the total number of read accesses? 2,048 reads.
+B. What is the total number of read accesses that hit in the cache? 1,024 misses.
+C. What is the hit rate? 1024/2048 = 50%.
+D. What would the hit rate be if the cache were twice as big? If the cache were
+twice as big, it could hold the entire grid array. The only misses would be
+the initial cold misses, and the hit rate would be 3/4 = 75%.
+Solution to Problem 6.20 (page 674)
+This loop has a nice stride-1 reference pattern, and thus the only misses are the
+initial cold misses.
+A. What is the total number of read accesses? 2,048 reads.
+B. What is the total number of read accesses that hit in the cache? 1,536 misses.
+C. What is the hit rate? 1536/2048 = 75%.
+D. What would the hit rate be if the cache were twice as big? Increasing the
+cache size by any amount would not change the miss rate, since cold misses
+are unavoidable.
+Solution to Problem 6.21 (page 679)
+The sustained throughput using large strides from L1 is about 12,000 MB/s, the
+clock frequency is 2,100 MHz, and the individual read accesses are in units
+of 16-byte longs. Thus, from this graph we can estimate that it takes roughly
+2,100/12,000 × 16 = 2.8 ≈3.0 cycles to access a word from L1 on this machine,
+which is roughly 1.25 times faster than the nominal 4-cycle latency from L1. This
+is due to the parallelism of the 4 × 4 unrolled loop, which allows multiple loads to
+be in ﬂight at the same time.

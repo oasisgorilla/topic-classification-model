@@ -1,0 +1,92 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+477
+M_dstE = %rbx
+M_valE = 10
+M
+M_dstM = %rax
+m_valM      M[128] = 3
+M
+F
+0x000: irmovq $128,%rdx
+# prog5
+# prog5
+0x00a: irmovq  $3,%rcx
+0x014: rmmovq %rcx, 0(%rdx) 
+0x01e: irmovq $10,%rbx
+0x028: mrmovq 0(%rdx),%rax # Load %rax
+0x032: addq %ebx,%eax # Use %rax
+0x034: halt
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+D
+valA      M_valE = 10
+valB      R[%rax] = 0
+Cycle 7
+Cycle 8
+Error
+. . .
+Figure 4.53
+Example of load/use data hazard. The addq instruction requires the value
+of register %rax during the decode stage in cycle 7. The preceding mrmovq reads a new
+value for this register during the memory stage in cycle 8, which is too late for the addq
+instruction.
+This use of a stall to handle a load/use hazard is called a load interlock. Load
+interlocks combined with forwarding sufﬁce to handle all possible forms of data
+hazards. Since only load interlocks reduce the pipeline throughput, we can nearly
+achieve our throughput goal of issuing one new instruction on every clock cycle.
+Avoiding Control Hazards
+Control hazards arise when the processor cannot reliably determine the address
+of the next instruction based on the current instruction in the fetch stage. As
+was discussed in Section 4.5.4, control hazards can only occur in our pipelined
+processor for ret and jump instructions. Moreover, the latter case only causes dif-
+ﬁculties when the direction of a conditional jump is mispredicted. In this section,
+we provide a high-level view of how these hazards can be handled. The detailed
+implementation will be presented in Section 4.5.8 as part of a more general dis-
+cussion of the pipeline control.
+For the ret instruction, consider the following example program. This pro-
+gram is shown in assembly code, but with the addresses of the different instructions
+on the left for reference:

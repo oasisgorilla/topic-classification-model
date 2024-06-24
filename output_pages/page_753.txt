@@ -1,0 +1,74 @@
+752
+Chapter 7
+Linking
+B. /* Module 1 */
+/* Module 2 */
+int x;
+double x;
+void main()
+int p2()
+{
+{
+}
+}
+(a) REF(x.1) →DEF(
+.
+)
+(b) REF(x.2) →DEF(
+.
+)
+C. /* Module 1 */
+/* Module 2 */
+int x=1;
+double x=1.0;
+void main()
+int p2()
+{
+{
+}
+}
+(a) REF(x.1) →DEF(
+.
+)
+(b) REF(x.2) →DEF(
+.
+)
+7.9 ◆
+Consider the following program, which consists of two object modules:
+1
+/* foo6.c */
+2
+void p2(void);
+3
+4
+int main()
+5
+{
+6
+p2();
+7
+return 0;
+8
+}
+1
+/* bar6.c */
+2
+#include <stdio.h>
+3
+4
+char main;
+5
+6
+void p2()
+7
+{
+8
+printf("0x%x\n", main);
+9
+}
+When this program is compiled and executed on an x86-64 Linux system, it
+prints the string 0x48\n and terminates normally, even though function p2 never
+initializes variable main. Can you explain this?
+7.10 ◆◆
+Let a and b denote object modules or static libraries in the current directory, and
+let a→b denote that a depends on b, in the sense that b deﬁnes a symbol that is

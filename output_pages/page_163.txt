@@ -1,0 +1,47 @@
+162
+Chapter 2
+Representing and Manipulating Information
+F.
+1.0/2 == 1/2.0
+G. d*d >= 0.0
+H. (f+d)-f == d
+2.5
+Summary
+Computers encode information as bits, generally organized as sequences of bytes.
+Different encodings are used for representing integers, real numbers, and charac-
+ter strings. Different models of computers use different conventions for encoding
+numbers and for ordering the bytes within multi-byte data.
+The C language is designed to accommodate a wide range of different imple-
+mentations in terms of word sizes and numeric encodings. Machines with 64-bit
+word sizes have become increasingly common, replacing the 32-bit machines that
+dominated the market for around 30 years. Because 64-bit machines can also run
+programs compiled for 32-bit machines, we have focused on the distinction be-
+tween 32- and 64-bit programs, rather than machines. The advantage of 64-bit pro-
+grams is that they can go beyond the 4 GB address limitation of 32-bit programs.
+Most machines encode signed numbers using a two’s-complement representa-
+tion and encode ﬂoating-point numbers using IEEE Standard 754. Understanding
+these encodings at the bit level, as well as understanding the mathematical char-
+acteristics of the arithmetic operations, is important for writing programs that
+operate correctly over the full range of numeric values.
+When casting between signed and unsigned integers of the same size, most
+C implementations follow the convention that the underlying bit pattern does
+not change. On a two’s-complement machine, this behavior is characterized by
+functions T2Uw and U2Tw, for a w-bit value. The implicit casting of C gives results
+that many programmers do not anticipate, often leading to program bugs.
+Due to the ﬁnite lengths of the encodings, computer arithmetic has properties
+quite different from conventional integer and real arithmetic. The ﬁnite length can
+cause numbers to overﬂow, when they exceed the range of the representation.
+Floating-point values can also underﬂow, when they are so close to 0.0 that they
+are changed to zero.
+The ﬁnite integer arithmetic implemented by C, as well as most other pro-
+gramming languages, has some peculiar properties compared to true integer arith-
+metic. For example, the expression x*x can evaluate to a negative number due
+to overﬂow. Nonetheless, both unsigned and two’s-complement arithmetic satisfy
+many of the other properties of integer arithmetic, including associativity, com-
+mutativity, and distributivity. This allows compilers to do many optimizations. For
+example, in replacing the expression 7*x by (x<<3)-x, we make use of the as-
+sociative, commutative, and distributive properties, along with the relationship
+between shifting and multiplying by powers of 2.
+We have seen several clever ways to exploit combinations of bit-level opera-
+tions and arithmetic operations. For example, we saw that with two’s-complement
+arithmetic, ~x+1 is equivalent to -x. As another example, suppose we want a bit

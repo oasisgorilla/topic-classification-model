@@ -75,7 +75,10 @@ def get_pages_by_topic(conn, topic):
 pdf_path = './sample/Computer_Systems_A_Programmers_Perspective(3rd).pdf'  # PDF 파일 경로
 pages = extract_text_by_page(pdf_path)  # PDF에서 페이지별로 텍스트를 추출
 
-print(pages)
+print(f"{len(pages)} pages extract complete")
+
+export_text_by_txt(pages)
+
 
 
 # db_conn = init_db()  # 데이터베이스 초기화

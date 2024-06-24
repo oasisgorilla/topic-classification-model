@@ -1,0 +1,43 @@
+Solutions to Practice Problems
+753
+referenced by a. For each of the following scenarios, show the minimal command
+line (i.e., one with the least number of object ﬁle and library arguments) that will
+allow the static linker to resolve all symbol references:
+A. p.o →libx.a →p.o
+B. p.o →libx.a →liby.a and liby.a →libx.a
+C. p.o →libx.a →liby.a →libz.a and liby.a →libx.a →libz.a
+7.11 ◆◆
+The program header in Figure 7.14 indicates that the data segment occupies 0x230
+bytes in memory. However, only the ﬁrst 0x228 bytes of these come from the
+sections of the executable ﬁle. What causes this discrepancy?
+7.12 ◆◆
+Consider the call to function swap in object ﬁle m.o (Problem 7.6).
+9:
+e8 00 00 00 00
+callq
+e <main+0xe>
+swap()
+with the following relocation entry:
+r.offset = 0xa
+r.symbol = swap
+r.type
+= R_X86_64_PC32
+r.addend = -4
+A. Suppose that the linker relocates .text in m.o to address 0x4004e0 and swap
+to address 0x4004f8. Then what is the value of the relocated reference to
+swap in the callq instruction?
+B. Suppose that the linker relocates .text in m.o to address 0x4004d0 and swap
+to address 0x400500. Then what is the value of the relocated reference to
+swap in the callq instruction?
+7.13 ◆◆
+Performing the following tasks will help you become more familiar with the
+various tools for manipulating object ﬁles.
+A. How many object ﬁles are contained in the versions of libc.a and libm.a
+on your system?
+B. Does gcc -Og produce different executable code than gcc -Og -g?
+C. What shared libraries does the gcc driver on your system use?
+Solutions to Practice Problems
+Solution to Problem 7.1 (page 714)
+The purpose of this problem is to help you understand the relationship between
+linker symbols and C variables and functions. Notice that the C local variable temp
+does not have a symbol table entry.

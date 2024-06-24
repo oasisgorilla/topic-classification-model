@@ -1,0 +1,167 @@
+1110
+Index
+principle of locality, 640, 640
+print command, 316
+print getaddrinfo error message
+function, 974
+printf [C Stdlib] formatted printing
+function
+formatted printing, 83
+numeric values with, 111
+printing, formatted, 83
+priorities
+PIPE processor forwarding sources,
+487–488
+write ports, 444
+private address space, 770
+private areas, 870
+private copy-on-write structures, 872
+private declarations (C++ and Java),
+713
+private objects, 870, 870
+privileged instructions, 771
+/proc ﬁlesystem, 771, 771–772, 822
+procedure linkage table (PLT), 742,
+742–743
+procedure return instruction, 393
+procedures, 274–275
+call performance, 548–549
+control transfer, 277–281
+data transfer, 281–284
+ﬂoating-point code in, 337–338
+recursive, 289–291
+register usage conventions, 287–289
+run-time stack, 275–277
+process contexts, 52, 772
+process graphs, 777, 778
+process groups, 795
+process IDs, 775
+process tables, 772
+processes, 51, 768, 774
+background, 789
+child, 776
+concurrent ﬂow, 768–770, 769
+concurrent programming with,
+1009–1013
+concurrent servers based on,
+1010–1011
+context switches, 772–773
+creating and terminating, 775–779
+default behavior, 780
+error conditions, 781–782
+exit status, 781
+foreground, 789
+group, 795
+IDs, 775–776
+loading programs, 735, 786–788
+overview, 51–53
+parent, 775, 776
+preempted, 769
+private address space, 770
+vs. programs, 789
+pros and cons, 1011
+reaping, 779, 779–785
+running programs, 786–792
+sleeping, 785–786
+tools, 822–823
+user and kernel modes, 770–771
+waitpid function, 782–785
+zombie, 779
+processor-memory gap, 49, 640
+processor packages, 861
+processor states, 759
+processors. See central processing
+units (CPUs)
+producer-consumer problem, 1040,
+1041–1042
+proﬁlers code, 533
+proﬁling, program, 598–600
+program counters (PCs), 45, 80
+in fetch stage, 420
+hazards, 471
+machine-language procedures, 275
+%rip, 207
+SEQ timing, 437
+Y86-64 instruction set architecture,
+392
+Y86-64 pipelining, 459, 463–465
+program data references locality,
+642–643
+program header tables, 732, 732
+program registers
+clocked, 417–420
+data hazards, 471
+Y86-64, 391–392
+programmable ROMs (PROMs), 623
+programmer-visible state, 391, 391–
+392
+programs
+code and data, 54
+concurrent. See concurrent
+programming
+forms, 40–41
+loading and running, 786–788
+machine-level. See machine-level
+programming
+objects, 70
+vs. processes, 789
+proﬁling, 598–600
+running, 46–48, 789–792
+Y86-64, 400–406
+progress graphs, 1035, 1035–1037
+deadlock regions, 1063–1064, 1064
+forbidden regions, 1039
+limitations, 1040
+prologue blocks, 891
+PROMs (programmable ROMs), 623
+protection, memory, 848–849
+protocol software, 958
+protocols, 958
+proxy caches, 988
+proxy chains, 988
+ps (picoseconds), 449, 538
+ps tool, 822
+pseudorandom number generator
+functions, 1057
+psum-array.c [CS:APP] parallel sum
+program using array, 1052
+psum-local.c [CS:APP] parallel sum
+program using local variables,
+1053
+psum-mutex.c [CS:APP] parallel sum
+program using mutex, 1051
+PTBRs (page table base registers),
+850
+PTEAs (page table entry addresses),
+853
+PTEs (page table entries), 843,
+843–844
+Core i7, 862–864
+TLBs for, 853–857, 859
+pthread_cancel [Unix] terminate
+another thread, 1025
+pthread_create [Unix] create a
+thread, 1024
+pthread_detach [Unix] detach
+thread, 1026, 1026
+pthread_exit [Unix] terminate
+current thread, 1025
+pthread_join [Unix] reap a thread,
+1025
+pthread_once [Unix] initialize a
+thread, 1026, 1048
+pthread_self [Unix] get thread ID,
+1024
+Pthreads, 1023, 1023–1024, 1046
+public declarations (C++ and Java),
+713
+push instructions in x86-64 models,
+408
+push operations on stack, 225, 225–227
+pushq [x86-64] push quad word, 209,
+226, 226, 393
+code for, 440
+processing steps, 406–407, 428
+run-time stack, 275
+PUT method in HTTP, 987
+“put to” operator (C++), 926

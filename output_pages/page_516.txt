@@ -1,0 +1,48 @@
+Homework Problems
+515
+4.58 ◆◆◆
+Our pipelined design is a bit unrealistic in that we have two write ports for the
+register ﬁle, but only the popq instruction requires two simultaneous writes to the
+register ﬁle. The other instructions could therefore use a single write port, sharing
+this for writing valE and valM. The following ﬁgure shows a modiﬁed version
+of the write-back logic, in which we merge the write-back register IDs (W_dstE
+and W_dstM) into a single signal w_dstE and the write-back values (W_valE and
+W_valM) into a single signal w_valE:
+Stat
+Stat
+W
+icode
+valE
+valM
+dstE dstM
+valE
+dstE
+w_valE
+w_dstE
+W_icode
+stat
+The logic for performing the merges is written in HCL as follows:
+## Set E port register ID
+word w_dstE = [
+## writing from valM
+W_dstM != RNONE : W_dstM;
+1: W_dstE;
+];
+## Set E port value
+word w_valE = [
+W_dstM != RNONE : W_valM;
+1: W_valE;
+];
+The control for these multiplexors is determined by dstE—when it indicates
+there is some register, then it selects the value for port E, and otherwise it selects
+the value for port M.
+In the simulation model, we can then disable register port M, as shown by the
+following HCL code:
+## Disable register port M
+## Set M port register ID
+word w_dstM = RNONE;
+## Set M port value
+word w_valM = 0;
+The challenge then becomes to devise a way to handle popq. One method is
+to use the control logic to dynamically process the instruction popq rA so that it
+has the same effect as the two-instruction sequence

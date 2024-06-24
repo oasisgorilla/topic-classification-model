@@ -1,0 +1,44 @@
+Section 9.10
+Garbage Collection
+901
+repeat until we ﬁnd a block that ﬁts. If none of the free lists yields a block that ﬁts,
+then we request additional heap memory from the operating system, allocate the
+block out of this new heap memory, and place the remainder in the appropriate
+size class. To free a block, we coalesce and place the result on the appropriate
+free list.
+The segregated ﬁts approach is a popular choice with production-quality
+allocators such as the GNU malloc package provided in the C standard library
+because it is both fast and memory efﬁcient. Search times are reduced because
+searches are limited to particular parts of the heap instead of the entire heap.
+Memory utilization can improve because of the interesting fact that a simple ﬁrst-
+ﬁt search of a segregated free list approximates a best-ﬁt search of the entire heap.
+Buddy Systems
+A buddy system is a special case of segregated ﬁts where each size class is a power
+of 2. The basic idea is that, given a heap of 2m words, we maintain a separate free
+list for each block size 2k, where 0 ≤k ≤m. Requested block sizes are rounded up
+to the nearest power of 2. Originally, there is one free block of size 2m words.
+To allocate a block of size 2k, we ﬁnd the ﬁrst available block of size 2j, such
+that k ≤j ≤m. If j = k, then we are done. Otherwise, we recursively split the block
+in half until j = k. As we perform this splitting, each remaining half (known as a
+buddy) is placed on the appropriate free list. To free a block of size 2k, we continue
+coalescing with the free buddies. When we encounter an allocated buddy, we stop
+the coalescing.
+A key fact about buddy systems is that, given the address and size of a block,
+it is easy to compute the address of its buddy. For example, a block of size 32 bytes
+with address
+xxx . . . x00000
+has its buddy at address
+xxx . . . x10000
+In other words, the addresses of a block and its buddy differ in exactly one bit
+position.
+The major advantage of a buddy system allocator is its fast searching and
+coalescing. The major disadvantage is that the power-of-2 requirement on the
+block size can cause signiﬁcant internal fragmentation. For this reason, buddy
+system allocators are not appropriate for general-purpose workloads. However,
+for certain application-speciﬁc workloads, where the block sizes are known in
+advance to be powers of 2, buddy system allocators have a certain appeal.
+9.10
+Garbage Collection
+With an explicit allocator such as the C malloc package, an application allocates
+and frees heap blocks by making calls to malloc and free. It is the application’s
+responsibility to free any allocated blocks that it no longer needs.

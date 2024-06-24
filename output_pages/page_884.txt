@@ -1,0 +1,53 @@
+Section 9.9
+Dynamic Memory Allocation
+883
+size bytes, malloc would save the current value of p on the stack, increment p by
+size, and return the old value of p to the caller. Free would simply return to the
+caller without doing anything.
+This naive allocator is an extreme point in the design space. Since each malloc
+and free execute only a handful of instructions, throughput would be extremely
+good. However, since the allocator never reuses any blocks, memory utilization
+would be extremely bad. A practical allocator that strikes a better balance between
+throughput and utilization must consider the following issues:
+Free block organization. How do we keep track of free blocks?
+Placement. How do we choose an appropriate free block in which to place a
+newly allocated block?
+Splitting. After we place a newly allocated block in some free block, what do
+we do with the remainder of the free block?
+Coalescing. What do we do with a block that has just been freed?
+The rest of this section looks at these issues in more detail. Since the basic
+techniques of placement, splitting, and coalescing cut across many different free
+block organizations, we will introduce them in the context of a simple free block
+organization known as an implicit free list.
+9.9.6
+Implicit Free Lists
+Any practical allocator needs some data structure that allows it to distinguish
+block boundaries and to distinguish between allocated and free blocks. Most
+allocators embed this information in the blocks themselves. One simple approach
+is shown in Figure 9.35.
+In this case, a block consists of a one-word header, the payload, and possibly
+some additional padding. The header encodes the block size (including the header
+and any padding) as well as whether the block is allocated or free. If we impose a
+double-word alignment constraint, then the block size is always a multiple of 8 and
+the 3 low-order bits of the block size are always zero. Thus, we need to store only
+the 29 high-order bits of the block size, freeing the remaining 3 bits to encode
+other information. In this case, we are using the least signiﬁcant of these bits
+Figure 9.35
+Format of a simple heap
+block.
+Header
+Block size
+Payload
+(allocated block only)
+Padding (optional)
+0 0 a
+The block size includes
+the header, payload, and
+any padding
+a = 1: Allocated
+a = 0: Free
+malloc returns a
+pointer to the beginning
+of the payload
+31
+3 2 1 0

@@ -1,0 +1,169 @@
+Index
+1097
+dynamic linkers, 735
+dynamic linking, 735, 735–737
+dynamic memory allocation
+allocated block placement, 885
+allocator design, 890–892
+allocator requirements and goals,
+880–881
+coalescing free blocks, 886–887
+coalescing with boundary tags,
+887–890
+explicit free lists, 898–899
+fragmentation, 882
+heap memory requests, 886
+implementation issues, 882–883
+implicit free lists, 883–885
+malloc and free functions, 876–
+879
+overview, 875–876
+purpose, 879–880
+segregated free lists, 899–901
+splitting free blocks, 885–886
+dynamic memory allocators, 875–876
+dynamic RAM (DRAM), 45, 618
+caches, 842, 844, 844–845
+conventional, 618–620
+enhanced, 621–622
+historical popularity, 622
+modules, 620, 621
+vs. SRAM, 618
+trends, 638–639
+dynamic Web content, 985
+%dx [x86-64] low order 16 bits of
+register %rdx, 216
+E-way set associative caches, 660–661
+%eax [x86-64] low order 32 bits of
+register %rax, 216
+%ebp [x86-64] low order 32 bits of
+register %rbp, 216
+%ebx [x86-64] low order 32 bits of
+register %rbx, 216
+ECF. See exceptional control ﬂow
+(ECF)
+ECHILD return code, 782–783
+echo [CS:APP] read and echo input
+lines, 983
+echo function, 317–318, 323
+echo_cnt [CS:APP] counting version
+of echo, 1048
+echoclient.c [CS:APP] echo client,
+980–981
+echoserveri.c [CS:APP] iterative
+echo server, 972–973, 983
+echoservert.c [CS:APP] concurrent
+echo server based on threads,
+1027
+echoservert_pre.c [CS:APP]
+prethreaded concurrent echo
+server, 1047
+%ecx [x86-64] low order 32 bits of
+register %rcx, 216
+%edi [x86-64] low order 32 bits of
+register %rdi, 216
+EDO DRAM (extended data out
+DRAM), 622
+%edx [x86-64] low order 32 bits of
+register %rdx, 216
+EEPROMs (electrically erasable
+programmable ROMs), 623
+effective addresses, 217, 726
+effective cycle time, 638
+efﬁciency of parallel programs, 1055,
+1055
+EINTR return code, 782
+electrically erasable programmable
+ROMs (EEPROMs), 623
+ELF. See executable and linkable
+format (ELF)
+EM64T processors, 204
+embedded processors, 399
+encapsulation, 958
+encodings in machine-level
+programming, 205–206
+code examples, 208–211
+code overview, 206–207
+formatting, 211–213
+Y86-64 instructions, 394–396
+end-of-ﬁle (EOF) condition, 927, 984
+end of line (EOL) indicators, 928
+entry points, 732, 733–734
+environment variables lists, 787–788
+EOF (end-of-ﬁle) condition, 927, 984
+EOL (end of line) indicators, 928
+ephemeral ports, 966
+epilogue blocks, 891
+EPIPE error return code, 1000
+erasable programmable ROMs
+(EPROMs), 623
+errno [Unix] Unix error variable,
+1078
+error-correcting codes for memory,
+618
+error handling
+system calls, 773–774
+Unix systems, 1078–1079
+wrappers, 774, 1077, 1079–1081
+error-reporting functions, 773
+errors
+child processes, 781–782
+link-time, 43
+off-by-one, 908
+race, 812, 812–814
+reporting, 1079
+synchronization, 1031
+%esi [x86-64] low order 32 bits of
+register %rsi, 216
+%esp [x86-64] low order 32 bits of
+stack pointer register %rsp, 216
+establish connection with server
+functions, 970, 970–971, 978–980
+establish listening socket function,
+980, 980
+etest script, 501
+Ethernet segments, 956, 956
+Ethernet technology, 956
+EUs (execution units), 554, 556
+eval [CS:APP] shell helper routine,
+790, 791
+event-driven programs, 1016
+based on I/O multiplexing, 1016–1021
+based on threads, 1049
+events, 759
+scheduling, 799
+state machines, 1016
+evicting blocks, 648
+exabytes, 75
+excepting instructions, 481
+exception handlers, 760, 760
+exception handling
+in instruction processing, 421
+Y86-64, 399–400, 480–483
+exception numbers, 761
+exception table base registers, 761
+exception tables, 761, 761
+exceptional control ﬂow (ECF), 758
+exceptions, 759–767
+importance, 758–759
+nonlocal jumps, 817–822
+process control. See processes
+signals. See signals
+summary, 823
+system call error handling, 773–774
+exceptions, 759
+anatomy, 759–760
+asynchronous, 762
+classes, 762–764
+data alignment, 312
+handling, 760–762
+Linux/x86-64 systems, 765–767
+status code for, 440
+synchronous, 763
+Y86, 392
+exclamation points ! for not
+operation, 409
+exclusive-or Boolean operation, 87
+exclusive-or instruction
+x86-64, 228
+Y86-64, 392

@@ -1,0 +1,76 @@
+792
+Chapter 8
+Exceptional Control Flow
+code/ecf/shellex.c
+1
+/* parseline - Parse the command line and build the argv array */
+2
+int parseline(char *buf, char **argv)
+3
+{
+4
+char *delim;
+/* Points to first space delimiter */
+5
+int argc;
+/* Number of args */
+6
+int bg;
+/* Background job? */
+7
+8
+buf[strlen(buf)-1] = ’ ’;
+/* Replace trailing ’\n’ with space */
+9
+while (*buf && (*buf == ’ ’)) /* Ignore leading spaces */
+10
+buf++;
+11
+12
+/* Build the argv list */
+13
+argc = 0;
+14
+while ((delim = strchr(buf, ’ ’))) {
+15
+argv[argc++] = buf;
+16
+*delim = ’\0’;
+17
+buf = delim + 1;
+18
+while (*buf && (*buf == ’ ’)) /* Ignore spaces */
+19
+buf++;
+20
+}
+21
+argv[argc] = NULL;
+22
+23
+if (argc == 0)
+/* Ignore blank line */
+24
+return 1;
+25
+26
+/* Should the job run in the background? */
+27
+if ((bg = (*argv[argc-1] == ’&’)) != 0)
+28
+argv[--argc] = NULL;
+29
+30
+return bg;
+31
+}
+code/ecf/shellex.c
+Figure 8.25 parseline parses a line of input for the shell.
+8.5
+Signals
+To this point in our study of exceptional control ﬂow, we have seen how hardware
+and software cooperate to provide the fundamental low-level exception mecha-
+nism. We have also seen how the operating system uses exceptions to support a
+form of exceptional control ﬂow known as the process context switch. In this sec-
+tion, we will study a higher-level software form of exceptional control ﬂow, known
+as a Linux signal, that allows processes and the kernel to interrupt other processes.

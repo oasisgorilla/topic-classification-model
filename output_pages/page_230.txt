@@ -1,0 +1,47 @@
+Section 3.5
+Arithmetic and Logical Operations
+229
+leaq 0xE(,%rdx,3), %rax
+leaq 6(%rbx,%rdx,7), %rax
+As an illustration of the use of leaq in compiled code, consider the following
+C program:
+long scale(long x, long y, long z) {
+long t = x + 4 * y + 12 * z;
+return t;
+}
+When compiled, the arithmetic operations of the function are implemented
+by a sequence of three leaq functions, as is documented by the comments on the
+right-hand side:
+long scale(long x, long y, long z)
+x in %rdi, y in %rsi, z in %rdx
+scale:
+leaq
+(%rdi,%rsi,4), %rax
+x + 4*y
+leaq
+(%rdx,%rdx,2), %rdx
+z + 2*z = 3*z
+leaq
+(%rax,%rdx,4), %rax
+(x+4*y) + 4*(3*z) = x + 4*y + 12*z
+ret
+The ability of the leaq instruction to perform addition and limited forms of
+multiplication proves useful when compiling simple arithmetic expressions such
+as this example.
+Practice Problem 3.7 (solution page 364)
+Consider the following code, in which we have omitted the expression being
+computed:
+short scale3(short x, short y, short z) {
+short t =
+;
+return t;
+}
+Compiling the actual function with gcc yields the following assembly code:
+short scale3(short x, short y, short z)
+x in %rdi, y in %rsi, z in %rdx
+scale3:
+leaq (%rsi,%rsi,9), %rbx
+leaq (%rbx,%rdx), %rbx
+leaq (%rbx,%rdi,%rsi), %rbx
+ret
+Fill in the missing expression in the C code.

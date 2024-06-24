@@ -1,0 +1,117 @@
+Solutions to Practice Problems
+1073
+A. Here is the table:
+Referenced by
+Variable
+instance
+main thread?
+peer thread 0?
+peer thread 1?
+ptr
+yes
+yes
+yes
+cnt
+no
+yes
+yes
+i.m
+yes
+no
+no
+msgs.m
+yes
+yes
+yes
+myid.p0
+no
+yes
+no
+myid.p1
+no
+no
+yes
+Notes:
+ptr A global variable that is written by the main thread and read by the
+peer threads.
+cnt A static variable with only one instance in memory that is read and
+written by the two peer threads.
+i.m A local automatic variable stored on the stack of the main thread.
+Even though its value is passed to the peer threads, the peer threads
+never reference it on the stack, and thus it is not shared.
+msgs.m A local automatic variable stored on the main thread’s stack and
+referenced indirectly through ptr by both peer threads.
+myid.p0 and myid.p1 Instances of a local automatic variable residing on
+the stacks of peer threads 0 and 1, respectively.
+B. Variables ptr, cnt, and msgs are referenced by more than one thread and
+thus are shared.
+Solution to Problem 12.7 (page 1034)
+The important idea here is that you cannot make any assumptions about the
+ordering that the kernel chooses when it schedules your threads.
+Step
+Thread
+Instr.
+%rdx1
+%rdx2
+cnt
+1
+1
+H1
+—
+—
+0
+2
+1
+L1
+0
+—
+0
+3
+2
+H2
+—
+—
+0
+4
+2
+L2
+—
+0
+0
+5
+2
+U2
+—
+1
+0
+6
+2
+S2
+—
+1
+1
+7
+1
+U1
+1
+—
+1
+8
+1
+S1
+1
+—
+1
+9
+1
+T1
+1
+—
+1
+10
+2
+T2
+—
+1
+1
+Variable cnt has a ﬁnal incorrect value of 1.

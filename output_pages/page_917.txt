@@ -1,0 +1,40 @@
+916
+Chapter 9
+Virtual Memory
+9.19 ◆
+You are given three groups of statements relating to memory management and
+garbage collection below. In each group, only one statement is true. Your task is
+to indicate which statement is true.
+1. (a) In a buddy system, up to 50% of the space can be wasted due to internal
+fragmentation.
+(b) The ﬁrst-ﬁt memory allocation algorithm is slower than the best-ﬁt algo-
+rithm (on average).
+(c) Deallocation using boundary tags is fast only when the list of free blocks
+is ordered according to increasing memory addresses.
+(d) The buddy system suffers from internal fragmentation, but not from
+external fragmentation.
+2. (a) Using the ﬁrst-ﬁt algorithm on a free list that is ordered according to
+decreasing block sizes results in low performance for allocations, but
+avoids external fragmentation.
+(b) For the best-ﬁt method, the list of free blocks should be ordered according
+to increasing memory addresses.
+(c) The best-ﬁt method chooses the largest free block into which the re-
+quested segment ﬁts.
+(d) Using the ﬁrst-ﬁt algorithm on a free list that is ordered according to
+increasing block sizes is equivalent to using the best-ﬁt algorithm.
+3. Mark&Sweep garbage collectors are called conservative if
+(a) They coalesce freed memory only when a memory request cannot be
+satisﬁed.
+(b) They treat everything that looks like a pointer as a pointer.
+(c) They perform garbage collection only when they run out of memory.
+(d) They do not free memory blocks forming a cyclic list.
+9.20 ◆◆◆◆
+Write your own version of malloc and free, and compare its running time and
+space utilization to the version of malloc provided in the standard C library.
+Solutions to Practice Problems
+Solution to Problem 9.1 (page 841)
+This problem gives you some appreciation for the sizes of different address spaces.
+At one point in time, a 32-bit address space seemed impossibly large. But now
+there are database and scientiﬁc applications that need more, and you can expect
+this trend to continue. At some point in your lifetime, expect to ﬁnd yourself
+complaining about the cramped 64-bit address space on your personal computer!

@@ -1,0 +1,33 @@
+Section A.2
+Error-Handling Wrappers
+1079
+The gai_strerror function returns a text description for a particular value
+of retcode.
+Summary of Error-Reporting Functions
+Thoughout this book, we use the following error-reporting functions to accommo-
+date different error-handling styles.
+#include "csapp.h"
+void unix_error(char *msg);
+void posix_error(int code, char *msg);
+void gai_error(int code, char *msg);
+void app_error(char *msg);
+Returns: nothing
+As their names suggest, the unix_error, posix_error, and gai_error functions
+report Unix-style, Posix-style, and GAI-style errors and then terminate. The app_
+error function is included as a convenience for application errors. It simply prints
+its input and then terminates. Figure A.1 shows the code for the error-reporting
+functions.
+A.2
+Error-Handling Wrappers
+Here are some examples of the different error-handling wrappers.
+Unix-style error-handling wrappers. Figure A.2 shows the wrapper for the Unix-
+style wait function. If the wait returns with an error, the wrapper prints
+an informative message and then exits. Otherwise, it returns a PID to the
+caller. Figure A.3 shows the wrapper for the Unix-style kill function.
+Notice that this function, unlike wait, returns void on success.
+Posix-style error-handling wrappers. Figure A.4 shows the wrapper for the
+Posix-style pthread_detach function. Like most Posix-style functions, it
+does not overload useful results with error-return codes, so the wrapper
+returns void on success.
+GAI-style error-handling wrappers. Figure A.5 shows the error-handling wrap-
+per for the GAI-style getaddrinfo function.

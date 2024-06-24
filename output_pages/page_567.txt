@@ -1,0 +1,58 @@
+566
+Chapter 5
+Optimizing Program Performance
+Practice Problem 5.5 (solution page 611)
+Suppose we wish to write a function to evaluate a polynomial, where a polynomial
+of degree n is deﬁned to have a set of coefﬁcients a0, a1, a2, . . . , an. For a value x,
+we evaluate the polynomial by computing
+a0 + a1x + a2x2 + . . . + anxn
+(5.2)
+This evaluation can be implemented by the following function, having as argu-
+ments an array of coefﬁcients a, a value x, and the polynomial degree degree (the
+value n in Equation 5.2). In this function, we compute both the successive terms
+of the equation and the successive powers of x within a single loop:
+1
+double poly(double a[], double x, long degree)
+2
+{
+3
+long i;
+4
+double result = a[0];
+5
+double xpwr = x;
+/* Equals x^i at start of loop */
+6
+for (i = 1; i <= degree; i++) {
+7
+result += a[i] * xpwr;
+8
+xpwr = x * xpwr;
+9
+}
+10
+return result;
+11
+}
+A. For degree n, how many additions and how many multiplications does this
+code perform?
+B. On our reference machine, with arithmetic operations having the latencies
+shown in Figure 5.12, we measure the CPE for this function to be 5.00. Ex-
+plain how this CPE arises based on the data dependencies formed between
+iterations due to the operations implementing lines 7–8 of the function.
+Practice Problem 5.6 (solution page 611)
+Let us continue exploring ways to evaluate polynomials, as described in Practice
+Problem 5.5. We can reduce the number of multiplications in evaluating a polyno-
+mial by applying Horner’s method, named after British mathematician William G.
+Horner (1786–1837). The idea is to repeatedly factor out the powers of x to get
+the following evaluation:
+a0 + x(a1 + x(a2 + . . . + x(an−1 + xan) . . .))
+(5.3)
+Using Horner’s method, we can implement polynomial evaluation using the
+following code:
+1
+/* Apply Horner’s method */
+2
+double polyh(double a[], double x, long degree)
+3
+{

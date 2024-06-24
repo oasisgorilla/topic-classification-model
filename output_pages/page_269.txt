@@ -1,0 +1,59 @@
+268
+Chapter 3
+Machine-Level Representation of Programs
+3
+movl
+$65, %eax
+4
+.L10:
+5
+movq
+%rdi, %rcx
+6
+andl
+$1, %ecx
+7
+addq
+%rax, %rax
+8
+orq
+%rcx, %rax
+9
+shrq
+%rdi
+Shift right by 1
+10
+addq
+$1, %rdx
+11
+jne
+.L10
+12
+rep; ret
+Reverse engineer the operation of this code and then do the following:
+A. Use the assembly-code version to ﬁll in the missing parts of the C code.
+B. Explain why there is neither an initial test before the loop nor an initial jump
+to the test portion of the loop.
+C. Describe in English what this function computes.
+Practice Problem 3.29 (solution page 373)
+Executing a continue statement in C causes the program to jump to the end of
+the current loop iteration. The stated rule for translating a for loop into a while
+loop needs some reﬁnement when dealing with continue statements. For example,
+consider the following code:
+/* Example of for loop containing a continue statement */
+/* Sum even numbers between 0 and 9 */
+long sum = 0;
+long i;
+for (i = 0; i < 10; i++) {
+if (i & 1)
+continue;
+sum += i;
+}
+A. What would we get if we naively applied our rule for translating the for loop
+into a while loop? What would be wrong with this code?
+B. How could you replace the continue statement with a goto statement to
+ensure that the while loop correctly duplicates the behavior of the for loop?
+3.6.8
+Switch Statements
+A switch statement provides a multiway branching capability based on the value
+of an integer index. They are particularly useful when dealing with tests where

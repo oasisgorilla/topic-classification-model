@@ -1,0 +1,42 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+501
+Aside
+Testing the design
+As we have seen, there are many ways to introduce bugs into a design, even for a simple microprocessor.
+With pipelining, there are many subtle interactions between the instructions at different pipeline stages.
+We have seen that many of the design challenges involve unusual instructions (such as popping to the
+stack pointer) or unusual instruction combinations (such as a not-taken jump followed by a ret). We
+also see that exception handling adds an entirely new dimension to the possible pipeline behaviors.
+How, then, can we be sure that our design is correct? For hardware manufacturers, this is a dominant
+concern, since they cannot simply report an error and have users download code patches over the
+Internet. Even a simple logic design error can have serious consequences, especially as microprocessors
+are increasingly used to operate systems that are critical to our lives and health, such as automotive
+antilock braking systems, heart pacemakers, and aircraft control systems.
+Simply simulating a design while running a number of “typical” programs is not a sufﬁcient means
+of testing a system. Instead, thorough testing requires devising ways of systematically generating many
+tests that will exercise as many different instructions and instruction combinations as possible. In
+creating our Y86-64 processor designs, we also devised a number of testing scripts, each of which
+generates many different tests, runs simulations of the processor, and compares the resulting register
+and memory values to those produced by our yis instruction set simulator. Here is a brief description
+of the scripts:
+optest. Runs 49 tests of different Y86-64 instructions with different source and destination registers
+jtest. Runs 64 tests of the different jump and call instructions, with different combinations of whether
+or not the branches are taken
+cmtest. Runs 28 tests of the different conditional move instructions, with different control combi-
+nations
+htest. Runs 600 tests of different data hazard possibilities, with different combinations of source
+and destination instructions, and with different numbers of nop instructions between the
+instruction pairs
+ctest. Tests 22 different control combinations, based on an analysis similar to what we did in Sec-
+tion 4.5.8
+etest. Tests 12 different combinations where an instruction causes an exception and the instructions
+following it could alter the programmer-visible state
+The key idea of this testing method is that we want to be as systematic as possible, generating tests that
+create the different conditions that are likely to cause pipeline errors.
+processor on some benchmark program and observe the operation of the execute
+stage. On each cycle, the execute stage either (1) processes an instruction and this
+instruction continues through the remaining stages to completion, or (2) processes
+a bubble injected due to one of the three special cases. If the stage processes a total
+of Ci instructions and Cb bubbles, then the processor has required around Ci + Cb
+total clock cycles to execute Ci instructions. We say “around” because we ignore

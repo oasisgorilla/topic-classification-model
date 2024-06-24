@@ -1,0 +1,46 @@
+88
+Chapter 2
+Representing and Manipulating Information
+Web Aside DATA:BOOL
+More on Boolean algebra and Boolean rings
+The Boolean operations |, &, and ~ operating on bit vectors of length w form a Boolean algebra,
+for any integer w > 0. The simplest is the case where w = 1 and there are just two elements, but for
+the more general case there are 2w bit vectors of length w. Boolean algebra has many of the same
+properties as arithmetic over integers. For example, just as multiplication distributes over addition,
+written a . (b + c) = (a . b) + (a . c), Boolean operation & distributes over |, written a & (b | c) = (a & b) |
+(a & c). In addition, however. Boolean operation | distributes over &, and so we can write a | (b & c) =
+(a | b) & (a | c), whereas we cannot say that a + (b . c) = (a + b) . (a + c) holds for all integers.
+When we consider operations ^, &, and ~ operating on bit vectors of length w, we get a different
+mathematical form, known as a Boolean ring. Boolean rings have many properties in common with
+integer arithmetic. For example, one property of integer arithmetic is that every value x has an additive
+inverse −x, such that x + −x = 0. A similar property holds for Boolean rings, where ^ is the “addition”
+operation, but in this case each element is its own additive inverse. That is, a ^ a = 0 for any value a,
+where we use 0 here to represent a bit vector of all zeros. We can see this holds for single bits, since
+0 ^ 0 = 1 ^ 1 = 0, and it extends to bit vectors as well. This property holds even when we rearrange terms
+and combine them in a different order, and so (a ^ b) ^ a = b. This property leads to some interesting
+results and clever tricks, as we will explore in Problem 2.10.
+Operation
+Result
+a
+[01001110]
+b
+[11100001]
+~a
+~b
+a & b
+a | b
+a ^ b
+One useful application of bit vectors is to represent ﬁnite sets. We can encode
+any subset A ⊆{0, 1, . . . , w −1} with a bit vector [aw−1, . . . , a1, a0], where ai = 1if
+and only if i ∈A. For example, recalling that we write aw−1 on the left and a0 on the
+right, bit vector a = [01101001]encodes the set A = {0, 3, 5, 6}, while bit vector b =
+[01010101]encodes the set B = {0, 2, 4, 6}. With this way of encoding sets, Boolean
+operations | and & correspond to set union and intersection, respectively, and ~
+corresponds to set complement. Continuing our earlier example, the operation
+a & b yields bit vector [01000001], while A ∩B = {0, 6}.
+We will see the encoding of sets by bit vectors in a number of practical
+applications. For example, in Chapter 8, we will see that there are a number of
+different signals that can interrupt the execution of a program. We can selectively
+enable or disable different signals by specifying a bit-vector mask, where a 1 in
+bit position i indicates that signal i is enabled and a 0 indicates that it is disabled.
+Thus, the mask represents the set of enabled signals.

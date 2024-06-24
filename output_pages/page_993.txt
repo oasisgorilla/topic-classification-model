@@ -1,0 +1,70 @@
+992
+Chapter 11
+Network Programming
+1
+linux> telnet kittyhawk.cmcl.cs.cmu.edu 8000
+Client: open connection
+2
+Trying 128.2.194.242...
+3
+Connected to kittyhawk.cmcl.cs.cmu.edu.
+4
+Escape character is ’^]’.
+5
+GET /cgi-bin/adder?15000&213 HTTP/1.0
+Client: request line
+6
+Client: empty line terminates headers
+7
+HTTP/1.0 200 OK
+Server: response line
+8
+Server: Tiny Web Server
+Server: identify server
+9
+Content-length: 115
+Adder: expect 115 bytes in response body
+10
+Content-type: text/html
+Adder: expect HTML in response body
+11
+Adder: empty line terminates headers
+12
+Welcome to add.com: THE Internet addition portal. Adder: first HTML line
+13
+<p>The answer is: 15000 + 213 = 15213
+Adder: second HTML line in response body
+14
+<p>Thanks for visiting!
+Adder: third HTML line in response body
+15
+Connection closed by foreign host.
+Server: closes connection
+16
+linux>
+Client: closes connection and terminates
+Figure 11.28
+An HTTP transaction that serves dynamic HTML content.
+11.6
+Putting It Together: The Tiny Web Server
+We conclude our discussion of network programming by developing a small but
+functioning Web server called Tiny. Tiny is an interesting program. It combines
+many of the ideas that we have learned about, such as process control, Unix I/O,
+the sockets interface, and HTTP, in only 250 lines of code. While it lacks the
+functionality, robustness, and security of a real server, it is powerful enough to
+serve both static and dynamic content to real Web browsers. We encourage you
+to study it and implement it yourself. It is quite exciting (even for the authors!) to
+point a real browser at your own server and watch it display a complicated Web
+page with text and graphics.
+The Tiny main Routine
+Figure 11.29 shows Tiny’s main routine. Tiny is an iterative server that listens
+for connection requests on the port that is passed in the command line. After
+opening a listening socket by calling the open_listenfd function, Tiny executes
+the typical inﬁnite server loop, repeatedly accepting a connection request (line 32),
+performing a transaction (line 36), and closing its end of the connection (line 37).
+The doit Function
+The doit function in Figure 11.30 handles one HTTP transaction. First, we
+read and parse the request line (lines 11–14). Notice that we are using the rio_
+readlineb function from Figure 10.8 to read the request line.
+Tiny supports only the GET method. If the client requests another method
+(such as POST), we send it an error message and return to the main routine

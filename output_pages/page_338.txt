@@ -1,0 +1,45 @@
+Section 3.11
+Floating-Point Code
+337
+%xmm0 (ﬂoating-point result). Show the instruction(s), including the source and
+destination registers.
+Tx
+Ty
+Instruction(s)
+long
+double
+vcvtsi2sdq %rdi, %xmm0
+double
+int
+double
+float
+long
+float
+float
+long
+3.11.2
+Floating-Point Code in Procedures
+With x86-64, the XMM registers are used for passing ﬂoating-point arguments to
+functions and for returning ﬂoating-point values from them. As is illustrated in
+Figure 3.45, the following conventions are observed:
+. Up to eight ﬂoating-point arguments can be passed in XMM registers %xmm0–
+%xmm7. These registers are used in the order the arguments are listed. Addi-
+tional ﬂoating-point arguments can be passed on the stack.
+. A function that returns a ﬂoating-point value does so in register %xmm0.
+. All XMM registers are caller saved. The callee may overwrite any of these
+registers without ﬁrst saving it.
+When a function contains a combination of pointer, integer, and ﬂoating-
+point arguments, the pointers and integers are passed in general-purpose registers,
+while the ﬂoating-point values are passed in XMM registers. This means that the
+mapping of arguments to registers depends on both their types and their ordering.
+Here are several examples:
+double f1(int x, double y, long z);
+This function would have x in %edi, y in %xmm0, and z in %rsi.
+double f2(double y, int x, long z);
+This function would have the same register assignment as function f1.
+double f1(float x, double *y, long *z);
+This function would have x in %xmm0, y in %rdi, and z in %rsi.
+Practice Problem 3.52 (solution page 384)
+For each of the following function declarations, determine the register assignments
+for the arguments:
+A. double g1(double a, long b, float c, int d);

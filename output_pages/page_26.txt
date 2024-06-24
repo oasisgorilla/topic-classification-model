@@ -1,0 +1,43 @@
+Preface
+25
+ering this material serves several purposes. It reinforces the concept that
+the virtual memory space is just an array of bytes that the program can
+subdivide into different storage units. It helps you understand the effects
+of programs containing memory referencing errors such as storage leaks
+and invalid pointer references. Finally, many application programmers write
+their own storage allocators optimized toward the needs and characteris-
+tics of the application. This chapter, more than any other, demonstrates the
+beneﬁt of covering both the hardware and the software aspects of computer
+systems in a uniﬁed way. Traditional computer architecture and operating
+systems texts present only part of the virtual memory story.
+Chapter 10: System-Level I/O. We cover the basic concepts of Unix I/O such as
+ﬁles and descriptors. We describe how ﬁles are shared, how I/O redirection
+works, and how to access ﬁle metadata. We also develop a robust buffered
+I/O package that deals correctly with a curious behavior known as short
+counts, where the library function reads only part of the input data. We
+cover the C standard I/O library and its relationship to Linux I/O, focusing
+on limitations of standard I/O that make it unsuitable for network program-
+ming. In general, the topics covered in this chapter are building blocks for
+the next two chapters on network and concurrent programming.
+Chapter 11: Network Programming. Networks are interesting I/O devices to pro-
+gram, tying together many of the ideas that we study earlier in the text, such
+as processes, signals, byte ordering, memory mapping, and dynamic storage
+allocation. Network programs also provide a compelling context for con-
+currency, which is the topic of the next chapter. This chapter is a thin slice
+through network programming that gets you to the point where you can
+write a simple Web server. We cover the client-server model that underlies
+all network applications. We present a programmer’s view of the Internet
+and show how to write Internet clients and servers using the sockets inter-
+face. Finally, we introduce HTTP and develop a simple iterative Web server.
+Chapter 12: Concurrent Programming. This chapter introduces concurrent pro-
+gramming using Internet server design as the running motivational example.
+We compare and contrast the three basic mechanisms for writing concur-
+rent programs—processes, I/O multiplexing, and threads—and show how
+to use them to build concurrent Internet servers. We cover basic principles
+of synchronization using P and V semaphore operations, thread safety and
+reentrancy, race conditions, and deadlocks. Writing concurrent code is es-
+sential for most server applications. We also describe the use of thread-level
+programming to express parallelism in an application program, enabling
+faster execution on multi-core processors. Getting all of the cores working
+on a single computational problem requires a careful coordination of the
+concurrent threads, both for correctness and to achieve high performance.

@@ -1,0 +1,53 @@
+Solutions to Practice Problems
+367
+B. The je instruction has as its target 0x0x400431 −12 (since 0xf4 is the 1-
+bytetwo’s-complementrepresentationof −12).Astheoriginaldisassembled
+code shows, this is 0x400425:
+40042f: 74 f4
+je
+400425
+400431: 5d
+pop
+%rbp
+C. According to the annotation produced by the disassembler, the jump target
+is at absolute address 0x400547. According to the byte encoding, this must
+be at an address 0x2 bytes beyond that of the pop instruction. Subtracting
+these gives address 0x400545. Noting that the encoding of the ja instruction
+requires 2 bytes, it must be located at address 0x400543. These are conﬁrmed
+by examining the original disassembly:
+400543: 77 02
+ja
+400547
+400545: 5d
+pop
+%rbp
+D. Reading the bytes in reverse order, we can see that the target offset is
+0xffffff73, or decimal −141. Adding this to 0x0x4005ed (the address of
+the nop instruction) gives address 0x400560:
+4005e8: e9 73 ff ff ff
+jmpq
+400560
+4005ed: 90
+nop
+Solution to Problem 3.16 (page 248)
+Annotating assembly code and writing C code that mimics its control ﬂow are good
+ﬁrst steps in understanding assembly-language programs. This problem gives you
+practice for an example with simple control ﬂow. It also gives you a chance to
+examine the implementation of logical operations.
+A. Here is the C code:
+void goto_cond(short a, short *p) {
+if (a == 0)
+goto done;
+if (a >= *p)
+goto done;
+*p = a;
+done:
+return;
+}
+B. The ﬁrst conditional branch is part of the implementation of the && expres-
+sion. If the test for a being non-null fails, the code will skip the test of a >= *p.
+Solution to Problem 3.17 (page 248)
+This is an exercise to help you think about the idea of a general translation rule
+and how to apply it.
+A. Converting to this alternate form involves only switching around a few lines
+of the code:

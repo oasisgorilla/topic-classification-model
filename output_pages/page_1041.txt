@@ -1,0 +1,43 @@
+1040
+Chapter 12
+Concurrent Programming
+Aside
+Limitations of progress graphs
+Progress graphs give us a nice way to visualize concurrent program execution on uniprocessors and to
+understand why we need synchronization. However, they do have limitations, particularly with respect
+to concurrent execution on multiprocessors, where a set of CPU/cache pairs share the same main
+memory. Multiprocessors behave in ways that cannot be explained by progress graphs. In particular, a
+multiprocessor memory system can be in a state that does not correspond to any trajectory in a progress
+graph. Regardless, the message remains the same: always synchronize accesses to your shared variables,
+regardless if you’re running on a uniprocessor or a multiprocessor.
+In an operational sense, the forbidden region created by the P and V op-
+erations makes it impossible for multiple threads to be executing instructions in
+the enclosed critical region at any point in time. In other words, the semaphore
+operations ensure mutually exclusive access to the critical region.
+Putting it all together, to properly synchronize the example counter program
+in Figure 12.16 using semaphores, we ﬁrst declare a semaphore called mutex:
+volatile long cnt = 0; /* Counter */
+sem_t mutex;
+/* Semaphore that protects counter */
+and then we initialize it to unity in the main routine:
+Sem_init(&mutex, 0, 1);
+/* mutex = 1 */
+Finally, we protect the update of the shared cnt variable in the thread routine by
+surrounding it with P and V operations:
+for (i = 0; i < niters; i++) {
+P(&mutex);
+cnt++;
+V(&mutex);
+}
+When we run the properly synchronized program, it now produces the correct
+answer each time.
+linux>
+./goodcnt 1000000
+OK cnt=2000000
+linux>
+./goodcnt 1000000
+OK cnt=2000000
+12.5.4
+Using Semaphores to Schedule Shared Resources
+Another important use of semaphores, besides providing mutual exclusion, is to
+schedule accesses to shared resources. In this scenario, a thread uses a semaphore

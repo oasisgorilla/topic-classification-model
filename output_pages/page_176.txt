@@ -1,0 +1,53 @@
+Homework Problems
+175
+Format A
+Format B
+Bits
+Value
+Bits
+Value
+1 01111 001
+−9
+8
+1 0111 0010
+−9
+8
+0 10110 011
+1 00111 010
+0 00000 111
+1 11100 000
+0 10111 100
+2.89 ◆
+We are running programs on a machine where values of type int have a 32-
+bit two’s-complement representation. Values of type float use the 32-bit IEEE
+format, and values of type double use the 64-bit IEEE format.
+We generate arbitrary integer values x, y, and z, and convert them to values
+of type double as follows:
+/* Create some arbitrary values */
+int x = random();
+int y = random();
+int z = random();
+/* Convert to double */
+double
+dx = (double) x;
+double
+dy = (double) y;
+double
+dz = (double) z;
+For each of the following C expressions, you are to indicate whether or
+not the expression always yields 1. If it always yields 1, describe the underlying
+mathematical principles. Otherwise, give an example of arguments that make
+it yield 0. Note that you cannot use an IA32 machine running gcc to test your
+answers, since it would use the 80-bit extended-precision representation for both
+float and double.
+A. (float) x == (float) dx
+B. dx - dy == (double) (x-y)
+C. (dx + dy) + dz == dx + (dy + dz)
+D. (dx * dy) * dz == dx * (dy * dz)
+E. dx / dx == dz / dz
+2.90 ◆
+You have been assigned the task of writing a C function to compute a ﬂoating-
+point representation of 2x. You decide that the best way to do this is to directly
+construct the IEEE single-precision representation of the result. When x is too
+small, your routine will return 0.0. When x is too large, it will return +∞. Fill in the
+blank portions of the code that follows to compute the correct result. Assume the

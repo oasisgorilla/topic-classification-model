@@ -1,0 +1,51 @@
+Section 2.4
+Floating Point
+157
+that |ˆ
+x| ≤|x|. Round-down mode rounds both positive and negative numbers
+downward, giving a value x−such that x−≤x. Round-up mode rounds both
+positive and negative numbers upward, giving a value x+ such that x ≤x+.
+Round-to-even at ﬁrst seems like it has a rather arbitrary goal—why is there
+any reason to prefer even numbers? Why not consistently round values halfway
+between two representable values upward? The problem with such a convention
+is that one can easily imagine scenarios in which rounding a set of data values
+would then introduce a statistical bias into the computation of an average of the
+values. The average of a set of numbers that we rounded by this means would
+be slightly higher than the average of the numbers themselves. Conversely, if we
+always rounded numbers halfway between downward, the average of a set of
+rounded numbers would be slightly lower than the average of the numbers them-
+selves. Rounding toward even numbers avoids this statistical bias in most real-life
+situations. It will round upward about 50% of the time and round downward about
+50% of the time.
+Round-to-even rounding can be applied even when we are not rounding to
+a whole number. We simply consider whether the least signiﬁcant digit is even
+or odd. For example, suppose we want to round decimal numbers to the nearest
+hundredth. We would round 1.2349999 to 1.23 and 1.2350001 to 1.24, regardless
+of rounding mode, since they are not halfway between 1.23 and 1.24. On the other
+hand, we would round both 1.2350000 and 1.2450000 to 1.24, since 4 is even.
+Similarly, round-to-even rounding can be applied to binary fractional num-
+bers. We consider least signiﬁcant bit value 0 to be even and 1 to be odd. In
+general, the rounding mode is only signiﬁcant when we have a bit pattern of the
+form XX . . . X.YY . . . Y100 . . ., where X and Y denote arbitrary bit values with
+the rightmost Y being the position to which we wish to round. Only bit patterns
+of this form denote values that are halfway between two possible results. As ex-
+amples, consider the problem of rounding values to the nearest quarter (i.e., 2 bits
+to the right of the binary point.) We would round 10.000112 (2 3
+32) down to 10.002
+(2), and 10.001102 (2 3
+16) up to 10.012 (2 1
+4), because these values are not halfway
+between two possible values. We would round 10.111002 (2 7
+8) up to 11.002 (3) and
+10.101002 (2 5
+8) down to 10.102 (2 1
+2), since these values are halfway between two
+possible results, and we prefer to have the least signiﬁcant bit equal to zero.
+Practice Problem 2.50 (solution page 195)
+Show how the following binary fractional values would be rounded to the nearest
+half (1 bit to the right of the binary point), according to the round-to-even rule.
+In each case, show the numeric values, both before and after rounding.
+A. 10.1112
+B. 11.0102
+C. 11.0002
+D. 10.1102

@@ -1,0 +1,105 @@
+686
+Chapter 6
+The Memory Hierarchy
+For each case below, suppose that a program reads the logical blocks of the
+ﬁle sequentially, one after the other, and that the time to position the head over
+the ﬁrst block is Tavg seek + Tavg rotation.
+A. Best case: Estimate the optimal time (in ms) required to read the ﬁle given
+the best possible mapping of logical blocks to disk sectors (i.e., sequential).
+B. Random case: Estimate the time (in ms) required to read the ﬁle if blocks
+are mapped randomly to disk sectors.
+6.25 ◆
+The following table gives the parameters for a number of different caches. For
+each cache, ﬁll in the missing ﬁelds in the table. Recall that m is the number of
+physical address bits, C is the cache size (number of data bytes), B is the block
+size in bytes, E is the associativity, S is the number of cache sets, t is the number of
+tag bits, s is the number of set index bits, and b is the number of block offset bits.
+Cache
+m
+C
+B
+E
+S
+t
+s
+b
+1.
+32
+1,024
+4
+4
+2.
+32
+1,024
+4
+256
+3.
+32
+1,024
+8
+1
+4.
+32
+1,024
+8
+128
+5.
+32
+1,024
+32
+1
+6.
+32
+1,024
+32
+4
+6.26 ◆
+The following table gives the parameters for a number of different caches. Your
+task is to ﬁll in the missing ﬁelds in the table. Recall that m is the number of physical
+address bits, C is the cache size (number of data bytes), B is the block size in bytes,
+E is the associativity, S is the number of cache sets, t is the number of tag bits, s is
+the number of set index bits, and b is the number of block offset bits.
+Cache
+m
+C
+B
+E
+S
+t
+s
+b
+1.
+32
+8
+1
+21
+8
+3
+2.
+32
+2,048
+128
+23
+7
+2
+3.
+32
+1,024
+2
+8
+64
+1
+4.
+32
+1,024
+2
+16
+23
+4
+6.27 ◆
+This problem concerns the cache in Practice Problem 6.12.
+A. List all of the hex memory addresses that will hit in set 1.
+B. List all of the hex memory addresses that will hit in set 6.
+6.28 ◆◆
+This problem concerns the cache in Practice Problem 6.12.
+A. List all of the hex memory addresses that will hit in set 2.

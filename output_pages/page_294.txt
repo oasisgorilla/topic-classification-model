@@ -1,0 +1,76 @@
+Section 3.8
+Array Allocation and Access
+293
+Array
+Element size
+Total size
+Start address
+Element i
+P
+xP
+Q
+xQ
+R
+xR
+S
+xS
+T
+xT
+3.8.2
+Pointer Arithmetic
+C allows arithmetic on pointers, where the computed value is scaled according to
+the size of the data type referenced by the pointer. That is, if p is a pointer to data
+of type T , and the value of p is xp, then the expression p+i has value xp + L . i,
+where L is the size of data type T .
+The unary operators ‘&’ and ‘*’ allow the generation and dereferencing of
+pointers. That is, for an expression Expr denoting some object, &Expr is a pointer
+giving the address of the object. For an expression AExpr denoting an address,
+*AExpr gives the value at that address. The expressions Expr and *&Expr are
+therefore equivalent. The array subscripting operation can be applied to both
+arrays and pointers. The array reference A[i] is identical to the expression *(A+i).
+It computes the address of the ith array element and then accesses this memory
+location.
+Expanding on our earlier example, suppose the starting address of integer
+array E and integer index i are stored in registers %rdx and %rcx, respectively.
+The following are some expressions involving E. We also show an assembly-code
+implementation of each expression, with the result being stored in either register
+%eax (for data) or register %rax (for pointers).
+Expression
+Type
+Value
+Assembly code
+E
+int *
+xE
+movl %rdx,%rax
+E[0]
+int
+M[xE]
+movl (%rdx),%eax
+E[i]
+int
+M[xE + 4i]
+movl (%rdx,%rcx,4),%eax
+&E[2]
+int *
+xE + 8
+leaq 8(%rdx),%rax
+E+i-1
+int *
+xE + 4i −4
+leaq -4(%rdx,%rcx,4),%rax
+*(E+i-3)
+int
+M[xE + 4i −12]
+movl -12(%rdx,%rcx,4),%eax
+&E[i]-E
+long
+i
+movq %rcx,%rax
+In these examples, we see that operations that return array values have type
+int, and hence involve 4-byte operations (e.g., movl) and registers (e.g., %eax).
+Those that return pointers have type int *, and hence involve 8-byte operations
+(e.g., leaq) and registers (e.g., %rax). The ﬁnal example shows that one can
+compute the difference of two pointers within the same data structure, with the
+result being data having type long and value equal to the difference of the two
+addresses divided by the size of the data type.

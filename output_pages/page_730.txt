@@ -1,0 +1,48 @@
+Section 7.7
+Relocation
+729
+and
+ADDR(r.symbol) = ADDR(sum) = 0x4004e8
+Using the algorithm in Figure 7.10, the linker ﬁrst computes the run-time
+address of the reference (line 7):
+refaddr = ADDR(s)
++ r.offset
+= 0x4004d0 + 0xf
+= 0x4004df
+It then updates the reference so that it will point to the sum routine at run time
+(line 8):
+*refptr = (unsigned) (ADDR(r.symbol) + r.addend - refaddr)
+= (unsigned) (0x4004e8
++ (-4)
+- 0x4004df)
+= (unsigned) (0x5)
+In the resulting executable object ﬁle, the call instruction has the following
+relocated form:
+4004de:
+e8 05 00 00 00
+callq
+4004e8 <sum>
+sum()
+At run time, the call instruction will be located at address 0x4004de. When
+the CPU executes the call instruction, the PC has a value of 0x4004e3, which
+is the address of the instruction immediately following the call instruction. To
+execute the call instruction, the CPU performs the following steps:
+1. Push PC onto stack
+2. PC ←PC + 0x5 = 0x4004e3 + 0x5 = 0x4004e8
+Thus, the next instruction to execute is the ﬁrst instruction of the sum routine,
+which of course is what we want!
+Relocating Absolute References
+Relocating absolute references is straightforward. For example, in line 4 in Fig-
+ure 7.11, the mov instruction copies the address of array (a 32-bit immediate value)
+into register %edi. The mov instruction begins at section offset 0x9 and consists of
+the 1-byte opcode 0xbf, followed by a placeholder for the 32-bit absolute refer-
+ence to array.
+The corresponding relocation entry r consists of four ﬁelds:
+r.offset = 0xa
+r.symbol = array
+r.type
+= R_X86_64_32
+r.addend = 0
+These ﬁelds tell the linker to modify the absolute reference starting at offset 0xa
+so that it will point to the ﬁrst byte of array at run time. Now, suppose that the
+linker has determined that

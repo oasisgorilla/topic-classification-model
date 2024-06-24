@@ -1,0 +1,51 @@
+572
+Chapter 5
+Optimizing Program Performance
+5.9
+Enhancing Parallelism
+At this point, our functions have hit the bounds imposed by the latencies of the
+arithmetic units. As we have noted, however, the functional units performing ad-
+dition and multiplication are all fully pipelined, meaning that they can start new
+operations every clock cycle, and some of the operations can be performed by
+multiple functional units. The hardware has the potential to perform multiplica-
+tions and additions at a much higher rate, but our code cannot take advantage of
+this capability, even with loop unrolling, since we are accumulating the value as a
+single variable acc. We cannot compute a new value for acc until the preceding
+computation has completed. Even though the functional unit computing a new
+value for acc can start a new operation every clock cycle, it will only start one
+every L cycles, where L is the latency of the combining operation. We will now
+investigate ways to break this sequential dependency and get performance better
+than the latency bound.
+5.9.1
+Multiple Accumulators
+For a combining operation that is associative and commutative, such as integer
+addition or multiplication, we can improve performance by splitting the set of
+combining operations into two or more parts and combining the results at the
+end. For example, let Pn denote the product of elements a0, a1, . . . , an−1:
+Pn =
+n−1
+
+i=0
+ai
+Assuming n is even, we can also write this as Pn = PEn × POn, where PEn is the
+product of the elements with even indices, and POn is the product of the elements
+with odd indices:
+PEn =
+n/2−1
+
+i=0
+a2i
+POn =
+n/2−1
+
+i=0
+a2i+1
+Figure 5.21 shows code that uses this method. It uses both two-way loop
+unrolling, to combine more elements per iteration, and two-way parallelism,
+accumulating elements with even indices in variable acc0 and elements with odd
+indices in variable acc1. We therefore refer to this as “2 × 2 loop unrolling.” As
+before, we include a second loop to accumulate any remaining array elements for
+the case where the vector length is not a multiple of 2. We then apply the combining
+operation to acc0 and acc1 to compute the ﬁnal result.
+Comparing loop unrolling alone to loop unrolling with two-way parallelism,
+we obtain the following performance:

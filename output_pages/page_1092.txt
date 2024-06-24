@@ -1,0 +1,169 @@
+Index
+1091
+arithmetic, 69, 227
+discussion, 232–233
+ﬂoating-point code, 338–340
+integer. See integer arithmetic
+latency and issue time, 559
+load effective address, 227–229
+pointers, 293–294, 909
+saturating, 170
+shift operations, 94, 140–142, 228,
+230–232
+special, 233–236
+unary and binary, 230–232
+arithmetic/logic units (ALUs), 46
+combinational circuits, 416
+in execute stage, 421
+sequential Y86-64 implementation,
+444–445
+ARM (Acorn RISC machine), 79
+ISAs, 388
+processor architecture, 399
+ARM A7 microprocessor, 389
+arms, actuator, 628
+ARPA (Advanced Research Projects
+Administration), 967
+ARPANET, 967
+arrays, 291
+basic principles, 291–293
+declarations, 291–292, 299
+DRAM, 618
+ﬁxed-size, 296–298
+machine-code representation, 207
+nested, 294–296
+pointer arithmetic, 293–294
+pointer relationships, 84, 313
+stride, 642
+variable-size, 298–301
+ASCII standard, 39
+character codes, 85
+limitations, 86
+asctime function, 1060
+ASLR (address-space layout
+randomization), 321, 321–322
+asm directive, 214
+assembler directives, 402
+assemblers, 41, 41, 200, 206
+assembly code, 41, 200
+with C programs, 325–326
+formatting, 211–213
+Y86-64, 395
+assembly phase, 41
+associate socket address with
+descriptor function, 971, 971
+associative caches, 660–662
+associative memory, 661
+associativity
+caches, 669
+ﬂoating-point addition, 159–160
+asterisks (*) dereference pointer
+operation, 224, 293, 313
+asymmetric ranges in two’s-
+complement representation,
+102, 113
+async-signal-safe function, 802
+async-signal safety, 802
+asynchronous interrupts, 762
+atomic reads and writes, 806
+ATT assembly code format, 213, 330,
+347
+argument listing, 342
+condition codes, 237–238
+cqo instruction, 235
+vs. Intel, 213
+operands, 217, 228
+Y86-64, 392
+automatic variables, 1030
+AVX (advanced vector extensions)
+instructions, 312, 330, 582–583
+%ax [x86-64] low order 16 bits of
+register %rax, 216
+B2T (binary to two’s-complement
+conversion), 96, 100, 108, 133
+B2U (binary to unsigned conversion),
+96, 98, 108, 118, 133
+background processes, 789, 789–792
+backlogs for listening sockets, 971
+backups for disks, 647
+backward compatibility, 71
+backward taken, forward not taken
+(BTFNT) branch prediction
+strategy, 464
+bad pointers and virtual memory,
+906–907
+badcnt.c [CS:APP] improperly
+synchronized program, 1031–
+1035, 1032
+bandwidth, read, 675
+Barracuda 7400 drives, 636
+base pointers, 326
+base registers, 217
+bash [Unix] Unix shell program, 789
+basic blocks, 605
+Bell Laboratories, 71
+Berkeley sockets, 968
+Berners-Lee, Tim, 985
+best-ﬁt block placement policy, 885,
+885
+bi-endian ordering convention, 79
+biased number encoding, 149, 149–153
+biasing in division, 142
+big-endian ordering convention, 78,
+78–80
+bigrams statistics, 601
+bijections, 100, 100
+/bin/kill program, 796
+binary ﬁles, 39, 927
+binary notation, 68
+binary points, 146, 146–147
+binary representations
+conversions
+with hexadecimal, 72–73
+signed and unsigned, 106–112
+to two’s complement, 100,
+108–109, 133
+to unsigned, 98–99
+fractional, 145–148
+machine language, 230
+binary semaphores, 1039
+binary tree structure, 306–307
+bind [Unix] associate socket address
+with descriptor, 969, 971, 971
+binding, lazy, 742
+binutils package, 749
+bistable memory cells, 617
+bit-level operations, 90–92
+bit representation expansion, 112–116
+bit vectors, 87, 87–88
+bits, 39
+overview, 68
+union access to, 307–308
+bitwise operations, 341–342
+%bl [x86-64] low order 8 of register
+%rbx, 216
+block and unblock signals instruction,
+801
+block devices, 928
+block offset bits, 652
+block pointers, 892
+block size
+caches, 669
+minimum, 884
+blocked bit vectors, 795
+blocked signals, 794, 795, 800–801
+blocking
+signals, 800–801
+for temporal locality, 683
+blocks
+aligning, 880
+allocated, 875, 885
+vs. cache lines, 670
+caches, 647, 647–648, 651, 669
+coalescing, 886–887, 896
+epilogue, 891
+free lists, 883–885
+freeing, 896
+heap, 875
+logical disk, 631, 631–632, 637
+prologue, 891

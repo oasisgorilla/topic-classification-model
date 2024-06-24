@@ -1,0 +1,59 @@
+796
+Chapter 8
+Exceptional Control Flow
+Sending Signals with the /bin/kill Program
+The /bin/kill program sends an arbitrary signal to another process. For example,
+the command
+linux> /bin/kill -9 15213
+sends signal 9 (SIGKILL) to process 15213. A negative PID causes the signal to
+be sent to every process in process group PID. For example, the command
+linux> /bin/kill -9 -15213
+sends a SIGKILL signal to every process in process group 15213. Note that we
+use the complete path /bin/kill here because some Unix shells have their own
+built-in kill command.
+Sending Signals from the Keyboard
+Unix shells use the abstraction of a job to represent the processes that are created
+as a result of evaluating a single command line. At any point in time, there is at
+most one foreground job and zero or more background jobs. For example, typing
+linux> ls | sort
+creates a foreground job consisting of two processes connected by a Unix pipe: one
+running the ls program, the other running the sort program. The shell creates
+a separate process group for each job. Typically, the process group ID is taken
+from one of the parent processes in the job. For example, Figure 8.28 shows a
+shell with one foreground job and two background jobs. The parent process in the
+foreground job has a PID of 20 and a process group ID of 20. The parent process
+has created two children, each of which are also members of process group 20.
+Figure 8.28
+Foreground and
+background process
+groups.
+Back-
+ground
+job #1
+Fore-
+ground
+job
+Background
+process group 32
+Foreground
+process group 20
+Shell
+Child
+Child
+Back-
+ground
+job #2
+Background
+process group 40
+pid20
+pgid20
+pid10
+pgid10
+pid21
+pgid20
+pid22
+pgid20
+pid32
+pgid32
+pid40
+pgid40

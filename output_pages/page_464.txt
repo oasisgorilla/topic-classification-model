@@ -1,0 +1,45 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+463
+Aside
+What is the difference between signals M_stat and m_stat?
+With our naming system, the uppercase preﬁxes ‘D’, ‘E’, ‘M’, and ‘W’ refer to pipeline registers, and so
+M_stat refers to the status code ﬁeld of pipeline register M. The lowercase preﬁxes ‘f’, ‘d’, ‘e’, ‘m’, and
+‘w’ refer to the pipeline stages, and so m_stat refers to the status signal generated in the memory stage
+by a control logic block.
+Understanding this naming convention is critical to understanding the operation of our pipelined
+processors.
+the write-back stage (shown in the more detailed views of the stages). We do
+this to make sure the write port address and data inputs hold values from the
+same instruction. Otherwise, the write back would be writing the values for the
+instruction in the write-back stage, but with register IDs from the instruction in
+the decode stage. As a general principle, we want to keep all of the information
+about a particular instruction contained within a single pipeline stage.
+One block of PIPE−that is not present in SEQ+ in the exact same form is the
+block labeled “Select A” in the decode stage. We can see that this block generates
+the value valA for the pipeline register E by choosing either valP from pipeline
+register D or the value read from the A port of the register ﬁle. This block is
+included to reduce the amount of state that must be carried forward to pipeline
+registers E and M. Of all the different instructions, only the call requires valP
+in the memory stage. Only the jump instructions require the value of valP in the
+execute stage (in the event the jump is not taken). None of these instructions
+requires a value read from the register ﬁle. Therefore, we can reduce the amount
+of pipeline register state by merging these two signals and carrying them through
+the pipeline as a single signal valA. This eliminates the need for the block labeled
+“Data” in SEQ (Figure 4.23) and SEQ+ (Figure 4.40), which served a similar
+purpose. In hardware design, it is common to carefully identify how signals get
+used and then reduce the amount of register state and wiring by merging signals
+such as these.
+As shown in Figure 4.41, our pipeline registers include a ﬁeld for the status
+code stat, initially computed during the fetch stage and possibly modiﬁed during
+the memory stage. We will discuss how to implement the processing of exceptional
+events in Section 4.5.6, after we have covered the implementation of normal in-
+struction execution. Sufﬁce it to say at this point that the most systematic approach
+is to associate a status code with each instruction as it passes through the pipeline,
+as we have indicated in the ﬁgure.
+4.5.4
+Next PC Prediction
+We have taken some measures in the design of PIPE−to properly handle control
+dependencies. Our goal in the pipelined design is to issue a new instruction on
+every clock cycle, meaning that on each clock cycle, a new instruction proceeds
+into the execute stage and will ultimately be completed. Achieving this goal would

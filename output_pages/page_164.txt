@@ -1,0 +1,43 @@
+Bibliographic Notes
+163
+Aside
+Ariane 5: The high cost of ﬂoating-point overﬂow
+Converting large ﬂoating-point numbers to integers is a common source of programming errors. Such
+an error had disastrous consequences for the maiden voyage of the Ariane 5 rocket, on June 4, 1996. Just
+37 seconds after liftoff, the rocket veered off its ﬂight path, broke up, and exploded. Communication
+satellites valued at $500 million were on board the rocket.
+A later investigation [73, 33] showed that the computer controlling the inertial navigation system
+had sent invalid data to the computer controlling the engine nozzles. Instead of sending ﬂight control
+information, it had sent a diagnostic bit pattern indicating that an overﬂow had occurred during the
+conversion of a 64-bit ﬂoating-point number to a 16-bit signed integer.
+The value that overﬂowed measured the horizontal velocity of the rocket, which could be more
+than ﬁve times higher than that achieved by the earlier Ariane 4 rocket. In the design of the Ariane 4
+software, they had carefully analyzed the numeric values and determined that the horizontal velocity
+would never overﬂow a 16-bit number. Unfortunately, they simply reused this part of the software in
+the Ariane 5 without checking the assumptions on which it had been based.
+pattern of the form [0, . . . , 0, 1, . . . , 1], consisting of w −k zeros followed by k
+ones. Such bit patterns are useful for masking operations. This pattern can be gen-
+erated by the C expression (1<<k)-1, exploiting the property that the desired
+bit pattern has numeric value 2k −1. For example, the expression (1<<8)-1 will
+generate the bit pattern 0xFF.
+Floating-point representations approximate real numbers by encoding num-
+bers of the form x × 2y. IEEE Standard 754 provides for several different preci-
+sions, with the most common being single (32 bits) and double (64 bits). IEEE
+ﬂoating point also has representations for special values representing plus and
+minus inﬁnity, as well as not-a-number.
+Floating-point arithmetic must be used very carefully, because it has only
+limited range and precision, and because it does not obey common mathematical
+properties such as associativity.
+Bibliographic Notes
+Reference books on C [45, 61] discuss properties of the different data types and
+operations. Of these two, only Steele and Harbison [45] cover the newer features
+found in ISO C99. There do not yet seem to be any books that cover the features
+found in ISO C11. The C standards do not specify details such as precise word sizes
+or numeric encodings. Such details are intentionally omitted to make it possible
+to implement C on a wide range of different machines. Several books have been
+written giving advice to C programmers [59, 74] that warn about problems with
+overﬂow, implicit casting to unsigned, and some of the other pitfalls we have
+covered in this chapter. These books also provide helpful advice on variable
+naming, coding styles, and code testing. Seacord’s book on security issues in C
+and C++ programs [97] combines information about C programs, how they are
+compiled and executed, and how vulnerabilities may arise. Books on Java (we

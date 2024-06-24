@@ -1,0 +1,46 @@
+206
+Chapter 3
+Machine-Level Representation of Programs
+linux> gcc -Og -o p p1.c p2.c
+The command gcc indicates the gcc C compiler. Since this is the default compiler
+on Linux, we could also invoke it as simply cc. The command-line option -Og1
+instructs the compiler to apply a level of optimization that yields machine code
+that follows the overall structure of the original C code. Invoking higher levels of
+optimization can generate code that is so heavily transformed that the relationship
+between the generated machine code and the original source code is difﬁcult to
+understand. We will therefore use -Og optimization as a learning tool and then see
+what happens as we increase the level of optimization. In practice, higher levels
+of optimization (e.g., speciﬁed with the option -O1 or -O2) are considered a better
+choice in terms of the resulting program performance.
+The gcc command invokes an entire sequence of programs to turn the source
+code into executable code. First, the C preprocessor expands the source code to
+include any ﬁles speciﬁed with #include commands and to expand any macros,
+speciﬁed with #define declarations. Second, the compiler generates assembly-
+code versions of the two source ﬁles having names p1.s and p2.s. Next, the
+assembler converts the assembly code into binary object-code ﬁles p1.o and p2.o.
+Object code is one form of machine code—it contains binary representations of all
+of the instructions, but the addresses of global values are not yet ﬁlled in. Finally,
+the linker merges these two object-code ﬁles along with code implementing library
+functions (e.g., printf) and generates the ﬁnal executable code ﬁle p (as speciﬁed
+by the command-line directive -o p). Executable code is the second form of
+machine code we will consider—it is the exact form of code that is executed by
+the processor. The relation between these different forms of machine code and
+the linking process is described in more detail in Chapter 7.
+3.2.1
+Machine-Level Code
+As described in Section 1.9.3, computer systems employ several different forms
+of abstraction, hiding details of an implementation through the use of a simpler
+abstract model. Two of these are especially important for machine-level program-
+ming. First, the format and behavior of a machine-level program is deﬁned by the
+instruction set architecture, or ISA, deﬁning the processor state, the format of the
+instructions, and the effect each of these instructions will have on the state. Most
+ISAs, including x86-64, describe the behavior of a program as if each instruction is
+executed in sequence, with one instruction completing before the next one begins.
+The processor hardware is far more elaborate, executing many instructions con-
+currently, but it employs safeguards to ensure that the overall behavior matches
+the sequential operation dictated by the ISA. Second, the memory addresses used
+by a machine-level program are virtual addresses, providing a memory model that
+1. This optimization level was introduced in gcc version 4.8. Earlier versions of gcc, as well as non-
+GNU compilers, will not recognize this option. For these, using optimization level one (speciﬁed with
+the command-line ﬂag -O1) is probably the best choice for generating code that follows the original
+program structure.

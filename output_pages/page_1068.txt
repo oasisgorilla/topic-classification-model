@@ -1,0 +1,59 @@
+Homework Problems
+1067
+tail [102, 106, 113]. The book by Butenhof [15] is a comprehensive description of
+the Posix threads interface. The paper by Birrell [7] is an excellent introduction to
+threads programming and its pitfalls. The book by Reinders [90] describes a C/C++
+library that simpliﬁes the design and implementation of threaded programs. Sev-
+eral texts cover the fundamentals of parallel programming on multi-core sys-
+tems [47, 71]. Pugh identiﬁes weaknesses with the way that Java threads interact
+through memory and proposes replacement memory models [88]. Gustafson pro-
+posed the weak-scaling speedup model [43] as an alternative to strong scaling.
+Homework Problems
+12.16 ◆
+Write a version of hello.c (Figure 12.13) that creates and reaps n joinable peer
+threads, where n is a command-line argument.
+12.17 ◆
+A. The program in Figure 12.46 has a bug. The thread is supposed to sleep for
+1 second and then print a string. However, when we run it on our system,
+nothing prints. Why?
+B. You can ﬁx this bug by replacing the exit function in line 10 with one of two
+different Pthreads function calls. Which ones?
+code/conc/hellobug.c
+1
+/* WARNING: This code is buggy! */
+2
+#include "csapp.h"
+3
+void *thread(void *vargp);
+4
+5
+int main()
+6
+{
+7
+pthread_t tid;
+8
+9
+Pthread_create(&tid, NULL, thread, NULL);
+10
+exit(0);
+11
+}
+12
+13
+/* Thread routine */
+14
+void *thread(void *vargp)
+15
+{
+16
+Sleep(1);
+17
+printf("Hello, world!\n");
+18
+return NULL;
+19
+}
+code/conc/hellobug.c
+Figure 12.46
+Buggy program for Problem 12.17.

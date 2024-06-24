@@ -1,0 +1,48 @@
+Section 3.5
+Arithmetic and Logical Operations
+227
+Therefore, the behavior of the instruction pushq %rbp is equivalent to that of the
+pair of instructions
+subq $8,%rsp
+Decrement stack pointer
+movq %rbp,(%rsp)
+Store %rbp on stack
+except that the pushq instruction is encoded in the machine code as a single byte,
+whereas the pair of instructions shown above requires a total of 8 bytes. The ﬁrst
+two columns in Figure 3.9 illustrate the effect of executing the instruction pushq
+%rax when %rsp is 0x108 and %rax is 0x123. First %rsp is decremented by 8, giving
+0x100, and then 0x123 is stored at memory address 0x100.
+Popping a quad word involves reading from the top-of-stack location and
+then incrementing the stack pointer by 8. Therefore, the instruction popq %rax
+is equivalent to the following pair of instructions:
+movq (%rsp),%rax
+Read %rax from stack
+addq $8,%rsp
+Increment stack pointer
+The third column of Figure 3.9 illustrates the effect of executing the instruction
+popq %edx immediately after executing the pushq. Value 0x123 is read from
+memory and written to register %rdx. Register %rsp is incremented back to 0x108.
+As shown in the ﬁgure, the value 0x123 remains at memory location 0x104 until it
+is overwritten (e.g., by another push operation). However, the stack top is always
+considered to be the address indicated by %rsp.
+Since the stack is contained in the same memory as the program code and
+other forms of program data, programs can access arbitrary positions within the
+stack using the standard memory addressing methods. For example, assuming the
+topmost element of the stack is a quad word, the instruction movq 8(%rsp),%rdx
+will copy the second quad word from the stack to register %rdx.
+3.5
+Arithmetic and Logical Operations
+Figure 3.10 lists some of the x86-64 integer and logic operations. Most of the
+operations are given as instruction classes, as they can have different variants with
+different operand sizes. (Only leaq has no other size variants.) For example, the
+instruction class add consists of four addition instructions: addb, addw, addl, and
+addq, adding bytes, words, double words, and quad words, respectively. Indeed,
+each of the instruction classes shown has instructions for operating on these four
+different sizes of data. The operations are divided into four groups: load effective
+address, unary, binary, and shifts. Binary operations have two operands, while
+unary operations have one operand. These operands are speciﬁed using the same
+notation as described in Section 3.4.
+3.5.1
+Load Effective Address
+The load effective address instruction leaq is actually a variant of the movq in-
+struction. It has the form of an instruction that reads from memory to a register,

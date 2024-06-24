@@ -1,0 +1,66 @@
+98
+Chapter 2
+Representing and Manipulating Information
+New to C?
+Signed and unsigned numbers in C, C++, and Java
+Both C and C++ support signed (the default) and unsigned numbers. Java supports only signed numbers.
+C data type
+Minimum
+Maximum
+[signed] char
+−127
+127
+unsigned char
+0
+255
+short
+−32,767
+32,767
+unsigned short
+0
+65,535
+int
+−32,767
+32,767
+unsigned
+0
+65,535
+long
+−2,147,483,647
+2,147,483,647
+unsigned long
+0
+4,294,967,295
+int32_t
+−2,147,483,648
+2,147,483,647
+uint32_t
+0
+4,294,967,295
+int64_t
+−9,223,372,036,854,775,808
+9,223,372,036,854,775,807
+uint64_t
+0
+18,446,744,073,709,551,615
+Figure 2.11
+Guaranteed ranges for C integral data types. The C standards require
+that the data types have at least these ranges of values.
+symmetric range of positive and negative numbers. We also see that data type int
+could be implemented with 2-byte numbers, although this is mostly a throwback
+to the days of 16-bit machines. We also see that size long can be implemented
+with 4-byte numbers, and it typically is for 32-bit programs. The ﬁxed-size data
+types guarantee that the ranges of values will be exactly those given by the typical
+numbers of Figure 2.9, including the asymmetry between negative and positive.
+2.2.2
+Unsigned Encodings
+Let us consider an integer data type of w bits. We write a bit vector as either ⃗
+x, to
+denote the entire vector, or as [xw−1, xw−2, . . . , x0] to denote the individual bits
+within the vector. Treating ⃗
+x as a number written in binary notation, we obtain the
+unsigned interpretation of ⃗
+x. In this encoding, each bit xi has value 0 or 1, with the
+latter case indicating that value 2i should be included as part of the numeric value.
+We can express this interpretation as a function B2Uw (for “binary to unsigned,”
+length w):

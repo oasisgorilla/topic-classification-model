@@ -1,0 +1,42 @@
+258
+Chapter 3
+Machine-Level Representation of Programs
+Aside
+Reverse engineering loops
+A key to understanding how the generated assembly code relates to the original source code is to ﬁnd a
+mapping between program values and registers. This task was simple enough for the loop of Figure 3.19,
+but it can be much more challenging for more complex programs. The C compiler will often rearrange
+the computations, so that some variables in the C code have no counterpart in the machine code, and
+new values are introduced into the machine code that do not exist in the source code. Moreover, it will
+often try to minimize register usage by mapping multiple program values onto a single register.
+The process we described for fact_do works as a general strategy for reverse engineering loops.
+Look at how registers are initialized before the loop, updated and tested within the loop, and used
+after the loop. Each of these provides a clue that can be combined to solve a puzzle. Be prepared for
+surprising transformations, some of which are clearly cases where the compiler was able to optimize
+the code, and others where it is hard to explain why the compiler chose that particular strategy.
+the assembly code from which the goto code was generated. The conditional jump
+instruction jg (line 7) is the key instruction in implementing a loop. It determines
+whether to continue iterating or to exit the loop.
+Reverse engineering assembly code, such as that of Figure 3.19(c), requires
+determining which registers are used for which program values. In this case, the
+mapping is fairly simple to determine: We know that n will be passed to the
+function in register %rdi. We can see register %rax getting initialized to 1 (line
+2). (Recall that, although the instruction has %eax as its destination, it will also
+set the upper 4 bytes of %rax to 0.) We can see that this register is also updated
+by multiplication on line 4. Furthermore, since %rax is used to return the function
+value, it is often chosen to hold program values that are returned. We therefore
+conclude that %rax corresponds to program value result.
+Practice Problem 3.23 (solution page 370)
+For the C code
+short dw_loop(short x) {
+short y = x/9;
+short *p = &x;
+short n = 4*x;
+do {
+x += y;
+(*p) += 5;
+n -= 2;
+} while (n > 0);
+return x;
+}
+gcc generates the following assembly code:

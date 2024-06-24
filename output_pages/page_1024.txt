@@ -1,0 +1,59 @@
+Section 12.3
+Concurrent Programming with Threads
+1023
+with a process form a pool of peers, independent of which threads were created
+by which other threads. The main thread is distinguished from other threads only
+in the sense that it is always the ﬁrst thread to run in the process. The main impact
+of this notion of a pool of peers is that a thread can kill any of its peers or wait
+for any of its peers to terminate. Further, each peer can read and write the same
+shared data.
+12.3.2
+Posix Threads
+Posix threads (Pthreads) is a standard interface for manipulating threads from C
+programs. It was adopted in 1995 and is available on all Linux systems. Pthreads
+deﬁnes about 60 functions that allow programs to create, kill, and reap threads,
+to share data safely with peer threads, and to notify peers about changes in the
+system state.
+Figure 12.13 shows a simple Pthreads program. The main thread creates a peer
+thread and then waits for it to terminate. The peer thread prints Hello, world!\n
+and terminates. When the main thread detects that the peer thread has terminated,
+it terminates the process by calling exit. This is the ﬁrst threaded program we
+have seen, so let us dissect it carefully. The code and local data for a thread are
+encapsulated in a thread routine. As shown by the prototype in line 2, each thread
+routine takes as input a single generic pointer and returns a generic pointer. If
+you want to pass multiple arguments to a thread routine, then you should put the
+arguments into a structure and pass a pointer to the structure. Similarly, if you
+code/conc/hello.c
+1
+#include "csapp.h"
+2
+void *thread(void *vargp);
+3
+4
+int main()
+5
+{
+6
+pthread_t tid;
+7
+Pthread_create(&tid, NULL, thread, NULL);
+8
+Pthread_join(tid, NULL);
+9
+exit(0);
+10
+}
+11
+12
+void *thread(void *vargp) /* Thread routine */
+13
+{
+14
+printf("Hello, world!\n");
+15
+return NULL;
+16
+}
+code/conc/hello.c
+Figure 12.13
+hello.c: The Pthreads “Hello, world!” program.

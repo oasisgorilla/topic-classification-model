@@ -1,0 +1,48 @@
+708
+Chapter 7
+Linking
+Figure 7.2
+Static linking. The linker
+combines relocatable
+object ﬁles to form an
+executable object ﬁle
+prog.
+main.c
+main.o
+Translators
+(cpp, cc1, as)
+Linker (ld)
+prog Fully linked
+executable object file
+Relocatable
+object files
+Source files
+sum.c
+sum.o
+Translators
+(cpp, cc1, as)
+cpp [other arguments] main.c /tmp/main.i
+Next, the driver runs the C compiler (cc1), which translates main.i into an ASCII
+assembly-language ﬁle main.s:
+cc1 /tmp/main.i -Og [other arguments] -o /tmp/main.s
+Then, the driver runs the assembler (as), which translates main.s into a binary
+relocatable object ﬁle main.o:
+as [other arguments] -o /tmp/main.o /tmp/main.s
+The driver goes through the same process to generate sum.o. Finally, it runs the
+linker program ld, which combines main.o and sum.o, along with the necessary
+system object ﬁles, to create the binary executable object ﬁle prog:
+ld -o prog [system object ﬁles and args] /tmp/main.o /tmp/sum.o
+To run the executable prog, we type its name on the Linux shell’s command
+line:
+linux> ./prog
+The shell invokes a function in the operating system called the loader, which copies
+the code and data in the executable ﬁle prog into memory, and then transfers
+control to the beginning of the program.
+7.2
+Static Linking
+Static linkers such as the Linux ld program take as input a collection of relocatable
+object ﬁles and command-line arguments and generate as output a fully linked
+executable object ﬁle that can be loaded and run. The input relocatable object
+ﬁles consist of various code and data sections, where each section is a contiguous
+sequence of bytes. Instructions are in one section, initialized global variables are
+in another section, and uninitialized variables are in yet another section.

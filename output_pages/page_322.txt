@@ -1,0 +1,44 @@
+Section 3.10
+Combining Control and Data in Machine-Level Programs
+321
+Aside
+Worms and viruses
+Both worms and viruses are pieces of code that attempt to spread themselves among computers. As
+described by Spafford [105], a worm is a program that can run by itself and can propagate a fully working
+version of itself to other machines. A virus is a piece of code that adds itself to other programs, including
+operating systems. It cannot run independently. In the popular press, the term “virus” is used to refer
+to a variety of different strategies for spreading attacking code among systems, and so you will hear
+people saying “virus” for what more properly should be called a “worm.”
+this pointer requires knowing the stack address where the string will be located.
+Historically, the stack addresses for a program were highly predictable. For all
+systems running the same combination of program and operating system version,
+the stack locations were fairly stable across many machines. So, for example, if
+an attacker could determine the stack addresses used by a common Web server,
+it could devise an attack that would work on many machines. Using infectious
+disease as an analogy, many systems were vulnerable to the exact same strain of
+a virus, a phenomenon often referred to as a security monoculture [96].
+The idea of stack randomization is to make the position of the stack vary from
+one runofaprogramtoanother.Thus, evenifmanymachinesarerunningidentical
+code, they would all be using different stack addresses. This is implemented by
+allocating a random amount of space between 0 and n bytes on the stack at the
+start of a program, for example, by using the allocation function alloca, which
+allocates space for a speciﬁed number of bytes on the stack. This allocated space is
+not used by the program, but it causes all subsequent stack locations to vary from
+one execution of a program to another. The allocation range n needs to be large
+enough to get sufﬁcient variations in the stack addresses, yet small enough that it
+does not waste too much space in the program.
+The following code shows a simple way to determine a “typical” stack address:
+int main() {
+long local;
+printf("local at %p\n", &local);
+return 0;
+}
+This code simply prints the address of a local variable in the main function.
+Running the code 10,000 times on a Linux machine in 32-bit mode, the addresses
+ranged from 0xff7fc59c to 0xffffd09c, a range of around 223. Running in 64-
+bit mode on the newer machine, the addresses ranged from 0x7fff0001b698 to
+0x7ffffffaa4a8, a range of nearly 232.
+Stack randomization has become standard practice in Linux systems. It is
+one of a larger class of techniques known as address-space layout randomization,
+or ASLR [99]. With ASLR, different parts of the program, including program
+code, library code, stack, global variables, and heap data, are loaded into different

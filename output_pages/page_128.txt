@@ -1,0 +1,65 @@
+Section 2.3
+Integer Arithmetic
+127
+Figure 2.24
+Relation between integer
+and two’s-complement
+addition. When x + y is
+less than −2w−1, there is a
+negative overﬂow. When
+it is greater than or equal
+to 2w−1, there is a positive
+overﬂow.
++2w
+–2w
+0
+0
++2w–1
++2w–1
+–2w–1
+–2w–1
+Negative overflow
+Positive overflow
+Case 4
+Case 3
+Case 2
+Case 1
+Normal
+x +ty
+x + y
+x +t
+w y = U2Tw(T2Uw(x) +u
+w T2Uw(y))
+(2.14)
+By Equation 2.6, we can write T2Uw(x) as xw−12w + x and T2Uw(y) as
+yw−12w + y. Using the property that +u
+w is simply addition modulo 2w, along with
+the properties of modular addition, we then have
+x +t
+w y = U2Tw(T2Uw(x) +u
+w T2Uw(y))
+= U2Tw[(xw−12w + x + yw−12w + y) mod 2w]
+= U2Tw[(x + y) mod 2w]
+The terms xw−12w and yw−12w drop out since they equal 0 modulo 2w.
+To better understand this quantity, let us deﬁne z as the integer sum z .
+= x + y,
+z′ as z′ .
+= z mod 2w, and z′′ as z′′ .
+= U2Tw(z′). The value z′′ is equal to x +t
+w y. We
+can divide the analysis into four cases as illustrated in Figure 2.24:
+1. −2w ≤z < −2w−1. Then we will have z′ = z + 2w. This gives 0 ≤z′ < −2w−1 +
+2w = 2w−1. Examining Equation 2.7, we see that z′ is in the range such that
+z′′ = z′. This is the case of negative overﬂow. We have added two negative
+numbers x and y (that’s the only way we can have z < −2w−1) and obtained
+a nonnegative result z′′ = x + y + 2w.
+2. −2w−1 ≤z < 0. Then we will again have z′ = z + 2w, giving −2w−1 + 2w =
+2w−1 ≤z′ < 2w. Examining Equation 2.7, we see that z′ is in such a range that
+z′′ = z′ −2w, and therefore z′′ = z′ −2w = z + 2w −2w = z. That is, our two’s-
+complement sum z′′ equals the integer sum x + y.
+3. 0 ≤z < 2w−1. Then we will have z′ = z, giving 0 ≤z′ < 2w−1, and hence z′′ =
+z′ = z. Again, the two’s-complement sum z′′ equals the integer sum x + y.
+4. 2w−1 ≤z < 2w. We will again have z′ = z, giving 2w−1 ≤z′ < 2w. But in this
+range we have z′′ = z′ −2w, giving z′′ = x + y −2w. This is the case of positive
+overﬂow. We have added two positive numbers x and y (that’s the only way
+we can have z ≥2w−1) and obtained a negative result z′′ = x + y −2w.

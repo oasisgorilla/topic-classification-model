@@ -1,0 +1,50 @@
+520
+Chapter 4
+Processor Architecture
+14
+addq %r10,%rax
+# Add to sum
+15
+addq %r8,%rdi
+# start++
+16
+subq %r9,%rsi
+# count--
+17
+test:
+18
+jne
+loop
+# Stop when 0
+Solution to Problem 4.7 (page 406)
+Although it is hard to imagine any practical use for this particular instruction, it is
+important when designing a system to avoid any ambiguities in the speciﬁcation.
+We want to determine a reasonable convention for the instruction’s behavior and
+to make sure each of our implementations adheres to this convention.
+The subq instruction in this test compares the starting value of %rsp to the
+value pushed onto the stack. The fact that the result of this subtraction is zero
+implies that the old value of %rsp gets pushed.
+Solution to Problem 4.8 (page 407)
+It is even more difﬁcult to imagine why anyone would want to pop to the stack
+pointer. Still, we should decide on a convention and stick with it. This code
+sequence pushes 0xabcd onto the stack, pops to %rsp, and returns the popped
+value. Since the result equals 0xabcd, we can deduce that popq %rsp sets the stack
+pointer to the value read from memory. It is therefore equivalent to the instruction
+mrmovq (%rsp),%rsp.
+Solution to Problem 4.9 (page 410)
+The exclusive-or function requires that the 2 bits have opposite values:
+bool xor = (!a && b) || (a && !b);
+In general, the signals eq and xor will be complements of each other. That is,
+one will equal 1 whenever the other is 0.
+Solution to Problem 4.10 (page 413)
+The outputs of the exclusive-or circuits will be the complements of the bit equal-
+ity values. Using DeMorgan’s laws (Web Aside data:bool on page 88), we can
+implement and using or and not, yielding the circuit shown in Figure 4.71.
+Solution to Problem 4.11 (page 415)
+We can see that the second part of the case expression can be written as
+B <= C
+: B;
+Since the ﬁrst line will detect the case where A is the minimum element, the second
+line need only determine whether B or C is minimum.
+Solution to Problem 4.12 (page 416)
+This design is a variant of the one to ﬁnd the minimum of the three inputs:

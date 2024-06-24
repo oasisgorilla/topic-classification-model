@@ -1,0 +1,194 @@
+1034
+Chapter 12
+Concurrent Programming
+(a) Correct ordering
+Step
+Thread
+Instr.
+%rdx1
+%rdx2
+cnt
+1
+1
+H1
+—
+—
+0
+2
+1
+L1
+0
+—
+0
+3
+1
+U1
+1
+—
+0
+4
+1
+S1
+1
+—
+1
+5
+2
+H2
+—
+—
+1
+6
+2
+L2
+—
+1
+1
+7
+2
+U2
+—
+2
+1
+8
+2
+S2
+—
+2
+2
+9
+2
+T2
+—
+2
+2
+10
+1
+T1
+1
+—
+2
+(b) Incorrect ordering
+Step
+Thread
+Instr.
+%rdx1
+%rdx2
+cnt
+1
+1
+H1
+—
+—
+0
+2
+1
+L1
+0
+—
+0
+3
+1
+U1
+1
+—
+0
+4
+2
+H2
+—
+—
+0
+5
+2
+L2
+—
+0
+0
+6
+1
+S1
+1
+—
+1
+7
+1
+T1
+1
+—
+1
+8
+2
+U2
+—
+1
+1
+9
+2
+S2
+—
+1
+1
+10
+2
+T2
+—
+1
+1
+Figure 12.18
+Instruction orderings for the ﬁrst loop iteration in badcnt.c.
+Here is the crucial point: In general, there is no way for you to predict whether
+the operating system will choose a correct ordering for your threads. For example,
+Figure 12.18(a) shows the step-by-step operation of a correct instruction ordering.
+After each thread has updated the shared variable cnt, its value in memory is 2,
+which is the expected result.
+On the other hand, the ordering in Figure 12.18(b) produces an incorrect value
+for cnt. The problem occurs because thread 2 loads cnt in step 5, after thread 1
+loads cnt in step 2 but before thread 1 stores its updated value in step 6. Thus, each
+thread ends up storing an updated counter value of 1. We can clarify these notions
+of correct and incorrect instruction orderings with the help of a device known as
+a progress graph, which we introduce in the next section.
+Practice Problem 12.7 (solution page 1073)
+Complete the table for the following instruction ordering of badcnt.c:
+Step
+Thread
+Instr.
+%rdx1
+%rdx2
+cnt
+1
+1
+H1
+—
+—
+0
+2
+1
+L1
+3
+2
+H2
+4
+2
+L2
+5
+2
+U2
+6
+2
+S2
+7
+1
+U1
+Step
+Thread
+Instr.
+%rdx1
+%rdx2
+cnt
+8
+1
+S1
+9
+1
+T1

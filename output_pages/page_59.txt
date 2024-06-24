@@ -1,0 +1,46 @@
+58
+Chapter 1
+A Tour of Computer Systems
+1.9
+Important Themes
+This concludes our initial whirlwind tour of systems. An important idea to take
+away from this discussion is that a system is more than just hardware. It is a
+collection of intertwined hardware and systems software that must cooperate in
+order to achieve the ultimate goal of running application programs. The rest of
+this book will ﬁll in some details about the hardware and the software, and it will
+show how, by knowing these details, you can write programs that are faster, more
+reliable, and more secure.
+To close out this chapter, we highlight several important concepts that cut
+across all aspects of computer systems. We will discuss the importance of these
+concepts at multiple places within the book.
+1.9.1
+Amdahl’s Law
+Gene Amdahl, one of the early pioneers in computing, made a simple but insight-
+ful observation about the effectiveness of improving the performance of one part
+of a system. This observation has come to be known as Amdahl’s law. The main
+idea is that when we speed up one part of a system, the effect on the overall sys-
+tem performance depends on both how signiﬁcant this part was and how much
+it sped up. Consider a system in which executing some application requires time
+Told. Suppose some part of the system requires a fraction α of this time, and that
+we improve its performance by a factor of k. That is, the component originally re-
+quired time αTold, and it now requires time (αTold)/k. The overall execution time
+would thus be
+Tnew = (1 −α)Told + (αTold)/k
+= Told[(1 −α) + α/k]
+From this, we can compute the speedup S = Told/Tnew as
+S =
+1
+(1 −α) + α/k
+(1.1)
+As an example, consider the case where a part of the system that initially
+consumed 60% of the time (α = 0.6) is sped up by a factor of 3 (k = 3). Then
+we get a speedup of 1/[0.4 + 0.6/3] = 1.67×. Even though we made a substantial
+improvement to a major part of the system, our net speedup was signiﬁcantly less
+than the speedup for the one part. This is the major insight of Amdahl’s law—
+to signiﬁcantly speed up the entire system, we must improve the speed of a very
+large fraction of the overall system.
+Practice Problem 1.1 (solution page 64)
+Suppose you work as a truck driver, and you have been hired to carry a load of
+potatoes from Boise, Idaho, to Minneapolis, Minnesota, a total distance of 2,500
+kilometers. You estimate you can average 100 km/hr driving within the speed
+limits, requiring a total of 25 hours for the trip.

@@ -1,0 +1,170 @@
+1106
+Index
+mispredicted branches
+handling, 479–480
+performance penalties, 503, 556,
+585–589
+miss rates, 667
+misses, caches, 506, 648
+kinds, 648–649
+penalties, 668, 842
+rates, 667
+mkdir command, 928
+mm_coalesce [CS:APP] allocator:
+boundary tag coalescing, 896
+mm_free [CS:APP] allocator: free
+heap block, 896
+mm-ijk [CS:APP] matrix multiply ijk,
+681
+mm-ikj [CS:APP] matrix multiply ikj,
+681
+mm_init [CS:APP] allocator: initialize
+heap, 894
+mm-jik [CS:APP] matrix multiply jik,
+681
+mm-jki [CS:APP] matrix multiply jki,
+681
+mm-kij [CS:APP] matrix multiply kij,
+681
+mm-kji [CS:APP] matrix multiply kji,
+681
+mm_malloc [CS:APP] allocator:
+allocate heap block, 896, 897
+mmap [Unix] map disk object into
+memory, 873, 873–875
+MMUs (memory management units),
+840, 843
+MMX media instructions, 203, 330
+Mockapetris, Paul, 967
+mode bits, 771
+modern processor performance,
+554–567
+modes
+kernel, 762, 764
+processes, 770–772, 771
+user, 762, 764
+modiﬁed sequential processor
+implementation, 457–458
+modular arithmetic, 121–122, 125
+modules
+DRAM, 620, 621
+object, 709
+monitors, Java, 1046
+monotonicity assumption, 882
+monotonicity property, 160
+Moore, Gordon, 205
+Moore’s Law, 205, 205
+mosaic browser, 985
+motherboards, 45
+Motorola RISC processors, 399
+mov [instruction class] move data, 218,
+218–219
+movabsq [x86-64] move absolute quad
+word, 219, 219
+movb [x86-64] move byte, 219
+move absolute quad word instruction,
+219, 219
+move aligned, packed double
+precision instruction, 332
+move aligned, packed single precision
+instruction, 332
+move and sign-extend instruction, 220,
+221
+move byte instruction, 219
+move data instructions, 218–225
+move double precision instruction,
+332
+move double word instruction, 219
+move if even parity instruction, 360
+move if greater instruction, 253, 393
+move if greater or equal instruction,
+253, 393
+move if less instruction, 253, 393
+move if less or equal instruction, 253,
+393
+move if negative instruction, 253
+move if nonnegative instruction, 253
+move if not equal instruction, 253,
+393
+move if not greater instruction, 253
+move if not greater or equal
+instruction, 253
+move if not less instruction, 253
+move if not less or equal instruction,
+253
+move if not unsigned greater
+instruction, 253
+move if not unsigned less instruction,
+253
+move if not unsigned less or equal
+instruction, 253
+move if not zero instruction, 253
+move if unsigned greater instruction,
+253
+move if unsigned greater or equal
+instruction, 253
+move if unsigned less instruction, 253
+move if unsigned less or equal
+instruction, 253
+move if zero instruction, 253
+move instructions, conditional, 250–
+256, 586–589
+move quad word instruction, 219
+move sign-extended byte to double
+word instruction, 221
+move sign-extended byte to quad
+word instruction, 221
+move sign-extended byte to word
+instruction, 221
+move sign-extended double word to
+quad word instruction, 221
+move sign-extended word to double
+word instruction, 221
+move sign-extended word to quad
+word instruction, 221
+move single precision instruction, 332
+move when equal instruction, 393
+move with zero extension instruction,
+220, 220
+move word instruction, 219
+move zero-extended byte to double
+word instruction, 220
+move zero-extended byte to quad
+word instruction, 220
+move zero-extended byte to word
+instruction, 220
+move zero-extended word to double
+word instruction, 220
+move zero-extended word to quad
+word instruction, 220
+movement operations, ﬂoating-point
+code, 332–337
+movl [x86-64] move double word, 219
+movq [x86-64] move quad word, 219
+movs [instruction class] move and
+sign-extend, 220, 221
+movsbl [x86-64] move sign-extended
+byte to double word, 221
+movsbq [x86-64] move sign-extended
+byte to quad word, 221
+movsbw [x86-64] move sign-extended
+byte to word, 221
+movslq [x86-64] move sign-extended
+double word to quad word, 221
+movswl [x86-64] move sign-extended
+word to double word, 221
+movswq [x86-64] move sign-extended
+word to quad word, 221
+movw [x86-64] move word, 219
+movz [instruction class] move with
+zero extension, 220, 220
+movzbl [x86-64] move zero-extended
+byte to double word, 220
+movzbq [x86-64] move zero-extended
+byte to quad word, 220
+movzbw [x86-64] move zero-extended
+byte to word, 220
+movzwl [x86-64] move zero-extended
+word to double word, 220
+movzwq [x86-64] move zero-extended
+word to quad word, 220

@@ -1,0 +1,182 @@
+700
+Chapter 6
+The Memory Hierarchy
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+CT
+CT
+CT
+CT
+CT
+CT
+CT
+CT
+CI
+CI
+CI
+CO
+CO
+Solution to Problem 6.13 (page 664)
+Address: 0x0D53
+A. Address format (1 bit per box):
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+0
+1
+1
+0
+1
+0
+1
+0
+1
+0
+0
+1
+1
+CT
+CT
+CT
+CT
+CT
+CT
+CT
+CT
+CI
+CI
+CI
+CO
+CO
+B. Memory reference:
+Parameter
+Value
+Cache block offset (CO)
+0x3
+Cache set index (CI)
+0x4
+Cache tag (CT)
+0x6A
+Cache hit? (Y/N)
+N
+Cache byte returned
+—
+Solution to Problem 6.14 (page 665)
+Address: 0x0CB4
+A. Address format (1 bit per box):
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+0
+1
+1
+0
+0
+1
+0
+1
+1
+0
+1
+0
+0
+CT
+CT
+CT
+CT
+CT
+CT
+CT
+CT
+CI
+CI
+CI
+CO
+CO
+B. Memory reference:
+Parameter
+Value
+Cache block offset (CO)
+0x0
+Cache set index (CI)
+0x5
+Cache tag (CT)
+0x65
+Cache hit? (Y/N)
+N
+Cache byte returned
+—
+Solution to Problem 6.15 (page 665)
+Address: 0x0A31
+A. Address format (1 bit per box):
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+0
+1
+0
+1
+0
+0
+0
+1
+1
+0
+0
+0
+1
+CT
+CT
+CT
+CT
+CT
+CT
+CT
+CT
+CI
+CI
+CI
+CO
+CO
+B. Memory reference:

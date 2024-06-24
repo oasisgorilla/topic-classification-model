@@ -1,0 +1,62 @@
+892
+Chapter 9
+Virtual Memory
+Prologue
+block
+Regular
+block 1
+Regular
+block 2
+Start
+of
+heap
+8/1
+8/1
+hdr
+hdr
+ftr
+ftr
+Regular
+block n
+Epilogue
+block hdr
+hdr
+ftr
+0/1
+static char *heap_listp 
+Double-
+word
+aligned
+. . .
+Figure 9.42
+Invariant form of the implicit free list.
+that consists of only a header. The prologue and epilogue blocks are tricks that
+eliminate the edge conditions during coalescing. The allocator uses a single private
+(static) global variable (heap_listp) that always points to the prologue block.
+(As a minor optimization, we could make it point to the next block instead of the
+prologue block.)
+Basic Constants and Macros for Manipulating the Free List
+Figure 9.43 shows some basic constants and macros that we will use throughout
+the allocator code. Lines 2–4 deﬁne some basic size constants: the sizes of words
+(WSIZE) and double words (DSIZE), and the size of the initial free block and
+the default size for expanding the heap (CHUNKSIZE).
+Manipulating the headers and footers in the free list can be troublesome
+because it demands extensive use of casting and pointer arithmetic. Thus, we ﬁnd
+it helpful to deﬁne a small set of macros for accessing and traversing the free list
+(lines 9–25). The PACK macro (line 9) combines a size and an allocate bit and
+returns a value that can be stored in a header or footer.
+The GET macro (line 12) reads and returns the word referenced by argu-
+ment p. The casting here is crucial. The argument p is typically a (void *) pointer,
+which cannot be dereferenced directly. Similarly, the PUT macro (line 13) stores
+val in the word pointed at by argument p.
+The GET_SIZE and GET_ALLOC macros (lines 16–17) return the size and
+allocated bit, respectively, from a header or footer at address p. The remaining
+macros operate on block pointers (denoted bp) that point to the ﬁrst payload
+byte. Given a block pointer bp, the HDRP and FTRP macros (lines 20–21) return
+pointers to the block header and footer, respectively. The NEXT_BLKP and
+PREV_BLKP macros (lines 24–25) return the block pointers of the next and
+previous blocks, respectively.
+The macros can be composed in various ways to manipulate the free list. For
+example, given a pointer bp to the current block, we could use the following line
+of code to determine the size of the next block in memory:
+size_t size = GET_SIZE(HDRP(NEXT_BLKP(bp)));

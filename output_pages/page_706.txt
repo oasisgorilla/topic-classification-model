@@ -1,0 +1,54 @@
+CHAPTER 7
+Linking
+7.1
+Compiler Drivers
+707
+7.2
+Static Linking
+708
+7.3
+Object Files
+709
+7.4
+Relocatable Object Files
+710
+7.5
+Symbols and Symbol Tables
+711
+7.6
+Symbol Resolution
+715
+7.7
+Relocation
+725
+7.8
+Executable Object Files
+731
+7.9
+Loading Executable Object Files
+733
+7.10
+Dynamic Linking with Shared Libraries
+734
+7.11
+Loading and Linking Shared Libraries from Applications
+737
+7.12
+Position-Independent Code (PIC)
+740
+7.13
+Library Interpositioning
+743
+7.14
+Tools for Manipulating Object Files
+749
+7.15
+Summary
+749
+Bibliographic Notes
+750
+Homework Problems
+750
+Solutions to Practice Problems
+753
+705

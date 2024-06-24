@@ -1,0 +1,120 @@
+154
+Chapter 2
+Representing and Manipulating Information
+Bits
+e
+E
+2E
+f
+M
+2E × M
+V
+Decimal
+0 01 10
+0 01 11
+0 10 00
+0 10 01
+0 10 10
+0 10 11
+0 11 00
+—
+—
+—
+—
+—
+—
+—
+0 11 01
+—
+—
+—
+—
+—
+—
+—
+0 11 10
+—
+—
+—
+—
+—
+—
+—
+0 11 11
+—
+—
+—
+—
+—
+—
+—
+Figure 2.36 shows the representations and numeric values of some important
+single- and double-precision ﬂoating-point numbers. As with the 8-bit format
+shown in Figure 2.35, we can see some general properties for a ﬂoating-point
+representation with a k-bit exponent and an n-bit fraction:
+. The value +0.0 always has a bit representation of all zeros.
+. The smallest positive denormalized value has a bit representation consisting of
+a 1 in the least signiﬁcant bit position and otherwise all zeros. It has a fraction
+(and signiﬁcand) value M = f = 2−n and an exponent value E = −2k−1 + 2.
+The numeric value is therefore V = 2−n−2k−1+2.
+. The largest denormalized value has a bit representation consisting of an
+exponent ﬁeld of all zeros and a fraction ﬁeld of all ones. It has a fraction
+(and signiﬁcand) value M = f = 1 −2−n (which we have written 1 −ϵ) and
+an exponent value E = −2k−1 + 2. The numeric value is therefore V = (1 −
+2−n) × 2−2k−1+2, which is just slightly smaller than the smallest normalized
+value.
+. The smallest positive normalized value has a bit representation with a 1 in
+the least signiﬁcant bit of the exponent ﬁeld and otherwise all zeros. It has a
+Single precision
+Double precision
+Description
+exp
+frac
+Value
+Decimal
+Value
+Decimal
+Zero
+00 . . . 00
+0 . . . 00
+0
+0.0
+0
+0.0
+Smallest denormalized
+00 . . . 00
+0 . . . 01
+2−23 × 2−126
+1.4 × 10−45
+2−52 × 2−1022
+4.9 × 10−324
+Largest denormalized
+00 . . . 00
+1 . . . 11
+(1 −ϵ) × 2−126
+1.2 × 10−38
+(1 −ϵ) × 2−1022
+2.2 × 10−308
+Smallest normalized
+00 . . . 01
+0 . . . 00
+1 × 2−126
+1.2 × 10−38
+1 × 2−1022
+2.2 × 10−308
+One
+01 . . . 11
+0 . . . 00
+1 × 20
+1.0
+1 × 20
+1.0
+Largest normalized
+11 . . . 10
+1 . . . 11
+(2 −ϵ) × 2127
+3.4 × 1038
+(2 −ϵ) × 21023
+1.8 × 10308
+Figure 2.36
+Examples of nonnegative ﬂoating-point numbers.

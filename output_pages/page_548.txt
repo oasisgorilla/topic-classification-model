@@ -1,0 +1,68 @@
+Section 5.4
+Eliminating Loop Inefﬁciencies
+547
+250
+200
+150
+100
+50
+0
+0
+100,000
+200,000
+300,000
+400,000
+500,000
+String length
+CPU seconds
+lower1
+lower2
+(a)
+String length
+Function
+16,384
+32,768
+65,536
+131,072
+262,144
+524,288
+1,048,576
+lower1
+0.26
+1.03
+4.10
+16.41
+65.62
+262.48
+1,049.89
+lower2
+0.0000
+0.0001
+0.0001
+0.0003
+0.0005
+0.0010
+0.0020
+(b)
+Figure 5.8
+Comparative performance of lowercase conversion routines. The original code lower1 has a
+quadratic run time due to an inefﬁcient loop structure. The modiﬁed code lower2 has a linear run time.
+Function lower2 shown in Figure 5.7 is identical to that of lower1, except
+that we have moved the call to strlen out of the loop. The performance im-
+proves dramatically. For a string length of 1,048,576, the function requires just 2.0
+milliseconds—over 500,000 times faster than lower1. Each doubling of the string
+length causes a doubling of the run time—a clear indicator of linear run time. For
+longer strings, the run-time improvement will be even greater.
+In an ideal world, a compiler would recognize that each call to strlen in
+the loop test will return the same result, and thus the call could be moved out of
+the loop. This would require a very sophisticated analysis, since strlen checks
+the elements of the string and these values are changing as lower1 proceeds. The
+compiler would need to detect that even though the characters within the string are
+changing, none are being set from nonzero to zero, or vice versa. Such an analysis
+is well beyond the ability of even the most sophisticated compilers, even if they
+employ inlining, and so programmers must do such transformations themselves.
+This example illustrates a common problem in writing programs, in which a
+seemingly trivial piece of code has a hidden asymptotic inefﬁciency. One would
+not expect a lowercase conversion routine to be a limiting factor in a program’s
+performance. Typically, programs are tested and analyzed on small data sets, for
+which the performance of lower1 is adequate. When the program is ultimately

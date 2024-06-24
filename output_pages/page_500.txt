@@ -1,0 +1,80 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+499
+F
+CC
+W
+icode
+valE
+valM
+dstE
+stat
+stat
+stat
+stat
+dstM
+M
+icode
+Cnd
+valE
+valA
+dstE dstM
+E
+icode
+ifun
+valC
+valA
+valB
+dstM srcA srcB
+dstE
+D
+icode
+ifun
+valC
+valP
+rB
+rA
+F
+predPC
+srcA
+srcB
+Stat
+Pipeline
+control
+logic
+M_icode
+W_stat
+e_Cnd
+m_stat
+E_dstM
+d_srcB
+d_srcA
+D_icode
+E_icode
+E_bubble
+set_cc
+W_stall
+M_bubble
+D_bubble
+D_stall
+F_stall
+Figure 4.68
+PIPE pipeline control logic. This logic overrides the normal ﬂow of instructions through the
+pipeline to handle special conditions such as procedure returns, mispredicted branches, load/use hazards,
+and program exceptions.
+stall and bubble control signals for the pipeline registers and also determines
+whether the condition code registers should be updated. We can combine the
+detection conditions of Figure 4.64 with the actions of Figure 4.66 to create HCL
+descriptions for the different pipeline control signals.
+Pipeline register F must be stalled for either a load/use hazard or a ret
+instruction:
+bool F_stall =
+# Conditions for a load/use hazard
+E_icode in { IMRMOVQ, IPOPQ } &&
+E_dstM in { d_srcA, d_srcB } ||
+# Stalling at fetch while ret passes through pipeline
+IRET in { D_icode, E_icode, M_icode };
+Practice Problem 4.39 (solution page 529)
+Write HCL code for the signal D_stall in the PIPE implementation.
+Pipeline register D must be set to bubble for a mispredicted branch or a ret
+instruction. As the analysis in the preceding section shows, however, it should

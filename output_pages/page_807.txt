@@ -1,0 +1,45 @@
+806
+Chapter 8
+Exceptional Control Flow
+clears the ﬂag. For ﬂags that are shared in this way, C provides an integer
+data type, sig_atomic_t, for which reads and writes are guaranteed to be
+atomic (uninterruptible) because they can be implemented with a single
+instruction:
+volatile sig_atomic_t flag;
+Since they can’t be interrupted, you can safely read from and write to
+sig_atomic_t variables without temporarily blocking signals. Note that
+the guarantee of atomicity only applies to individual reads and writes.
+It does not apply to updates such as flag++ or flag = flag + 10, which
+might require multiple instructions.
+Keep in mind that the guidelines we have presented are conservative, in
+the sense that they are not always strictly necessary. For example, if you know
+that a handler can never modify errno, then you don’t need to save and restore
+errno. Or if you can prove that no instance of printf can ever be interrupted
+by a handler, then it is safe to call printf from the handler. The same holds for
+accesses to shared global data structures. However, it is very difﬁcult to prove such
+assertions in general. So we recommend that you take the conservative approach
+and follow the guidelines by keeping your handlers as simple as possible, calling
+safe functions, saving and restoring errno, protecting accesses to shared data
+structures, and using volatile and sig_atomic_t.
+Correct Signal Handling
+One of the nonintuitive aspects of signals is that pending signals are not queued.
+Because the pending bit vector contains exactly one bit for each type of signal,
+there can be at most one pending signal of any particular type. Thus, if two signals
+of type k are sent to a destination process while signal k is blocked because the
+destination process is currently executing a handler for signal k, then the second
+signal is simply discarded; it is not queued. The key idea is that the existence of a
+pending signal merely indicates that at least one signal has arrived.
+To see how this affects correctness, let’s look at a simple application that
+is similar in nature to real programs such as shells and Web servers. The basic
+structure is that a parent process creates some children that run independently for
+a while and then terminate. The parent must reap the children to avoid leaving
+zombies in the system. But we also want the parent to be free to do other work
+while the children are running. So we decide to reap the children with a SIGCHLD
+handler, instead of explicitly waiting for the children to terminate. (Recall that
+the kernel sends a SIGCHLD signal to the parent whenever one of its children
+terminates or stops.)
+Figure 8.36 shows our ﬁrst attempt. The parent installs a SIGCHLD handler
+and then creates three children. In the meantime, the parent waits for a line of
+input from the terminal and then processes it. This processing is modeled by
+an inﬁnite loop. When each child terminates, the kernel notiﬁes the parent by
+sending it a SIGCHLD signal. The parent catches the SIGCHLD, reaps one child,

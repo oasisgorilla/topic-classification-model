@@ -1,0 +1,44 @@
+374
+Chapter 3
+Machine-Level Representation of Programs
+Solution to Problem 3.30 (page 272)
+This problem gives you a chance to reason about the control ﬂow of a switch
+statement. Answering the questions requires you to combine information from
+several places in the assembly code.
+. Line 2 of the assembly code adds 2 to x to set the lower range of the cases to
+zero. That means that the minimum case label is −2.
+. Lines 3 and 4 cause the program to jump to the default case when the adjusted
+case value is greater than 8. This implies that the maximum case label is
+−2 + 8 = 6.
+. In the jump table, we see that the entry on lines 6 (case value 2) and 9 (case
+value 5) have the same destination (.L2) as the jump instruction on line 4,
+indicating the default case behavior. Thus, case labels 2 and 5 are missing in
+the switch statement body.
+. In the jump table, we see that the entries on lines 3 and 10 have the same
+destination. These correspond to cases −1 and 6.
+. In the jump table, we see that the entries on lines 5 and 7 have the same
+destination. These correspond to cases 1 and 3.
+From this reasoning, we draw the following conclusions:
+A. The case labels in the switch statement body have values −2, −1, 0, 1, 3, 4,
+and 6.
+B. The case with destination .L5 has labels −1 and 6.
+C. The case with destination .L7 has labels 1 and 3.
+Solution to Problem 3.31 (page 273)
+The key to reverse engineering compiled switch statements is to combine the
+information from the assembly code and the jump table to sort out the different
+cases. We can see from the ja instruction (line 3) that the code for the default case
+has label .L2. We can see that the only other repeated label in the jump table is
+.L5, and so this must be the code for the cases C and D. We can see that the code
+falls through at line 8, and so label .L7 must match case A and label .L3 must
+match case B. That leaves only label .L6 to match case E.
+The original C code is as follows:
+void switcher(long a, long b, long c, long *dest)
+{
+long val;
+switch(a) {
+case 5:
+c = b ^ 15;
+/* Fall through */
+case 0:
+val = c + 112;
+break;

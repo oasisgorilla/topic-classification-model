@@ -1,0 +1,65 @@
+1076
+Chapter 12
+Concurrent Programming
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+Thread 2
+Thread 1
+V(s)
+P(s)
+P(s)
+V(s)
+P(t)
+V(t)
+P(t)
+V(t)
+Initially
+s1
+t0
+Forbidden
+region 
+for t
+Forbidden
+region 
+for s
+Forbidden
+region for t
+Figure 12.48
+Progress graph for a program that deadlocks.
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+Thread 2
+Thread 1
+V(s)
+P(s)
+P(s)
+V(s)
+P(t)
+V(t)
+P(t)
+V(t)
+Initially
+s1
+t1
+Forbidden
+region 
+for s
+Forbidden
+region 
+for t
+Figure 12.49
+Progress graph for the corrected deadlock-free program.

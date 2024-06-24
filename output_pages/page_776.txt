@@ -1,0 +1,35 @@
+Section 8.4
+Process Control
+775
+8.4.1
+Obtaining Process IDs
+Each process has a unique positive (nonzero) process ID (PID). The getpid
+function returns the PID of the calling process. The getppid function returns the
+PID of its parent (i.e., the process that created the calling process).
+#include <sys/types.h>
+#include <unistd.h>
+pid_t getpid(void);
+pid_t getppid(void);
+Returns: PID of either the caller or the parent
+The getpid and getppid routines return an integer value of type pid_t, which on
+Linux systems is deﬁned in types.h as an int.
+8.4.2
+Creating and Terminating Processes
+From a programmer’s perspective, we can think of a process as being in one of
+three states:
+Running. The process is either executing on the CPU or waiting to be executed
+and will eventually be scheduled by the kernel.
+Stopped. The execution of the process is suspended and will not be scheduled.
+A process stops as a result of receiving a SIGSTOP, SIGTSTP, SIGTTIN,
+or SIGTTOU signal, and it remains stopped until it receives a SIGCONT
+signal, at which point it becomes running again. (A signal is a form of
+software interrupt that we will describe in detail in Section 8.5.)
+Terminated. The process is stopped permanently. A process becomes termi-
+nated for one of three reasons: (1) receiving a signal whose default action
+is to terminate the process, (2) returning from the main routine, or (3)
+calling the exit function.
+#include <stdlib.h>
+void exit(int status);
+This function does not return
+The exit function terminates the process with an exit status of status. (The other
+way to set the exit status is to return an integer value from the main routine.)

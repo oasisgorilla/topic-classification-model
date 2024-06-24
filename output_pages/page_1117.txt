@@ -1,0 +1,167 @@
+1116
+Index
+stack corruption detection, 322–325
+stack frames, 276, 276–277
+alignment on, 312
+variable-size, 326–329
+stack pointers, 275
+stack protectors, 322–323
+stack randomization, 320–322
+stack storage allocation function, 326,
+360
+stacks, 55, 225, 225–227
+bottom, 226
+buffer overﬂow, 907
+with execve function, 787–788
+local storage, 284–287
+machine-level programming, 207
+overﬂow. See buffer overﬂow
+recursive procedures, 289–291
+run time, 275–277
+top, 226
+Y86-64 pipelining, 465
+stages, SEQ, 420–431
+decode and write-back, 442–444
+execute, 444–445
+fetch, 440–442
+memory stage, 445–447
+PC update, 447
+stalling
+for data hazards, 478
+pipeline, 469–472, 495–496
+Stallman, Richard, 42, 52
+standard C library, 40, 40–41
+standard error ﬁles, 927
+standard I/O library, 947, 947
+standard input ﬁles, 927
+standard output ﬁles, 927
+Standard Unix Speciﬁcation, 52
+_start, 734
+starvation in readers-writers problem,
+1044
+stat [Unix] fetch ﬁle metadata,
+939–940
+state machines, 1016
+states
+bistable memory, 617
+deadlock, 1063
+processor, 759
+programmer-visible, 391, 391–392
+progress graphs, 1035
+state machines, 1016
+static libraries, 720, 720–724
+static linkers, 708
+static linking, 708
+static RAM (SRAM), 49, 617–618
+cache. See caches and cache memory
+vs. DRAM, 618
+trends, 638–639
+static [C] variable and function
+attribute, 712, 713, 1030
+static variables, 1030, 1030–1031
+static Web content, 985
+status code registers, 471
+status codes
+HTTP, 989
+Y86-64, 399–400, 400
+status messages in HTTP, 989
+status register hazards, 471
+STDERR_FILENO [Unix] constant for
+standard error descriptor, 927
+stderr stream, 947
+STDIN_FILENO [Unix] constant for
+standard input descriptor, 927
+stdin stream, 947
+stdint.h ﬁle, 103
+<stdio.h> [Unix] standard I/O
+library header ﬁle, 120, 122
+stdlib, 40, 40–41
+STDOUT_FILENO [Unix] constant for
+standard output descriptor, 927
+stdout stream, 947
+stepi command, 316
+stepi4 command, 316
+Stevens, W. Richard, 939, 950, 1001,
+1077
+stopped processes, 775
+storage. See also information storage
+device hierarchy, 50
+registers, 287–289
+stack, 284–287
+storage classes for variables, 1030–1031
+store buffers, 593–594
+store instructions, 46
+store operations
+example, 624
+processors, 557
+store performance of memory, 591–
+597
+strace tool, 822
+straight-line code, 236–237
+strcat [C Stdlib] string concatenation
+function, 318
+strcpy [C Stdlib] string copy function,
+318
+streaming SIMD extensions (SSE)
+instructions, 203–204, 330
+alignment exceptions, 312
+parallelism, 582–583
+streams, 947
+buffers, 947
+directory, 941
+full duplex, 948
+strerror function, 774
+stride-1 reference patterns, 642
+stride-k reference patterns, 642
+string concatenation function, 318
+string copy function, 318
+string generation function, 318
+strings
+in buffer overﬂow, 315, 317
+length, 119
+lowercase conversions, 545–547
+representing, 85
+strings tool, 749
+strip tool, 749
+strlen [C Stdlib] string length
+function, 119, 545–547
+strong scaling, 1055
+strong symbols, 716
+.strtab section, 711
+strtok [C Stdlib] string function, 1060
+struct [C] structure data type, 301
+structures
+address, 969–970
+heterogeneous. See heterogeneous
+data structures
+machine-level programming, 207
+sub [instruction class] subtract, 228
+subdomains, 963
+subq [Y86-64] subtract, 392, 424
+substitution, inline, 537
+subtract instruction, 228
+subtract operation in execute stage,
+444
+subtraction, ﬂoating-point, 338
+sumarraycols [CS:APP] column-
+major sum, 672
+sumarrayrows [CS:APP] row-major
+sum, 671, 671
+sumvec [CS:APP] vector sum, 670,
+671–672
+Sun Microsystems, 81
+ﬁve-stage pipelines, 507
+RISC processors, 399
+security vulnerability, 136
+supercells, 618, 618–619
+superscalar processors, 62, 507, 554
+supervisor mode, 771
+surfaces, disks, 626, 631
+suspend process function, 785
+suspend until signal arrives function,
+786
+suspended processes, 775
+swap areas, 869
+swap ﬁles, 869
+swap space, 869
+swapped-in pages, 845

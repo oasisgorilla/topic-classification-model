@@ -1,0 +1,94 @@
+Section 4.1
+The Y86-64 Instruction Set Architecture
+401
+x86-64 code
+long sum(long *start, long count)
+start in %rdi, count in %rsi
+1
+sum:
+2
+movl
+$0, %eax
+sum = 0
+3
+jmp
+.L2
+Goto test
+4
+.L3:
+loop:
+5
+addq
+(%rdi), %rax
+Add *start to sum
+6
+addq
+$8, %rdi
+start++
+7
+subq
+$1, %rsi
+count--
+8
+.L2:
+test:
+9
+testq
+%rsi, %rsi
+Test sum
+10
+jne
+.L3
+If !=0, goto loop
+11
+rep; ret
+Return
+Y86-64 code
+long sum(long *start, long count)
+start in %rdi, count in %rsi
+1
+sum:
+2
+irmovq $8,%r8
+Constant 8
+3
+irmovq $1,%r9
+Constant 1
+4
+xorq %rax,%rax
+sum = 0
+5
+andq %rsi,%rsi
+Set CC
+6
+jmp
+test
+Goto test
+7
+loop:
+8
+mrmovq (%rdi),%r10
+Get *start
+9
+addq %r10,%rax
+Add to sum
+10
+addq %r8,%rdi
+start++
+11
+subq %r9,%rsi
+count--.
+Set CC
+12
+test:
+13
+jne
+loop
+Stop when 0
+14
+ret
+Return
+Figure 4.6
+Comparison of Y86-64 and x86-64 assembly programs. The sum function
+computes the sum of an integer array. The Y86-64 code follows the same general pattern
+as the x86-64 code.

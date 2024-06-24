@@ -1,0 +1,46 @@
+Section 4.3
+Sequential Y86-64 Implementations
+437
+memories (such as the register ﬁle), and we can mimic this effect for larger circuits
+using special clock circuits. Since our instruction memory is only used to read
+instructions, we can therefore treat this unit as if it were combinational logic.
+We are left with just four hardware units that require an explicit control
+over their sequencing—the program counter, the condition code register, the data
+memory, and the register ﬁle. These are controlled via a single clock signal that
+triggers the loading of new values into the registers and the writing of values to the
+random access memories. The program counter is loaded with a new instruction
+address every clock cycle. The condition code register is loaded only when an
+integer operation instruction is executed. The data memory is written only when
+an rmmovq, pushq, or call instruction is executed. The two write ports of the
+register ﬁle allow two program registers to be updated on every cycle, but we can
+use the special register ID 0xF as a port address to indicate that no write should
+be performed for this port.
+This clocking of the registers and memories is all that is required to control the
+sequencing of activities in our processor. Our hardware achieves the same effect as
+would a sequential execution of the assignments shown in the tables of Figures 4.18
+through 4.21, even though all of the state updates actually occur simultaneously
+and only as the clock rises to start the next cycle. This equivalence holds because
+of the nature of the Y86-64 instruction set, and because we have organized the
+computations in such a way that our design obeys the following principle:
+principle: No reading back
+The processor never needs to read back the state updated by an instruction in
+order to complete the processing of this instruction.
+This principle is crucial to the success of our implementation. As an illustra-
+tion, suppose we implemented the pushq instruction by ﬁrst decrementing %rsp
+by 8 and then using the updated value of %rsp as the address of a write operation.
+This approach would violate the principle stated above. It would require reading
+the updated stack pointer from the register ﬁle in order to perform the memory
+operation. Instead, our implementation (Figure 4.20) generates the decremented
+value of the stack pointer as the signal valE and then uses this signal both as the
+data for the register write and the address for the memory write. As a result, it
+can perform the register and memory writes simultaneously as the clock rises to
+begin the next clock cycle.
+As another illustration of this principle, we can see that some instructions (the
+integer operations) set the condition codes, and some instructions (the conditional
+move and jump instructions) read these condition codes, but no instruction must
+both set and then read the condition codes. Even though the condition codes are
+not set until the clock rises to begin the next clock cycle, they will be updated
+before any instruction attempts to read them.
+Figure 4.25 shows how the SEQ hardware would process the instructions at
+lines 3 and 4 in the following code sequence, shown in assembly code with the
+instruction addresses listed on the left:

@@ -1,0 +1,91 @@
+650
+Chapter 6
+The Memory Hierarchy
+Type
+What cached
+Where cached
+Latency (cycles)
+Managed by
+CPU registers
+4-byte or 8-byte words
+On-chip CPU registers
+0
+Compiler
+TLB
+Address translations
+On-chip TLB
+0
+Hardware MMU
+L1 cache
+64-byte blocks
+On-chip L1 cache
+4
+Hardware
+L2 cache
+64-byte blocks
+On-chip L2 cache
+10
+Hardware
+L3 cache
+64-byte blocks
+On-chip L3 cache
+50
+Hardware
+Virtual memory
+4-KB pages
+Main memory
+200
+Hardware + OS
+Buffer cache
+Parts of ﬁles
+Main memory
+200
+OS
+Disk cache
+Disk sectors
+Disk controller
+100,000
+Controller ﬁrmware
+Network cache
+Parts of ﬁles
+Local disk
+10,000,000
+NFS client
+Browser cache
+Web pages
+Local disk
+10,000,000
+Web browser
+Web cache
+Web pages
+Remote server disks
+1,000,000,000
+Web proxy server
+Figure 6.23
+The ubiquity of caching in modern computer systems. Acronyms: TLB: translation lookaside
+buffer; MMU: memory management unit; OS: operating system; NFS: network ﬁle system.
+6.3.2
+Summary of Memory Hierarchy Concepts
+To summarize, memory hierarchies based on caching work because slower storage
+is cheaper than faster storage and because programs tend to exhibit locality:
+Exploiting temporal locality. Because of temporal locality, the same data objects
+are likely to be reused multiple times. Once a data object has been copied
+into the cache on the ﬁrst miss, we can expect a number of subsequent
+hits on that object. Since the cache is faster than the storage at the next
+lower level, these subsequent hits can be served much faster than the
+original miss.
+Exploiting spatial locality. Blocks usually contain multiple data objects. Because
+of spatial locality, we can expect that the cost of copying a block after a
+miss will be amortized by subsequent references to other objects within
+that block.
+Caches are used everywhere in modern systems. As you can see from Fig-
+ure 6.23, caches are used in CPU chips, operating systems, distributed ﬁle systems,
+and on the World Wide Web. They are built from and managed by various com-
+binations of hardware and software. Note that there are a number of terms and
+acronyms in Figure 6.23 that we haven’t covered yet. We include them here to
+demonstrate how common caches are.
+6.4
+Cache Memories
+The memory hierarchies of early computer systems consisted of only three levels:
+CPU registers, main memory, and disk storage. However, because of the increasing
+gap between CPU and main memory, system designers were compelled to insert

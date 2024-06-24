@@ -1,0 +1,46 @@
+24
+Preface
+Chapter 6: The Memory Hierarchy. The memory system is one of the most visible
+parts of a computer system to application programmers. To this point, you
+have relied on a conceptual model of the memory system as a linear array
+with uniform access times. In practice, a memory system is a hierarchy of
+storage devices with different capacities, costs, and access times. We cover
+the different types of RAM and ROM memories and the geometry and
+organization of magnetic-disk and solid state drives. We describe how these
+storage devices are arranged in a hierarchy. We show how this hierarchy is
+made possible by locality of reference. We make these ideas concrete by
+introducing a unique view of a memory system as a “memory mountain”
+with ridges of temporal locality and slopes of spatial locality. Finally, we
+show you how to improve the performance of application programs by
+improving their temporal and spatial locality.
+Chapter 7: Linking. This chapter covers both static and dynamic linking, including
+the ideas of relocatable and executable object ﬁles, symbol resolution, re-
+location, static libraries, shared object libraries, position-independent code,
+and library interpositioning. Linking is not covered in most systems texts,
+but we cover it for two reasons. First, some of the most confusing errors that
+programmers can encounter are related to glitches during linking, especially
+for large software packages. Second, the object ﬁles produced by linkers are
+tied to concepts such as loading, virtual memory, and memory mapping.
+Chapter 8: Exceptional Control Flow. In this part of the presentation, we step
+beyond the single-program model by introducing the general concept of
+exceptional control ﬂow (i.e., changes in control ﬂow that are outside the
+normal branches and procedure calls). We cover examples of exceptional
+control ﬂow that exist at all levels of the system, from low-level hardware ex-
+ceptions and interrupts, to context switches between concurrent processes,
+to abrupt changes in control ﬂow caused by the receipt of Linux signals, to
+the nonlocal jumps in C that break the stack discipline.
+This is the part of the book where we introduce the fundamental idea
+of a process, an abstraction of an executing program. You will learn how
+processes work and how they can be created and manipulated from appli-
+cation programs. We show how application programmers can make use of
+multiple processes via Linux system calls. When you ﬁnish this chapter, you
+will be able to write a simple Linux shell with job control. It is also your ﬁrst
+introduction to the nondeterministic behavior that arises with concurrent
+program execution.
+Chapter 9: Virtual Memory. Our presentation of the virtual memory system seeks
+to give some understanding of how it works and its characteristics. We want
+you to know how it is that the different simultaneous processes can each use
+an identical range of addresses, sharing some pages but having individual
+copies of others. We also cover issues involved in managing and manip-
+ulating virtual memory. In particular, we cover the operation of storage
+allocators such as the standard-library malloc and free operations. Cov-

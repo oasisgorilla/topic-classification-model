@@ -1,0 +1,59 @@
+Section 1.5
+Caches Matter
+47
+Figure 1.5
+Reading the hello
+command from the
+keyboard.
+CPU
+Register file
+PC
+ALU
+Bus interface
+I/O
+bridge
+System bus
+Memory bus
+Main
+memory
+I/O bus
+Expansion slots for
+other devices such
+as network adapters
+Disk
+controller
+Graphics
+adapter
+Display
+Mouse  Keyboard
+USB
+controller
+Disk
+“hello”
+User
+types
+“hello”
+object ﬁle from disk to main memory. The data includes the string of characters
+hello, world\n that will eventually be printed out.
+Using a technique known as direct memory access (DMA, discussed in Chap-
+ter 6), the data travel directly from disk to main memory, without passing through
+the processor. This step is shown in Figure 1.6.
+Once the code and data in the hello object ﬁle are loaded into memory,
+the processor begins executing the machine-language instructions in the hello
+program’s main routine. These instructions copy the bytes in the hello, world\n
+string from memory to the register ﬁle, and from there to the display device, where
+they are displayed on the screen. This step is shown in Figure 1.7.
+1.5
+Caches Matter
+An important lesson from this simple example is that a system spends a lot of
+time moving information from one place to another. The machine instructions in
+the hello program are originally stored on disk. When the program is loaded,
+they are copied to main memory. As the processor runs the program, instruc-
+tions are copied from main memory into the processor. Similarly, the data string
+hello,world\n, originally on disk, is copied to main memory and then copied
+from main memory to the display device. From a programmer’s perspective, much
+of this copying is overhead that slows down the “real work” of the program. Thus,
+a major goal for system designers is to make these copy operations run as fast as
+possible.
+Because of physical laws, larger storage devices are slower than smaller stor-
+age devices. And faster devices are more expensive to build than their slower

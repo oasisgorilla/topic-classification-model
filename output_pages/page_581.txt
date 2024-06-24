@@ -1,0 +1,42 @@
+580
+Chapter 5
+Optimizing Program Performance
+Figure 5.29
+Data-ﬂow representation
+of combine7 operating
+on a vector of length n.
+We have a single critical
+path, but it contains only
+n/2 operations.
+data[0]
+data[1]
+load
+load
+mul
+mul
+add
+data[2]
+data[3]
+load
+load
+mul
+mul
+add
+data[n-2]
+data[n-1]
+load
+load
+mul
+mul
+add
+Critical path
+Figure 5.30 demonstrates the effect of applying the reassociation transforma-
+tion to achieve what we refer to as k × 1a loop unrolling for values up to k = 10.
+We can see that this transformation yields performance results similar to what is
+achieved by maintaining k separate accumulators with k × k unrolling. In all cases,
+we come close to the throughput bounds imposed by the functional units.
+In performing the reassociation transformation, we once again change the
+order in which the vector elements will be combined together. For integer addition
+and multiplication, the fact that these operations are associative implies that
+this reordering will have no effect on the result. For the ﬂoating-point cases, we
+must once again assess whether this reassociation is likely to signiﬁcantly affect

@@ -1,0 +1,45 @@
+Section 8.4
+Process Control
+789
+Environment variables:
+envp[ 0]: PWD=/usr0/droh/ics/code/ecf
+envp[ 1]: TERM=emacs
+.
+.
+.
+envp[25]: USER=droh
+envp[26]: SHELL=/usr/local/bin/tcsh
+envp[27]: HOME=/usr0/droh
+8.4.6
+Using fork and execve to Run Programs
+Programs such as Unix shells and Web servers make heavy use of the fork and
+execve functions. A shell is an interactive application-level program that runs
+other programs on behalf of the user. The original shell was the sh program,
+which was followed by variants such as csh, tcsh, ksh, and bash. A shell performs
+a sequence of read/evaluate steps and then terminates. The read step reads a
+command line from the user. The evaluate step parses the command line and runs
+programs on behalf of the user.
+Figure 8.23 shows the main routine of a simple shell. The shell prints a
+command-line prompt, waits for the user to type a command line on stdin, and
+then evaluates the command line.
+Figure 8.24 shows the code that evaluates the command line. Its ﬁrst task is
+to call the parseline function (Figure 8.25), which parses the space-separated
+command-line arguments and builds the argv vector that will eventually be passed
+to execve. The ﬁrst argument is assumed to be either the name of a built-in shell
+command that is interpreted immediately, or an executable object ﬁle that will be
+loaded and run in the context of a new child process.
+If the last argument is an ‘&’ character, then parseline returns 1, indicating
+that the program should be executed in the background (the shell does not wait
+for it to complete). Otherwise, it returns 0, indicating that the program should be
+run in the foreground (the shell waits for it to complete).
+Aside
+Programs versus processes
+This is a good place to pause and make sure you understand the distinction between a program and
+a process. A program is a collection of code and data; programs can exist as object ﬁles on disk or as
+segments in an address space. A process is a speciﬁc instance of a program in execution; a program
+always runs in the context of some process. Understanding this distinction is important if you want to
+understand the fork and execve functions. The fork function runs the same program in a new child
+process that is a duplicate of the parent. The execve function loads and runs a new program in the
+context of the current process. While it overwrites the address space of the current process, it does not
+create a new process. The new program still has the same PID, and it inherits all of the ﬁle descriptors
+that were open at the time of the call to the execve function.

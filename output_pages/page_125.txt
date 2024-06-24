@@ -1,0 +1,50 @@
+124
+Chapter 2
+Representing and Manipulating Information
+16
+14
+12
+10
+8
+6
+4
+2
+0
+Overflow
+Normal
+0
+2
+4
+6
+8
+10
+12
+14
+0
+2
+4
+6
+8
+10
+12
+14
+Figure 2.23
+Unsigned addition. With a 4-bit word size, addition is performed
+modulo 16.
+occurs when the two operands sum to 2w or more. Figure 2.23 shows a plot of the
+unsigned addition function for word size w = 4. The sum is computed modulo
+24 = 16. When x + y < 16, there is no overﬂow, and x +u
+4 y is simply x + y. This is
+shown as the region forming a sloping plane labeled “Normal.” When x + y ≥16,
+the addition overﬂows, having the effect of decrementing the sum by 16. This is
+shown as the region forming a sloping plane labeled “Overﬂow.”
+When executing C programs, overﬂows are not signaled as errors. At times,
+however, we might wish to determine whether or not overﬂow has occurred.
+principle: Detecting overﬂow of unsigned addition
+For x and y in the range 0 ≤x, y ≤UMaxw, let s .
+= x +u
+w y. Then the computation
+of s overﬂowed if and only if s < x (or equivalently, s < y).
+As an illustration, in our earlier example, we saw that 9 +u
+4 12 = 5. We can see
+that overﬂow occurred, since 5 < 9.

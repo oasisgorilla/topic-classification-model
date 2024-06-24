@@ -1,0 +1,63 @@
+Section 2.2
+Integer Representations
+117
+2.2.7
+Truncating Numbers
+Suppose that, rather than extending a value with extra bits, we reduce the number
+of bits representing a number. This occurs, for example, in the following code:
+1
+int x = 53191;
+2
+short sx = (short) x;
+/* -12345 */
+3
+int y = sx;
+/* -12345 */
+Casting x to be short will truncate a 32-bit int to a 16-bit short. As we saw
+before, this 16-bit pattern is the two’s-complement representation of −12,345.
+When casting this back to int, sign extension will set the high-order 16 bits to
+ones, yielding the 32-bit two’s-complement representation of −12,345.
+When truncating a w-bit number ⃗
+x = [xw−1, xw−2, . . . , x0] to a k-bit number,
+we drop the high-order w −k bits, giving a bit vector ⃗
+x′ = [xk−1, xk−2, . . . , x0].
+Truncating a number can alter its value—a form of overﬂow. For an unsigned
+number, we can readily characterize the numeric value that will result.
+principle: Truncation of an unsigned number
+Let ⃗
+x be the bit vector [xw−1, xw−2, . . . , x0], and let ⃗
+x′ be the result of truncating
+it to k bits: ⃗
+x′ = [xk−1, xk−2, . . . , x0]. Let x = B2Uw(⃗
+x) and x′ = B2Uk(⃗
+x′). Then
+x′ = x mod 2k.
+The intuition behind this principle is simply that all of the bits that were
+truncated have weights of the form 2i, where i ≥k, and therefore each of these
+weights reduces to zero under the modulus operation. This is formalized by the
+following derivation:
+derivation: Truncation of an unsigned number
+Applying the modulus operation to Equation 2.1 yields
+B2Uw([xw−1, xw−2, . . . , x0]) mod 2k =
+w−1
+
+i=0
+xi2i
+
+mod 2k
+=
+k−1
+
+i=0
+xi2i
+
+mod 2k
+=
+k−1
+
+i=0
+xi2i
+= B2Uk([xk−1, xk−2, . . . , x0])
+In this derivation, we make use of the property that 2i mod 2k = 0 for any i ≥k.
+A similar property holds for truncating a two’s-complement number, except
+that it then converts the most signiﬁcant bit into a sign bit:

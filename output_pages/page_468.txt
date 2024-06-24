@@ -1,0 +1,81 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+467
+D
+valA      R[%rdx] = 10
+valB      R[%rax] = 0
+F
+0x000: irmovq $10,%rdx
+# prog2
+# prog2
+0x00a: irmovq  $3,%rax
+0x014: nop
+0x015: nop
+0x016: addq %rdx,%rax
+0x018: halt
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+Cycle 6
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+W
+R[%rax]      3
+Error
+. . .
+Figure 4.44
+Pipelined execution of prog2 without special pipeline control. The
+write to program register %rax does not occur until the start of cycle 7, and so the addq
+instruction gets the incorrect value for this register in the decode stage.
+dependencies. Let us see what happens as these nop instructions are removed.
+Figure 4.44 illustrates the pipeline ﬂow of a program, named prog2, containing
+two nop instructions between the two irmovq instructions generating values for
+registers %rdx and %rax and the addq instruction having these two registers as
+operands. In this case, the crucial step occurs in cycle 6, when the addq instruc-
+tion reads its operands from the register ﬁle. An expanded view of the pipeline
+activities during this cycle is shown at the bottom of the ﬁgure. The ﬁrst irmovq
+instruction has passed through the write-back stage, and so program register %rdx
+has been updated in the register ﬁle. The second irmovq instruction is in the write-
+back stage during this cycle, and so the write to program register %rax only occurs
+at the start of cycle 7 as the clock rises. As a result, the incorrect value zero would
+be read for register %rax (recall that we assume all registers are initially zero),
+since the pending write for this register has not yet occurred. Clearly, we will have
+to adapt our pipeline to handle this hazard properly.
+Figure 4.45 shows what happens when we have only one nop instruction
+between the irmovq instructions and the addq instruction, yielding a program
+prog3. Now we must examine the behavior of the pipeline during cycle 5 as the
+addq instruction passes through the decode stage. Unfortunately, the pending

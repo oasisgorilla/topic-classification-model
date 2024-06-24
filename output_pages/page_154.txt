@@ -1,0 +1,65 @@
+Section 2.4
+Floating Point
+153
+As we increase the exponent, we get successively larger normalized values,
+passing through 1.0 and then to the largest normalized number. This number has
+exponent E = 7, giving a weight 2E = 128. The fraction equals 7
+8, giving a signiﬁ-
+cand M = 15
+8 . Thus, the numeric value is V = 240. Going beyond this overﬂows to
++∞.
+One interesting property of this representation is that if we interpret the bit
+representations of the values in Figure 2.35 as unsigned integers, they occur in
+ascending order, as do the values they represent as ﬂoating-point numbers. This is
+no accident—the IEEE format was designed so that ﬂoating-point numbers could
+be sorted using an integer sorting routine. A minor difﬁculty occurs when dealing
+with negative numbers, since they have a leading 1 and occur in descending order,
+but this can be overcome without requiring ﬂoating-point operations to perform
+comparisons (see Problem 2.84).
+Practice Problem 2.47 (solution page 194)
+Consider a 5-bit ﬂoating-point representation based on the IEEE ﬂoating-point
+format, with one sign bit, two exponent bits (k = 2), and two fraction bits (n = 2).
+The exponent bias is 22−1 −1 = 1.
+The table that follows enumerates the entire nonnegative range for this 5-bit
+ﬂoating-point representation. Fill in the blank table entries using the following
+directions:
+e: The value represented by considering the exponent ﬁeld to be an unsigned
+integer
+E: The value of the exponent after biasing
+2E: The numeric weight of the exponent
+f : The value of the fraction
+M: The value of the signiﬁcand
+2E × M: The (unreduced) fractional value of the number
+V : The reduced fractional value of the number
+Decimal: The decimal representation of the number
+Express the values of 2E, f , M, 2E × M, and V either as integers (when
+possible) or as fractions of the form x
+y , where y is a power of 2. You need not
+ﬁll in entries marked —.
+Bits
+e
+E
+2E
+f
+M
+2E × M
+V
+Decimal
+0 00 00
+0 00 01
+0 00 10
+0 00 11
+0 01 00
+0 01 01
+1
+0
+1
+1
+4
+5
+4
+5
+4
+5
+4
+1.25

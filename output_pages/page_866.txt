@@ -1,0 +1,99 @@
+VPO 
+L4 PT
+Page
+table
+4 KB
+region
+per entry
+2 MB
+region
+per entry
+1 GB
+region
+per entry
+512 GB
+region
+per entry
+L3 PT
+Page middle
+directory
+L2 PT
+Page upper
+directory
+L1 PT
+Page global
+directory
+Physical
+address
+of L1 PT
+Physical
+address
+of page
+CR3
+Physical address
+Virtual address
+PPN
+Offset into
+physical and
+virtual page
+L4 PTE
+40
+12
+12
+PPO 
+12
+40
+40
+9
+L3 PTE
+40
+9
+L2 PTE
+40
+9
+L1 PTE
+40
+9
+VPN 4 
+9
+VPN 3 
+9
+VPN 2 
+9
+VPN 1 
+9
+Figure 9.25
+Core i7 page table translation. PT: page table; PTE: page table entry; VPN: virtual page number;
+VPO: virtual page offset; PPN: physical page number; PPO: physical page offset. The Linux names for the four
+levels of page tables are also shown.
+Figure 9.26
+The virtual memory of a
+Linux process.
+0x400000
+0
+Process-specific data
+structures
+(e.g., page tables,
+task and mm structs, 
+kernel stack)
+Physical memory
+Kernel code and data
+Memory-mapped region
+for shared libraries
+Run-time heap (via malloc)
+Uninitialized data (.bss)
+Initialized data (.data)
+Code (.text)
+User stack
+Different for
+each process
+Identical for
+each process
+Process
+virtual
+memory
+Kernel
+virtual
+memory
+%rsp
+brk

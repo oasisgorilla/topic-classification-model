@@ -1,0 +1,51 @@
+950
+Chapter 10
+System-Level I/O
+simpler, preferred alternative to Unix I/O. However, because of some mutually
+incompatible restrictions on standard I/O and network ﬁles, Unix I/O, rather than
+standard I/O, should be used for network applications.
+Bibliographic Notes
+Kerrisk gives a comprehensive treatment of Unix I/O and the Linux ﬁle sys-
+tem [62]. Stevens wrote the original standard reference text for Unix I/O [111].
+Kernighan and Ritchie give a clear and complete discussion of the standard I/O
+functions [61].
+Homework Problems
+10.6 ◆
+What is the output of the following program?
+1
+#include "csapp.h"
+2
+3
+int main()
+4
+{
+5
+int fd1, fd2;
+6
+7
+fd1 = Open("foo.txt", O_RDONLY, 0);
+8
+fd2 = Open("bar.txt", O_RDONLY, 0);
+9
+Close(fd2);
+10
+fd2 = Open("baz.txt", O_RDONLY, 0);
+11
+printf("fd2 = %d\n", fd2);
+12
+exit(0);
+13
+}
+10.7 ◆
+Modify the cpfile program in Figure 10.5 so that it uses the Rio functions to copy
+standard input to standard output, MAXBUF bytes at a time.
+10.8 ◆◆
+Write a version of the statcheck program in Figure 10.10, called fstatcheck,
+that takes a descriptor number on the command line rather than a ﬁlename.
+10.9 ◆◆
+Consider the following invocation of the fstatcheck program from Problem 10.8:
+linux> fstatcheck 3 < foo.txt
+You might expect that this invocation of fstatcheck would fetch and display
+metadata for ﬁle foo.txt. However, when we run it on our system, it fails with
+a “bad ﬁle descriptor.” Given this behavior, ﬁll in the pseudocode that the shell
+must be executing between the fork and execve calls:

@@ -1,0 +1,41 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+491
+Practice Problem 4.36 (solution page 528)
+In this stage, we can complete the computation of the status code Stat by detecting
+the case of an invalid address for the data memory. Write HCL code for the signal
+m_stat.
+4.5.8
+Pipeline Control Logic
+We are now ready to complete our design for PIPE by creating the pipeline control
+logic. This logic must handle the following four control cases for which other
+mechanisms, such as data forwarding and branch prediction, do not sufﬁce:
+Load/use hazards. The pipeline must stall for one cycle between an instruction
+that reads a value from memory and an instruction that uses this value.
+Processing ret. The pipeline must stall until the ret instruction reaches the
+write-back stage.
+Mispredicted branches. By the time the branch logic detects that a jump should
+not have been taken, several instructions at the branch target will have
+started down the pipeline. These instructions must be canceled, and fetch-
+ing should begin at the instruction following the jump instruction.
+Exceptions. When an instruction causes an exception, we want to disable the
+updating of the programmer-visible state by later instructions and halt
+execution once the excepting instruction reaches the write-back stage.
+We will go through the desired actions for each of these cases and then develop
+control logic to handle all of them.
+Desired Handling of Special Control Cases
+For a load/use hazard, we have described the desired pipeline operation in Section
+4.5.5, as illustrated by the example of Figure 4.54. Only the mrmovq and popq
+instructions read data from memory. When (1) either of these is in the execute
+stage and (2) an instruction requiring the destination register is in the decode
+stage, we want to hold back the second instruction in the decode stage and inject a
+bubble into the execute stage on the next cycle. After this, the forwarding logic will
+resolve the data hazard. The pipeline can hold back an instruction in the decode
+stage by keeping pipeline register D in a ﬁxed state. In doing so, it should also
+keep pipeline register F in a ﬁxed state, so that the next instruction will be fetched
+a second time. In summary, implementing this pipeline ﬂow requires detecting the
+hazard condition, keeping pipeline registers F and D ﬁxed, and injecting a bubble
+into the execute stage.
+For the processing of a ret instruction, we have described the desired pipeline
+operation in Section 4.5.5. The pipeline should stall for three cycles until the
+return address is read as the ret instruction passes through the memory stage.

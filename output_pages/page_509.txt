@@ -1,0 +1,44 @@
+508
+Chapter 4
+Processor Architecture
+Web Aside ARCH:HCL
+HCL descriptions of Y86-64 processors
+In this chapter, we have looked at portions of the HCL code for several simple logic designs and for
+the control logic for Y86-64 processors SEQ and PIPE. For reference, we provide documentation of
+the HCL language and complete HCL descriptions for the control logic of the two processors. Each of
+these descriptions requires only ﬁve to seven pages of HCL code, and it is worthwhile to study them in
+their entirety.
+We enhanced the pipeline performance by adding forwarding logic to speed the
+sending of a result from one instruction to another. Several special cases require
+additional pipeline control logic to stall or cancel some of the pipeline stages.
+Our design included rudimentary mechanisms to handle exceptions, where
+we make sure that only instructions up to the excepting instruction affect the
+programmer-visible state. Implementing a complete handling of exceptions would
+be signiﬁcantly more challenging. Properly handling exceptions gets even more
+complex in systems that employ greater degrees of pipelining and parallelism.
+In this chapter, we have learned several important lessons about processor
+design:
+. Managing complexity is a top priority. We want to make optimum use of the
+hardware resources to get maximum performance at minimum cost. We did
+this by creating a very simple and uniform framework for processing all of the
+different instruction types. With this framework, we could share the hardware
+units among the logic for processing the different instruction types.
+. We do not need to implement the ISA directly. A direct implementation of the
+ISA would imply a very sequential design. To achieve higher performance,
+we want to exploit the ability in hardware to perform many operations si-
+multaneously. This led to the use of a pipelined design. By careful design and
+analysis, we can handle the various pipeline hazards, so that the overall effect
+of running a program exactly matches what would be obtained with the ISA
+model.
+. Hardware designers must be meticulous. Once a chip has been fabricated,
+it is nearly impossible to correct any errors. It is very important to get the
+designrightontheﬁrsttry.Thismeanscarefullyanalyzingdifferentinstruction
+types and combinations, even ones that do not seem to make sense, such
+as popping to the stack pointer. Designs must be thoroughly tested with
+systematic simulation test programs. In developing the control logic for PIPE,
+our design had a subtle bug that was uncovered only after a careful and
+systematic analysis of control combinations.
+4.6.1
+Y86-64 Simulators
+The lab materials for this chapter include simulators for the SEQ and PIPE
+processors. Each simulator has two versions:

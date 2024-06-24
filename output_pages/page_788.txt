@@ -1,0 +1,54 @@
+Section 8.4
+Process Control
+787
+Figure 8.20
+Organization of an
+argument list.
+…
+argv[]
+argv[]
+argv[0]
+"ls"
+"-lt"
+"/user/include"
+argv
+argv[1]
+argv[argc  1]
+NULL
+Figure 8.21
+Organization of an
+environment variable list.
+…
+envp[]
+envp[]
+envp[0]
+"PWD/usr/droh"
+"PRINTERiron"
+"USERdroh"
+envp
+envp[1]
+envp[n  1]
+NULL
+After execve loads filename, it calls the start-up code described in Sec-
+tion 7.9. The start-up code sets up the stack and passes control to the main routine
+of the new program, which has a prototype of the form
+int main(int argc, char **argv, char **envp);
+or equivalently,
+int main(int argc, char *argv[], char *envp[]);
+When main begins executing, the user stack has the organization shown in Fig-
+ure 8.22. Let’s work our way from the bottom of the stack (the highest address)
+to the top (the lowest address). First are the argument and environment strings.
+These are followed further up the stack by a null-terminated array of pointers,
+each of which points to an environment variable string on the stack. The global
+variable environ points to the ﬁrst of these pointers, envp[0]. The environment
+array is followed by the null-terminated argv[] array, with each element pointing
+to an argument string on the stack. At the top of the stack is the stack frame for
+the system start-up function, libc_start_main (Section 7.9).
+There are three arguments to function main, each stored in a register accord-
+ing to the x86-64 stack discipline: (1) argc, which gives the number of non-null
+pointers in the argv[] array; (2) argv, which points to the ﬁrst entry in the argv[]
+array; and (3) envp, which points to the ﬁrst entry in the envp[] array.
+Linux provides several functions for manipulating the environment array:
+#include <stdlib.h>
+char *getenv(const char *name);
+Returns: pointer to name if it exists, NULL if no match

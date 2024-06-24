@@ -1,0 +1,77 @@
+Section 8.5
+Signals
+807
+code/ecf/signal1.c
+1
+/* WARNING: This code is buggy! */
+2
+3
+void handler1(int sig)
+4
+{
+5
+int olderrno = errno;
+6
+7
+if ((waitpid(-1, NULL, 0)) < 0)
+8
+sio_error("waitpid error");
+9
+Sio_puts("Handler reaped child\n");
+10
+Sleep(1);
+11
+errno = olderrno;
+12
+}
+13
+14
+int main()
+15
+{
+16
+int i, n;
+17
+char buf[MAXBUF];
+18
+19
+if (signal(SIGCHLD, handler1) == SIG_ERR)
+20
+unix_error("signal error");
+21
+22
+/* Parent creates children */
+23
+for (i = 0; i < 3; i++) {
+24
+if (Fork() == 0) {
+25
+printf("Hello from child %d\n", (int)getpid());
+26
+exit(0);
+27
+}
+28
+}
+29
+30
+/* Parent waits for terminal input and then processes it */
+31
+if ((n = read(STDIN_FILENO, buf, sizeof(buf))) < 0)
+32
+unix_error("read");
+33
+34
+printf("Parent processing input\n");
+35
+while (1)
+36
+;
+37
+38
+exit(0);
+39
+}
+code/ecf/signal1.c
+Figure 8.36 signal1. This program is ﬂawed because it assumes that signals are
+queued.

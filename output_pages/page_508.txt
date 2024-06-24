@@ -1,0 +1,45 @@
+Section 4.6
+Summary
+507
+Aside
+State-of-the-art microprocessor design
+A ﬁve-stage pipeline, such as we have shown with the PIPE processor, represented the state of the art in
+processor design in the mid-1980s. The prototype RISC processor developed by Patterson’s research
+group at Berkeley formed the basis for the ﬁrst SPARC processor, developed by Sun Microsystems
+in 1987. The processor developed by Hennessy’s research group at Stanford was commercialized by
+MIPS Technologies (a company founded by Hennessy) in 1986. Both of these used ﬁve-stage pipelines.
+The Intel i486 processor also uses a ﬁve-stage pipeline, although with a different partitioning of
+responsibilities among the stages, with two decode stages and a combined execute/memory stage [27].
+These pipelined designs are limited to a throughput of at most one instruction per clock cycle. The
+CPI (for “cycles per instruction”) measure described in Section 4.5.9 can never be less than 1.0. The
+different stages can only process one instruction at a time. More recent processors support superscalar
+operation, meaning that they can achieve a CPI less than 1.0 by fetching, decoding, and executing
+multiple instructions in parallel. As superscalar processors have become widespread, the accepted
+performance measure has shifted from CPI to its reciprocal—the average number of instructions
+executed per cycle, or IPC. It can exceed 1.0 for superscalar processors. The most advanced designs
+use a technique known as out-of-order execution to execute multiple instructions in parallel, possibly
+in a totally different order than they occur in the program, while preserving the overall behavior implied
+by the sequential ISA model. This form of execution is described in Chapter 5 as part of our discussion
+of program optimization.
+Pipelined processors are not just historical artifacts, however. The majority of processors sold are
+used in embedded systems, controlling automotive functions, consumer products, and other devices
+where the processor is not directly visible to the system user. In these applications, the simplicity of
+a pipelined processor, such as the one we have explored in this chapter, reduces its cost and power
+requirements compared to higher-performance models.
+More recently, as multicore processors have gained a following, some have argued that we could
+get more overall computing power by integrating many simple processors on a single chip rather
+than a smaller number of more complex ones. This strategy is sometimes referred to as “many-core”
+processors [10].
+We deﬁned the Y86-64 instruction set by starting with the x86-64 instructions
+and simplifying the data types, address modes, and instruction encoding consider-
+ably. The resulting ISA has attributes of both RISC and CISC instruction sets. We
+then organized the processing required for the different instructions into a series
+of ﬁve stages, where the operations at each stage vary according to the instruction
+being executed. From this, we constructed the SEQ processor, in which an entire
+instruction is executed every clock cycle by having it ﬂow through all ﬁve stages.
+Pipelining improves the throughput performance of a system by letting the
+different stages operate concurrently. At any given time, multiple operations are
+being processed by the different stages. In introducing this concurrency, we must
+be careful to provide the same program-level behavior as would a sequential
+execution of the program. We introduced pipelining by reordering parts of SEQ
+to get SEQ+ and then adding pipeline registers to create the PIPE−pipeline.

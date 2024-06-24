@@ -1,0 +1,83 @@
+Section 6.4
+Cache Memories
+661
+Figure 6.32
+Set associative cache
+(1 < E < C/B). In a set
+associative cache, each
+set contains more than
+one line. This particular
+example shows a two-way
+set associative cache.
+Valid
+Tag
+Cache block
+Set 0:
+Valid
+Tag
+Cache block
+Set S – 1:
+. . .
+E = 2 lines per set
+Valid
+Tag
+Cache block
+Valid
+Tag
+Cache block
+Valid
+Tag
+Cache block
+Valid
+Tag
+Cache block
+Set 1:
+Figure 6.33
+Set selection in a set
+associative cache.
+Valid
+Tag
+Cache block
+Set 0:
+Valid
+Tag
+Cache block
+Set S–1:
+. . .
+Valid
+Tag
+Cache block
+Valid
+Tag
+Cache block
+Valid
+Tag
+Cache block
+Valid
+Tag
+Cache block
+Set 1:
+m–1
+0
+t bits
+Tag
+Set index Block offset
+s bits
+b bits
+Selected set
+0 0 0 0 1
+will discuss the special case, where E = C/B, in the next section. Figure 6.32 shows
+the organization of a two-way set associative cache.
+Set Selection in Set Associative Caches
+Set selection is identical to a direct-mapped cache, with the set index bits identi-
+fying the set. Figure 6.33 summarizes this principle.
+Line Matching and Word Selection in Set Associative Caches
+Line matching is more involved in a set associative cache than in a direct-mapped
+cache because it must check the tags and valid bits of multiple lines in order to
+determine if the requested word is in the set. A conventional memory is an array of
+values that takes an address as input and returns the value stored at that address.
+An associative memory, on the other hand, is an array of (key, value) pairs that
+takes as input the key and returns a value from one of the (key, value) pairs that
+matches the input key. Thus, we can think of each set in a set associative cache as
+a small associative memory where the keys are the concatenation of the tag and
+valid bits, and the values are the contents of a block.

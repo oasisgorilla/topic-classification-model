@@ -1,0 +1,118 @@
+Contents
+9
+3.2
+Program Encodings
+205
+3.2.1
+Machine-Level Code
+206
+3.2.2
+Code Examples
+208
+3.2.3
+Notes on Formatting
+211
+3.3
+Data Formats
+213
+3.4
+Accessing Information
+215
+3.4.1
+Operand Speciﬁers
+216
+3.4.2
+Data Movement Instructions
+218
+3.4.3
+Data Movement Example
+222
+3.4.4
+Pushing and Popping Stack Data
+225
+3.5
+Arithmetic and Logical Operations
+227
+3.5.1
+Load Effective Address
+227
+3.5.2
+Unary and Binary Operations
+230
+3.5.3
+Shift Operations
+230
+3.5.4
+Discussion
+232
+3.5.5
+Special Arithmetic Operations
+233
+3.6
+Control
+236
+3.6.1
+Condition Codes
+237
+3.6.2
+Accessing the Condition Codes
+238
+3.6.3
+Jump Instructions
+241
+3.6.4
+Jump Instruction Encodings
+243
+3.6.5
+Implementing Conditional Branches with
+Conditional Control
+245
+3.6.6
+Implementing Conditional Branches with
+Conditional Moves
+250
+3.6.7
+Loops
+256
+3.6.8
+Switch Statements
+268
+3.7
+Procedures
+274
+3.7.1
+The Run-Time Stack
+275
+3.7.2
+Control Transfer
+277
+3.7.3
+Data Transfer
+281
+3.7.4
+Local Storage on the Stack
+284
+3.7.5
+Local Storage in Registers
+287
+3.7.6
+Recursive Procedures
+289
+3.8
+Array Allocation and Access
+291
+3.8.1
+Basic Principles
+291
+3.8.2
+Pointer Arithmetic
+293
+3.8.3
+Nested Arrays
+294
+3.8.4
+Fixed-Size Arrays
+296
+3.8.5
+Variable-Size Arrays
+298

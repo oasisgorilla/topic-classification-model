@@ -1,0 +1,46 @@
+452
+Chapter 4
+Processor Architecture
+propagates through stage B, and I3 (shown in light gray) propagates through stage
+A. Just before the rising clock at time 240 (point 1), the values computed in stage A
+for instruction I2 have reached the input of the ﬁrst pipeline register, but its state
+and output remain set to those computed during stage A for instruction I1. The
+values computed in stage B for instruction I1 have reached the input of the sec-
+ond pipeline register. As the clock rises, these inputs are loaded into the pipeline
+registers, becoming the register outputs (point 2). In addition, the input to stage
+A is set to initiate the computation of instruction I3. The signals then propagate
+through the combinational logic for the different stages (point 3). As the curved
+wave fronts in the diagram at point 3 suggest, signals can propagate through differ-
+ent sections at different rates. Before time 360, the result values reach the inputs
+of the pipeline registers (point 4). When the clock rises at time 360, each of the
+instructions will have progressed through one pipeline stage.
+We can see from this detailed view of pipeline operation that slowing down
+the clock would not change the pipeline behavior. The signals propagate to the
+pipeline register inputs, but no change in the register states will occur until the
+clock rises. On the other hand, we could have disastrous effects if the clock
+were run too fast. The values would not have time to propagate through the
+combinational logic, and so the register inputs would not yet be valid when the
+clock rises.
+As with our discussion of the timing for the SEQ processor (Section 4.3.3),
+we see that the simple mechanism of having clocked registers between blocks of
+combinational logic sufﬁces to control the ﬂow of instructions in the pipeline. As
+the clock rises and falls repeatedly, the different instructions ﬂow through the
+stages of the pipeline without interfering with one another.
+4.4.3
+Limitations of Pipelining
+The example of Figure 4.33 shows an ideal pipelined system in which we are able
+to divide the computation into three independent stages, each requiring one-third
+of the time required by the original logic. Unfortunately, other factors often arise
+that diminish the effectiveness of pipelining.
+Nonuniform Partitioning
+Figure 4.36 shows a system in which we divide the computation into three stages
+as before, but the delays through the stages range from 50 to 150 ps. The sum of
+the delays through all of the stages remains 300 ps. However, the rate at which we
+can operate the clock is limited by the delay of the slowest stage. As the pipeline
+diagram in this ﬁgure shows, stage A will be idle (shown as a white box) for
+100 ps every clock cycle, while stage C will be idle for 50 ps every clock cycle. Only
+stage B will be continuously active. We must set the clock cycle to 150 + 20 = 170
+picoseconds, giving a throughput of 5.88 GIPS. In addition, the latency would
+increase to 510 ps due to the slower clock rate.
+Devising a partitioning of the system computation into a series of stages
+having uniform delays can be a major challenge for hardware designers. Often,

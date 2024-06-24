@@ -1,0 +1,98 @@
+References
+[1]
+Advanced Micro Devices, Inc. Software
+Optimization Guide for AMD64 Processors,
+2005. Publication Number 25112.
+[2]
+Advanced Micro Devices, Inc. AMD64
+Architecture Programmer’s Manual, Volume
+1: Application Programming, 2013. Publication
+Number 24592.
+[3]
+Advanced Micro Devices, Inc. AMD64
+Architecture Programmer’s Manual, Volume
+3: General-Purpose and System Instructions,
+2013. Publication Number 24594.
+[4]
+Advanced Micro Devices, Inc. AMD64
+Architecture Programmer’s Manual, Volume
+4: 128-Bit and 256-Bit Media Instructions, 2013.
+Publication Number 26568.
+[5]
+K. Arnold, J. Gosling, and D. Holmes. The
+Java Programming Language, Fourth Edition.
+Prentice Hall, 2005.
+[6]
+T. Berners-Lee, R. Fielding, and H. Frystyk.
+Hypertext transfer protocol - HTTP/1.0. RFC
+1945, 1996.
+[7]
+A. Birrell. An introduction to programming
+with threads. Technical Report 35, Digital
+Systems Research Center, 1989.
+[8]
+A. Birrell, M. Isard, C. Thacker, and T. Wobber.
+A design for high-performance ﬂash disks.
+SIGOPS Operating Systems Review 41(2):88–
+93, 2007.
+[9]
+G. E. Blelloch, J. T. Fineman, P. B. Gibbons,
+and H. V. Simhadri. Scheduling irregular
+parallel computations on hierarchical caches.
+In Proceedings of the 23rd Symposium on
+Parallelism in Algorithms and Architectures
+(SPAA), pages 355–366. ACM, June 2011.
+[10]
+S. Borkar. Thousand core chips: A technology
+perspective. In Proceedings of the 44th Design
+Automation Conference, pages 746–749. ACM,
+2007.
+[11]
+D. Bovet and M. Cesati. Understanding the
+Linux Kernel, Third Edition. O’Reilly Media,
+Inc., 2005.
+[12]
+A. Demke Brown and T. Mowry. Taming the
+memory hogs: Using compiler-inserted releases
+to manage physical memory intelligently. In
+Proceedings of the 4th Symposium on Operating
+Systems Design and Implementation (OSDI),
+pages 31–44. Usenix, October 2000.
+[13]
+R. E. Bryant. Term-level veriﬁcation of a
+pipelined CISC microprocessor. Technical
+Report CMU-CS-05-195, Carnegie Mellon
+University, School of Computer Science, 2005.
+[14]
+R. E. Bryant and D. R. O’Hallaron. Introducing
+computer systems from a programmer’s
+perspective. In Proceedings of the Technical
+Symposium on Computer Science Education
+(SIGCSE), pages 90–94. ACM, February 2001.
+[15]
+D. Butenhof. Programming with Posix Threads.
+Addison-Wesley, 1997.
+[16]
+S. Carson and P
+. Reynolds. The geometry of
+semaphore programs. ACM Transactions on
+Programming Languages and Systems 9(1):25–
+53, 1987.
+[17]
+J. B. Carter, W. C. Hsieh, L. B. Stoller, M. R.
+Swanson, L. Zhang, E. L. Brunvand, A. Davis,
+C.-C. Kuo, R. Kuramkote, M. A. Parker,
+L. Schaelicke, and T. Tateyama. Impulse:
+Building a smarter memory controller. In
+Proceedings of the 5th International Symposium
+on High Performance Computer Architecture
+(HPCA), pages 70–79. ACM, January 1999.
+[18]
+K. Chang, D. Lee, Z. Chishti, A. Alameldeen,
+C. Wilkerson, Y. Kim, and O. Mutlu. Improving
+DRAM performance by parallelizing refreshes
+with accesses. In Proceedings of the 20th
+International Symposium on High-Performance
+Computer Architecture (HPCA). ACM,
+February 2014.
+1083

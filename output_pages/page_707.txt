@@ -1,0 +1,48 @@
+706
+Chapter 7
+Linking
+L
+inking is the process of collecting and combining various pieces of code and
+data into a single ﬁle that can be loaded (copied) into memory and executed.
+Linking can be performed at compile time, when the source code is translated
+into machine code; at load time, when the program is loaded into memory and
+executed by the loader; and even at run time, by application programs. On early
+computer systems, linking was performed manually. On modern systems, linking
+is performed automatically by programs called linkers.
+Linkers play a crucial role in software development because they enable
+separate compilation. Instead of organizing a large application as one monolithic
+source ﬁle, we can decompose it into smaller, more manageable modules that can
+be modiﬁed and compiled separately. When we change one of these modules, we
+simply recompile it and relink the application, without having to recompile the
+other ﬁles.
+Linking is usually handled quietly by the linker and is not an important
+issue for students who are building small programs in introductory programming
+classes. So why bother learning about linking?
+. Understanding linkers will help you build large programs. Programmers who
+build large programs often encounter linker errors caused by missing modules,
+missing libraries, or incompatible library versions. Unless you understand how
+a linker resolves references, what a library is, and how a linker uses a library
+to resolve references, these kinds of errors will be bafﬂing and frustrating.
+. Understanding linkers will help you avoid dangerous programming errors.The
+decisions that Linux linkers make when they resolve symbol references can
+silently affect the correctness of your programs. Programs that incorrectly
+deﬁne multiple global variables can pass through the linker without any warn-
+ings in the default case. The resulting programs can exhibit bafﬂing run-time
+behavior and are extremely difﬁcult to debug. We will show you how this hap-
+pens and how to avoid it.
+. Understanding linking will help you understand how language scoping rules
+are implemented.For example, what is the difference between global and local
+variables? What does it really mean when you deﬁne a variable or function
+with the static attribute?
+. Understanding linking will help you understand other important systems con-
+cepts.The executable object ﬁles produced by linkers play key roles in impor-
+tant systems functions such as loading and running programs, virtual memory,
+paging, and memory mapping.
+. Understanding linking will enable you to exploit shared libraries. For many
+years, linking was considered to be fairly straightforward and uninteresting.
+However, with the increased importance of shared libraries and dynamic
+linking in modern operating systems, linking is a sophisticated process that
+provides the knowledgeable programmer with signiﬁcant power. For exam-
+ple, many software products use shared libraries to upgrade shrink-wrapped
+binaries at run time. Also, many Web servers rely on dynamic linking of shared
+libraries to serve dynamic content.

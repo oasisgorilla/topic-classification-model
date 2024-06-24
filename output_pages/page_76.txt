@@ -1,0 +1,39 @@
+Section 2.1
+Information Storage
+75
+Aside
+Converting between decimal and hexadecimal
+For converting larger values between decimal and hexadecimal, it is best to let a computer or calculator
+do the work. There are numerous tools that can do this. One simple way is to use any of the standard
+search engines, with queries such as
+Convert 0xabcd to decimal
+or
+123 in hex
+Decimal
+Binary
+Hexadecimal
+0x75
+0xBD
+0xF5
+Practice Problem 2.4 (solution page 180)
+Without converting the numbers to decimal or binary, try to solve the following
+arithmetic problems, giving the answers in hexadecimal. Hint: Just modify the
+methods you use for performing decimal addition and subtraction to use base 16.
+A. 0x605c + 0x5 =
+B. 0x605c −0x20 =
+C. 0x605c + 32 =
+D. 0x60fa −0x605c =
+2.1.2
+Data Sizes
+Every computer has a word size, indicating the nominal size of pointer data. Since
+a virtual address is encoded by such a word, the most important system parameter
+determined by the word size is the maximum size of the virtual address space. That
+is, for a machine with a w-bit word size, the virtual addresses can range from 0 to
+2w −1, giving the program access to at most 2w bytes.
+In recent years, there has been a widespread shift from machines with 32-
+bit word sizes to those with word sizes of 64 bits. This occurred ﬁrst for high-end
+machines designed for large-scale scientiﬁc and database applications, followed
+by desktop and laptop machines, and most recently for the processors found in
+smartphones. A 32-bit word size limits the virtual address space to 4 gigabytes
+(written 4 GB), that is, just over 4 × 109 bytes. Scaling up to a 64-bit word size
+leads to a virtual address space of 16 exabytes, or around 1.84 × 1019 bytes.

@@ -1,0 +1,91 @@
+568
+Chapter 5
+Optimizing Program Performance
+1
+/* 2 x 1 loop unrolling */
+2
+void combine5(vec_ptr v, data_t *dest)
+3
+{
+4
+long i;
+5
+long length = vec_length(v);
+6
+long limit = length-1;
+7
+data_t *data = get_vec_start(v);
+8
+data_t acc = IDENT;
+9
+10
+/* Combine 2 elements at a time */
+11
+for (i = 0; i < limit; i+=2) {
+12
+acc = (acc OP data[i]) OP data[i+1];
+13
+}
+14
+15
+/* Finish any remaining elements */
+16
+for (; i < length; i++) {
+17
+acc = acc OP data[i];
+18
+}
+19
+*dest = acc;
+20
+}
+Figure 5.16
+Applying 2 × 1 loop unrolling. This transformation can reduce the effect
+of loop overhead.
+to optionally add a ﬁnal iteration, as we did with the function psum2 (Figure 5.1).
+For k > 2, the ﬁnishing cases are better expressed with a loop, and so we adopt
+this programming convention for k = 2 as well. We refer to this transformation as
+“k × 1 loop unrolling,” since we unroll by a factor of k but accumulate values in a
+single variable acc.
+Practice Problem 5.7 (solution page 611)
+Modify the code for combine5 to unroll the loop by a factor k = 5.
+When we measure the performance of unrolled code for unrolling factors
+k = 2 (combine5) and k = 3, we get the following results:
+Integer
+Floating point
+Function
+Page
+Method
++
+*
++
+*
+combine4
+551
+No unrolling
+1.27
+3.01
+3.01
+5.01
+combine5
+568
+2 × 1 unrolling
+1.01
+3.01
+3.01
+5.01
+3 × 1 unrolling
+1.01
+3.01
+3.01
+5.01
+Latency bound
+1.00
+3.00
+3.00
+5.00
+Throughput bound
+0.50
+1.00
+1.00
+0.50

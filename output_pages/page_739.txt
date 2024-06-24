@@ -1,0 +1,33 @@
+738
+Chapter 7
+Linking
+The dlopen function loads and links the shared library filename. The external
+symbols in filename are resolved using libraries previously opened with the RTLD_
+GLOBAL ﬂag. If the current executable was compiled with the -rdynamic ﬂag, then
+its global symbols are also available for symbol resolution. The flag argument
+must include either RTLD_NOW, which tells the linker to resolve references to
+external symbols immediately, or the RTLD_LAZY ﬂag, which instructs the linker
+to defer symbol resolution until code from the library is executed. Either of these
+values can be ored with the RTLD_GLOBAL ﬂag.
+#include <dlfcn.h>
+void *dlsym(void *handle, char *symbol);
+Returns: pointer to symbol if OK, NULL on error
+The dlsym function takes a handle to a previously opened shared library and
+a symbol name and returns the address of the symbol, if it exists, or NULL
+otherwise.
+#include <dlfcn.h>
+int dlclose (void *handle);
+Returns: 0 if OK, −1 on error
+The dlclose function unloads the shared library if no other shared libraries are
+still using it.
+#include <dlfcn.h>
+const char *dlerror(void);
+Returns: error message if previous call to dlopen, dlsym, or dlclose failed;
+NULL if previous call was OK
+The dlerror function returns a string describing the most recent error that oc-
+curred as a result of calling dlopen, dlsym, or dlclose, or NULL if no error
+occurred.
+Figure 7.17 shows how we would use this interface to dynamically link our
+libvector.so shared library at run time and then invoke its addvec routine. To
+compile the program, we would invoke gcc in the following way:
+linux> gcc -rdynamic -o prog2r dll.c -ldl

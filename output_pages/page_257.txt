@@ -1,0 +1,50 @@
+256
+Chapter 3
+Machine-Level Representation of Programs
+movq
+%rdi, %rbx
+imulq
+%rsi, %rbx
+movq
+%rdi, %rdx
+orq
+%rsi, %rdx
+cmpq
+%rsi, %rdi
+cmovge
+%rdx, %rbx
+ret
+.L2:
+idivq
+%rsi, %rdi
+cmpq
+$10, %rsi
+cmovge
+%rdi, %rbx
+ret
+Fill in the missing expressions in the C code.
+3.6.7
+Loops
+C provides several looping constructs—namely, do-while, while, and for. No
+corresponding instructions exist in machine code. Instead, combinations of con-
+ditional tests and jumps are used to implement the effect of loops. Gcc and other
+compilers generate loop code based on the two basic loop patterns. We will study
+the translation of loops as a progression, starting with do-while and then working
+toward ones with more complex implementations, covering both patterns.
+Do-While Loops
+The general form of a do-while statement is as follows:
+do
+body-statement
+while (test-expr);
+The effect of the loop is to repeatedly execute body-statement, evaluate test-expr,
+and continue the loop if the evaluation result is nonzero. Observe that body-
+statement is executed at least once.
+This general form can be translated into conditionals and goto statements as
+follows:
+loop:
+body-statement
+t = test-expr;
+if (t)
+goto loop;
+That is, on each iteration the program evaluates the body statement and then the
+test expression. If the test succeeds, the program goes back for another iteration.

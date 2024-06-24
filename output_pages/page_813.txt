@@ -1,0 +1,47 @@
+812
+Chapter 8
+Exceptional Control Flow
+8.5.6
+Synchronizing Flows to Avoid Nasty Concurrency Bugs
+The problem of how to program concurrent ﬂows that read and write the same
+storage locations has challenged generations of computer scientists. In general,
+the number of potential interleavings of the ﬂows is exponential in the number of
+instructions. Some of those interleavings will produce correct answers, and others
+will not. The fundamental problem is to somehow synchronize the concurrent
+ﬂows so as to allow the largest set of feasible interleavings such that each of the
+feasible interleavings produces a correct answer.
+Concurrent programming is a deep and important problem that we will discuss
+in more detail in Chapter 12. However, we can use what you’ve learned about
+exceptional control ﬂow in this chapter to give you a sense of the interesting
+intellectual challenges associated with concurrency. For example, consider the
+program in Figure 8.39, which captures the structure of a typical Unix shell. The
+parent keeps track of its current children using entries in a global job list, with one
+entry per job. The addjob and deletejob functions add and remove entries from
+the job list.
+After the parent creates a new child process, it adds the child to the job
+list. When the parent reaps a terminated (zombie) child in the SIGCHLD signal
+handler, it deletes the child from the job list.
+At ﬁrst glance, this code appears to be correct. Unfortunately, the following
+sequence of events is possible:
+1. The parent executes the fork function and the kernel schedules the newly
+created child to run instead of the parent.
+2. Before the parent is able to run again, the child terminates and becomes a
+zombie, causing the kernel to deliver a SIGCHLD signal to the parent.
+3. Later, when the parent becomes runnable again but before it is executed, the
+kernel notices the pending SIGCHLD and causes it to be received by running
+the signal handler in the parent.
+4. The signal handler reaps the terminated child and calls deletejob, which does
+nothing because the parent has not added the child to the list yet.
+5. After the handler completes, the kernel then runs the parent, which returns
+from fork and incorrectly adds the (nonexistent) child to the job list by calling
+addjob.
+Thus, for some interleavings of the parent’s main routine and signal-handling
+ﬂows, it is possible for deletejob to be called before addjob. This results in an
+incorrect entry on the job list, for a job that no longer exists and that will never be
+removed. On the other hand, there are also interleavings where events occur in
+the correct order. For example, if the kernel happens to schedule the parent to run
+when the fork call returns instead of the child, then the parent will correctly add
+the child to the job list before the child terminates and the signal handler removes
+the job from the list.
+This is an example of a classic synchronization error known as a race. In this
+case, the race is between the call to addjob in the main routine and the call to

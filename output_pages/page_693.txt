@@ -1,0 +1,78 @@
+692
+Chapter 6
+The Memory Hierarchy
+1
+typedef int array_t[N][N];
+2
+3
+int sumA(array_t a)
+4
+{
+5
+int i, j;
+6
+int sum = 0;
+7
+for (i = 0; i < N; i++)
+8
+for (j = 0; j < N; j++) {
+9
+sum += a[i][j];
+10
+}
+11
+return sum;
+12
+}
+13
+14
+int sumB(array_t a)
+15
+{
+16
+int i, j;
+17
+int sum = 0;
+18
+for (j = 0; j < N; j++)
+19
+for (i = 0; i < N; i++) {
+20
+sum += a[i][j];
+21
+}
+22
+return sum;
+23
+}
+24
+25
+int sumC(array_t a)
+26
+{
+27
+int i, j;
+28
+int sum = 0;
+29
+for (j = 0; j < N; j+=2)
+30
+for (i = 0; i < N; i+=2) {
+31
+sum += (a[i][j] + a[i+1][j]
+32
++ a[i][j+1] + a[i+1][j+1]);
+33
+}
+34
+return sum;
+35
+}
+Figure 6.47
+Functions referenced in Problem 6.37.
+6.38 ◆
+3M decides to make Post-its by printing yellow squares on white pieces of paper.
+As part of the printing process, they need to set the CMYK (cyan, magenta, yellow,
+black) value for every point in the square. 3M hires you to determine the efﬁciency
+of the following algorithms on a machine with a 1,024-byte direct-mapped data
+cache with 16-byte blocks. You are given the following deﬁnitions:

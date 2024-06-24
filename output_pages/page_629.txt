@@ -1,0 +1,53 @@
+628
+Chapter 6
+The Memory Hierarchy
+Aside
+How much is a gigabyte?
+Unfortunately, the meanings of preﬁxes such as kilo (K), mega (M), giga (G), and tera (T) depend
+on the context. For measures that relate to the capacity of DRAMs and SRAMs, typically K = 210,
+M = 220, G = 230, and T = 240. For measures related to the capacity of I/O devices such as disks and
+networks, typically K = 103, M = 106, G = 109, and T = 1012. Rates and throughputs usually use these
+preﬁx values as well.
+Fortunately, for the back-of-the-envelope estimates that we typically rely on, either assumption
+works ﬁne in practice. For example, the relative difference between 230 and 109 is not that large:
+(230 −109)/109 ≈7%. Similarly, (240 −1012)/1012 ≈10%.
+when areal densities were relatively low. However, as areal densities increased,
+the gaps between sectors (where no data bits were stored) became unacceptably
+large. Thus, modern high-capacity disks use a technique known as multiple zone
+recording, where the set of cylinders is partitioned into disjoint subsets known as
+recording zones. Each zone consists of a contiguous collection of cylinders. Each
+track in each cylinder in a zone has the same number of sectors, which is deter-
+mined by the number of sectors that can be packed into the innermost track of
+the zone.
+The capacity of a disk is given by the following formula:
+Capacity = # bytes
+sector × average # sectors
+track
+× # tracks
+surface × # surfaces
+platter
+× # platters
+disk
+For example, suppose we have a disk with ﬁve platters, 512 bytes per sector, 20,000
+tracks per surface, and an average of 300 sectors per track. Then the capacity of
+the disk is
+Capacity = 512 bytes
+sector
+× 300 sectors
+track
+× 20,000 tracks
+surface
+× 2 surfaces
+platter
+× 5 platters
+disk
+= 30,720,000,000 bytes
+= 30.72 GB
+Notice that manufacturers express disk capacity in units of gigabytes (GB) or
+terabytes (TB), where 1 GB = 109 bytes and 1 TB = 1012 bytes.
+Practice Problem 6.2 (solution page 697)
+What is the capacity of a disk with 3 platters, 15,000 cylinders, an average of 500
+sectors per track, and 1,024 bytes per sector?
+Disk Operation
+Disks read and write bits stored on the magnetic surface using a read/write head
+connected to the end of an actuator arm, as shown in Figure 6.10(a). By moving

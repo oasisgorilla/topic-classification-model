@@ -1,0 +1,79 @@
+550
+Chapter 5
+Optimizing Program Performance
+5.6
+Eliminating Unneeded Memory References
+The code for combine3 accumulates the value being computed by the combining
+operation at the location designated by the pointer dest. This attribute can be seen
+by examining the assembly code generated for the inner loop of the compiled
+code. We show here the x86-64 code generated for data type double and with
+multiplication as the combining operation:
+Inner loop of combine3.
+data_t = double, OP = *
+dest in %rbx, data+i in %rdx, data+length in %rax
+1
+.L17:
+loop:
+2
+vmovsd
+(%rbx), %xmm0
+Read product from dest
+3
+vmulsd
+(%rdx), %xmm0, %xmm0
+Multiply product by data[i]
+4
+vmovsd
+%xmm0, (%rbx)
+Store product at dest
+5
+addq
+$8, %rdx
+Increment data+i
+6
+cmpq
+%rax, %rdx
+Compare to data+length
+7
+jne
+.L17
+If !=, goto loop
+We see in this loop code that the address corresponding to pointer dest is held in
+register %rbx. It has also transformed the code to maintain a pointer to the ith data
+element in register %rdx, shown in the annotations as data+i. This pointer is in-
+cremented by 8 on every iteration. The loop termination is detected by comparing
+this pointer to one stored in register %rax. We can see that the accumulated value
+is read from and written to memory on each iteration. This reading and writing is
+wasteful, since the value read from dest at the beginning of each iteration should
+simply be the value written at the end of the previous iteration.
+We can eliminate this needless reading and writing of memory by rewriting the
+code in the style of combine4 in Figure 5.10. We introduce a temporary variable
+acc that is used in the loop to accumulate the computed value. The result is stored
+at dest only after the loop has been completed. As the assembly code that follows
+shows, the compiler can now use register %xmm0 to hold the accumulated value.
+Compared to the loop in combine3, we have reduced the memory operations per
+iteration from two reads and one write to just a single read.
+Inner loop of combine4.
+data_t = double, OP = *
+acc in %xmm0, data+i in %rdx, data+length in %rax
+1
+.L25:
+loop:
+2
+vmulsd
+(%rdx), %xmm0, %xmm0
+Multiply acc by data[i]
+3
+addq
+$8, %rdx
+Increment data+i
+4
+cmpq
+%rax, %rdx
+Compare to data+length
+5
+jne
+.L25
+If !=, goto loop
+We see a signiﬁcant improvement in program performance, as shown in the
+following table:

@@ -1,0 +1,80 @@
+Solutions to Practice Problems
+179
+For ﬂoating-point number f , this function computes (int) f . Your function
+should round toward zero. If f cannot be represented as an integer (e.g., it is out
+of range, or it is NaN), then the function should return 0x80000000.
+Test your function by evaluating it for all 232 values of argument f and com-
+paring the result to what would be obtained using your machine’s ﬂoating-point
+operations.
+2.97 ◆◆◆◆
+Following the bit-level ﬂoating-point coding rules, implement the function with
+the following prototype:
+/* Compute (float) i */
+float_bits float_i2f(int i);
+For argument i, this function computes the bit-level representation of
+(float) i.
+Test your function by evaluating it for all 232 values of argument f and com-
+paring the result to what would be obtained using your machine’s ﬂoating-point
+operations.
+Solutions to Practice Problems
+Solution to Problem 2.1 (page 73)
+Understanding the relation between hexadecimal and binary formats will be im-
+portant once we start looking at machine-level programs. The method for doing
+these conversions is in the text, but it takes a little practice to become familiar.
+A. 0x25B9D2 to binary:
+Hexadecimal
+2
+5
+B
+9
+D
+2
+Binary
+0010
+0101
+1101
+1001
+1101
+0010
+B. Binary 1100 1001 0111 1011 to hexadecimal:
+Binary
+1100
+1001
+0111
+1011
+Hexadecimal
+C
+9
+7
+B
+C. 0xA8B3D to binary:
+Hexadecimal
+A
+8
+B
+3
+D
+Binary
+1010
+1000
+1011
+0011
+1101
+D. Binary 11 0010 0010 1101 1001 0110 to hexadecimal:
+Binary
+11
+0010
+0010
+1101
+1001
+0110
+Hexadecimal
+3
+2
+2
+D
+9
+6
+Solution to Problem 2.2 (page 73)
+This problem gives you a chance to think about powers of 2 and their hexadecimal
+representations.

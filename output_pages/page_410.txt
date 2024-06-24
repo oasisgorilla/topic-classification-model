@@ -1,0 +1,58 @@
+Section 4.2
+Logic Design and the Hardware Control Language HCL
+409
+Aside
+Modern logic design
+At one time, hardware designers created circuit designs by drawing schematic diagrams of logic circuits
+(ﬁrst with paper and pencil, and later with computer graphics terminals). Nowadays, most designs
+are expressed in a hardware description language (HDL), a textual notation that looks similar to a
+programming language but that is used to describe hardware structures rather than program behaviors.
+The most commonly used languages are Verilog, having a syntax similar to C, and VHDL, having
+a syntax similar to the Ada programming language. These languages were originally designed for
+creating simulation models of digital circuits. In the mid-1980s, researchers developed logic synthesis
+programs that could generate efﬁcient circuit designs from HDL descriptions. There are now a number
+of commercial synthesis programs, and this has become the dominant technique for generating digital
+circuits. This shift from hand-designed circuits to synthesized ones can be likened to the shift from
+writing programs in assembly code to writing them in a high-level language and having a compiler
+generate the machine code.
+Our HCL language expresses only the control portions of a hardware design, with only a limited set
+of operations and with no modularity. As we will see, however, the control logic is the most difﬁcult part
+of designing a microprocessor. We have developed tools that can directly translate HCL into Verilog,
+and by combining this code with Verilog code for the basic hardware units, we can generate HDL
+descriptions from which actual working microprocessors can be synthesized. By carefully separating
+out, designing, and testing the control logic, we can create a working microprocessor with reasonable
+effort. Web Aside arch:vlog on page 503 describes how we can generate Verilog versions of a Y86-64
+processor.
+Figure 4.9
+Logic gate types. Each
+gate generates output
+equal to some Boolean
+function of its inputs.
+AND
+out
+out
+out
+OR
+NOT
+a
+a
+b
+a
+b
+out = a && b
+out = a || b
+out = !a
+4.2.1
+Logic Gates
+Logic gates are the basic computing elements for digital circuits. They generate an
+output equal to some Boolean function of the bit values at their inputs. Figure 4.9
+shows the standard symbols used for Boolean functions and, or, and not. HCL
+expressions are shown below the gates for the operators in C (Section 2.1.8): &&
+for and, || for or, and ! for not. We use these instead of the bit-level C operators
+&, |, and ~, because logic gates operate on single-bit quantities, not entire words.
+Although the ﬁgure illustrates only two-input versions of the and and or gates, it
+is common to see these being used as n-way operations for n > 2. We still write
+these in HCL using binary operators, though, so the operation of a three-input
+and gate with inputs a, b, and c is described with the HCL expression a && b && c.
+Logic gates are always active. If some input to a gate changes, then within
+some small amount of time, the output will change accordingly.

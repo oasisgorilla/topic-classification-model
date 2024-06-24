@@ -1,0 +1,77 @@
+Section 2.2
+Integer Representations
+109
+Figure 2.16
+Comparing unsigned
+and two’s-complement
+representations for w = 4.
+The weight of the most
+signiﬁcant bit is −8 for
+two’s complement and +8
+for unsigned, yielding a net
+difference of 16.
+8
+7
+6
+5
+4
+3
+2
+1
+16
+15
+14
+13
+12
+11
+10
+9
+0
+–1
+–2
+–3
+–4
+–5
+–6
+–7
+–8
+20 = 1
+21 = 2
+22 = 4
+–23 = –8
+[1011]
+[1111]
+23 = 8
++16
++16
+Figure 2.17
+Conversion from two’s
+complement to unsigned.
+Function T2U converts
+negative numbers to large
+positive numbers.
++2w–1
+0
+–2w–1
+2w
+0
+2w–1
+Two’s
+complement
+Unsigned
+Figure 2.17 illustrates the general behavior of function T2U. As it shows, when
+mapping a signed number to its unsigned counterpart, negative numbers are con-
+verted to large positive numbers, while nonnegative numbers remain unchanged.
+Practice Problem 2.20 (solution page 185)
+Explain how Equation 2.5 applies to the entries in the table you generated when
+solving Problem 2.19.
+Going in the other direction, we can state the relationship between an un-
+signed number u and its signed counterpart U2Tw(u):
+principle: Unsigned to two’s-complement conversion
+For u such that 0 ≤u ≤UMaxw:
+U2Tw(u) =
+ u,
+u ≤TMaxw
+u −2w,
+u > TMaxw
+(2.7)

@@ -1,0 +1,55 @@
+306
+Chapter 3
+Machine-Level Representation of Programs
+union U3 {
+char c;
+int i[2];
+double v;
+};
+When compiled on an x86-64 Linux machine, the offsets of the ﬁelds, as well as
+the total size of data types S3 and U3, are as shown in the following table:
+Type
+c
+i
+v
+Size
+S3
+0
+4
+16
+24
+U3
+0
+0
+0
+8
+(We will see shortly why i has offset 4 in S3 rather than 1, and why v has offset 16,
+rather than 9 or 12.) For pointer p of type union U3 *, references p->c, p->i[0],
+and p->v would all reference the beginning of the data structure. Observe also
+that the overall size of a union equals the maximum size of any of its ﬁelds.
+Unions can be useful in several contexts. However, they can also lead to nasty
+bugs, since they bypass the safety provided by the C type system. One application
+is when we know in advance that the use of two different ﬁelds in a data structure
+will be mutually exclusive. Then, declaring these two ﬁelds as part of a union rather
+than a structure will reduce the total space allocated.
+For example, suppose we want to implement a binary tree data structure
+where each leaf node has two double data values and each internal node has
+pointers to two children but no data. If we declare this as
+struct node_s {
+struct node_s *left;
+struct node_s *right;
+double data[2];
+};
+then every node requires 32 bytes, with half the bytes wasted for each type of node.
+On the other hand, if we declare a node as
+union node_u {
+struct {
+union node_u *left;
+union node_u *right;
+} internal;
+double data[2];
+};
+then every node will require just 16 bytes. If n is a pointer to a node of type
+union node_u *, we would reference the data of a leaf node as n->data[0]
+and n->data[1], and the children of an internal node as n->internal.left and
+n->internal.right.

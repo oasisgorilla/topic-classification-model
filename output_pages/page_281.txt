@@ -1,0 +1,89 @@
+280
+Chapter 3
+Machine-Level Representation of Programs
+demonstrate the important role of the run-time stack in managing the storage
+needed to support procedure calls and returns.
+Instruction L1 of leaf sets %rax to 97, the value to be returned. Instruction L2
+then returns. It pops 0x400054e from the stack. In setting the PC to this popped
+value, control transfers back to instruction T3 of top. The program has successfully
+completed the call to leaf and returned to top.
+Instruction T3 sets %rax to 194, the value to be returned from top. Instruction
+T4 then returns. It pops 0x4000560 from the stack, thereby setting the PC to
+instruction M2 of main. The program has successfully completed the call to top
+and returned to main. We see that the stack pointer has also been restored to
+0x7fffffffe820, the value it had before the call to top.
+We can see that this simple mechanism of pushing the return address onto
+the stack makes it possible for the function to later return to the proper point
+in the program. The standard call/return mechanism of C (and of most program-
+ming languages) conveniently matches the last-in, ﬁrst-out memory management
+discipline provided by a stack.
+Practice Problem 3.32 (solution page 375)
+The disassembled code for two functions first and last is shown below, along
+with the code for a call of first by function main:
+Disassembly of last(long u, long v)
+u in %rdi, v in %rsi
+1
+0000000000400540 <last>:
+2
+400540:
+48 89 f8
+mov
+%rdi,%rax
+L1: u
+3
+400543:
+48 0f af c6
+imul
+%rsi,%rax
+L2: u*v
+4
+400547:
+c3
+retq
+L3: Return
+Disassembly of last(long x)
+x in %rdi
+5
+0000000000400548 <first>:
+6
+400548:
+48 8d 77 01
+lea
+0x1(%rdi),%rsi
+F1: x+1
+7
+40054c:
+48 83 ef 01
+sub
+$0x1,%rdi
+F2: x-1
+8
+400550:
+e8 eb ff ff ff
+callq
+400540 <last>
+F3: Call last(x-1,x+1)
+9
+400555:
+f3 c3
+repz retq
+F4: Return
+.
+.
+.
+10
+400560:
+e8 e3 ff ff ff
+callq
+400548 <first>
+M1: Call first(10)
+11
+400565:
+48 89 c2
+mov
+%rax,%rdx
+M2: Resume
+Each of these instructions is given a label, similar to those in Figure 3.27(a).
+Starting with the calling of first(10) by main, ﬁll in the following table to trace
+instruction execution through to the point where the program returns back to
+main.

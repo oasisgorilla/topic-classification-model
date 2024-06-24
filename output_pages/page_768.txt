@@ -1,0 +1,65 @@
+Section 8.1
+Exceptions
+767
+Aside
+A note on terminology
+The terminology for the various classes of exceptions varies from system to system. Processor ISA
+speciﬁcations often distinguish between asynchronous “interrupts” and synchronous “exceptions” yet
+provide no umbrella term to refer to these very similar concepts. To avoid having to constantly refer to
+“exceptions and interrupts” and “exceptions or interrupts,” we use the word “exception” as the general
+term and distinguish between asynchronous exceptions (interrupts) and synchronous exceptions (traps,
+faults, and aborts) only when it is appropriate. As we have noted, the basic ideas are the same for every
+system, but you should be aware that some manufacturers’ manuals use the word “exception” to refer
+only to those changes in control ﬂow caused by synchronous events.
+code/ecf/hello-asm64.sa
+1
+.section .data
+2
+string:
+3
+.ascii "hello, world\n"
+4
+string_end:
+5
+.equ len, string_end - string
+6
+.section .text
+7
+.globl main
+8
+main:
+First, call write(1, "hello, world\n", 13)
+9
+movq $1, %rax
+write is system call 1
+10
+movq $1, %rdi
+Arg1: stdout has descriptor 1
+11
+movq $string, %rsi
+Arg2: hello world string
+12
+movq $len, %rdx
+Arg3: string length
+13
+syscall
+Make the system call
+Next, call _exit(0)
+14
+movq $60, %rax
+_exit is system call 60
+15
+movq $0, %rdi
+Arg1: exit status is 0
+16
+syscall
+Make the system call
+code/ecf/hello-asm64.sa
+Figure 8.11
+Implementing the hello program directly with Linux system calls.
+Figure 8.11 shows an assembly-language version of hello that uses the
+syscall instruction to invoke the write and exit system calls directly. Lines
+9–13 invoke the write function. First, line 9 stores the number of the write sys-
+tem call in %rax, and lines 10–12 set up the argument list. Then, line 13 uses the
+syscall instruction to invoke the system call. Similarly, lines 14–16 invoke the
+_exit system call.

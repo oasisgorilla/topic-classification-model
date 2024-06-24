@@ -1,0 +1,72 @@
+918
+Chapter 9
+Virtual Memory
+A. 00 0011 1101 0111
+B. Parameter
+Value
+VPN
+0xf
+TLB index
+0x3
+TLB tag
+0x3
+TLB hit? (Y/N)
+Y
+Page fault? (Y/N)
+N
+PPN
+0xd
+C. 0011 0101 0111
+D. Parameter
+Value
+Byte offset
+0x3
+Cache index
+0x5
+Cache tag
+0xd
+Cache hit? (Y/N)
+Y
+Cache byte returned
+0x1d
+Solution to Problem 9.5 (page 875)
+Solving this problem will give you a good feel for the idea of memory mapping.
+Try it yourself. We haven’t discussed the open, fstat, or write functions, so you’ll
+need to read their man pages to see how they work.
+code/vm/mmapcopy.c
+1
+#include "csapp.h"
+2
+3
+/*
+4
+* mmapcopy - uses mmap to copy file fd to stdout
+5
+*/
+6
+void mmapcopy(int fd, int size)
+7
+{
+8
+char *bufp; /* ptr to memory-mapped VM area */
+9
+10
+bufp = Mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
+11
+Write(1, bufp, size);
+12
+return;
+13
+}
+14
+15
+/* mmapcopy driver */
+16
+int main(int argc, char **argv)
+17
+{
+18
+struct stat stat;
+19
+int fd;
+20

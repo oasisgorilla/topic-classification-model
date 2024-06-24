@@ -1,0 +1,44 @@
+1028
+Chapter 12
+Concurrent Programming
+the connected descriptor to the peer thread when we call pthread_create. The
+obvious approach is to pass a pointer to the descriptor, as in the following:
+connfd = Accept(listenfd, (SA *) &clientaddr, &clientlen);
+Pthread_create(&tid, NULL, thread, &connfd);
+Then we have the peer thread dereference the pointer and assign it to a local
+variable, as follows:
+void *thread(void *vargp) {
+int connfd = *((int *)vargp);
+.
+.
+.
+}
+This would be wrong, however, because it introduces a race between the assign-
+ment statement in the peer thread and the accept statement in the main thread. If
+the assignment statement completes before the next accept, then the local connfd
+variable in the peer thread gets the correct descriptor value. However, if the as-
+signment completes after the accept, then the local connfd variable in the peer
+thread gets the descriptor number of the next connection. The unhappy result is
+that two threads are now performing input and output on the same descriptor. In
+order to avoid the potentially deadly race, we must assign each connected descrip-
+tor returned by accept to its own dynamically allocated memory block, as shown
+in lines 21–22. We will return to the issue of races in Section 12.7.4.
+Another issue is avoiding memory leaks in the thread routine. Since we are
+not explicitly reaping threads, we must detach each thread so that its memory
+resources will be reclaimed when it terminates (line 31). Further, we must be
+careful to free the memory block that was allocated by the main thread (line 32).
+Practice Problem 12.5 (solution page 1072)
+In the process-based server in Figure 12.5, we observed that there is no memory
+leak and the code remains correct even when line 33 is deleted. In the threads-
+based server in Figure 12.14, are there any chances of memory leak if lines 31 or 32
+are deleted. Why?
+12.4
+Shared Variables in Threaded Programs
+From a programmer’s perspective, one of the attractive aspects of threads is the
+ease with which multiple threads can share the same program variables. However,
+this sharing can be tricky. In order to write correctly threaded programs, we must
+have a clear understanding of what we mean by sharing and how it works.
+There are some basic questions to work through in order to understand
+whether a variable in a C program is shared or not: (1) What is the underlying
+memory model for threads? (2) Given this model, how are instances of the vari-
+able mapped to memory? (3) Finally, how many threads reference each of these

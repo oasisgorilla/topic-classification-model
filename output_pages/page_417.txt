@@ -1,0 +1,77 @@
+416
+Chapter 4
+Processor Architecture
+0
+Y
+X
+X  Y
+A
+L
+U
+A
+B
+1
+Y
+X
+X  Y
+A
+L
+U
+A
+B
+2
+Y
+X
+X & Y
+A
+L
+U
+A
+B
+3
+Y
+X
+X ^ Y
+A
+L
+U
+A
+B
+Figure 4.15
+Arithmetic/logic unit (ALU). Depending on the setting of the function
+input, the circuit will perform one of four different arithmetic and logical operations.
+Practice Problem 4.12 (solution page 520)
+Write HCL code describing a circuit that for word inputs A, B, and C selects the
+median of the three values. That is, the output equals the word lying between the
+minimum and maximum of the three inputs.
+Combinational logic circuits can be designed to perform many different types
+of operations on word-level data. The detailed design of these is beyond the
+scope of our presentation. One important combinational circuit, known as an
+arithmetic/logic unit (ALU), is diagrammed at an abstract level in Figure 4.15.
+In our version, the circuit has three inputs: two data inputs labeled A and B and
+a control input. Depending on the setting of the control input, the circuit will
+perform different arithmetic or logical operations on the data inputs. Observe
+that the four operations diagrammed for this ALU correspond to the four different
+integer operations supported by the Y86-64 instruction set, and the control values
+match the function codes for these instructions (Figure 4.3). Note also the ordering
+of operands for subtraction, where the A input is subtracted from the B input.
+This ordering is chosen in anticipation of the ordering of arguments in the subq
+instruction.
+4.2.4
+Set Membership
+In our processor designs, we will ﬁnd many examples where we want to compare
+one signal against a number of possible matching signals, such as to test whether
+the code for some instruction being processed matches some category of instruc-
+tion codes. As a simple example, suppose we want to generate the signals s1 and
+s0 for the 4-way multiplexor of Figure 4.14 by selecting the high- and low-order
+bits from a 2-bit signal code, as follows:
+code
+s1
+s0
+D
+C
+B
+A
+Control
+MUX4
+Out4

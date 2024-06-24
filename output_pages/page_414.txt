@@ -1,0 +1,44 @@
+Section 4.2
+Logic Design and the Hardware Control Language HCL
+413
+As is shown on the right side of Figure 4.12, we will draw word-level circuits
+using medium-thickness lines to represent the set of wires carrying the individual
+bits of the word, and we will show a single-bit signal as a dashed line.
+Practice Problem 4.10 (solution page 520)
+Suppose you want to implement a word-level equality circuit using the exclusive-
+or circuits from Problem 4.9 rather than from bit-level equality circuits. Design
+such a circuit for a 64-bit word consisting of 64 bit-level exclusive-or circuits and
+two additional logic gates.
+Figure 4.13 shows the circuit for a word-level multiplexor. This circuit gener-
+ates a 64-bit word Out equal to one of the two input words, A or B, depending on
+the control input bit s. The circuit consists of 64 identical subcircuits, each hav-
+ing a structure similar to the bit-level multiplexor from Figure 4.11. Rather than
+replicating the bit-level multiplexor 64 times, the word-level version reduces the
+number of inverters by generating !s once and reusing it at each bit position.
+(a) Bit-level implementation
+(b) Word-level abstraction
+out63
+out62
+out0
+s
+!s
+s
+B
+A
+Out
+MUX
+int Out = [
+  s : A;
+  l : B;
+];
+b63
+a63
+b62
+a62
+b0
+a0
+. . .
+Figure 4.13
+Word-level multiplexor circuit. The output will equal input word A when
+the control signal s is 1, and it will equal B otherwise. Multiplexors are described in HCL
+using case expressions.

@@ -1,0 +1,56 @@
+Section 9.11
+Common Memory-Related Bugs in C Programs
+909
+9.11.6
+Referencing a Pointer Instead of the Object It Points To
+If we are not careful about the precedence and associativity of C operators, then
+we incorrectly manipulate a pointer instead of the object it points to. For example,
+consider the following function, whose purpose is to remove the ﬁrst item in a
+binary heap of *size items and then reheapify the remaining *size - 1 items:
+1
+int *binheapDelete(int **binheap, int *size)
+2
+{
+3
+int *packet = binheap[0];
+4
+5
+binheap[0] = binheap[*size - 1];
+6
+*size--; /* This should be (*size)-- */
+7
+heapify(binheap, *size, 0);
+8
+return(packet);
+9
+}
+In line 6, the intent is to decrement the integer value pointed to by the size
+pointer. However, because the unary -- and * operators have the same precedence
+and associate from right to left, the code in line 6 actually decrements the pointer
+itself instead of the integer value that it points to. If we are lucky, the program will
+crash immediately. But more likely we will be left scratching our heads when the
+program produces an incorrect answer much later in its execution. The moral here
+is to use parentheses whenever in doubt about precedence and associativity. For
+example, in line 6, we should have clearly stated our intent by using the expression
+(*size)--.
+9.11.7
+Misunderstanding Pointer Arithmetic
+Another common mistake is to forget that arithmetic operations on pointers are
+performed in units that are the size of the objects they point to, which are not
+necessarily bytes. For example, the intent of the following function is to scan an
+array of ints and return a pointer to the ﬁrst occurrence of val:
+1
+int *search(int *p, int val)
+2
+{
+3
+while (*p && *p != val)
+4
+p += sizeof(int); /* Should be p++ */
+5
+return p;
+6
+}
+However, because line 4 increments the pointer by 4 (the number of bytes in an
+integer) each time through the loop, the function incorrectly scans every fourth
+integer in the array.

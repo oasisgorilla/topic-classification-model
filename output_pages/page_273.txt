@@ -1,0 +1,57 @@
+272
+Chapter 3
+Machine-Level Representation of Programs
+These declarations state that within the segment of the object-code ﬁle called
+.rodata (for “read-only data”), there should be a sequence of seven “quad” (8-
+byte) words, where the value of each word is given by the instruction address
+associated with the indicated assembly-code labels (e.g., .L3). Label .L4 marks
+the start of this allocation. The address associated with this label serves as the
+base for the indirect jump (line 5).
+The different code blocks (C labels loc_A through loc_D and loc_def) im-
+plement the different branches of the switch statement. Most of them simply
+compute a value for val and then go to the end of the function. Similarly, the
+assembly-code blocks compute a value for register %rdi and jump to the position
+indicated by label .L2 at the end of the function. Only the code for case label 102
+does not follow this pattern, to account for the way the code for this case falls
+through to the block with label 103 in the original C code. This is handled in the
+assembly-code block starting with label .L5, by omitting the jmp instruction at
+the end of the block, so that the code continues execution of the next block. Simi-
+larly, the C version switch_eg_impl has no goto statement at the end of the block
+starting with label loc_B.
+Examining all of this code requires careful study, but the key point is to see
+that the use of a jump table allows a very efﬁcient way to implement a multiway
+branch. In our case, the program could branch to ﬁve distinct locations with a
+single jump table reference. Even if we had a switch statement with hundreds of
+cases, they could be handled by a single jump table access.
+Practice Problem 3.30 (solution page 374)
+In the C function that follows, we have omitted the body of the switch statement.
+In the C code, the case labels did not span a contiguous range, and some cases had
+multiple labels.
+void switch2(short x, short *dest) {
+short val = 0;
+switch (x) {
+.
+.
+.
+Body of switch statement omitted
+}
+*dest = val;
+}
+In compiling the function, gcc generates the assembly code that follows for
+the initial part of the procedure, with variable x in %rdi:
+void switch2(short x, short *dest)
+x in %rdi
+1
+switch2:
+2
+addq
+$2, %rdi
+3
+cmpq
+$8, %rdi
+4
+ja
+.L2
+5
+jmp
+*.L4(,%rdi,8)

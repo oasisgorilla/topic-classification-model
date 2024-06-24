@@ -1,0 +1,54 @@
+Section 7.6
+Symbol Resolution
+719
+11
+printf("x = 0x%x y = 0x%x \n",
+12
+x, y);
+13
+return 0;
+14
+}
+1
+/* bar5.c */
+2
+double x;
+3
+4
+void f()
+5
+{
+6
+x = -0.0;
+7
+}
+On an x86-64/Linux machine, doubles are 8 bytes and ints are 4 bytes. On
+our system, the address of x is 0x601020 and the address of y is 0x601024. Thus,
+the assignment x = -0.0 in line 6 of bar5.c will overwrite the memory locations
+for x and y (lines 5 and 6 in foo5.c) with the double-precision ﬂoating-point
+representation of negative zero!
+linux> gcc -Wall -Og -o foobar5 foo5.c bar5.c
+/usr/bin/ld: Warning: alignment 4 of symbol ‘x’ in /tmp/cclUFK5g.o
+is smaller than 8 in /tmp/ccbTLcb9.o
+linux> ./foobar5
+x = 0x0 y = 0x80000000
+This is a subtle and nasty bug, especially because it triggers only a warning from
+the linker, and because it typically manifests itself much later in the execution
+of the program, far away from where the error occurred. In a large system with
+hundreds of modules, a bug of this kind is extremely hard to ﬁx, especially because
+many programmers are not aware of how linkers work, and because they often
+ignore compiler warnings. When in doubt, invoke the linker with a ﬂag such
+as the gcc -fno-common ﬂag, which triggers an error if it encounters multiply-
+deﬁned global symbols. Or use the -Werror option, which turns all warnings into
+errors.
+In Section 7.5, we saw how the compiler assigns symbols to COMMON and
+.bss using a seemingly arbitrary convention. Actually, this convention is due to
+the fact that in some cases the linker allows multiple modules to deﬁne global
+symbols with the same name. When the compiler is translating some module and
+encounters a weak global symbol, say, x, it does not know if other modules also
+deﬁne x, and if so, it cannot predict which of the multiple instances of x the linker
+might choose. So the compiler defers the decision to the linker by assigning x to
+COMMON. On the other hand, if x is initialized to zero, then it is a strong symbol
+(and thus must be unique by rule 2), so the compiler can conﬁdently assign it to
+.bss. Similarly, static symbols are unique by construction, so the compiler can
+conﬁdently assign them to either .data or .bss.

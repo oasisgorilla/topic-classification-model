@@ -1,0 +1,57 @@
+44
+Chapter 1
+A Tour of Computer Systems
+Figure 1.4
+Hardware organization
+of a typical system. CPU:
+central processing unit,
+ALU: arithmetic/logic unit,
+PC: program counter, USB:
+Universal Serial Bus.
+CPU
+Register file
+PC
+ALU
+Bus interface
+I/O
+bridge
+System bus
+Memory bus
+Main
+memory
+I/O bus
+Expansion slots for
+other devices such
+as network adapters
+Disk
+controller
+Graphics
+adapter
+Display
+Mouse Keyboard
+USB
+controller
+Disk
+hello executable
+stored on disk
+assumes that it is the name of an executable ﬁle that it should load and run. So
+in this case, the shell loads and runs the hello program and then waits for it to
+terminate.The hello programprintsitsmessagetothescreenandthenterminates.
+The shell then prints a prompt and waits for the next input command line.
+1.4.1
+Hardware Organization of a System
+To understand what happens to our hello program when we run it, we need
+to understand the hardware organization of a typical system, which is shown
+in Figure 1.4. This particular picture is modeled after the family of recent Intel
+systems, but all systems have a similar look and feel. Don’t worry about the
+complexity of this ﬁgure just now. We will get to its various details in stages
+throughout the course of the book.
+Buses
+Running throughout the system is a collection of electrical conduits called buses
+that carry bytes of information back and forth between the components. Buses
+are typically designed to transfer ﬁxed-size chunks of bytes known as words. The
+number of bytes in a word (the word size) is a fundamental system parameter that
+varies across systems. Most machines today have word sizes of either 4 bytes (32
+bits) or 8 bytes (64 bits). In this book, we do not assume any ﬁxed deﬁnition of
+word size. Instead, we will specify what we mean by a “word” in any context that
+requires this to be deﬁned.

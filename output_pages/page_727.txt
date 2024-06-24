@@ -1,0 +1,54 @@
+726
+Chapter 7
+Linking
+ﬁle. The linker then assigns run-time memory addresses to the new aggregate
+sections, to each section deﬁned by the input modules, and to each symbol
+deﬁned by the input modules. When this step is complete, each instruction
+and global variable in the program has a unique run-time memory address.
+2. Relocating symbol references within sections. In this step, the linker modiﬁes
+every symbol reference in the bodies of the code and data sections so that
+they point to the correct run-time addresses. To perform this step, the linker
+relies on data structures in the relocatable object modules known as relocation
+entries, which we describe next.
+7.7.1
+Relocation Entries
+When an assembler generates an object module, it does not know where the code
+and data will ultimately be stored in memory. Nor does it know the locations of
+any externally deﬁned functions or global variables that are referenced by the
+module. So whenever the assembler encounters a reference to an object whose
+ultimate location is unknown, it generates a relocation entry that tells the linker
+how to modify the reference when it merges the object ﬁle into an executable.
+Relocation entries for code are placed in .rel.text. Relocation entries for data
+are placed in .rel.data.
+Figure 7.9 shows the format of an ELF relocation entry. The offset is the
+section offset of the reference that will need to be modiﬁed. The symbol identiﬁes
+the symbol that the modiﬁed reference should point to. The type tells the linker
+how to modify the new reference. The addend is a signed constant that is used by
+some types of relocations to bias the value of the modiﬁed reference.
+ELF deﬁnes 32 different relocation types, many quite arcane. We are con-
+cerned with only the two most basic relocation types:
+R_X86_64_PC32. Relocate a reference that uses a 32-bit PC-relative address.
+Recall from Section 3.6.3 that a PC-relative address is an offset from
+the current run-time value of the program counter (PC). When the CPU
+executes an instruction using PC-relative addressing, it forms the effective
+address (e.g., the target of the call instruction) by adding the 32-bit value
+code/link/elfstructs.c
+1
+typedef struct {
+2
+long offset;
+/* Offset of the reference to relocate */
+3
+long type:32,
+/* Relocation type */
+4
+symbol:32; /* Symbol table index */
+5
+long addend;
+/* Constant part of relocation expression */
+6
+} Elf64_Rela;
+code/link/elfstructs.c
+Figure 7.9
+ELF relocation entry. Each entry identiﬁes a reference that must be relocated
+and speciﬁes how to compute the modiﬁed reference.

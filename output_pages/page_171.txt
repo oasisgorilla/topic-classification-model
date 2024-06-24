@@ -1,0 +1,42 @@
+170
+Chapter 2
+Representing and Manipulating Information
+2.73 ◆◆
+Write code for a function with the following prototype:
+/* Addition that saturates to TMin or TMax */
+int saturating_add(int x, int y);
+Instead of overﬂowing the way normal two’s-complement addition does, sat-
+urating addition returns TMax when there would be positive overﬂow, and TMin
+when there would be negative overﬂow. Saturating arithmetic is commonly used
+in programs that perform digital signal processing.
+Your function should follow the bit-level integer coding rules (page 164).
+2.74 ◆◆
+Write a function with the following prototype:
+/* Determine whether arguments can be subtracted without overflow */
+int tsub_ok(int x, int y);
+This function should return 1 if the computation x-y does not overﬂow.
+2.75 ◆◆◆
+Suppose we want to compute the complete 2w-bit representation of x . y, where
+both x and y are unsigned, on a machine for which data type unsigned is w bits.
+The low-order w bits of the product can be computed with the expression x*y, so
+we only require a procedure with prototype
+unsigned unsigned_high_prod(unsigned x, unsigned y);
+that computes the high-order w bits of x . y for unsigned variables.
+We have access to a library function with prototype
+int signed_high_prod(int x, int y);
+that computes the high-order w bits of x . y for the case where x and y are in two’s-
+complement form. Write code calling this procedure to implement the function
+for unsigned arguments. Justify the correctness of your solution.
+Hint: Look at the relationship between the signed product x . y and the un-
+signed product x′ . y′ in the derivation of Equation 2.18.
+2.76 ◆
+The library function calloc has the following declaration:
+void *calloc(size_t nmemb, size_t size);
+According to the library documentation, “The calloc function allocates memory
+for an array of nmemb elements of size bytes each. The memory is set to zero. If
+nmemb or size is zero, then calloc returns NULL.”
+Write an implementation of calloc that performs the allocation by a call to
+malloc and sets the memory to zero via memset. Your code should not have any
+vulnerabilities due to arithmetic overﬂow, and it should work correctly regardless
+of the number of bits used to represent data of type size_t.
+As a reference, functions malloc and memset have the following declarations:

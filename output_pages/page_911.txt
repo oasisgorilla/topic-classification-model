@@ -1,0 +1,64 @@
+910
+Chapter 9
+Virtual Memory
+9.11.8
+Referencing Nonexistent Variables
+Naive C programmers who do not understand the stack discipline will sometimes
+reference local variables that are no longer valid, as in the following example:
+1
+int *stackref ()
+2
+{
+3
+int val;
+4
+5
+return &val;
+6
+}
+This function returns a pointer (say, p) to a local variable on the stack and
+then pops its stack frame. Although p still points to a valid memory address, it
+no longer points to a valid variable. When other functions are called later in the
+program, the memory will be reused for their stack frames. Later, if the program
+assigns some value to *p, then it might actually be modifying an entry in another
+function’s stack frame, with potentially disastrous and bafﬂing consequences.
+9.11.9
+Referencing Data in Free Heap Blocks
+A similar error is to reference data in heap blocks that have already been freed.
+Consider the following example, which allocates an integer array x in line 6,
+prematurely frees block x in line 10, and then later references it in line 14:
+1
+int *heapref(int n, int m)
+2
+{
+3
+int i;
+4
+int *x, *y;
+5
+6
+x = (int *)Malloc(n * sizeof(int));
+7
+8
+.
+.
+.
+// Other calls to malloc and free go here
+9
+10
+free(x);
+11
+12
+y = (int *)Malloc(m * sizeof(int));
+13
+for (i = 0; i < m; i++)
+14
+y[i] = x[i]++; /* Oops! x[i] is a word in a free block */
+15
+16
+return y;
+17
+}
+Depending on the pattern of malloc and free calls that occur between lines 6
+and 10, when the program references x[i] in line 14, the array x might be part of
+some other allocated heap block and may have been overwritten. As with many

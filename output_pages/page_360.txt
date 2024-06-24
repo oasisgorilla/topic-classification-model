@@ -1,0 +1,74 @@
+Homework Problems
+359
+is only one answer that does not perform any casting and does not violate
+any type constraints.
+3.71 ◆
+Write a function good_echo that reads a line from standard input and writes it to
+standard output. Your implementation should work for an input line of arbitrary
+length. You may use the library function fgets, but you must make sure your
+function works correctly even when the input line requires more space than you
+have allocated for your buffer. Your code should also check for error conditions
+and return when one is encountered. Refer to the deﬁnitions of the standard I/O
+functions for documentation [45, 61].
+3.72 ◆◆
+Figure 3.54(a) shows the code for a function that is similar to function vfunct
+(Figure 3.43(a)). We used vfunct to illustrate the use of a frame pointer in man-
+aging variable-size stack frames. The new function aframe allocates space for local
+(a) C code
+1
+#include <alloca.h>
+2
+3
+long aframe(long n, long idx, long *q)
+{
+4
+long i;
+5
+long **p = alloca(n * sizeof(long *));
+6
+p[0] = &i;
+7
+for (i = 1; i < n; i++)
+8
+p[i] = q;
+9
+return *p[idx];
+10
+}
+(b) Portions of generated assembly code
+long aframe(long n, long idx, long *q)
+n in %rdi, idx in %rsi, q in %rdx
+1
+aframe:
+2
+pushq
+%rbp
+3
+movq
+%rsp, %rbp
+4
+subq
+$16, %rsp
+Allocate space for i (%rsp = s1)
+5
+leaq
+30(,%rdi,8), %rax
+6
+andq
+$-16, %rax
+7
+subq
+%rax, %rsp
+Allocate space for array p (%rsp = s2)
+8
+leaq
+15(%rsp), %r8
+9
+andq
+$-16, %r8
+Set %r8 to &p[0]
+.
+.
+.
+Figure 3.54
+Code for Problem 3.72. This function is similar to that of Figure 3.43.

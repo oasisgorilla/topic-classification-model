@@ -1,0 +1,77 @@
+1012
+Chapter 12
+Concurrent Programming
+code/conc/echoserverp.c
+1
+#include "csapp.h"
+2
+void echo(int connfd);
+3
+4
+void sigchld_handler(int sig)
+5
+{
+6
+while (waitpid(-1, 0, WNOHANG) > 0)
+7
+;
+8
+return;
+9
+}
+10
+11
+int main(int argc, char **argv)
+12
+{
+13
+int listenfd, connfd;
+14
+socklen_t clientlen;
+15
+struct sockaddr_storage clientaddr;
+16
+17
+if (argc != 2) {
+18
+fprintf(stderr, "usage: %s <port>\n", argv[0]);
+19
+exit(0);
+20
+}
+21
+22
+Signal(SIGCHLD, sigchld_handler);
+23
+listenfd = Open_listenfd(argv[1]);
+24
+while (1) {
+25
+clientlen = sizeof(struct sockaddr_storage);
+26
+connfd = Accept(listenfd, (SA *) &clientaddr, &clientlen);
+27
+if (Fork() == 0) {
+28
+Close(listenfd); /* Child closes its listening socket */
+29
+echo(connfd);
+/* Child services client */
+30
+Close(connfd);
+/* Child closes connection with client */
+31
+exit(0);
+/* Child exits */
+32
+}
+33
+Close(connfd); /* Parent closes connected socket (important!) */
+34
+}
+35
+}
+code/conc/echoserverp.c
+Figure 12.5
+Concurrent echo server based on processes. The parent forks a child to handle each new
+connection request.

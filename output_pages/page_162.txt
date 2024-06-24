@@ -1,0 +1,40 @@
+Section 2.4
+Floating Point
+161
+Practice Problem 2.53 (solution page 196)
+Fill in the following macro deﬁnitions to generate the double-precision values +∞,
+−∞, and −0:
+#define POS_INFINITY
+#define NEG_INFINITY
+#define NEG_ZERO
+You cannot use any include ﬁles (such as math.h), but you can make use of the
+fact that the largest ﬁnite number that can be represented with double precision
+is around 1.8 × 10308.
+When casting values between int, float, and double formats, the program
+changes the numeric values and the bit representations as follows (assuming data
+type int is 32 bits):
+. From int to float, the number cannot overﬂow, but it may be rounded.
+. From int or float to double, the exact numeric value can be preserved be-
+cause double has both greater range (i.e., the range of representable values),
+as well as greater precision (i.e., the number of signiﬁcant bits).
+. From double to float, the value can overﬂow to +∞or −∞, since the range
+is smaller. Otherwise, it may be rounded, because the precision is smaller.
+. From float or double to int, the value will be rounded toward zero. For
+example, 1.999 will be converted to 1, while −1.999 will be converted to
+−1. Furthermore, the value may overﬂow. The C standards do not specify
+a ﬁxed result for this case. Intel-compatible microprocessors designate the
+bit pattern [10 . . . 00] (TMinw for word size w) as an integer indeﬁnite value.
+Any conversion from ﬂoating point to integer that cannot assign a reasonable
+integer approximation yields this value. Thus, the expression (int) +1e10
+yields -21483648, generating a negative value from a positive one.
+Practice Problem 2.54 (solution page 196)
+Assume variables x, f, and d are of type int, float, and double, respectively.
+Their values are arbitrary, except that neither f nor d equals +∞, −∞, or NaN.
+For each of the following C expressions, either argue that it will always be true
+(i.e., evaluate to 1) or give a value for the variables such that it is not true (i.e.,
+evaluates to 0).
+A. x == (int)(double) x
+B. x == (int)(float) x
+C. d == (double)(float) d
+D. f == (float)(double) f
+E. f == -(-f)

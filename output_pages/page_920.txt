@@ -1,0 +1,81 @@
+Solutions to Practice Problems
+919
+21
+/* Check for required command-line argument */
+22
+if (argc != 2) {
+23
+printf("usage: %s <filename>\n", argv[0]);
+24
+exit(0);
+25
+}
+26
+27
+/* Copy the input argument to stdout */
+28
+fd = Open(argv[1], O_RDONLY, 0);
+29
+fstat(fd, &stat);
+30
+mmapcopy(fd, stat.st_size);
+31
+exit(0);
+32
+}
+code/vm/mmapcopy.c
+Solution to Problem 9.6 (page 885)
+This problem touches on some core ideas such as alignment requirements, min-
+imum block sizes, and header encodings. The general approach for determining
+the block size is to round the sum of the requested payload and the header size
+to the nearest multiple of the alignment requirement (in this case, 8 bytes). For
+example, the block size for the malloc(2) request is 4 + 2 = 6 rounded up to 8.
+The block size for the malloc(20) request is 20 + 4 = 24 rounded up to 24. No
+need to round up since it is already aligned.
+Request
+Block size (decimal bytes)
+Block header (hex)
+malloc(2)
+8
+0x9
+malloc(9)
+16
+0x11
+malloc(15)
+24
+0x19
+malloc(20)
+24
+0x19
+Solution to Problem 9.7 (page 888)
+The minimum block size can have a signiﬁcant effect on internal fragmentation.
+Thus, it is good to understand the minimum block sizes associated with different
+allocator designs and alignment requirements. The tricky part is to realize that the
+same block can be allocated or free at different points in time. Thus, the minimum
+block size is the maximum of the minimum allocated block size and the minimum
+free block size. For example, in the last subproblem, the minimum allocated block
+size is a 4-byte header and a 1-byte payload rounded up to 8 bytes. The minimum
+free block size is a 4-byte header and 4-byte footer, which is already a multiple of
+8 and doesn’t need to be rounded. So the minimum block size for this allocator is
+8 bytes.
+Minimum block
+Alignment
+Allocated block
+Free block
+size (bytes)
+Single word
+Header and footer
+Header and footer
+12
+Single word
+Header, but no footer
+Header and footer
+8
+Double word
+Header and footer
+Header and footer
+16
+Double word
+Header, but no footer
+Header and footer
+8

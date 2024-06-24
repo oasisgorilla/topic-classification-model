@@ -1,0 +1,66 @@
+Section 3.11
+Floating-Point Code
+341
+Single
+Double
+Effect
+Description
+vxorps
+xorpd
+D ←S2 ^ S1
+Bitwise exclusive-or
+vandps
+andpd
+D ←S2 & S1
+Bitwise and
+Figure 3.50
+Bitwise operations on packed data. These instructions perform Boolean
+operations on all 128 bits in an XMM register.
+Practice Problem 3.55 (solution page 385)
+Show how the numbers declared at label .LC3 encode the number 32.0.
+3.11.5
+Using Bitwise Operations in Floating-Point Code
+At times, we ﬁnd gcc generating code that performs bitwise operations on XMM
+registers to implement useful ﬂoating-point results. Figure 3.50 shows some rele-
+vant instructions, similar to their counterparts for operating on general-purpose
+registers. These operations all act on packed data, meaning that they update the
+entire destination XMM register, applying the bitwise operation to all the data in
+the two source registers. Once again, our only interest for scalar data is the effect
+these instructions have on the low-order 4 or 8 bytes of the destination. These op-
+erations are often simple and convenient ways to manipulate ﬂoating-point values,
+as is explored in the following problem.
+Practice Problem 3.56 (solution page 386)
+Consider the following C function, where EXPR is a macro deﬁned with #define:
+double simplefun(double x) {
+return EXPR(x);
+}
+Below, we show the AVX2 code generated for different deﬁnitions of EXPR,
+where value x is held in %xmm0. All of them correspond to some useful operation on
+ﬂoating-point values. Identify what the operations are. Your answers will require
+you to understand the bit patterns of the constant words being retrieved from
+memory.
+A.
+1
+vmovsd
+.LC1(%rip), %xmm1
+2
+vandpd
+%xmm1, %xmm0, %xmm0
+3
+.LC1:
+4
+.long
+4294967295
+5
+.long
+2147483647
+6
+.long
+0
+7
+.long
+0
+B.
+1
+vxorpd
+%xmm0, %xmm0, %xmm0

@@ -1,0 +1,45 @@
+Section 9.9
+Dynamic Memory Allocation
+885
+Practice Problem 9.6 (solution page 919)
+Determine the block sizes and header values that would result from the fol-
+lowing sequence of malloc requests. Assumptions: (1) The allocator maintains
+double-word alignment and uses an implicit free list with the block format from
+Figure 9.35. (2) Block sizes are rounded up to the nearest multiple of 8 bytes.
+Request
+Block size (decimal bytes)
+Block header (hex)
+malloc(2)
+malloc(9)
+malloc(15)
+malloc(20)
+9.9.7
+Placing Allocated Blocks
+When an application requests a block of k bytes, the allocator searches the free
+list for a free block that is large enough to hold the requested block. The manner
+in which the allocator performs this search is determined by the placement policy.
+Some common policies are ﬁrst ﬁt, next ﬁt, and best ﬁt.
+First ﬁt searches the free list from the beginning and chooses the ﬁrst free
+block that ﬁts. Next ﬁt is similar to ﬁrst ﬁt, but instead of starting each search at
+the beginning of the list, it starts each search where the previous search left off.
+Best ﬁt examines every free block and chooses the free block with the smallest size
+that ﬁts.
+An advantage of ﬁrst ﬁt is that it tends to retain large free blocks at the end
+of the list. A disadvantage is that it tends to leave “splinters” of small free blocks
+toward the beginning of the list, which will increase the search time for larger
+blocks. Next ﬁt was ﬁrst proposed by Donald Knuth as an alternative to ﬁrst ﬁt,
+motivated by the idea that if we found a ﬁt in some free block the last time, there
+is a good chance that we will ﬁnd a ﬁt the next time in the remainder of the block.
+Next ﬁt can run signiﬁcantly faster than ﬁrst ﬁt, especially if the front of the list
+becomes littered with many small splinters. However, some studies suggest that
+next ﬁt suffers from worse memory utilization than ﬁrst ﬁt. Studies have found
+that best ﬁt generally enjoys better memory utilization than either ﬁrst ﬁt or next
+ﬁt. However, the disadvantage of using best ﬁt with simple free list organizations
+such as the implicit free list is that it requires an exhaustive search of the heap.
+Later, we will look at more sophisticated segregated free list organizations that
+approximate a best-ﬁt policy without an exhaustive search of the heap.
+9.9.8
+Splitting Free Blocks
+Once the allocator has located a free block that ﬁts, it must make another policy
+decision about how much of the free block to allocate. One option is to use
+the entire free block. Although simple and fast, the main disadvantage is that it

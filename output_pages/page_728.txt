@@ -1,0 +1,57 @@
+Section 7.7
+Relocation
+727
+encoded in the instruction to the current run-time value of the PC, which
+is always the address of the next instruction in memory.
+R_X86_64_32. Relocate a reference that uses a 32-bit absolute address. With
+absolute addressing, the CPU directly uses the 32-bit value encoded in
+the instruction as the effective address, without further modiﬁcations.
+These two relocation types support the x86-64 small code model, which as-
+sumes that the total size of the code and data in the executable object ﬁle is smaller
+than 2 GB, and thus can be accessed at run-time using 32-bit PC-relative addresses.
+The small code model is the default for gcc. Programs larger than 2 GB can be
+compiled using the -mcmodel=medium (medium code model) and -mcmodel=large
+(large code model) ﬂags, but we won’t discuss those.
+7.7.2
+Relocating Symbol References
+Figure 7.10 shows the pseudocode for the linker’s relocation algorithm. Lines 1
+and 2 iterate over each section s and each relocation entry r associated with each
+section. For concreteness, assume that each section s is an array of bytes and that
+each relocation entry r is a struct of type Elf64_Rela, as deﬁned in Figure 7.9.
+Also, assume that when the algorithm runs, the linker has already chosen run-
+time addresses for each section (denoted ADDR(s)) and each symbol (denoted
+ADDR(r.symbol)). Line 3 computes the address in the s array of the 4-byte ref-
+erence that needs to be relocated. If this reference uses PC-relative addressing,
+then it is relocated by lines 5–9. If the reference uses absolute addressing, then it
+is relocated by lines 11–13.
+1
+foreach section s {
+2
+foreach relocation entry r {
+3
+refptr = s + r.offset;
+/* ptr to reference to be relocated */
+4
+5
+/* Relocate a PC-relative reference */
+6
+if (r.type == R_X86_64_PC32) {
+7
+refaddr = ADDR(s) + r.offset; /* ref’s run-time address */
+8
+*refptr = (unsigned) (ADDR(r.symbol) + r.addend - refaddr);
+9
+}
+10
+11
+/* Relocate an absolute reference */
+12
+if (r.type == R_X86_64_32)
+13
+*refptr = (unsigned) (ADDR(r.symbol) + r.addend);
+14
+}
+15
+}
+Figure 7.10
+Relocation algorithm.

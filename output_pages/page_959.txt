@@ -1,0 +1,54 @@
+958
+Chapter 11
+Network Programming
+Host
+Host
+Host
+. . .
+LAN
+Host
+Host
+Host
+. . .
+LAN 
+WAN
+WAN
+Router
+Router
+Router
+Figure 11.6
+A small internet. Two LANs and two WANs are connected by three routers.
+The crucial property of an internet is that it can consist of different LANs
+and WANs with radically different and incompatible technologies. Each host is
+physically connected to every other host, but how is it possible for some source
+host to send data bits to another destination host across all of these incompatible
+networks?
+The solution is a layer of protocol software running on each host and router
+that smoothes out the differences between the different networks. This software
+implements a protocol that governs how hosts and routers cooperate in order to
+transfer data. The protocol must provide two basic capabilities:
+Naming scheme. Different LAN technologies have different and incompatible
+ways of assigning addresses to hosts. The internet protocol smoothes these
+differences by deﬁning a uniform format for host addresses. Each host
+is then assigned at least one of these internet addresses that uniquely
+identiﬁes it.
+Delivery mechanism. Different networking technologies have different and
+incompatible ways of encoding bits on wires and of packaging these bits
+into frames. The internet protocol smoothes these differences by deﬁning
+a uniform way to bundle up data bits into discrete chunks called packets. A
+packet consists of a header, which contains the packet size and addresses
+of the source and destination hosts, and a payload, which contains data
+bits sent from the source host.
+Figure 11.7 shows an example of how hosts and routers use the internet
+protocol to transfer data across incompatible LANs. The example internet consists
+of two LANs connected by a router. A client running on host A, which is attached
+to LAN1, sends a sequence of data bytes to a server running on host B, which is
+attached to LAN2. There are eight basic steps:
+1. The client on host A invokes a system call that copies the data from the client’s
+virtual address space into a kernel buffer.
+2. The protocol software on host A creates a LAN1 frame by appending an
+internet header and a LAN1 frame header to the data. The internet header
+is addressed to internet host B. The LAN1 frame header is addressed to the
+router. It then passes the frame to the adapter. Notice that the payload of the
+LAN1 frame is an internet packet, whose payload is the actual user data. This
+kind of encapsulation is one of the fundamental insights of internetworking.

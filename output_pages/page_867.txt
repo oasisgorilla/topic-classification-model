@@ -1,0 +1,43 @@
+866
+Chapter 9
+Virtual Memory
+Aside
+Optimizing address translation
+In our discussion of address translation, we have described a sequential two-step process where the
+MMU (1) translates the virtual address to a physical address and then (2) passes the physical address
+to the L1 cache. However, real hardware implementations use a neat trick that allows these steps to
+be partially overlapped, thus speeding up accesses to the L1 cache. For example, a virtual address on
+a Core i7 with 4 KB pages has 12 bits of VPO, and these bits are identical to the 12 bits of PPO in the
+corresponding physical address. Since the 8-way set associative physically addressed L1 caches have
+64 sets and 64-byte cache blocks, each physical address has 6 (log2 64) cache offset bits and 6 (log2 64)
+index bits. These 12 bits ﬁt exactly in the 12-bit VPO of a virtual address, which is no accident! When
+the CPU needs a virtual address translated, it sends the VPN to the MMU and the VPO to the L1
+cache. While the MMU is requesting a page table entry from the TLB, the L1 cache is busy using the
+VPO bits to ﬁnd the appropriate set and read out the eight tags and corresponding data words in that
+set. When the MMU gets the PPN back from the TLB, the cache is ready to try to match the PPN to
+one of these eight tags.
+are shared by all processes. For example, each process shares the kernel’s code
+and global data structures. Interestingly, Linux also maps a set of contiguous
+virtual pages (equal in size to the total amount of DRAM in the system) to the
+corresponding set of contiguous physical pages. This provides the kernel with a
+convenient way to access any speciﬁc location in physical memory—for example,
+when it needs to access page tables or to perform memory-mapped I/O operations
+on devices that are mapped to particular physical memory locations.
+Other regions of kernel virtual memory contain data that differ for each
+process. Examples include page tables, the stack that the kernel uses when it is
+executing code in the context of the process, and various data structures that keep
+track of the current organization of the virtual address space.
+Linux Virtual Memory Areas
+Linux organizes the virtual memory as a collection of areas (also called segments).
+An area is a contiguous chunk of existing (allocated) virtual memory whose pages
+are related in some way. For example, the code segment, data segment, heap,
+shared library segment, and user stack are all distinct areas. Each existing virtual
+page is contained in some area, and any virtual page that is not part of some area
+does not exist and cannot be referenced by the process. The notion of an area is
+important because it allows the virtual address space to have gaps. The kernel does
+not keep track of virtual pages that do not exist, and such pages do not consume
+any additional resources in memory, on disk, or in the kernel itself.
+Figure 9.27 highlights the kernel data structures that keep track of the virtual
+memory areas in a process. The kernel maintains a distinct task structure (task_
+struct in the source code) for each process in the system. The elements of the task
+structure either contain or point to all of the information that the kernel needs to

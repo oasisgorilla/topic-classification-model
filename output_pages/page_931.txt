@@ -1,0 +1,48 @@
+930
+Chapter 10
+System-Level I/O
+Mask
+Description
+S_IRUSR
+User (owner) can read this ﬁle
+S_IWUSR
+User (owner) can write this ﬁle
+S_IXUSR
+User (owner) can execute this ﬁle
+S_IRGRP
+Members of the owner’s group can read this ﬁle
+S_IWGRP
+Members of the owner’s group can write this ﬁle
+S_IXGRP
+Members of the owner’s group can execute this ﬁle
+S_IROTH
+Others (anyone) can read this ﬁle
+S_IWOTH
+Others (anyone) can write this ﬁle
+S_IXOTH
+Others (anyone) can execute this ﬁle
+Figure 10.2
+Access permission bits. Deﬁned in sys/stat.h.
+For example, here is how you might open an existing ﬁle with the intent of
+appending some data:
+fd = Open("foo.txt", O_WRONLY|O_APPEND, 0);
+The mode argument speciﬁes the access permission bits of new ﬁles. The
+symbolic names for these bits are shown in Figure 10.2.
+As part of its context, each process has a umask that is set by calling the
+umask function. When a process creates a new ﬁle by calling the open function
+with some mode argument, then the access permission bits of the ﬁle are set to
+mode & ~umask. For example, suppose we are given the following default values
+for mode and umask:
+#define DEF_MODE
+S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH
+#define DEF_UMASK
+S_IWGRP|S_IWOTH
+Then the following code fragment creates a new ﬁle in which the owner of the ﬁle
+has read and write permissions, and all other users have read permissions:
+umask(DEF_UMASK);
+fd = Open("foo.txt", O_CREAT|O_TRUNC|O_WRONLY, DEF_MODE);
+Finally, a process closes an open ﬁle by calling the close function.
+#include <unistd.h>
+int close(int fd);
+Returns: 0 if OK, −1 on error
+Closing a descriptor that is already closed is an error.

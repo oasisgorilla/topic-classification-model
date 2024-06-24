@@ -1,0 +1,50 @@
+732
+Chapter 7
+Linking
+code/link/prog-exe.d
+Read-only code segment
+1
+LOAD off
+0x0000000000000000 vaddr 0x0000000000400000 paddr 0x0000000000400000 align 2**21
+2
+filesz 0x000000000000069c memsz 0x000000000000069c flags r-x
+Read/write data segment
+3
+LOAD off
+0x0000000000000df8 vaddr 0x0000000000600df8 paddr 0x0000000000600df8 align 2**21
+4
+filesz 0x0000000000000228 memsz 0x0000000000000230 flags rw-
+code/link/prog-exe.d
+Figure 7.14
+Program header table for the example executable prog. off: offset in object ﬁle;
+vaddr/paddr: memory address; align: alignment requirement; filesz: segment size in object ﬁle;
+memsz: segment size in memory; flags: run-time permissions.
+The format of an executable object ﬁle is similar to that of a relocatable object
+ﬁle. The ELF header describes the overall format of the ﬁle. It also includes the
+program’s entry point, which is the address of the ﬁrst instruction to execute when
+the program runs. The .text, .rodata, and .data sections are similar to those in
+a relocatable object ﬁle, except that these sections have been relocated to their
+eventual run-time memory addresses. The .init section deﬁnes a small function,
+called _init, that will be called by the program’s initialization code. Since the
+executable is fully linked (relocated), it needs no .rel sections.
+ELF executables are designed to be easy to load into memory, with contigu-
+ous chunks of the executable ﬁle mapped to contiguous memory segments. This
+mapping is described by the program header table. Figure 7.14 shows part of the
+program header table for our example executable prog, as displayed by objdump.
+From the program header table, we see that two memory segments will be
+initialized with the contents of the executable object ﬁle. Lines 1 and 2 tell us
+that the ﬁrst segment (the code segment) has read/execute permissions, starts at
+memory address 0x400000, has a total size in memory of 0x69c bytes, and is
+initialized with the ﬁrst 0x69c bytes of the executable object ﬁle, which includes
+the ELF header, the program header table, and the .init, .text, and .rodata
+sections.
+Lines 3 and 4 tell us that the second segment (the data segment) has read/write
+permissions, starts at memory address 0x600df8, has a total memory size of 0x230
+bytes, and is initialized with the 0x228 bytes in the .data section starting at offset
+0xdf8 in the object ﬁle. The remaining 8 bytes in the segment correspond to .bss
+data that will be initialized to zero at run time.
+For any segment s, the linker must choose a starting address, vaddr, such that
+vaddr mod align = off mod align
+where off is the offset of the segment’s ﬁrst section in the object ﬁle, and align
+is the alignment speciﬁed in the program header (221 = 0x200000). For example,
+in the data segment in Figure 7.14,

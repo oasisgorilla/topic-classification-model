@@ -1,0 +1,77 @@
+Section 5.8
+Loop Unrolling
+569
+Figure 5.17
+CPE performance for
+different degrees of
+k × 1 loop unrolling. Only
+integer addition improves
+with this transformation.
+6
+5
+4
+3
+2
+1
+0
+1
+2
+3
+4
+Unrolling factor k
+CPE
+5
+6
+double *
+double +
+long *
+long +
+We see that the CPE for integer addition improves, achieving the latency
+bound of 1.00. This result can be attributed to the beneﬁts of reducing loop
+overhead operations. By reducing the number of overhead operations relative
+to the number of additions required to compute the vector sum, we can reach
+the point where the 1-cycle latency of integer addition becomes the performance-
+limiting factor. On the other hand, none of the other cases improve—they are
+already at their latency bounds. Figure 5.17 shows CPE measurements when
+unrolling the loop by up to a factor of 10. We see that the trends we observed
+for unrolling by 2 and 3 continue—none go below their latency bounds.
+To understand why k × 1 unrolling cannot improve performance beyond
+the latency bound, let us examine the machine-level code for the inner loop of
+combine5, having k = 2. The following code gets generated when type data_t is
+double, and the operation is multiplication:
+Inner loop of combine5.
+data_t = double, OP = *
+i in %rdx, data %rax, limit in %rbx, acc in %xmm0
+1
+.L35:
+loop:
+2
+vmulsd
+(%rax,%rdx,8), %xmm0, %xmm0
+Multiply acc by data[i]
+3
+vmulsd
+8(%rax,%rdx,8), %xmm0, %xmm0
+Multiply acc by data[i+1]
+4
+addq
+$2, %rdx
+Increment i by 2
+5
+cmpq
+%rdx, %rbp
+Compare to limit:i
+6
+jg
+.L35
+If >, goto loop
+We can see that gcc uses a more direct translation of the array referencing
+seen in the C code, compared to the pointer-based code generated for combine4.2
+Loop index i is held in register %rdx, and the address of data is held in register
+%rax. As before, the accumulated value acc is held in vector register %xmm0. The
+loop unrolling leads to two vmulsd instructions—one to add data[i] to acc, and
+2. The gcc optimizer operates by generating multiple variants of a function and then choosing one that
+it predicts will yield the best performance and smallest code size. As a consequence, small changes in
+the source code can yield widely varying forms of machine code. We have found that the choice of
+pointer-based or array-based code has no impact on the performance of programs running on our
+reference machine.

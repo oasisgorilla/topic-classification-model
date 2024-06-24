@@ -1,0 +1,71 @@
+Section 11.6
+Putting It Together: The Tiny Web Server
+997
+code/netp/tiny/tiny.c
+1
+int parse_uri(char *uri, char *filename, char *cgiargs)
+2
+{
+3
+char *ptr;
+4
+5
+if (!strstr(uri, "cgi-bin")) {
+/* Static content */
+6
+strcpy(cgiargs, "");
+7
+strcpy(filename, ".");
+8
+strcat(filename, uri);
+9
+if (uri[strlen(uri)-1] == ’/’)
+10
+strcat(filename, "home.html");
+11
+return 1;
+12
+}
+13
+else {
+/* Dynamic content */
+14
+ptr = index(uri, ’?’);
+15
+if (ptr) {
+16
+strcpy(cgiargs, ptr+1);
+17
+*ptr = ’\0’;
+18
+}
+19
+else
+20
+strcpy(cgiargs, "");
+21
+strcpy(filename, ".");
+22
+strcat(filename, uri);
+23
+return 0;
+24
+}
+25
+}
+code/netp/tiny/tiny.c
+Figure 11.33
+Tiny parse_uri parses an HTTP URI.
+The serve_static Function
+Tiny serves ﬁve common types of static content: HTML ﬁles, unformatted text
+ﬁles, and images encoded in GIF, PNG, and JPEG formats.
+The serve_static function in Figure 11.34 sends an HTTP response whose
+body contains the contents of a local ﬁle. First, we determine the ﬁle type by
+inspecting the sufﬁx in the ﬁlename (line 7) and then send the response line and
+response headers to the client (lines 8–13). Notice that a blank line terminates the
+headers.
+Next, we send the response body by copying the contents of the requested ﬁle
+to the connected descriptor fd. The code here is somewhat subtle and needs to be
+studied carefully. Line 18 opens filename for reading and gets its descriptor. In
+line 19, the Linux mmap function maps the requested ﬁle to a virtual memory area.
+Recall from our discussion of mmap in Section 9.8 that the call to mmap maps the

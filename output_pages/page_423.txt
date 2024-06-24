@@ -1,0 +1,90 @@
+422
+Chapter 4
+Processor Architecture
+1
+0x000: 30f20900000000000000 |
+irmovq $9,
+%rdx
+2
+0x00a: 30f31500000000000000 |
+irmovq $21, %rbx
+3
+0x014: 6123
+|
+subq %rdx, %rbx
+# subtract
+4
+0x016: 30f48000000000000000 |
+irmovq $128,%rsp
+# Problem 4.13
+5
+0x020: 40436400000000000000 |
+rmmovq %rsp, 100(%rbx)
+# store
+6
+0x02a: a02f
+|
+pushq %rdx
+# push
+7
+0x02c: b00f
+|
+popq
+%rax
+# Problem 4.14
+8
+0x02e: 734000000000000000
+|
+je done
+# Not taken
+9
+0x037: 804100000000000000
+|
+call proc
+# Problem 4.18
+10
+0x040:
+| done:
+11
+0x040: 00
+|
+halt
+12
+0x041:
+| proc:
+13
+0x041: 90
+|
+ret
+# Return
+14
+|
+Figure 4.17
+Sample Y86-64 instruction sequence. We will trace the processing of these instructions through
+the different stages.
+(indicated by the assignment operation ‘←’). These should be read as if they were
+evaluated in sequence from top to bottom. When we later map the computations
+to hardware, we will ﬁnd that we do not need to perform these evaluations in strict
+sequential order.
+Figure 4.18 shows the processing required for instruction types OPq (integer
+and logical operations), rrmovq (register-register move), and irmovq (immediate-
+register move). Let us ﬁrst consider the integer operations. Examining Figure 4.2,
+we can see that we have carefully chosen an encoding of instructions so that the
+four integer operations (addq, subq, andq, and xorq) all have the same value of
+icode. We can handle them all by an identical sequence of steps, except that the
+ALU computation must be set according to the particular instruction operation,
+encoded in ifun.
+The processing of an integer-operation instruction follows the general pattern
+listed above. In the fetch stage, we do not require a constant word, and so valP
+is computed as PC + 2. During the decode stage, we read both operands. These
+are supplied to the ALU in the execute stage, along with the function speciﬁer
+ifun, so that valE becomes the instruction result. This computation is shown as the
+expression valB OP valA, where OP indicates the operation speciﬁed by ifun. Note
+the ordering of the two arguments—this order is consistent with the conventions
+of Y86-64 (and x86-64). For example, the instruction subq %rax,%rdx is supposed
+to compute the value R[%rdx] −R[%rax]. Nothing happens in the memory stage
+for these instructions, but valE is written to register rB in the write-back stage, and
+the PC is set to valP to complete the instruction execution.
+Executing an rrmovq instruction proceeds much like an arithmetic operation.
+We do not need to fetch the second register operand, however. Instead, we set the
+second ALU input to zero and add this to the ﬁrst, giving valE = valA, which is

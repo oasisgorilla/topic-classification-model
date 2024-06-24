@@ -1,0 +1,89 @@
+778
+Chapter 8
+Exceptional Control Flow
+Figure 8.16
+Process graph for the
+example program in
+Figure 8.15.
+fork
+fork
+main
+main
+printf
+printf
+exit
+exit
+child: x=2
+Child
+Parent
+x==1
+parent: x=0
+printf
+printf
+exit
+exit
+1
+int main()
+2
+{
+3
+Fork();
+4
+Fork();
+5
+printf("hello\n");
+6
+exit(0);
+7
+}
+fork
+fork
+fork
+fork
+printf
+printf
+exit
+exit
+hello
+hello
+main
+main
+printf
+printf
+exit
+exit
+fork
+fork
+printf
+printf
+exit
+exit
+hello
+hello
+printf
+printf
+exit
+exit
+Figure 8.17
+Process graph for a nested fork.
+corresponds to the parent process calling main. This vertex has no inedges and
+exactly one outedge. The sequence of vertices for each process ends with a vertex
+corresponding to a call to exit. This vertex has one inedge and no outedges.
+For example, Figure 8.16 shows the process graph for the example program in
+Figure 8.15. Initially, the parent sets variable x to 1. The parent calls fork, which
+creates a child process that runs concurrently with the parent in its own private
+address space.
+For a program running on a single processor, any topological sort of the
+vertices in the corresponding process graph represents a feasible total ordering
+of the statements in the program. Here’s a simple way to understand the idea of
+a topological sort: Given some permutation of the vertices in the process graph,
+draw the sequence of vertices in a line from left to right, and then draw each of the
+directed edges. The permutation is a topological sort if and only if each edge in
+the drawing goes from left to right. Thus, in our example program in Figure 8.15,
+the printf statements in the parent and child can occur in either order because
+each of the orderings corresponds to some topological sort of the graph vertices.
+The process graph can be especially helpful in understanding programs with
+nested fork calls. For example, Figure 8.17 shows a program with two calls to fork
+in the source code. The corresponding process graph helps us see that this program
+runs four processes, each of which makes a call to printf and which can execute
+in any order.

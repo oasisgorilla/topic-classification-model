@@ -1,0 +1,77 @@
+Section 3.11
+Floating-Point Code
+335
+Suppose these instructions start with register %xmm0 holding two double-precision
+values [x1, x0]. Then the vmovddup instruction will set it to [x0, x0]. The vcvtpd2psx
+instruction will convert these values to single precision, pack them into the
+low-order half of the register, and set the upper half to 0, yielding a result
+[0.0, 0.0, x0, x0] (recall that ﬂoating-point value 0.0 is represented by a bit pat-
+tern of all zeros). Again, there is no clear value in computing the conversion from
+one precision to another this way, rather than by using the single instruction
+vcvtsd2ss %xmm0, %xmm0, %xmm0
+As an example of the different ﬂoating-point conversion operations, consider
+the C function
+double fcvt(int i, float *fp, double *dp, long *lp)
+{
+float f = *fp; double d = *dp; long l = *lp;
+*lp = (long)
+d;
+*fp = (float)
+i;
+*dp = (double)
+l;
+return (double) f;
+}
+and its associated x86-64 assembly code
+double fcvt(int i, float *fp, double *dp, long *lp)
+i in %edi, fp in %rsi, dp in %rdx, lp in %rcx
+1
+fcvt:
+2
+vmovss
+(%rsi), %xmm0
+Get f = *fp
+3
+movq
+(%rcx), %rax
+Get l = *lp
+4
+vcvttsd2siq
+(%rdx), %r8
+Get d = *dp and convert to long
+5
+movq
+%r8, (%rcx)
+Store at lp
+6
+vcvtsi2ss
+%edi, %xmm1, %xmm1
+Convert i to float
+7
+vmovss
+%xmm1, (%rsi)
+Store at fp
+8
+vcvtsi2sdq
+%rax, %xmm1, %xmm1
+Convert l to double
+9
+vmovsd
+%xmm1, (%rdx)
+Store at dp
+The following two instructions convert f to double
+10
+vunpcklps
+%xmm0, %xmm0, %xmm0
+11
+vcvtps2pd
+%xmm0, %xmm0
+12
+ret
+Return f
+All of the arguments to fcvt are passed through the general-purpose registers,
+since they are either integers or pointers. The result is returned in register %xmm0.
+As is documented in Figure 3.45, this is the designated return register for float
+or double values. In this code, we see a number of the movement and conversion
+instructions of Figures 3.46–3.48, as well as gcc’s preferred method of converting
+from single to double precision.

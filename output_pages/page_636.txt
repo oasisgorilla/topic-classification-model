@@ -1,0 +1,58 @@
+Figure 6.12
+Reading a disk sector.
+Keyboard
+Mouse
+USB
+controller
+CPU chip
+(a) The CPU initiates a disk read by writing a command, logical block number, and
+destination memory address to the memory-mapped address associated with the disk.
+Register file
+I/O bus
+Monitor
+Disk
+Main
+memory
+Bus interface
+Graphics
+adapter
+Disk
+controller
+ALU
+Keyboard
+Mouse
+USB
+controller
+CPU chip
+Register file
+I/O bus
+Monitor
+Disk
+Main
+memory
+Bus interface
+Graphics
+adapter
+Disk
+controller
+ALU
+(b) The disk controller reads the sector and performs a DMA transfer into main memory.
+Keyboard
+Mouse
+USB
+controller
+CPU chip
+Register file
+Interrupt
+I/O bus
+Monitor
+Disk
+Main
+memory
+Bus interface
+Graphics
+adapter
+Disk
+controller
+ALU
+(c) When the DMA transfer is complete, the disk controller notiﬁes the CPU with an interrupt.

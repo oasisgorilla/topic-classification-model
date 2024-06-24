@@ -1,0 +1,43 @@
+Preface
+23
+Aside
+What is an aside?
+You will encounter asides of this form throughout the text. Asides are parenthetical remarks that give
+you some additional insight into the current topic. Asides serve a number of purposes. Some are little
+history lessons. For example, where did C, Linux, and the Internet come from? Other asides are meant
+to clarify ideas that students often ﬁnd confusing. For example, what is the difference between a cache
+line, set, and block? Other asides give real-world examples, such as how a ﬂoating-point error crashed
+a French rocket or the geometric and operational parameters of a commercial disk drive. Finally, some
+asides are just fun stuff. For example, what is a “hoinky”?
+grammer, the compiler, and the operating system can take to reduce these
+threats. Learning the concepts in this chapter helps you become a better
+programmer, because you will understand how programs are represented
+on a machine. One certain beneﬁt is that you will develop a thorough and
+concrete understanding of pointers.
+Chapter 4: Processor Architecture. This chapter covers basic combinational and
+sequential logic elements, and then shows how these elements can be com-
+bined in a datapath that executes a simpliﬁed subset of the x86-64 instruction
+set called “Y86-64.” We begin with the design of a single-cycle datapath.
+This design is conceptually very simple, but it would not be very fast. We
+then introduce pipelining, where the different steps required to process an
+instruction are implemented as separate stages. At any given time, each
+stage can work on a different instruction. Our ﬁve-stage processor pipeline is
+much more realistic. The control logic for the processor designs is described
+using a simple hardware description language called HCL. Hardware de-
+signs written in HCL can be compiled and linked into simulators provided
+with the textbook, and they can be used to generate Verilog descriptions
+suitable for synthesis into working hardware.
+Chapter 5: Optimizing Program Performance. This chapter introduces a number
+of techniques for improving code performance, with the idea being that pro-
+grammers learn to write their C code in such a way that a compiler can then
+generate efﬁcient machine code. We start with transformations that reduce
+the work to be done by a program and hence should be standard practice
+when writing any program for any machine. We then progress to trans-
+formations that enhance the degree of instruction-level parallelism in the
+generated machine code, thereby improving their performance on modern
+“superscalar” processors. To motivate these transformations, we introduce
+a simple operational model of how modern out-of-order processors work,
+and show how to measure the potential performance of a program in terms
+of the critical paths through a graphical representation of a program. You
+will be surprised how much you can speed up a program by simple transfor-
+mations of the C code.

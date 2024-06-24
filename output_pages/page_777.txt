@@ -1,0 +1,43 @@
+776
+Chapter 8
+Exceptional Control Flow
+A parent process creates a new running child process by calling the fork
+function.
+#include <sys/types.h>
+#include <unistd.h>
+pid_t fork(void);
+Returns: 0 to child, PID of child to parent, −1 on error
+The newly created child process is almost, but not quite, identical to the parent.
+The child gets an identical (but separate) copy of the parent’s user-level virtual
+address space, including the code and data segments, heap, shared libraries, and
+user stack. The child also gets identical copies of any of the parent’s open ﬁle
+descriptors, which means the child can read and write any ﬁles that were open in
+the parent when it called fork. The most signiﬁcant difference between the parent
+and the newly created child is that they have different PIDs.
+The fork function is interesting (and often confusing) because it is called once
+but it returns twice: once in the calling process (the parent), and once in the newly
+created child process. In the parent, fork returns the PID of the child. In the child,
+fork returns a value of 0. Since the PID of the child is always nonzero, the return
+value provides an unambiguous way to tell whether the program is executing in
+the parent or the child.
+Figure 8.15 shows a simple example of a parent process that uses fork to create
+a child process. When the fork call returns in line 6, x has a value of 1 in both the
+parent and child. The child increments and prints its copy of x in line 8. Similarly,
+the parent decrements and prints its copy of x in line 13.
+When we run the program on our Unix system, we get the following result:
+linux> ./fork
+parent: x=0
+child : x=2
+There are some subtle aspects to this simple example.
+Call once, return twice. The fork function is called once by the parent, but it
+returns twice: once to the parent and once to the newly created child.
+This is fairly straightforward for programs that create a single child. But
+programs with multiple instances of fork can be confusing and need to
+be reasoned about carefully.
+Concurrent execution. The parent and the child are separate processes that
+run concurrently. The instructions in their logical control ﬂows can be
+interleaved by the kernel in an arbitrary way. When we run the program
+on our system, the parent process completes its printf statement ﬁrst,
+followed by the child. However, on another system the reverse might be
+true. In general, as programmers we can never make assumptions about
+the interleaving of the instructions in different processes.

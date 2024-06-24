@@ -1,0 +1,83 @@
+Section 9.6
+Address Translation
+849
+Figure 9.10
+Using VM to provide
+page-level memory
+protection.
+Physical memory
+PP 0
+PP 2
+PP 4
+PP 6
+PP 9
+PP 11
+Process i:
+Process j:
+Page tables with permission bits
+SUP READ WRITE
+Address
+VP 0:
+VP 1:
+VP 2:
+No
+No
+Yes
+Yes
+Yes
+Yes
+No
+Yes
+Yes
+PP 6
+PP 4
+PP 2
+SUP READ WRITE
+Address
+VP 0:
+VP 1:
+VP 2:
+No
+Yes
+No
+Yes
+Yes
+Yes
+No
+Yes
+Yes
+PP 9
+PP 6
+PP 11
+. . .
+. . .
+. . .
+to modify its read-only code section. Nor should it be allowed to read or modify
+any of the code and data structures in the kernel. It should not be allowed to read
+or write the private memory of other processes, and it should not be allowed to
+modify any virtual pages that are shared with other processes, unless all parties
+explicitly allow it (via calls to explicit interprocess communication system calls).
+As we have seen, providing separate virtual address spaces makes it easy to
+isolate the private memories of different processes. But the address translation
+mechanism can be extended in a natural way to provide even ﬁner access control.
+Since the address translation hardware reads a PTE each time the CPU generates
+an address, it is straightforward to control access to the contents of a virtual page
+by adding some additional permission bits to the PTE. Figure 9.10 shows the
+general idea.
+Inthisexample, wehaveaddedthreepermissionbitstoeachPTE.TheSUPbit
+indicates whether processes must be running in kernel (supervisor) mode to access
+the page. Processes running in kernel mode can access any page, but processes
+running in user mode are only allowed to access pages for which SUP is 0. The
+READ and WRITE bits control read and write access to the page. For example,
+if process i is running in user mode, then it has permission to read VP 0 and to
+read or write VP 1. However, it is not allowed to access VP 2.
+If an instruction violates these permissions, then the CPU triggers a general
+protection fault that transfers control to an exception handler in the kernel, which
+sends a SIGSEGV signal to the offending process. Linux shells typically report this
+exception as a “segmentation fault.”
+9.6
+Address Translation
+This section covers the basics of address translation. Our aim is to give you an
+appreciation of the hardware’s role in supporting virtual memory, with enough
+detail so that you can work through some concrete examples by hand. However,
+keep in mind that we are omitting a number of details, especially related to timing,

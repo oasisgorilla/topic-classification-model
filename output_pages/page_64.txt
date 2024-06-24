@@ -1,0 +1,58 @@
+Section 1.10
+Summary
+63
+Figure 1.18
+Some abstractions
+provided by a computer
+system. A major theme
+in computer systems
+is to provide abstract
+representations at
+different levels to hide
+the complexity of the
+actual implementations.
+Main memory
+I/O devices
+Processor
+Operating system
+Processes
+Virtual memory
+Files
+Virtual machine
+Instruction set
+architecture
+ming languages provide different forms and levels of support for abstraction, such
+as Java class declarations and C function prototypes.
+We have already been introduced to several of the abstractions seen in com-
+puter systems, as indicated in Figure 1.18. On the processor side, the instruction set
+architecture provides an abstraction of the actual processor hardware. With this
+abstraction, a machine-code program behaves as if it were executed on a proces-
+sor that performs just one instruction at a time. The underlying hardware is far
+more elaborate, executing multiple instructions in parallel, but always in a way
+that is consistent with the simple, sequential model. By keeping the same execu-
+tion model, different processor implementations can execute the same machine
+code while offering a range of cost and performance.
+On the operating system side, we have introduced three abstractions: ﬁles as
+an abstraction of I/O devices, virtual memory as an abstraction of program mem-
+ory, and processes as an abstraction of a running program. To these abstractions
+we add a new one: the virtual machine, providing an abstraction of the entire
+computer, including the operating system, the processor, and the programs. The
+idea of a virtual machine was introduced by IBM in the 1960s, but it has become
+more prominent recently as a way to manage computers that must be able to run
+programs designed for multiple operating systems (such as Microsoft Windows,
+Mac OS X, and Linux) or different versions of the same operating system.
+We will return to these abstractions in subsequent sections of the book.
+1.10
+Summary
+A computer system consists of hardware and systems software that cooperate
+to run application programs. Information inside the computer is represented as
+groups of bits that are interpreted in different ways, depending on the context.
+Programs are translated by other programs into different forms, beginning as
+ASCII text and then translated by compilers and linkers into binary executable
+ﬁles.
+Processors read and interpret binary instructions that are stored in main mem-
+ory. Since computers spend most of their time copying data between memory, I/O
+devices, and the CPU registers, the storage devices in a system are arranged in a hi-
+erarchy, with the CPU registers at the top, followed by multiple levels of hardware
+cache memories, DRAM main memory, and disk storage. Storage devices that are
+higher in the hierarchy are faster and more costly per bit than those lower in the

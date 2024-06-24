@@ -1,0 +1,42 @@
+Homework Problems
+1071
+12.32 ◆◆◆
+Implement a version of the tfgets function from Problem 12.31 that uses the
+select function. Your function should be implemented in a package called
+tfgets-select.c. Test your solution using the driver program from Problem
+12.31. You may assume that standard input is assigned to descriptor 0.
+12.33 ◆◆◆
+Implement a threaded version of the tfgets function from Problem 12.31. Your
+function should be implemented in a package called tfgets-thread.c. Test your
+solution using the driver program from Problem 12.31.
+12.34 ◆◆◆
+Write a parallel threaded version of an N × M matrix multiplication kernel. Com-
+pare the performance to the sequential case.
+12.35 ◆◆◆
+Implement a concurrent version of the Tiny Web server based on processes. Your
+solution should create a new child process for each new connection request. Test
+your solution using a real Web browser.
+12.36 ◆◆◆
+Implement a concurrent version of the Tiny Web server based on I/O multiplexing.
+Test your solution using a real Web browser.
+12.37 ◆◆◆
+Implement a concurrent version of the Tiny Web server based on threads. Your
+solution should create a new thread for each new connection request. Test your
+solution using a real Web browser.
+12.38 ◆◆◆◆
+Implement a concurrent prethreaded version of the Tiny Web server. Your solu-
+tion should dynamically increase or decrease the number of threads in response to
+the current load. One strategy is to double the number of threads when the buffer
+becomes full, and halve the number of threads when the buffer becomes empty.
+Test your solution using a real Web browser.
+12.39 ◆◆◆◆
+A Web proxy is a program that acts as a middleman between a Web server and
+browser. Instead of contacting the server directly to get a Web page, the browser
+contacts the proxy, which forwards the request to the server. When the server
+replies to the proxy, the proxy sends the reply to the browser. For this lab, you will
+write a simple Web proxy that ﬁlters and logs requests:
+A. In the ﬁrst part of the lab, you will set up the proxy to accept requests, parse
+the HTTP, forward the requests to the server, and return the results to the
+browser. Your proxy should log the URLs of all requests in a log ﬁle on disk,
+and it should also block requests to any URL contained in a ﬁlter ﬁle on
+disk.

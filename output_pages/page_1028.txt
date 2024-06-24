@@ -1,0 +1,81 @@
+Section 12.3
+Concurrent Programming with Threads
+1027
+12.3.8
+A Concurrent Server Based on Threads
+Figure 12.14 shows the code for a concurrent echo server based on threads. The
+overall structure is similar to the process-based design. The main thread repeat-
+edly waits for a connection request and then creates a peer thread to handle the
+request. While the code looks simple, there are a couple of general and some-
+what subtle issues we need to look at more closely. The ﬁrst issue is how to pass
+code/conc/echoservert.c
+1
+#include "csapp.h"
+2
+3
+void echo(int connfd);
+4
+void *thread(void *vargp);
+5
+6
+int main(int argc, char **argv)
+7
+{
+8
+int listenfd, *connfdp;
+9
+socklen_t clientlen;
+10
+struct sockaddr_storage clientaddr;
+11
+pthread_t tid;
+12
+13
+if (argc != 2) {
+14
+fprintf(stderr, "usage: %s <port>\n", argv[0]);
+15
+exit(0);
+16
+}
+17
+listenfd = Open_listenfd(argv[1]);
+18
+19
+while (1) {
+20
+clientlen=sizeof(struct sockaddr_storage);
+21
+connfdp = Malloc(sizeof(int));
+22
+*connfdp = Accept(listenfd, (SA *) &clientaddr, &clientlen);
+23
+Pthread_create(&tid, NULL, thread, connfdp);
+24
+}
+25
+}
+26
+27
+/* Thread routine */
+28
+void *thread(void *vargp)
+29
+{
+30
+int connfd = *((int *)vargp);
+31
+Pthread_detach(pthread_self());
+32
+Free(vargp);
+33
+echo(connfd);
+34
+Close(connfd);
+35
+return NULL;
+36
+}
+code/conc/echoservert.c
+Figure 12.14
+Concurrent echo server based on threads.

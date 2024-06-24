@@ -1,0 +1,46 @@
+Section 3.3
+Data Formats
+213
+Aside
+ATT versus Intel assembly-code formats
+In our presentation, we show assembly code in ATT format (named after AT&T, the company that
+operated Bell Laboratories for many years), the default format for gcc, objdump, and the other tools we
+will consider. Other programming tools, including those from Microsoft as well as the documentation
+from Intel, show assembly code in Intel format. The two formats differ in a number of ways. As an
+example, gcc can generate code in Intel format for the sum function using the following command line:
+linux> gcc -Og -S -masm=intel mstore.c
+This gives the following assembly code:
+multstore:
+push
+rbx
+mov
+rbx, rdx
+call
+mult2
+mov
+QWORD PTR [rbx], rax
+pop
+rbx
+ret
+We see that the Intel and ATT formats differ in the following ways:
+. The Intel code omits the size designation sufﬁxes. We see instruction push and mov instead of pushq
+and movq.
+. The Intel code omits the ‘%’ character in front of register names, using rbx instead of %rbx.
+. The Intel code has a different way of describing locations in memory—for example, QWORD PTR
+[rbx] rather than (%rbx).
+. Instructions with multiple operands list them in the reverse order. This can be very confusing when
+switching between the two formats.
+Although we will not be using Intel format in our presentation, you will encounter it in documentation
+from Intel and Microsoft.
+second is to use gcc’s support for embedding assembly code directly within C
+programs.
+3.3
+Data Formats
+Due to its origins as a 16-bit architecture that expanded into a 32-bit one, Intel
+uses the term “word” to refer to a 16-bit data type. Based on this, they refer to 32-
+bit quantities as “double words,” and 64-bit quantities as “quad words.” Figure 3.1
+shows the x86-64 representations used for the primitive data types of C. Standard
+int values are stored as double words (32 bits). Pointers (shown here as char *)
+are stored as 8-byte quad words, as would be expected in a 64-bit machine. With
+x86-64, data type long is implemented with 64 bits, allowing a very wide range
+of values. Most of our code examples in this chapter use pointers and long data

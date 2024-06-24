@@ -1,0 +1,58 @@
+Homework Problems
+513
+material for directions on how to generate a simulator for your solution and how
+to test it.
+4.55 ◆◆◆
+The ﬁle pipe-nt.hcl contains a copy of the HCL code for PIPE, plus a declaration
+of the constant J_YES with value 0, the function code for an unconditional jump
+instruction. Modify the branch prediction logic so that it predicts conditional
+jumps as being not taken while continuing to predict unconditional jumps and
+call as being taken. You will need to devise a way to get valC, the jump target
+address, to pipeline register M to recover from mispredicted branches. See the lab
+material for directions on how to generate a simulator for your solution and how
+to test it.
+4.56 ◆◆◆
+The ﬁle pipe-btfnt.hcl contains a copy of the HCL code for PIPE, plus a decla-
+ration of the constant J_YES with value 0, the function code for an unconditional
+jump instruction. Modify the branch prediction logic so that it predicts condi-
+tional jumps as being taken when valC < valP (backward branch) and as being
+not taken when valC ≥valP (forward branch). (Since Y86-64 does not support
+unsigned arithmetic, you should implement this test using a signed comparison.)
+Continue to predict unconditional jumps and call as being taken. You will need
+to devise a way to get both valC and valP to pipeline register M to recover from
+mispredicted branches. See the lab material for directions on how to generate a
+simulator for your solution and how to test it.
+4.57 ◆◆◆
+In our design of PIPE, we generate a stall whenever one instruction performs a
+load, reading a value from memory into a register, and the next instruction has this
+register as a source operand. When the source gets used in the execute stage, this
+stalling is the only way to avoid a hazard. For cases where the second instruction
+stores the source operand to memory, such as with an rmmovq or pushq instruction,
+this stalling is not necessary. Consider the following code examples:
+1
+mrmovq 0(%rcx),%rdx
+# Load
+1
+2
+pushq
+%rdx
+# Store 1
+3
+nop
+4
+popq %rdx
+# Load
+2
+5
+rmmovq %rax,0(%rdx)
+# Store 2
+In lines 1 and 2, the mrmovq instruction reads a value from memory into
+%rdx, and the pushq instruction then pushes this value onto the stack. Our design
+for PIPE would stall the pushq instruction to avoid a load/use hazard. Observe,
+however, that the value of %rdx is not required by the pushq instruction until it
+reaches the memory stage. We can add an additional bypass path, as diagrammed
+in Figure 4.70, to forward the memory output (signal m_valM) to the valA ﬁeld
+in pipeline register M. On the next clock cycle, this forwarded value can then be
+written to memory. This technique is known as load forwarding.
+Note that the second example (lines 4 and 5) in the code sequence above
+cannot make use of load forwarding. The value loaded by the popq instruction is

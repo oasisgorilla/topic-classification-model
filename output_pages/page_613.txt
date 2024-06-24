@@ -1,0 +1,95 @@
+612
+Chapter 5
+Optimizing Program Performance
+9
+/* Combine 5 elements at a time */
+10
+for (i = 0; i < limit; i+=5) {
+11
+acc = acc OP data[i]
+OP data[i+1];
+12
+acc = acc OP data[i+2] OP data[i+3];
+13
+acc = acc OP data[i+4];
+14
+}
+15
+16
+/* Finish any remaining elements */
+17
+for (; i < length; i++) {
+18
+acc = acc OP data[i];
+19
+}
+20
+*dest = acc;
+21
+}
+Solution to Problem 5.8 (page 581)
+This problem demonstrates how small changes in a program can yield dramatic
+performance differences, especially on a machine with out-of-order execution.
+Figure 5.39 diagrams the three multiplication operations for a single iteration
+of the function. In this ﬁgure, the operations shown as blue boxes are along the
+critical path—they need to be computed in sequence to compute a new value for
+loop variable r. The operations shown as light boxes can be computed in parallel
+with the critical path operations. For a loop with P operations along the critical
+path, each iteration will require a minimum of 5P clock cycles and will compute
+the product for three elements, giving a lower bound on the CPE of 5P/3. This
+implies lower bounds of 5.00 for A1, 3.33 for A2 and A5, and 1.67 for A3 and A4.
+We ran these functions on an Intel Core i7 Haswell processor and found that it
+could achieve these CPE values.
+Solution to Problem 5.9 (page 589)
+This is another demonstration that a slight change in coding style can make it much
+easier for the compiler to detect opportunities to use conditional moves:
+while (i1 < n && i2 < n) {
+long v1 = src1[i1];
+r
+A1: ((r*x)*y)*z
+r
+x
+y
+z
+*
+*
+*
+*
+r
+A2: (r*(x*y))*z
+r
+x
+y
+z
+*
+*
+*
+r
+A3: r*((x*y)*z)
+r
+x
+y
+z
+*
+*
+*
+r
+A4: r*(x*(y*z))
+r
+x
+y
+z
+*
+*
+*
+r
+A5: (r*x)*(y*z)
+r
+x
+y
+z
+*
+*
+Figure 5.39
+Data dependencies among multiplication operations for cases in Problem 5.8. The
+operations shown as blue boxes form the critical paths for the iterations.

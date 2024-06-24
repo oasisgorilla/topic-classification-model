@@ -1,0 +1,68 @@
+754
+Chapter 7
+Linking
+Symbol
+.symtab entry?
+Symbol type
+Module where deﬁned
+Section
+buf
+Yes
+extern
+m.o
+.data
+bufp0
+Yes
+global
+swap.o
+.data
+bufp1
+Yes
+global
+swap.o
+COMMON
+swap
+Yes
+global
+swap.o
+.text
+temp
+No
+—
+—
+—
+Solution to Problem 7.2 (page 720)
+This is a simple drill that checks your understanding of the rules that a Unix linker
+uses when it resolves global symbols that are deﬁned in more than one module.
+Understanding these rules can help you avoid some nasty programming bugs.
+A. The linker chooses the strong symbol deﬁned in module 1 over the weak
+symbol deﬁned in module 2 (rule 2):
+(a) REF(main.1) →DEF(main.1)
+(b) REF(main.2) →DEF(main.1)
+B. This is an error, because each module deﬁnes a strong symbol main (rule 1).
+C. The linker chooses the strong symbol deﬁned in module 2 over the weak
+symbol deﬁned in module 1 (rule 2):
+(a) REF(x.1) →DEF(x.2)
+(b) REF(x.2) →DEF(x.2)
+Solution to Problem 7.3 (page 725)
+Placing static libraries in the wrong order on the command line is a common source
+of linker errors that confuses many programmers. However, once you understand
+how linkers use static libraries to resolve references, it’s pretty straightforward.
+This little drill checks your understanding of this idea:
+A. linux>
+gcc p.o libx.a
+B. linux>
+gcc p.o libx.a liby.a
+C. linux>
+gcc p.o libx.a liby.a libx.a
+Solution to Problem 7.4 (page 730)
+This problem concerns the disassembly listing in Figure 7.12(a). Our purpose
+here is to give you some practice reading disassembly listings and to check your
+understanding of PC-relative addressing.
+A. The hex address of the relocated reference in line 5 is 0x4004df.
+B. The hex value of the relocated reference in line 5 is 0x5. Remember that
+the disassembly listing shows the value of the reference in little-endian byte
+order.
+Solution to Problem 7.5 (page 731)
+This problem tests your understanding of how the linker relocates PC-relative
+references. You were given that

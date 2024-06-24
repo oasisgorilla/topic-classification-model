@@ -1,0 +1,49 @@
+Chapter 5
+Optimizing Program Performance
+533
+tion environment. Programmers must assist the compiler by writing code that can
+be optimized readily.
+The ﬁrst step in optimizing a program is to eliminate unnecessary work, mak-
+ing the code perform its intended task as efﬁciently as possible. This includes
+eliminating unnecessary function calls, conditional tests, and memory references.
+These optimizations do not depend on any speciﬁc properties of the target ma-
+chine.
+To maximize the performance of a program, both the programmer and the
+compiler require a model of the target machine, specifying how instructions are
+processed and the timing characteristics of the different operations. For example,
+the compiler must know timing information to be able to decide whether it should
+use a multiply instruction or some combination of shifts and adds. Modern com-
+puters use sophisticated techniques to process a machine-level program, executing
+many instructions in parallel and possibly in a different order than they appear in
+the program. Programmers must understand how these processors work to be
+able to tune their programs for maximum speed. We present a high-level model
+of such a machine based on recent designs of Intel and AMD processors. We also
+devise a graphical data-ﬂow notation to visualize the execution of instructions by
+the processor, with which we can predict program performance.
+With this understanding of processor operation, we can take a second step in
+program optimization, exploiting the capability of processors to provide instruc-
+tion-level parallelism, executing multiple instructions simultaneously. We cover
+several program transformations that reduce the data dependencies between dif-
+ferent parts of a computation, increasing the degree of parallelism with which they
+can be executed.
+We conclude the chapter by discussing issues related to optimizing large pro-
+grams. We describe the use of code proﬁlers—tools that measure the performance
+of different parts of a program. This analysis can help ﬁnd inefﬁciencies in the code
+and identify the parts of the program on which we should focus our optimization
+efforts.
+In this presentation, we make code optimization look like a simple linear
+process of applying a series of transformations to the code in a particular order.
+In fact, the task is not nearly so straightforward. A fair amount of trial-and-
+error experimentation is required. This is especially true as we approach the later
+optimization stages, where seemingly small changes can cause major changes
+in performance and some very promising techniques prove ineffective. As we
+will see in the examples that follow, it can be difﬁcult to explain exactly why a
+particular code sequence has a particular execution time. Performance can depend
+on many detailed features of the processor design for which we have relatively
+little documentation or understanding. This is another reason to try a number of
+different variations and combinations of techniques.
+Studying the assembly-code representation of a program is one of the most
+effective means for gaining an understanding of the compiler and how the gen-
+erated code will run. A good strategy is to start by looking carefully at the code
+for the inner loops, identifying performance-reducing attributes such as excessive
+memory references and poor use of registers. Starting with the assembly code, we

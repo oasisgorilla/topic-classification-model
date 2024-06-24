@@ -1,0 +1,53 @@
+734
+Chapter 7
+Linking
+Figure 7.15
+Linux x86-64 run-time
+memory image. Gaps
+due to segment alignment
+requirements and address-
+space layout randomization
+(ASLR) are not shown. Not
+to scale.
+0x400000
+248-1
+0
+Memory
+invisible to
+user code
+%esp (stack pointer)
+brk
+Loaded from the
+executable file
+User stack
+(created at run time)
+Memory-mapped region for
+shared libraries
+Run-time heap
+(created by malloc)
+Read/write segment
+(.data,.bss)
+Read-only code segment
+(.init,.text,.rodata)
+Kernel memory
+executable object ﬁle into the code and data segments. Next, the loader jumps
+to the program’s entry point, which is always the address of the _start function.
+This function is deﬁned in the system object ﬁle crt1.o and is the same for all C
+programs. The _start function calls the system startup function, __libc_start_
+main, which is deﬁned in libc.so. It initializes the execution environment, calls
+the user-level main function, handles its return value, and if necessary returns
+control to the kernel.
+7.10
+Dynamic Linking with Shared Libraries
+The static libraries that we studied in Section 7.6.2 address many of the issues as-
+sociated with making large collections of related functions available to application
+programs. However, static libraries still have some signiﬁcant disadvantages. Static
+libraries, like all software, need to be maintained and updated periodically. If ap-
+plication programmers want to use the most recent version of a library, they must
+somehow become aware that the library has changed and then explicitly relink
+their programs against the updated library.
+Another issue is that almost every C program uses standard I/O functions such
+as printf and scanf. At run time, the code for these functions is duplicated in the
+text segment of each running process. On a typical system that is running hundreds
+of processes, this can be a signiﬁcant waste of scarce memory system resources.
+(An interesting property of memory is that it is always a scarce resource, regardless

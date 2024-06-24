@@ -1,0 +1,99 @@
+Section 6.4
+Cache Memories
+663
+Figure 6.35
+Fully associative cache
+(E = C/B). In a fully
+associative cache, a single
+set contains all of the lines.
+Valid
+Tag
+Cache block
+Set 0:
+Valid
+Tag
+Cache block
+. . .
+E = C/B  lines in
+the one and only set
+Valid
+Tag
+Cache block
+Figure 6.36
+Set selection in a fully
+associative cache. Notice
+that there are no set index
+bits.
+Valid
+Tag
+Cache block
+Set 0:
+Valid
+Tag
+Cache block
+. . .
+Valid
+Tag
+Cache block
+m–1
+0
+t bits
+Tag
+Block offset
+b bits
+The entire cache is one set, so
+by default set 0 is always selected.
+Figure 6.37
+Line matching and
+word selection in a fully
+associative cache.
+m–1
+0
+1
+0
+0110
+1110
+t bits
+Tag
+Block offset
+b bits
+= ?
+w0
+w1
+w2
+w3
+0110
+100
+0
+1
+2
+3
+4
+5
+6
+7
+1
+0
+1001
+0110
+= 1?   (1) The valid bit must be set.
+Entire cache
+(2) The tag bits in one 
+of the cache lines 
+must match the tag 
+bits in the address.
+(3) If (1) and (2), then 
+cache hit, and
+block offset selects 
+starting byte.
+Set Selection in Fully Associative Caches
+Set selection in a fully associative cache is trivial because there is only one set,
+summarized in Figure 6.36. Notice that there are no set index bits in the address,
+which is partitioned into only a tag and a block offset.
+Line Matching and Word Selection in Fully Associative Caches
+Line matching and word selection in a fully associative cache work the same as
+with a set associative cache, as we show in Figure 6.37. The difference is mainly a
+question of scale.
+Because the cache circuitry must search for many matching tags in parallel, it
+is difﬁcult and expensive to build an associative cache that is both large and fast.
+As a result, fully associative caches are only appropriate for small caches, such

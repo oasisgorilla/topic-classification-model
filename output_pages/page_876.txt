@@ -1,0 +1,41 @@
+Section 9.9
+Dynamic Memory Allocation
+875
+asks the kernel to create a new read-only, private, demand-zero area of virtual
+memory containing size bytes. If the call is successful, then bufp contains the
+address of the new area.
+The munmap function deletes regions of virtual memory:
+#include <unistd.h>
+#include <sys/mman.h>
+int munmap(void *start, size_t length);
+Returns: 0 if OK, −1 on error
+The munmap function deletes the area starting at virtual address start and consist-
+ing of the next length bytes. Subsequent references to the deleted region result
+in segmentation faults.
+Practice Problem 9.5 (solution page 918)
+Write a C program mmapcopy.c that uses mmap to copy an arbitrary-size disk ﬁle to
+stdout. The name of the input ﬁle should be passed as a command-line argument.
+9.9
+Dynamic Memory Allocation
+While it is certainly possible to use the low-level mmap and munmap functions to
+create and delete areas of virtual memory, C programmers typically ﬁnd it more
+convenient and more portable to use a dynamic memory allocator when they need
+to acquire additional virtual memory at run time.
+A dynamic memory allocator maintains an area of a process’s virtual memory
+known as the heap (Figure 9.33). Details vary from system to system, but without
+loss of generality, we will assume that the heap is an area of demand-zero mem-
+ory that begins immediately after the uninitialized data area and grows upward
+(toward higher addresses). For each process, the kernel maintains a variable brk
+(pronounced “break”) that points to the top of the heap.
+An allocator maintains the heap as a collection of various-size blocks. Each
+block is a contiguous chunk of virtual memory that is either allocated or free. An
+allocated block has been explicitly reserved for use by the application. A free block
+is available to be allocated. A free block remains free until it is explicitly allocated
+by the application. An allocated block remains allocated until it is freed, either
+explicitly by the application or implicitly by the memory allocator itself.
+Allocators come in two basic styles. Both styles require the application to
+explicitly allocate blocks. They differ about which entity is responsible for freeing
+allocated blocks.
+. Explicit allocators require the application to explicitly free any allocated
+blocks. For example, the C standard library provides an explicit allocator
+called the malloc package. C programs allocate a block by calling the malloc

@@ -1,0 +1,119 @@
+1084
+References
+[19]
+S. Chellappa, F. Franchetti, and M. P¨
+uschel.
+How to write fast numerical code: A small in-
+troduction. In Generative and Transformational
+Techniques in Software Engineering II, volume
+5235 of Lecture Notes in Computer Science,
+pages 196–259. Springer-Verlag, 2008.
+[20]
+P
+. Chen, E. Lee, G. Gibson, R. Katz, and
+D. Patterson. RAID: High-performance,
+reliable secondary storage. ACM Computing
+Surveys 26(2):145–185, June 1994.
+[21]
+S. Chen, P. Gibbons, and T. Mowry. Improving
+index performance through prefetching. In
+Proceedings of the 2001 ACM SIGMOD
+International Conference on Management of
+Data, pages 235–246. ACM, May 2001.
+[22]
+T. Chilimbi, M. Hill, and J. Larus. Cache-
+conscious structure layout. In Proceedings of
+the 1999 ACM Conference on Programming
+Language Design and Implementation (PLDI),
+pages 1–12. ACM, May 1999.
+[23]
+E. Coffman, M. Elphick, and A. Shoshani.
+System deadlocks. ACM Computing Surveys
+3(2):67–78, June 1971.
+[24]
+D. Cohen. On holy wars and a plea for peace.
+IEEE Computer 14(10):48–54, October 1981.
+[25]
+P
+. J. Courtois, F. Heymans, and D. L. Parnas.
+Concurrent control with “readers” and
+“writers.” Communications of the ACM
+14(10):667–668, 1971.
+[26]
+C. Cowan, P. Wagle, C. Pu, S. Beattie, and
+J. Walpole. Buffer overﬂows: Attacks and
+defenses for the vulnerability of the decade. In
+DARPA Information Survivability Conference
+and Expo (DISCEX), volume 2, pages 119–129,
+March 2000.
+[27]
+J. H. Crawford. The i486 CPU: Executing
+instructions in one clock cycle. IEEE Micro
+10(1):27–36, February 1990.
+[28]
+V. Cuppu, B. Jacob, B. Davis, and T. Mudge.
+A performance comparison of contemporary
+DRAM architectures. In Proceedings of the
+26th International Symposium on Computer
+Architecture (ISCA), pages 222–233, ACM,
+1999.
+[29]
+B. Davis, B. Jacob, and T. Mudge. The new
+DRAM interfaces: SDRAM, RDRAM, and
+variants. In Proceedings of the 3rd International
+Symposium on High Performance Computing
+(ISHPC), volume 1940 of Lecture Notes in
+Computer Science, pages 26–31. Springer-
+Verlag, October 2000.
+[30]
+E. Demaine. Cache-oblivious algorithms and
+data structures. In Lecture Notes from the EEF
+Summer School on Massive Data Sets. BRICS,
+University of Aarhus, Denmark, 2002.
+[31]
+E. W. Dijkstra. Cooperating sequential
+processes. Technical Report EWD-123,
+Technological University, Eindhoven, the
+Netherlands, 1965.
+[32]
+C. Ding and K. Kennedy. Improving cache
+performance of dynamic applications through
+data and computation reorganizations at
+run time. In Proceedings of the 1999 ACM
+Conference on Programming Language Design
+and Implementation (PLDI), pages 229–241.
+ACM, May 1999.
+[33]
+M. Dowson. The Ariane 5 software failure.
+SIGSOFT Software Engineering Notes 22(2):84,
+1997.
+[34]
+U. Drepper. User-level IPv6 programming
+introduction. Available at http://www.akkadia
+.org/drepper/userapi-ipv6.html, 2008.
+[35]
+M. W. Eichen and J. A. Rochlis. With micro-
+scope and tweezers: An analysis of the Internet
+virus of November, 1988. In Proceedings of the
+IEEE Symposium on Research in Security and
+Privacy, pages 326–343. IEEE, 1989.
+[36]
+ELF-64 Object File Format, Version 1.5 Draft 2,
+1998. Available at http://www.uclibc.org/docs/
+elf-64-gen.pdf.
+[37]
+R. Fielding, J. Gettys, J. Mogul, H. Frystyk,
+L. Masinter, P
+. Leach, and T. Berners-Lee.
+Hypertext transfer protocol - HTTP/1.1. RFC
+2616, 1999.
+[38]
+M. Frigo, C. E. Leiserson, H. Prokop, and
+S. Ramachandran. Cache-oblivious algorithms.
+In Proceedings of the 40th IEEE Symposium
+on Foundations of Computer Science (FOCS),
+pages 285–297. IEEE, August 1999.
+[39]
+M. Frigo and V. Strumpen. The cache complex-
+ity of multithreaded cache oblivious algorithms.
+In Proceedings of the 18th Symposium on Paral-

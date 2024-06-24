@@ -1,0 +1,39 @@
+780
+Chapter 8
+Exceptional Control Flow
+Aside
+Why are terminated children called zombies?
+In folklore, a zombie is a living corpse, an entity that is half alive and half dead. A zombie process is
+similar in the sense that although it has already terminated, the kernel maintains some of its state until
+it can be reaped by the parent.
+The waitpid function is complicated. By default (when options = 0),
+waitpid suspends execution of the calling process until a child process in its wait
+set terminates. If a process in the wait set has already terminated at the time of the
+call, then waitpid returns immediately. In either case, waitpid returns the PID of
+the terminated child that caused waitpid to return. At this point, the terminated
+child has been reaped and the kernel removes all traces of it from the system.
+Determining the Members of the Wait Set
+The members of the wait set are determined by the pid argument:
+. If pid > 0, then the wait set is the singleton child process whose process ID is
+equal to pid.
+. If pid = -1, then the wait set consists of all of the parent’s child processes.
+The waitpid function also supports other kinds of wait sets, involving Unix pro-
+cess groups, which we will not discuss.
+Modifying the Default Behavior
+The default behavior can be modiﬁed by setting options to various combinations
+of the WNOHANG, WUNTRACED, and WCONTINUED constants:
+WNOHANG. Return immediately (with a return value of 0) if none of the
+child processes in the wait set has terminated yet. The default behavior
+suspends the calling process until a child terminates; this option is useful
+in those cases where you want to continue doing useful work while waiting
+for a child to terminate.
+WUNTRACED. Suspend execution of the calling process until a process in the
+wait set becomes either terminated or stopped. Return the PID of the
+terminated or stopped child that caused the return. The default behavior
+returns only for terminated children; this option is useful when you want
+to check for both terminated and stopped children.
+WCONTINUED. Suspend execution of the calling process until a running
+process in the wait set is terminated or until a stopped process in the wait
+set has been resumed by the receipt of a SIGCONT signal. (Signals are
+explained in Section 8.5.)
+You can combine options by oring them together. For example:

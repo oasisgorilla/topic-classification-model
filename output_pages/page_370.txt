@@ -1,0 +1,50 @@
+Solutions to Practice Problems
+369
+B. When misprediction occurs, the function will require around 25 + 40 = 65
+cycles.
+Solution to Problem 3.20 (page 255)
+This problem provides a chance to study the use of conditional moves.
+A. The operator is ‘/’. We see this is an example of dividing by a power of 4 by
+right shifting (see Section 2.3.7). Before shifting by k = 4, we must add a bias
+of 2k −1 = 15 when the dividend is negative.
+B. Here is an annotated version of the assembly code:
+short arith(short x)
+x in %rdi
+arith:
+leaq
+15(%rdi), %rbx
+temp = x+15
+testq
+%rdi, %rdi
+Text x
+cmovns
+%rdi, %rbx
+If x>= 0, temp = x
+sarq
+$4, %rbx
+result = temp >> 4 (= x/16)
+ret
+The program creates a temporary value equal to x + 15, in anticipation
+of x being negative and therefore requiring biasing. The cmovns instruction
+conditionally changes this number to x when x ≥0, and then it is shifted by
+4 to generate x/16.
+Solution to Problem 3.21 (page 255)
+This problem is similar to Problem 3.18, except that some of the conditionals have
+been implemented by conditional data transfers. Although it might seem daunting
+to ﬁt this code into the framework of the original C code, you will ﬁnd that it follows
+the translation rules fairly closely.
+short test(short x, short y) {
+short val = y + 12;
+if (x < 0) {
+if (x < y)
+val = x * y;
+else
+val = x | y;
+} else if (y > 10)
+val = x / y;
+return val;
+}
+Solution to Problem 3.22 (page 257)
+A. The computation of 14! would overﬂow with a 32-bit int. As we learned
+in Problem 2.35, when we get value x while attempting to compute n!, we
+can test for overﬂow by computing x/n and seeing whether it equals (n −1)!

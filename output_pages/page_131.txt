@@ -1,0 +1,41 @@
+130
+Chapter 2
+Representing and Manipulating Information
+x
+y
+x + y
+x +t
+5 y
+Case
+[11000]
+[11000]
+[10111]
+[01000]
+[00010]
+[00101]
+[01100]
+[00100]
+Practice Problem 2.30 (solution page 189)
+Write a function with the following prototype:
+/* Determine whether arguments can be added without overflow */
+int tadd_ok(int x, int y);
+This function should return 1 if arguments x and y can be added without
+causing overﬂow.
+Practice Problem 2.31 (solution page 189)
+Your coworker gets impatient with your analysis of the overﬂow conditions for
+two’s-complement addition and presents you with the following implementation
+of tadd_ok:
+/* Determine whether arguments can be added without overflow */
+/* WARNING: This code is buggy. */
+int tadd_ok(int x, int y) {
+int sum = x+y;
+return (sum-x == y) && (sum-y == x);
+}
+You look at the code and laugh. Explain why.
+Practice Problem 2.32 (solution page 189)
+You are assigned the task of writing code for a function tsub_ok, with arguments
+x and y, that will return 1 if computing x-y does not cause overﬂow. Having just
+written the code for Problem 2.30, you write the following:
+/* Determine whether arguments can be subtracted without overflow */
+/* WARNING: This code is buggy. */
+int tsub_ok(int x, int y) {

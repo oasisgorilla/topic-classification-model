@@ -1,0 +1,71 @@
+Section 6.1
+Storage Technologies
+621
+Figure 6.5
+Reading the contents of a
+memory module.
+addr (row = i, col = j)
+DRAM 7
+DRAM 0
+data
+: Supercell (i, j)
+64 MB
+memory module
+consisting of
+eight 8M × 8 DRAMs
+Memory
+controller
+64-bit word to CPU chip
+64-bit word at main memory address A
+Bits
+0-7
+Bits
+8-15
+Bits
+16-23
+Bits
+24-31
+Bits
+32-39
+Bits
+40-47
+Bits
+48-55
+Bits
+56-63
+63
+56 55
+48 47
+40 39
+32 31
+24 23
+16 15
+8
+7
+0
+Organization
+r
+c
+br
+bc
+max(br, bc)
+16 × 1
+16 × 4
+128 × 8
+512 × 4
+1,024 × 4
+Enhanced DRAMs
+There are many kinds of DRAM memories, and new kinds appear on the market
+with regularity as manufacturers attempt to keep up with rapidly increasing pro-
+cessor speeds. Each is based on the conventional DRAM cell, with optimizations
+that improve the speed with which the basic DRAM cells can be accessed.
+Fast page mode DRAM (FPM DRAM). A conventional DRAM copies an
+entire row of supercells into its internal row buffer, uses one, and then
+discards the rest. FPM DRAM improves on this by allowing consecutive
+accesses to the same row to be served directly from the row buffer. For
+example, to read four supercells from row i of a conventional DRAM, the
+memory controller must send four RAS/CAS requests, even though the
+row address i is identical in each case. To read supercells from the same
+row of an FPM DRAM, the memory controller sends an initial RAS/CAS
+request, followed by three CAS requests. The initial RAS/CAS request
+copies row i into the row buffer and returns the supercell addressed by the

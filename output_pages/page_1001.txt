@@ -1,0 +1,44 @@
+1000
+Chapter 11
+Network Programming
+Aside
+Dealing with prematurely closed connections
+Although the basic functions of a Web server are quite simple, we don’t want to give you the false
+impression that writing a real Web server is easy. Building a robust Web server that runs for extended
+periods without crashing is a difﬁcult task that requires a deeper understanding of Linux systems
+programming than we’ve learned here. For example, if a server writes to a connection that has already
+been closed by the client (say, because you clicked the “Stop” button on your browser), then the ﬁrst
+such write returns normally, but the second write causes the delivery of a SIGPIPE signal whose default
+behavior is to terminate the process. If the SIGPIPE signal is caught or ignored, then the second write
+operation returns −1 with errno set to EPIPE. The strerr and perror functions report the EPIPE
+error as a “Broken pipe,” a nonintuitive message that has confused generations of students. The bottom
+line is that a robust server must catch these SIGPIPE signals and check write function calls for EPIPE
+errors.
+set the other CGI environment variables here as well. For brevity, we have omitted
+this step.
+Next, the child redirects the child’s standard output to the connected ﬁle
+descriptor (line 14) and then loads and runs the CGI program (line 15). Since
+the CGI program runs in the context of the child, it has access to the same open
+ﬁles and environment variables that existed before the call to the execve function.
+Thus, everything that the CGI program writes to standard output goes directly to
+the client process, without any intervention from the parent process. Meanwhile,
+the parent blocks in a call to wait, waiting to reap the child when it terminates
+(line 17).
+11.7
+Summary
+Every network application is based on the client-server model. With this model,
+an application consists of a server and one or more clients. The server manages
+resources, providing a service for its clients by manipulating the resources in some
+way. The basic operation in the client-server model is a client-server transaction,
+which consists of a request from a client, followed by a response from the server.
+Clients and servers communicate over a global network known as the Internet.
+From a programmer’s point of view, we can think of the Internet as a worldwide
+collection of hosts with the following properties: (1) Each Internet host has a
+unique 32-bit name called its IP address. (2) The set of IP addresses is mapped
+to a set of Internet domain names. (3) Processes on different Internet hosts can
+communicate with each other over connections.
+Clients and servers establish connections by using the sockets interface. A
+socket is an end point of a connection that is presented to applications in the
+form of a ﬁle descriptor. The sockets interface provides functions for opening and
+closing socket descriptors. Clients and servers communicate with each other by
+reading and writing these descriptors.

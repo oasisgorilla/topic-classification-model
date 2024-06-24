@@ -1,0 +1,71 @@
+100
+Chapter 2
+Representing and Manipulating Information
+there is only one representation of decimal value 11 as an unsigned 4-bit number—
+namely, [1011]. We highlight this as a mathematical principle, which we ﬁrst state
+and then explain.
+principle: Uniqueness of unsigned encoding
+Function B2Uw is a bijection.
+The mathematical term bijection refers to a function f that goes two ways:
+it maps a value x to a value y where y = f (x), but it can also operate in reverse,
+since for every y, there is a unique value x such that f (x) = y. This is given by
+the inverse function f −1, where, for our example, x = f −1(y). The function B2Uw
+maps each bit vector of length w to a unique number between 0 and 2w −1, and
+it has an inverse, which we call U2Bw (for “unsigned to binary”), that maps each
+number in the range 0 to 2w −1 to a unique pattern of w bits.
+2.2.3
+Two’s-Complement Encodings
+For many applications, we wish to represent negative values as well. The most com-
+mon computer representation of signed numbers is known as two’s-complement
+form. This is deﬁned by interpreting the most signiﬁcant bit of the word to have
+negative weight. We express this interpretation as a function B2Tw (for “binary
+to two’s complement” length w):
+principle: Deﬁnition of two’s-complement encoding
+For vector ⃗
+x = [xw−1, xw−2, . . . , x0]:
+B2Tw(⃗
+x) .
+= −xw−12w−1 +
+w−2
+
+i=0
+xi2i
+(2.3)
+The most signiﬁcant bit xw−1 is also called the sign bit. Its “weight” is −2w−1,
+the negation of its weight in an unsigned representation. When the sign bit is set
+to 1, the represented value is negative, and when set to 0, the value is nonnegative.
+As examples, Figure 2.13 shows the mapping, given by B2T, from bit vectors to
+integers for the following cases:
+B2T4([0001])
+=
+−0 . 23 + 0 . 22 + 0 . 21 + 1 . 20
+=
+0 + 0 + 0 + 1
+=
+1
+B2T4([0101])
+=
+−0 . 23 + 1 . 22 + 0 . 21 + 1 . 20
+=
+0 + 4 + 0 + 1
+=
+5
+B2T4([1011])
+=
+−1 . 23 + 0 . 22 + 1 . 21 + 1 . 20
+=
+−8 + 0 + 2 + 1
+=
+−5
+B2T4([1111])
+=
+−1 . 23 + 1 . 22 + 1 . 21 + 1 . 20
+=
+−8 + 4 + 2 + 1
+=
+−1
+(2.4)
+In the ﬁgure, we indicate that the sign bit has negative weight by showing it as
+a leftward-pointing gray bar. The numeric value associated with a bit vector is
+then given by the combination of the possible leftward-pointing gray bar and the
+rightward-pointing blue bars.

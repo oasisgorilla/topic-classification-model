@@ -1,0 +1,59 @@
+1060
+Chapter 12
+Concurrent Programming
+to nonshared data. For example, the rand_r function in Figure 12.40 is implicitly
+reentrant.
+We always use the term reentrant to include both explicit and implicit re-
+entrant functions. However, it is important to realize that reentrancy is sometimes
+a property of both the caller and the callee, and not just the callee alone.
+Practice Problem 12.12 (solution page 1074)
+The rand_r function in Figure 12.40 is implicitly reentrant. Explain.
+12.7.3
+Using Existing Library Functions in Threaded Programs
+Most Linux functions, including the functions deﬁned in the standard C library
+(such as malloc, free, realloc, printf, and scanf), are thread-safe, with only
+a few exceptions. Figure 12.41 lists some common exceptions. (See [110] for a
+complete list.) The strtok function is a deprecated function (one whose use is
+discouraged) for parsing strings. The asctime, ctime, and localtime functions
+are popular functions for converting back and forth between different time and
+date formats. The gethostbyaddr, gethostbyname, and inet_ntoa functions
+are obsolete network programming functions that have been replaced by the
+reentrant getaddrinfo, getnameinfo, and inet_ntop functions, respectively (see
+Chapter 11). With the exceptions of rand and strtok, they are of the class 3 variety
+that return a pointer to a static variable. If we need to call one of these functions in
+a threaded program, the least disruptive approach to the caller is to lock and copy.
+However, the lock-and-copy approach has a number of disadvantages. First, the
+additional synchronization slows down the program. Second, functions that return
+pointers to complex structures of structures require a deep copy of the structures
+in order to copy the entire structure hierarchy. Third, the lock-and-copy approach
+will not work for a class 2 thread-unsafe function such as rand that relies on static
+state across calls.
+Thread-unsafe function
+Thread-unsafe class
+Linux thread-safe version
+rand
+2
+rand_r
+strtok
+2
+strtok_r
+asctime
+3
+asctime_r
+ctime
+3
+ctime_r
+gethostbyaddr
+3
+gethostbyaddr_r
+gethostbyname
+3
+gethostbyname_r
+inet_ntoa
+3
+(none)
+localtime
+3
+localtime_r
+Figure 12.41
+Common thread-unsafe library functions.

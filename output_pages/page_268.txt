@@ -1,0 +1,62 @@
+Section 3.6
+Control
+267
+Indeed, a close examination of the assembly code produced by gcc with
+command-line option -Og closely follows this template:
+long fact_for(long n)
+n in %rdi
+fact_for:
+movl
+$1, %eax
+Set result = 1
+movl
+$2, %edx
+Set i = 2
+jmp
+.L8
+Goto test
+.L9:
+loop:
+imulq
+%rdx, %rax
+Compute result *= i
+addq
+$1, %rdx
+Increment i
+.L8:
+test:
+cmpq
+%rdi, %rdx
+Compare i:n
+jle
+.L9
+If <=, goto loop
+rep; ret
+Return
+Practice Problem 3.27 (solution page 372)
+Write goto code for a function called fibonacci to print ﬁbonacci numbers using
+a while loop. Apply the guarded-do transformation.
+We see from this presentation that all three forms of loops in C—do-while,
+while, and for—can be translated by a simple strategy, generating code that con-
+tains one or more conditional branches. Conditional transfer of control provides
+the basic mechanism for translating loops into machine code.
+Practice Problem 3.28 (solution page 372)
+A function test_two has the following overall structure:
+short test_two(unsigned short x) {
+short val = 0;
+short i;
+for ( ... ; ... ; ... ) {
+.
+.
+.
+}
+return val;
+}
+The gcc C compiler generates the following assembly code:
+test fun_b(unsigned test x)
+x in %rdi
+1
+test_two:
+2
+movl
+$1, %edx

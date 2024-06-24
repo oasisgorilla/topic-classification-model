@@ -1,0 +1,64 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+503
+Web Aside ARCH:VLOG
+Verilog implementation of a pipelined Y86-64 processor
+As we have mentioned, modern logic design involves writing textual representations of hardware
+designs in a hardware description language. The design can then be tested by both simulation and a
+variety of formal veriﬁcation tools. Once we have conﬁdence in the design, we can use logic synthesis
+tools to translate the design into actual logic circuits.
+We have developed models of our Y86-64 processor designs in the Verilog hardware description
+language. These designs combine modules implementing the basic building blocks of the processor,
+along with control logic generated directly from the HCL descriptions. We have been able to synthesize
+some of these designs, download the logic circuit descriptions onto ﬁeld-programmable gate array
+(FPGA) hardware, and run the processors on actual programs.
+CPI = 1.0 + lp + mp + rp
+where lp (for “load penalty”) is the average frequency with which bubbles are in-
+jected while stalling for load/use hazards, mp (for “mispredicted branch penalty”)
+is the average frequency with which bubbles are injected when canceling instruc-
+tions due to mispredicted branches, and rp (for “return penalty”) is the average
+frequency with which bubbles are injected while stalling for ret instructions. Each
+of these penalties indicates the total number of bubbles injected for the stated
+reason (some portion of Cb) divided by the total number of instructions that were
+executed (Ci.)
+To estimate each of these penalties, we need to know how frequently the
+relevant instructions (load, conditional branch, and return) occur, and for each of
+these how frequently the particular condition arises. Let us pick the following set
+of frequencies for our CPI computation (these are comparable to measurements
+reported in [44] and [46]):
+. Load instructions (mrmovq and popq) account for 25% of all instructions
+executed. Of these, 20% cause load/use hazards.
+. Conditional branches account for 20% of all instructions executed. Of these,
+60% are taken and 40% are not taken.
+. Return instructions account for 2% of all instructions executed.
+We can therefore estimate each of our penalties as the product of the fre-
+quency of the instruction type, the frequency the condition arises, and the number
+of bubbles that get injected when the condition occurs:
+Instruction
+Condition
+Cause
+Name
+frequency
+frequency
+Bubbles
+Product
+Load/use
+lp
+0.25
+0.20
+1
+0.05
+Mispredict
+mp
+0.20
+0.40
+2
+0.16
+Return
+rp
+0.02
+1.00
+3
+0.06
+Total penalty
+0.27

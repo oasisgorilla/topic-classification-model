@@ -1,0 +1,53 @@
+880
+Chapter 9
+Virtual Memory
+1
+#include "csapp.h"
+2
+3
+int main()
+4
+{
+5
+int *array, i, n;
+6
+7
+scanf("%d", &n);
+8
+array = (int *)Malloc(n * sizeof(int));
+9
+for (i = 0; i < n; i++)
+10
+scanf("%d", &array[i]);
+11
+free(array);
+12
+exit(0);
+13
+}
+Dynamic memory allocation is a useful and important programming tech-
+nique. However, in order to use allocators correctly and efﬁciently, programmers
+need to have an understanding of how they work. We will discuss some of the grue-
+some errors that can result from the improper use of allocators in Section 9.11.
+9.9.3
+Allocator Requirements and Goals
+Explicit allocators must operate within some rather stringent constraints:
+Handling arbitrary request sequences. An application can make an arbitrary se-
+quence of allocate and free requests, subject to the constraint that each
+free request must correspond to a currently allocated block obtained from
+a previous allocate request. Thus, the allocator cannot make any assump-
+tions about the ordering of allocate and free requests. For example, the
+allocator cannot assume that all allocate requests are accompanied by a
+matching free request, or that matching allocate and free requests are
+nested.
+Making immediate responses to requests. The allocator must respond immedi-
+ately to allocate requests. Thus, the allocator is not allowed to reorder or
+buffer requests in order to improve performance.
+Using only the heap. In order for the allocator to be scalable, any nonscalar data
+structures used by the allocator must be stored in the heap itself.
+Aligning blocks (alignment requirement). The allocator must align blocks in
+such a way that they can hold any type of data object.
+Not modifying allocated blocks. Allocators can only manipulate or change free
+blocks. In particular, they are not allowed to modify or move blocks
+once they are allocated. Thus, techniques such as compaction of allocated
+blocks are not permitted.

@@ -1,0 +1,44 @@
+912
+Chapter 9
+Virtual Memory
+Modern systems initialize chunks of virtual memory by associating them with
+chunks of ﬁles on disk, a process known as memory mapping. Memory mapping
+provides an efﬁcient mechanism for sharing data, creating new processes, and
+loading programs. Applications can manually create and delete areas of the virtual
+address space using the mmap function. However, most programs rely on a dynamic
+memory allocator such as malloc, which manages memory in an area of the virtual
+address space called the heap. Dynamic memory allocators are application-level
+programs with a system-level feel, directly manipulating memory without much
+help from the type system. Allocators come in two ﬂavors. Explicit allocators
+require applications to explicitly free their memory blocks. Implicit allocators
+(garbage collectors) free any unused and unreachable blocks automatically.
+Managing and using memory is a difﬁcult and error-prone task for C program-
+mers. Examples of common errors include dereferencing bad pointers, reading
+uninitialized memory, allowing stack buffer overﬂows, assuming that pointers and
+the objects they point to are the same size, referencing a pointer instead of the
+object it points to, misunderstanding pointer arithmetic, referencing nonexistent
+variables, and introducing memory leaks.
+Bibliographic Notes
+Kilburn and his colleagues published the ﬁrst description of virtual memory [63].
+Architecture texts contain additional details about the hardware’s role in virtual
+memory [46]. Operating systems texts contain additional information about the
+operating system’s role [102, 106, 113]. Bovet and Cesati [11] give a detailed de-
+scription of the Linux virtual memory system. Intel Corporation provides detailed
+documentation on 32-bit and 64-bit address translation on IA processors [52].
+Knuth wrote the classic work on storage allocation in 1968 [64]. Since that
+time, there has been a tremendous amount of work in the area. Wilson, Johnstone,
+Neely, and Boles have written a beautiful survey and performance evaluation of
+explicit allocators [118]. The general comments in this book about the throughput
+and utilization of different allocator strategies are paraphrased from their sur-
+vey. Jones and Lins provide a comprehensive survey of garbage collection [56].
+Kernighan and Ritchie [61] show the complete code for a simple allocator based
+on an explicit free list with a block size and successor pointer in each free block.
+The code is interesting in that it uses unions to eliminate a lot of the complicated
+pointer arithmetic, but at the expense of a linear-time (rather than constant-time)
+free operation. Doug Lea developed a widely used open-source malloc package
+called dlmalloc [67].
+Homework Problems
+9.11 ◆
+In the following series of problems, you are to show how the example memory
+system in Section 9.6.4 translates a virtual address into a physical address and
+accesses the cache. For the given virtual address, indicate the TLB entry accessed,

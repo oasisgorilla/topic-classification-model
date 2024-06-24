@@ -1,0 +1,85 @@
+Section 11.4
+The Sockets Interface
+981
+code/src/csapp.c
+1
+int open_listenfd(char *port)
+2
+{
+3
+struct addrinfo hints, *listp, *p;
+4
+int listenfd, optval=1;
+5
+6
+/* Get a list of potential server addresses */
+7
+memset(&hints, 0, sizeof(struct addrinfo));
+8
+hints.ai_socktype = SOCK_STREAM;
+/* Accept connections */
+9
+hints.ai_flags = AI_PASSIVE | AI_ADDRCONFIG; /* ... on any IP address */
+10
+hints.ai_flags |= AI_NUMERICSERV;
+/* ... using port number */
+11
+Getaddrinfo(NULL, port, &hints, &listp);
+12
+13
+/* Walk the list for one that we can bind to */
+14
+for (p = listp; p; p = p->ai_next) {
+15
+/* Create a socket descriptor */
+16
+if ((listenfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) < 0)
+17
+continue;
+/* Socket failed, try the next */
+18
+19
+/* Eliminates "Address already in use" error from bind */
+20
+Setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR,
+21
+(const void *)&optval , sizeof(int));
+22
+23
+/* Bind the descriptor to the address */
+24
+if (bind(listenfd, p->ai_addr, p->ai_addrlen) == 0)
+25
+break; /* Success */
+26
+Close(listenfd); /* Bind failed, try the next */
+27
+}
+28
+29
+/* Clean up */
+30
+Freeaddrinfo(listp);
+31
+if (!p) /* No address worked */
+32
+return -1;
+33
+34
+/* Make it a listening socket ready to accept connection requests */
+35
+if (listen(listenfd, LISTENQ) < 0) {
+36
+Close(listenfd);
+37
+return -1;
+38
+}
+39
+return listenfd;
+40
+}
+code/src/csapp.c
+Figure 11.19
+open_listenfd: Helper function that opens and returns a listening descriptor. It is
+reentrant and protocol-independent.

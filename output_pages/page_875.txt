@@ -1,0 +1,47 @@
+874
+Chapter 9
+Virtual Memory
+Figure 9.32
+Visual interpretation of
+mmap arguments.
+length (bytes)
+length (bytes)
+offset
+(bytes)
+Disk file specified by
+file descriptor fd
+Process
+virtual memory
+start
+(or address
+chosen by the
+kernel)
+0
+0
+#include <unistd.h>
+#include <sys/mman.h>
+void
+*mmap(void *start, size_t length, int prot, int flags,
+int fd, off_t offset);
+Returns: pointer to mapped area if OK, MAP_FAILED (−1) on error
+The mmap function asks the kernel to create a new virtual memory area, preferably
+one that starts at address start, and to map a contiguous chunk of the object
+speciﬁed by ﬁle descriptor fd to the new area. The contiguous object chunk has a
+size of length bytes and starts at an offset of offset bytes from the beginning of
+the ﬁle. The start address is merely a hint, and is usually speciﬁed as NULL. For
+our purposes, we will always assume a NULL start address. Figure 9.32 depicts the
+meaning of these arguments.
+The prot argument contains bits that describe the access permissions of the
+newly mapped virtual memory area (i.e., the vm_prot bits in the corresponding
+area struct).
+PROT_EXEC. Pages in the area consist of instructions that may be executed
+by the CPU.
+PROT_READ. Pages in the area may be read.
+PROT_WRITE. Pages in the area may be written.
+PROT_NONE. Pages in the area cannot be accessed.
+The flags argument consists of bits that describe the type of the mapped
+object. If the MAP_ANON ﬂag bit is set, then the backing store is an anonymous
+object and the corresponding virtual pages are demand-zero. MAP_PRIVATE
+indicates a private copy-on-write object, and MAP_SHARED indicates a shared
+object. For example,
+bufp = Mmap(NULL, size, PROT_READ, MAP_PRIVATE|MAP_ANON, 0, 0);

@@ -1,0 +1,52 @@
+Section 4.2
+Logic Design and the Hardware Control Language HCL
+415
+Figure 4.14
+Four-way multiplexor.
+The different combinations
+of control signals s1 and
+s0 determine which data
+input is transmitted to the
+output.
+D
+s1
+s0
+Out4
+C
+B
+A
+MUX4
+!s1
+: B; # 01
+!s0
+: C; # 10
+1
+: D; # 11
+];
+The comments on the right (any text starting with # and running for the rest of
+the line is a comment) show which combination of s1 and s0 will cause the case to
+be selected. Observe that the selection expressions can sometimes be simpliﬁed,
+since only the ﬁrst matching case is selected. For example, the second expression
+can be written !s1
+, rather than the more complete !s1&& s0, since the only other
+possibility having s1 equal to 0 was given as the ﬁrst selection expression. Similarly,
+the third expression can be written as !s0, while the fourth can simply be written
+as 1.
+As a ﬁnal example, suppose we want to design a logic circuit that ﬁnds the
+minimum value among a set of words A, B, and C, diagrammed as follows:
+C
+B
+A
+MIN3
+Min3
+We can express this using an HCL case expression as
+word Min3 = [
+A <= B && A <= C : A;
+B <= A && B <= C : B;
+1
+: C;
+];
+Practice Problem 4.11 (solution page 520)
+The HCL code given for computing the minimum of three words contains four
+comparison expressions of the form X <= Y. Rewrite the code to compute the
+same result, but using only three comparisons.

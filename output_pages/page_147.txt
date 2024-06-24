@@ -1,0 +1,69 @@
+146
+Chapter 2
+Representing and Manipulating Information
+Figure 2.31
+Fractional binary
+representation. Digits
+to the left of the binary
+point have weights of the
+form 2i, while those to the
+right have weights of the
+form 1/2i.
+bm
+bm–1 · · ·
+· · ·
+b2
+b1
+b0
+b–1
+1
+1/2
+1/4
+1/8
+1/2n–1
+1/2n
+2
+4
+2m–1
+2m
+b–2
+b–3
+· · ·
+·
+· · ·
+b–n+1 b–n
+where each decimal digit di ranges between 0 and 9. This notation represents a
+value d deﬁned as
+d =
+m
+
+i=−n
+10i × di
+The weighting of the digits is deﬁned relative to the decimal point symbol (‘.’),
+meaning that digits to the left are weighted by nonnegative powers of 10, giving
+integral values, while digits to the right are weighted by negative powers of 10,
+giving fractional values. For example, 12.3410 represents the number 1 × 101 +
+2 × 100 + 3 × 10−1 + 4 × 10−2 = 12 34
+100.
+By analogy, consider a notation of the form
+bm bm−1 . . . b1 b0 . b−1 b−2 . . . b−n+1 b−n
+where each binary digit, or bit, bi ranges between 0 and 1, as is illustrated in
+Figure 2.31. This notation represents a number b deﬁned as
+b =
+m
+
+i=−n
+2i × bi
+(2.19)
+The symbol ‘.’ now becomes a binary point, with bits on the left being weighted
+by nonnegative powers of 2, and those on the right being weighted by negative
+powers of 2. For example, 101.112 represents the number 1 × 22 + 0 × 21 + 1 ×
+20 + 1 × 2−1 + 1 × 2−2 = 4 + 0 + 1 + 1
+2 + 1
+4 = 53
+4.
+One can readily see from Equation 2.19 that shifting the binary point one
+position to the left has the effect of dividing the number by 2. For example, while
+101.112 represents the number 53
+4, 10.1112 represents the number 2 + 0 + 1
+2 +

@@ -1,0 +1,55 @@
+Section 12.7
+Other Concurrency Issues
+1059
+Figure 12.39
+Relationships between
+the sets of reentrant,
+thread-safe, and thread-
+unsafe functions.
+All functions
+Thread-safe
+functions
+Thread-unsafe
+functions
+Reentrant
+functions
+code/conc/rand-r.c
+1
+/* rand_r - return a pseudorandom integer on 0..32767 */
+2
+int rand_r(unsigned int *nextp)
+3
+{
+4
+*nextp = *nextp * 1103515245 + 12345;
+5
+return (unsigned int)(*nextp / 65536) % 32768;
+6
+}
+code/conc/rand-r.c
+Figure 12.40 rand_r: A reentrant version of the rand function from Figure 12.37.
+12.7.2
+Reentrancy
+There is an important class of thread-safe functions, known as reentrant functions,
+that are characterized by the property that they do not reference any shared data
+when they are called by multiple threads. Although the terms thread-safe and
+reentrant are sometimes used (incorrectly) as synonyms, there is a clear technical
+distinction that is worth preserving. Figure 12.39 shows the set relationships be-
+tween reentrant, thread-safe, and thread-unsafe functions. The set of all functions
+is partitioned into the disjoint sets of thread-safe and thread-unsafe functions. The
+set of reentrant functions is a proper subset of the thread-safe functions.
+Reentrant functions are typically more efﬁcient than non-reentrant thread-
+safe functions because they require no synchronization operations. Furthermore,
+the only way to convert a class 2 thread-unsafe function into a thread-safe one is
+to rewrite it so that it is reentrant. For example, Figure 12.40 shows a reentrant
+version of the rand function from Figure 12.37. The key idea is that we have
+replaced the static next variable with a pointer that is passed in by the caller.
+Is it possible to inspect the code of some function and declare a priori that it is
+reentrant? Unfortunately, it depends. If all function arguments are passed by value
+(i.e., no pointers) and all data references are to local automatic stack variables (i.e.,
+no references to static or global variables), then the function is explicitly reentrant,
+in the sense that we can assert its reentrancy regardless of how it is called.
+However, if we loosen our assumptions a bit and allow some parameters in
+our otherwise explicitly reentrant function to be passed by reference (i.e., we
+allow them to pass pointers), then we have an implicitly reentrant function, in
+the sense that it is only reentrant if the calling threads are careful to pass pointers

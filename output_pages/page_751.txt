@@ -1,0 +1,54 @@
+750
+Chapter 7
+Linking
+Loaders map the contents of executable ﬁles into memory and run the pro-
+gram. Linkers can also produce partially linked executable object ﬁles with un-
+resolved references to the routines and data deﬁned in a shared library. At load
+time, the loader maps the partially linked executable into memory and then calls
+a dynamic linker, which completes the linking task by loading the shared library
+and relocating the references in the program.
+Shared libraries that are compiled as position-independent code can be loaded
+anywhere and shared at run time by multiple processes. Applications can also use
+the dynamic linker at run time in order to load, link, and access the functions and
+data in shared libraries.
+Bibliographic Notes
+Linking is poorly documented in the computer systems literature. Since it lies at
+the intersection of compilers, computer architecture, and operating systems, link-
+ing requires an understanding of code generation, machine-language program-
+ming, program instantiation, and virtual memory. It does not ﬁt neatly into any of
+the usual computer systems specialties and thus is not well covered by the classic
+texts in these areas. However, Levine’s monograph provides a good general ref-
+erence on the subject [69]. The original IA32 speciﬁcations for ELF and DWARF
+(a speciﬁcation for the contents of the .debug and .line sections) are described
+in [54]. The x86-64 extensions to the ELF ﬁle format are described in [36]. The
+x86-64 application binary interface (ABI) describes the conventions for compil-
+ing, linking, and running x86-64 programs, including the rules for relocation and
+position-independent code [77].
+Homework Problems
+7.6 ◆
+This problem concerns the m.o module from Figure 7.5 and the following version
+of the swap.c function that counts the number of times it has been called:
+1
+extern int buf[];
+2
+3
+int *bufp0 = &buf[0];
+4
+static int *bufp1;
+5
+6
+static void incr()
+7
+{
+8
+static int count=0;
+9
+10
+count++;
+11
+}
+12
+13
+void swap()
+14
+{

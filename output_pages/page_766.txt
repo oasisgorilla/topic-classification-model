@@ -1,0 +1,55 @@
+Section 8.1
+Exceptions
+765
+Exception number
+Description
+Exception class
+0
+Divide error
+Fault
+13
+General protection fault
+Fault
+14
+Page fault
+Fault
+18
+Machine check
+Abort
+32–255
+OS-deﬁned exceptions
+Interrupt or trap
+Figure 8.9
+Examples of exceptions in x86-64 systems.
+8.1.3
+Exceptions in Linux/x86-64 Systems
+To help make things more concrete, let’s look at some of the exceptions deﬁned
+for x86-64 systems. There are up to 256 different exception types [50]. Numbers
+in the range from 0 to 31 correspond to exceptions that are deﬁned by the Intel
+architects and thus are identical for any x86-64 system. Numbers in the range from
+32 to 255 correspond to interrupts and traps that are deﬁned by the operating
+system. Figure 8.9 shows a few examples.
+Linux/x86-64 Faults and Aborts
+Divide error. A divide error (exception 0) occurs when an application attempts
+to divide by zero or when the result of a divide instruction is too big for
+the destination operand. Unix does not attempt to recover from divide
+errors, opting instead to abort the program. Linux shells typically report
+divide errors as “Floating exceptions.”
+General protection fault. The infamous general protection fault (exception 13)
+occurs for many reasons, usually because a program references an unde-
+ﬁned area of virtual memory or because the program attempts to write to a
+read-only text segment. Linux does not attempt to recover from this fault.
+Linux shells typically report general protection faults as “Segmentation
+faults.”
+Page fault. A page fault (exception 14) is an example of an exception where
+the faulting instruction is restarted. The handler maps the appropriate
+page of virtual memory on disk into a page of physical memory and then
+restarts the faulting instruction. We will see how page faults work in detail
+in Chapter 9.
+Machine check. A machine check (exception 18) occurs as a result of a fatal
+hardware error that is detected during the execution of the faulting in-
+struction. Machine check handlers never return control to the application
+program.
+Linux/x86-64 System Calls
+Linux provides hundreds of system calls that application programs use when they
+want to request services from the kernel, such as reading a ﬁle, writing a ﬁle, and

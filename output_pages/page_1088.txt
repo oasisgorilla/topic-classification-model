@@ -1,0 +1,102 @@
+References
+1087
+dence analysis. Communications of the ACM
+35(8):102–114, August 1992.
+[88]
+W. Pugh. Fixing the Java memory model. In
+Proceedings of the ACM Conference on Java
+Grande, pages 89–98. ACM, June 1999.
+[89]
+J. Rabaey, A. Chandrakasan, and B. Nikolic.
+Digital Integrated Circuits: A Design Perspec-
+tive, Second Edition. Prentice Hall, 2003.
+[90]
+J. Reinders. Intel Threading Building Blocks.
+O’Reilly, 2007.
+[91]
+D. Ritchie. The evolution of the Unix time-
+sharing system. AT&T Bell Laboratories
+Technical Journal 63(6 Part 2):1577–1593,
+October 1984.
+[92]
+D. Ritchie. The development of the C language.
+In Proceedings of the 2nd ACM SIGPLAN
+Conference on History of Programming
+Languages, pages 201–208. ACM, April 1993.
+[93]
+D. Ritchie and K. Thompson. The Unix time-
+sharing system. Communications of the ACM
+17(7):365–367, July 1974.
+[94]
+M. Satyanarayanan, J. Kistler, P. Kumar,
+M. Okasaki, E. Siegel, and D. Steere. Coda:
+A highly available ﬁle system for a distributed
+workstation environment. IEEE Transactions
+on Computers 39(4):447–459, April 1990.
+[95]
+J. Schindler and G. Ganger. Automated disk
+drive characterization. Technical Report CMU-
+CS-99-176, School of Computer Science,
+Carnegie Mellon University, 1999.
+[96]
+F. B. Schneider and K. P. Birman. The
+monoculture risk put into context. IEEE
+Security and Privacy 7(1):14–17, January 2009.
+[97]
+R. C. Seacord. Secure Coding in C and C++,
+Second Edition. Addison-Wesley, 2013.
+[98]
+R. Sedgewick and K. Wayne. Algorithms, Fourth
+Edition. Addison-Wesley, 2011.
+[99]
+H. Shacham, M. Page, B. Pfaff, E.-J. Goh,
+N. Modadugu, and D. Boneh. On the effec-
+tiveness of address-space randomization. In
+Proceedings of the 11th ACM Conference on
+Computer and Communications Security (CCS),
+pages 298–307. ACM, 2004.
+[100] J. P
+. Shen and M. Lipasti. Modern Processor De-
+sign: Fundamentals of Superscalar Processors.
+McGraw Hill, 2005.
+[101] B. Shriver and B. Smith. The Anatomy of a
+High-Performance Microprocessor: A Systems
+Perspective. IEEE Computer Society, 1998.
+[102] A. Silberschatz, P
+. Galvin, and G. Gagne.
+Operating Systems Concepts, Ninth Edition.
+Wiley, 2014.
+[103] R. Skeel. Roundoff error and the Patriot missile.
+SIAM News 25(4):11, July 1992.
+[104] A. Smith. Cache memories. ACM Computing
+Surveys 14(3), September 1982.
+[105] E. H. Spafford. The Internet worm program:
+An analysis. Technical Report CSD-TR-823,
+Department of Computer Science, Purdue
+University, 1988.
+[106] W. Stallings. Operating Systems: Internals and
+Design Principles, Eighth Edition. Prentice
+Hall, 2014.
+[107] W. R. Stevens. TCP/IP Illustrated, Volume 3:
+TCP for Transactions, HTTP, NNTP and the
+Unix Domain Protocols. Addison-Wesley, 1996.
+[108] W. R. Stevens. Unix Network Programming:
+Interprocess Communications, Second Edition,
+volume 2. Prentice Hall, 1998.
+[109] W. R. Stevens and K. R. Fall. TCP/IP Illustrated,
+Volume 1: The Protocols, Second Edition.
+Addison-Wesley, 2011.
+[110] W. R. Stevens, B. Fenner, and A. M. Rudoff.
+Unix Network Programming: The Sockets
+Networking API, Third Edition, volume 1.
+Prentice Hall, 2003.
+[111] W. R. Stevens and S. A. Rago. Advanced
+Programming in the Unix Environment, Third
+Edition. Addison-Wesley, 2013.
+[112] T. Stricker and T. Gross. Global address
+space, non-uniform bandwidth: A memory
+system performance characterization of parallel
+systems. In Proceedings of the 3rd International
+Symposium on High Performance Computer
+Architecture (HPCA), pages 168–179. IEEE,
+February 1997.

@@ -1,0 +1,64 @@
+94
+Chapter 2
+Representing and Manipulating Information
+Logical. A logical right shift ﬁlls the left end with k zeros, giving a result
+[0, . . . , 0, xw−1, xw−2, . . . xk].
+Arithmetic. An arithmetic right shift ﬁlls the left end with k repetitions of the
+most signiﬁcant bit, giving a result [xw−1, . . . , xw−1, xw−1, xw−2, . . . xk].
+This convention might seem peculiar, but as we will see, it is useful for
+operating on signed integer data.
+As examples, the following table shows the effect of applying the different
+shift operations to two different values of an 8-bit argument x:
+Operation
+Value 1
+Value 2
+Argument x
+[01100011]
+[10010101]
+x << 4
+[00110000]
+[01010000]
+x >> 4 (logical)
+[00000110]
+[00001001]
+x >> 4 (arithmetic)
+[00000110]
+[11111001]
+The italicized digits indicate the values that ﬁll the right (left shift) or left (right
+shift) ends. Observe that all but one entry involves ﬁlling with zeros. The exception
+is the case of shifting [10010101] right arithmetically. Since its most signiﬁcant bit
+is 1, this will be used as the ﬁll value.
+The C standards do not precisely deﬁne which type of right shift should be
+used with signed numbers—either arithmetic or logical shifts may be used. This
+unfortunately means that any code assuming one form or the other will potentially
+encounter portability problems. In practice, however, almost all compiler/machine
+combinations use arithmetic right shifts for signed data, and many programmers
+assume this to be the case. For unsigned data, on the other hand, right shifts must
+be logical.
+In contrast to C, Java has a precise deﬁnition of how right shifts should be
+performed. The expression x >> k shifts x arithmetically by k positions, while
+x >>> k shifts it logically.
+Practice Problem 2.16 (solution page 184)
+Fill in the table below showing the effects of the different shift operations on single-
+byte quantities. The best way to think about shift operations is to work with binary
+representations. Convert the initial values to binary, perform the shifts, and then
+convert back to hexadecimal. Each of the answers should be 8 binary digits or 2
+hexadecimal digits.
+Logical
+Arithmetic
+a
+a << 2
+a >> 3
+a >> 3
+Hex
+Binary
+Binary
+Hex
+Binary
+Hex
+Binary
+Hex
+0xD4
+0x64
+0x72
+0x44

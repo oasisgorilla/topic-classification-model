@@ -1,0 +1,64 @@
+Solutions to Practice Problems
+189
+Solution to Problem 2.30 (page 130)
+This function is a direct implementation of the rules given to determine whether
+or not a two’s-complement addition overﬂows.
+/* Determine whether arguments can be added without overflow */
+int tadd_ok(int x, int y) {
+int sum = x+y;
+int neg_over = x <
+0 && y <
+0 && sum >= 0;
+int pos_over = x >= 0 && y >= 0 && sum <
+0;
+return !neg_over && !pos_over;
+}
+Solution to Problem 2.31 (page 130)
+Your coworker could have learned, by studying Section 2.3.2, that two’s-
+complement addition forms an abelian group, and so the expression (x+y)-x
+will evaluate to y regardless of whether or not the addition overﬂows, and that
+(x+y)-y will always evaluate to x.
+Solution to Problem 2.32 (page 130)
+This function will give correct values, except when y is TMin. In this case, we
+will have -y also equal to TMin, and so the call to function tadd_ok will indicate
+overﬂow when x is negative and no overﬂow when x is nonnegative. In fact, the
+opposite is true: tsub_ok(x, TMin) should yield 0 when x is negative and 1 when
+it is nonnegative.
+One lesson to be learned from this exercise is that TMin should be included
+as one of the cases in any test procedure for a function.
+Solution to Problem 2.33 (page 131)
+This problem helps you understand two’s-complement negation using a very small
+word size.
+For w = 4, we have TMin4 = −8. So −8 is its own additive inverse, while other
+values are negated by integer negation.
+x
+-t
+4 x
+Hex
+Decimal
+Decimal
+Hex
+2
+2
+−2
+E
+3
+3
+−3
+D
+9
+−9
+−9
+7
+B
+−5
+5
+5
+C
+−4
+4
+4
+The bit patterns are the same as for unsigned negation.
+Solution to Problem 2.34 (page 134)
+This problem is an exercise to make sure you understand two’s-complement
+multiplication.

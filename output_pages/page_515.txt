@@ -1,0 +1,75 @@
+514
+Chapter 4
+Processor Architecture
+e_Cnd
+E_icode
+W_stat
+m_stat
+M_dstM
+E_srcA
+m_valM
+E_valA
+W
+icode
+stat
+stat
+stat
+valE
+valM
+dstE dstM
+M
+icode
+Cnd
+valE
+valA
+dstE dstM
+E
+icode ifun
+valC
+valA
+valB
+dstM srcA srcB
+ALU
+A
+Set
+CC
+ALU
+B
+ALU
+fun.
+ALU
+CC
+cond
+data out
+data in
+read
+dmem_error
+write
+Addr
+Fwd A
+Mem.
+read
+Mem.
+write
+Stat
+dstE
+dstE
+Data
+memory
+Figure 4.70
+Execute and memory stages capable of load forwarding. By adding a
+bypass path from the memory output to the source of valA in pipeline register M, we can
+use forwarding rather than stalling for one form of load/use hazard. This is the subject
+of Problem 4.57.
+used as part of the address computation by the next instruction, and this value is
+required in the execute stage rather than the memory stage.
+A. Write a logic formula describing the detection condition for a load/use haz-
+ard, similar to the one given in Figure 4.64, except that it will not cause a
+stall in cases where load forwarding can be used.
+B. The ﬁle pipe-lf.hcl contains a modiﬁed version of the control logic for
+PIPE. It contains the deﬁnition of a signal e_valA to implement the block
+labeled “Fwd A” in Figure 4.70. It also has the conditions for a load/use haz-
+ard in the pipeline control logic set to zero, and so the pipeline control logic
+will not detect any forms of load/use hazards. Modify this HCL description
+to implement load forwarding. See the lab material for directions on how to
+generate a simulator for your solution and how to test it.

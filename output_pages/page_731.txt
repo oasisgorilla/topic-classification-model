@@ -1,0 +1,110 @@
+730
+Chapter 7
+Linking
+(a) Relocated .text section
+1
+00000000004004d0 <main>:
+2
+4004d0:
+48 83 ec 08
+sub
+$0x8,%rsp
+3
+4004d4:
+be 02 00 00 00
+mov
+$0x2,%esi
+4
+4004d9:
+bf 18 10 60 00
+mov
+$0x601018,%edi
+%edi = &array
+5
+4004de:
+e8 05 00 00 00
+callq
+4004e8 <sum>
+sum()
+6
+4004e3:
+48 83 c4 08
+add
+$0x8,%rsp
+7
+4004e7:
+c3
+retq
+8
+00000000004004e8 <sum>:
+9
+4004e8:
+b8 00 00 00 00
+mov
+$0x0,%eax
+10
+4004ed:
+ba 00 00 00 00
+mov
+$0x0,%edx
+11
+4004f2:
+eb 09
+jmp
+4004fd <sum+0x15>
+12
+4004f4:
+48 63 ca
+movslq %edx,%rcx
+13
+4004f7:
+03 04 8f
+add
+(%rdi,%rcx,4),%eax
+14
+4004fa:
+83 c2 01
+add
+$0x1,%edx
+15
+4004fd:
+39 f2
+cmp
+%esi,%edx
+16
+4004ff:
+7c f3
+jl
+4004f4 <sum+0xc>
+17
+400501:
+f3 c3
+repz retq
+(b) Relocated .data section
+1
+0000000000601018 <array>:
+2
+601018:
+01 00 00 00 02 00 00 00
+Figure 7.12
+Relocated .text and .data sections for the executable ﬁle prog. The original C code is in
+Figure 7.1.
+ADDR(r.symbol) = ADDR(array) = 0x601018
+The linker updates the reference using line 13 of the algorithm in Figure 7.10:
+*refptr = (unsigned) (ADDR(r.symbol) + r.addend)
+= (unsigned) (0x601018
++ 0)
+= (unsigned) (0x601018)
+In the resulting executable object ﬁle, the reference has the following relocated
+form:
+4004d9:
+bf 18 10 60 00
+mov
+$0x601018,%edi
+%edi = &array
+Putting it all together, Figure 7.12 shows the relocated .text and .data sections
+in the ﬁnal executable object ﬁle. At load time, the loader can copy the bytes
+from these sections directly into memory and execute the instructions without
+any further modiﬁcations.
+Practice Problem 7.4 (solution page 754)
+This problem concerns the relocated program in Figure 7.12(a).

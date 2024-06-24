@@ -1,0 +1,50 @@
+Section 8.2
+Processes
+771
+Figure 8.13
+Process address space.
+0x400000
+0
+Memory
+invisible to
+user code
+%esp (stack pointer)
+brk
+Loaded from the
+executable file
+User stack
+(created at run time)
+Memory-mapped region for
+shared libraries
+Run-time heap
+(created by malloc)
+Read/write segment
+(.data,.bss)
+Read-only code segment
+(.init,.text,.rodata)
+Kernel virtual memory
+(code, data, heap, stack)
+248-1
+application can execute, as well as the portions of the address space that it can
+access.
+Processors typically provide this capability with a mode bit in some control
+register that characterizes the privileges that the process currently enjoys. When
+the mode bit is set, the process is running in kernel mode (sometimes called
+supervisor mode). A process running in kernel mode can execute any instruction
+in the instruction set and access any memory location in the system.
+When the mode bit is not set, the process is running in user mode. A process
+in user mode is not allowed to execute privileged instructions that do things such
+as halt the processor, change the mode bit, or initiate an I/O operation. Nor is it
+allowed to directly reference code or data in the kernel area of the address space.
+Any such attempt results in a fatal protection fault. User programs must instead
+access kernel code and data indirectly via the system call interface.
+A process running application code is initially in user mode. The only way for
+the process to change from user mode to kernel mode is via an exception such as
+an interrupt, a fault, or a trapping system call. When the exception occurs, and
+control passes to the exception handler, the processor changes the mode from
+user mode to kernel mode. The handler runs in kernel mode. When it returns to
+the application code, the processor changes the mode from kernel mode back to
+user mode.
+Linux provides a clever mechanism, called the /proc ﬁlesystem, that allows
+user mode processes to access the contents of kernel data structures. The /proc
+ﬁlesystem exports the contents of many kernel data structures as a hierarchy of text

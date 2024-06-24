@@ -1,0 +1,45 @@
+Section 6.6
+Putting It Together: The Impact of Caches on Program Performance
+683
+Web Aside MEM:BLOCKING
+Using blocking to increase temporal locality
+There is an interesting technique called blocking that can improve the temporal locality of inner loops.
+The general idea of blocking is to organize the data structures in a program into large chunks called
+blocks. (In this context, “block” refers to an application-level chunk of data, not to a cache block.) The
+program is structured so that it loads a chunk into the L1 cache, does all the reads and writes that it
+needs to on that chunk, then discards the chunk, loads in the next chunk, and so on.
+Unlike the simple loop transformations for improving spatial locality, blocking makes the code
+harder to read and understand. For this reason, it is best suited for optimizing compilers or frequently
+executed library routines. Blocking does not improve the performance of matrix multiply on the Core
+i7, because of its sophisticated prefetching hardware. Still, the technique is interesting to study and
+understand because it is a general concept that can produce big performance gains on systems that
+don’t prefetch.
+memory references in the inner loop (two loads and one store) than the class
+AB routines (two loads).
+. For large values of n, the performance of the fastest pair of versions (kij and
+ikj) is constant. Even though the array is much larger than any of the SRAM
+cache memories, the prefetching hardware is smart enough to recognize the
+stride-1 access pattern, and fast enough to keep up with memory accesses
+in the tight inner loop. This is a stunning accomplishment by the Intel engi-
+neers who designed this memory system, providing even more incentive for
+programmers to develop programs with good spatial locality.
+6.6.3
+Exploiting Locality in Your Programs
+As we have seen, the memory system is organized as a hierarchy of storage
+devices, with smaller, faster devices toward the top and larger, slower devices
+toward the bottom. Because of this hierarchy, the effective rate that a program
+can access memory locations is not characterized by a single number. Rather, it is
+a wildly varying function of program locality (what we have dubbed the memory
+mountain) that can vary by orders of magnitude. Programs with good locality
+access most of their data from fast cache memories. Programs with poor locality
+access most of their data from the relatively slow DRAM main memory.
+Programmers who understand the nature of the memory hierarchy can ex-
+ploit this understanding to write more efﬁcient programs, regardless of the speciﬁc
+memory system organization. In particular, we recommend the following tech-
+niques:
+. Focus your attention on the inner loops, where the bulk of the computations
+and memory accesses occur.
+. Try to maximize the spatial locality in your programs by reading data objects
+sequentially, with stride 1, in the order they are stored in memory.
+. Try to maximize the temporal locality in your programs by using a data object
+as often as possible once it has been read from memory.

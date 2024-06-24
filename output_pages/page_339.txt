@@ -1,0 +1,81 @@
+338
+Chapter 3
+Machine-Level Representation of Programs
+B. double g2(int a, double *b, float *c, long d);
+C. double g3(double *a, double b, int c, float d);
+D. double g4(float a, int *b, float c, double d);
+3.11.3
+Floating-Point Arithmetic Operations
+Figure 3.49 documents a set of scalar AVX2 ﬂoating-point instructions that per-
+form arithmetic operations. Each has either one (S1) or two (S1, S2) source oper-
+ands and a destination operand D. The ﬁrst source operand S1 can be either an
+XMM register or a memory location. The second source operand and the desti-
+nation operands must be XMM registers. Each operation has an instruction for
+single precision and an instruction for double precision. The result is stored in the
+destination register.
+As an example, consider the following ﬂoating-point function:
+double funct(double a, float x, double b, int i)
+{
+return a*x - b/i;
+}
+The x86-64 code is as follows:
+double funct(double a, float x, double b, int i)
+a in %xmm0, x in %xmm1, b in %xmm2, i in %edi
+1
+funct:
+The following two instructions convert x to double
+2
+vunpcklps
+%xmm1, %xmm1, %xmm1
+3
+vcvtps2pd
+%xmm1, %xmm1
+4
+vmulsd
+%xmm0, %xmm1, %xmm0
+Multiply a by x
+5
+vcvtsi2sd
+%edi, %xmm1, %xmm1
+Convert i to double
+6
+vdivsd
+%xmm1, %xmm2, %xmm2
+Compute b/i
+Single
+Double
+Effect
+Description
+vaddss
+vaddsd
+D ←S2 + S1
+Floating-point add
+vsubss
+vsubsd
+D ←S2 −S1
+Floating-point subtract
+vmulss
+vmulsd
+D ←S2 × S1
+Floating-point multiply
+vdivss
+vdivsd
+D ←S2/S1
+Floating-point divide
+vmaxss
+vmaxsd
+D ←max(S2, S1)
+Floating-point maximum
+vminss
+vminsd
+D ←min(S2, S1)
+Floating-point minimum
+sqrtss
+sqrtsd
+D ←
+
+S1
+Floating-point square root
+Figure 3.49
+Scalar ﬂoating-point arithmetic operations. These have either one or
+two source operands and a destination operand.

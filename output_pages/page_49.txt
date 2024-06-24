@@ -1,0 +1,64 @@
+48
+Chapter 1
+A Tour of Computer Systems
+Disk
+CPU
+Register file
+PC
+ALU
+Bus interface
+I/O
+bridge
+System bus
+Memory bus
+Main
+memory
+I/O bus
+Expansion slots for
+other devices such
+as network adapters
+Disk
+controller
+Graphics
+adapter
+Display
+Mouse Keyboard
+USB
+controller
+“hello, world\n”
+hello code
+hello executable
+stored on disk
+Figure 1.6
+Loading the executable from disk into main memory.
+CPU
+Register file
+PC
+ALU
+Bus interface
+I/O
+bridge
+System bus
+Memory bus
+Main
+memory
+I/O bus
+Expansion slots for
+other devices such
+as network adapters
+Disk
+controller
+Graphics
+adapter
+Display
+Mouse Keyboard
+USB
+controller
+Disk
+“hello, world\n”
+“hello, world\n”
+hello code
+hello executable
+stored on disk
+Figure 1.7
+Writing the output string from memory to the display.

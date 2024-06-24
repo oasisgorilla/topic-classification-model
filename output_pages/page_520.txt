@@ -1,0 +1,99 @@
+Solutions to Practice Problems
+519
+mrmovq (%rdi),%rbx
+# Get *start
+irmovq $-1,%r10
+addq
+%r10,%rsi
+# count--
+irmovq $8,%r10
+addq
+%r10,%rdi
+# start++
+call
+rproduct
+imulq
+%rbx,%rax
+# Multiply *start to product
+popq
+%rbx
+# Restore callee-saved register
+return:
+ret
+Solution to Problem 4.5 (page 406)
+This problem gives you a chance to try your hand at writing assembly code.
+1
+# long absSum(long *start, long count)
+2
+# start in %rdi, count in %rsi
+3
+absSum:
+4
+irmovq $8,%r8
+# Constant 8
+5
+irmovq $1,%r9
+# Constant 1
+6
+xorq %rax,%rax
+# sum = 0
+7
+andq %rsi,%rsi
+# Set condition codes
+8
+jmp
+test
+9
+loop:
+10
+mrmovq (%rdi),%r10
+# x = *start
+11
+xorq %r11,%r11
+# Constant 0
+12
+subq %r10,%r11
+# -x
+13
+jle pos
+# Skip if -x <= 0
+14
+rrmovq %r11,%r10
+# x = -x
+15
+pos:
+16
+addq %r10,%rax
+# Add to sum
+17
+addq %r8,%rdi
+# start++
+18
+subq %r9,%rsi
+# count--
+19
+test:
+20
+jne
+loop
+# Stop when 0
+21
+ret
+Solution to Problem 4.6 (page 406)
+This problem gives you a chance to try your hand at writing assembly code with
+conditional moves. We show only the code for the loop. The rest is the same as for
+Problem 4.5:
+9
+loop:
+10
+mrmovq (%rdi),%r10
+# x = *start
+11
+xorq %r11,%r11
+# Constant 0
+12
+subq %r10,%r11
+# -x
+13
+cmovg %r11,%r10
+# If -x > 0 then x = -x

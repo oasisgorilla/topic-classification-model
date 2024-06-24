@@ -1,0 +1,42 @@
+Section 8.6
+Nonlocal Jumps
+817
+The proper solution is to use sigsuspend.
+#include <signal.h>
+int sigsuspend(const sigset_t *mask);
+Returns: −1
+The sigsuspend function temporarily replaces the current blocked set with mask
+and then suspends the process until the receipt of a signal whose action is either
+to run a handler or to terminate the process. If the action is to terminate, then the
+process terminates without returning from sigsuspend. If the action is to run a
+handler, then sigsuspend returns after the handler returns, restoring the blocked
+set to its state when sigsuspend was called.
+The sigsuspend function is equivalent to an atomic (uninterruptible) version
+of the following:
+1
+sigprocmask(SIG_BLOCK, &mask, &prev);
+2
+pause();
+3
+sigprocmask(SIG_SETMASK, &prev, NULL);
+The atomic property guarantees that the calls to sigprocmask (line 1) and pause
+(line 2) occur together, without being interrupted. This eliminates the potential
+race where a signal is received after the call to sigprocmask and before the call
+to pause.
+Figure 8.42 shows how we would use sigsuspend to replace the spin loop
+in Figure 8.41. Before each call to sigsuspend, SIGCHLD is blocked. The
+sigsuspend temporarily unblocks SIGCHLD, and then sleeps until the parent
+catches a signal. Before returning, it restores the original blocked set, which blocks
+SIGCHLD again. If the parent caught a SIGINT, then the loop test succeeds and
+the next iteration calls sigsuspend again. If the parent caught a SIGCHLD, then
+the loop test fails and we exit the loop. At this point, SIGCHLD is blocked, and
+so we can optionally unblock SIGCHLD. This might be useful in a real shell with
+background jobs that need to be reaped.
+The sigsuspend version is less wasteful than the original spin loop, avoids the
+race introduced by pause, and is more efﬁcient than sleep.
+8.6
+Nonlocal Jumps
+C provides a form of user-level exceptional control ﬂow, called a nonlocal jump,
+that transfers control directly from one function to another currently executing
+function without having to go through the normal call-and-return sequence. Non-
+local jumps are provided by the setjmp and longjmp functions.

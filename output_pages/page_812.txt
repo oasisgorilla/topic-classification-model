@@ -1,0 +1,50 @@
+Section 8.5
+Signals
+811
+code/src/csapp.c
+1
+handler_t *Signal(int signum, handler_t *handler)
+2
+{
+3
+struct sigaction action, old_action;
+4
+5
+action.sa_handler = handler;
+6
+sigemptyset(&action.sa_mask); /* Block sigs of type being handled */
+7
+action.sa_flags = SA_RESTART; /* Restart syscalls if possible */
+8
+9
+if (sigaction(signum, &action, &old_action) < 0)
+10
+unix_error("Signal error");
+11
+return (old_action.sa_handler);
+12
+}
+code/src/csapp.c
+Figure 8.38 Signal. A wrapper for sigaction that provides portable signal handling on Posix-compliant
+systems.
+To deal with these issues, the Posix standard deﬁnes the sigaction function, which
+allows users to clearly specify the signal-handling semantics they want when they
+install a handler.
+#include <signal.h>
+int sigaction(int signum,
+struct sigaction *act,
+struct sigaction *oldact);
+Returns: 0 if OK, −1 on error
+The sigaction function is unwieldy because it requires the user to set the entries
+of a complicated structure. A cleaner approach, originally proposed by W. Richard
+Stevens [110], is to deﬁne a wrapper function, called Signal, that calls sigaction
+for us. Figure 8.38 shows the deﬁnition of Signal, which is invoked in the same
+way as the signal function.
+The Signal wrapper installs a signal handler with the following signal-
+handling semantics:
+. Only signals of the type currently being processed by the handler are blocked.
+. As with all signal implementations, signals are not queued.
+. Interrupted system calls are automatically restarted whenever possible.
+. Once the signal handler is installed, it remains installed until Signal is called
+with a handler argument of either SIG_IGN or SIG_DFL.
+We will use the Signal wrapper in all of our code.

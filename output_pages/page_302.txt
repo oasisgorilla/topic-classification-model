@@ -1,0 +1,53 @@
+Section 3.9
+Heterogeneous Data Structures
+301
+bounds. The need for two values does not show up in the C code, due to the scaling
+of pointer arithmetic.
+We have seen that, with optimizations enabled, gcc is able to recognize pat-
+terns that arise when a program steps through the elements of a multidimensional
+array. It can then generate code that avoids the multiplication that would result
+from a direct application of Equation 3.1. Whether it generates the pointer-based
+code of Figure 3.37(b) or the array-based code of Figure 3.38(b), these optimiza-
+tions will signiﬁcantly improve program performance.
+3.9
+Heterogeneous Data Structures
+C provides two mechanisms for creating data types by combining objects of dif-
+ferent types: structures, declared using the keyword struct, aggregate multiple
+objects into a single unit; unions, declared using the keyword union, allow an
+object to be referenced using several different types.
+3.9.1
+Structures
+The C struct declaration creates a data type that groups objects of possibly
+different types into a single object. The different components of a structure are
+referenced by names. The implementation of structures is similar to that of arrays
+in that all of the components of a structure are stored in a contiguous region of
+memory and a pointer to a structure is the address of its ﬁrst byte. The compiler
+maintains information about each structure type indicating the byte offset of
+each ﬁeld. It generates references to structure elements using these offsets as
+displacements in memory referencing instructions.
+As an example, consider the following structure declaration:
+struct rec {
+int i;
+int j;
+int a[2];
+int *p;
+};
+This structure contains four ﬁelds: two 4-byte values of type int, a two-element
+array of type int, and an 8-byte integer pointer, giving a total of 24 bytes:
+Offset 
+Contents 
+i
+0
+4
+8
+16
+24
+j
+a[0]
+a[1]
+p
+Observe that array a is embedded within the structure. The numbers along
+the top of the diagram give the byte offsets of the ﬁelds from the beginning of the
+structure.
+To access the ﬁelds of a structure, the compiler generates code that adds the
+appropriate offset to the address of the structure. For example, suppose variable r

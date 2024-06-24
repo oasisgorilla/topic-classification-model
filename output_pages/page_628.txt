@@ -1,0 +1,50 @@
+Section 6.1
+Storage Technologies
+627
+Tracks
+(a) Single-platter view
+Track k
+Gaps
+Surface
+Spindle
+Sectors
+(b) Multiple-platter view
+Cylinder k
+Platter 0
+Surface 0
+Surface 1
+Surface 2
+Platter 1
+Platter 2
+Spindle
+Surface 3
+Surface 4
+Surface 5
+Figure 6.9
+Disk geometry.
+A disk consists of one or more platters stacked on top of each other and
+encased in a sealed package, as shown in Figure 6.9(b). The entire assembly is
+often referred to as a disk drive, although we will usually refer to it as simply a
+disk. We will sometimes refer to disks as rotating disks to distinguish them from
+ﬂash-based solid state disks (SSDs), which have no moving parts.
+Disk manufacturers describe the geometry of multiple-platter drives in terms
+of cylinders, where a cylinder is the collection of tracks on all the surfaces that are
+equidistant from the center of the spindle. For example, if a drive has three platters
+and six surfaces, and the tracks on each surface are numbered consistently, then
+cylinder k is the collection of the six instances of track k.
+Disk Capacity
+The maximum number of bits that can be recorded by a disk is known as its max-
+imum capacity, or simply capacity. Disk capacity is determined by the following
+technology factors:
+Recording density (bits/in). The number of bits that can be squeezed into a 1-
+inch segment of a track.
+Track density (tracks/in). The number of tracks that can be squeezed into a
+1-inch segment of the radius extending from the center of the platter.
+Areal density (bits/in2). The product of the recording density and the track
+density.
+Disk manufacturers work tirelessly to increase areal density (and thus capac-
+ity), and this is doubling every couple of years. The original disks, designed in
+an age of low areal density, partitioned every track into the same number of sec-
+tors, which was determined by the number of sectors that could be recorded on
+the innermost track. To maintain a ﬁxed number of sectors per track, the sectors
+were spaced farther apart on the outer tracks. This was a reasonable approach

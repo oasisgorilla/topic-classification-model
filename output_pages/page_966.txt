@@ -1,0 +1,40 @@
+Section 11.3
+The Global IP Internet
+965
+for debugging. We can use hostname to determine the real domain name of our
+local host:
+linux> hostname
+whaleshark.ics.cs.cmu.edu
+In the simplest case, there is a one-to-one mapping between a domain name
+and an IP address:
+linux> nslookup whaleshark.ics.cs.cmu.edu
+Address: 128.2.210.175
+However, in some cases, multiple domain names are mapped to the same IP
+address:
+linux> nslookup cs.mit.edu
+Address: 18.62.1.6
+linux> nslookup eecs.mit.edu
+Address: 18.62.1.6
+In the most general case, multiple domain names are mapped to the same set of
+multiple IP addresses:
+linux> nslookup www.twitter.com
+Address: 199.16.156.6
+Address: 199.16.156.70
+Address: 199.16.156.102
+Address: 199.16.156.230
+linux> nslookup twitter.com
+Address: 199.16.156.102
+Address: 199.16.156.230
+Address: 199.16.156.6
+Address: 199.16.156.70
+Finally, we notice that some valid domain names are not mapped to any IP
+address:
+linux> nslookup edu
+*** Can’t find edu: No answer
+linux> nslookup ics.cs.cmu.edu
+*** Can’t find ics.cs.cmu.edu: No answer
+11.3.3
+Internet Connections
+Internet clients and servers communicate by sending and receiving streams of
+bytes over connections. A connection is point-to-point in the sense that it connects
+a pair of processes. It is full duplex in the sense that data can ﬂow in both directions

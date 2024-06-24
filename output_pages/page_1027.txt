@@ -1,0 +1,38 @@
+1026
+Chapter 12
+Concurrent Programming
+be reaped or killed by other threads. Its memory resources are freed automatically
+by the system when it terminates.
+By default, threads are created joinable. In order to avoid memory leaks, each
+joinable thread should be either explicitly reaped by another thread or detached
+by a call to the pthread_detach function.
+#include <pthread.h>
+int pthread_detach(pthread_t tid);
+Returns: 0 if OK, nonzero on error
+The pthread_detach function detaches the joinable thread tid. Threads can
+detach themselves by calling pthread_detach with an argument of pthread_
+self().
+Although some of our examples will use joinable threads, there are good rea-
+sons to use detached threads in real programs. For example, a high-performance
+Web server might create a new peer thread each time it receives a connection re-
+quest from a Web browser. Since each connection is handled independently by a
+separate thread, it is unnecessary—and indeed undesirable—for the server to ex-
+plicitly wait for each peer thread to terminate. In this case, each peer thread should
+detach itself before it begins processing the request so that its memory resources
+can be reclaimed after it terminates.
+12.3.7
+Initializing Threads
+The pthread_once function allows you to initialize the state associated with a
+thread routine.
+#include <pthread.h>
+pthread_once_t once_control = PTHREAD_ONCE_INIT;
+int pthread_once(pthread_once_t *once_control,
+void (*init_routine)(void));
+Always returns 0
+The once_control variable is a global or static variable that is always initialized
+to PTHREAD_ONCE_INIT. The ﬁrst time you call pthread_once with an ar-
+gument of once_control, it invokes init_routine, which is a function with no
+input arguments that returns nothing. Subsequent calls to pthread_once with the
+same once_control variable do nothing. The pthread_once function is useful
+whenever you need to dynamically initialize global variables that are shared by
+multiple threads. We will look at an example in Section 12.5.5.

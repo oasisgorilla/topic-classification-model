@@ -1,0 +1,61 @@
+484
+Chapter 4
+Processor Architecture
+Need
+valC
+Need
+regids
+Predict
+PC
+Select
+PC
+PC
+increment
+Align
+Bytes 1–9
+f_pc
+Byte 0
+imem_error
+Instruction
+memory
+Split
+Instr
+valid
+D
+icode
+stat
+ifun
+valC
+valP
+rB
+rA
+F
+predPC
+M_icode
+M_Cnd
+M_valA
+W_icode
+W_valM
+icode
+Stat
+ifun
+Figure 4.57
+PIPE PC selection and fetch logic. Within the one cycle time limit, the
+processor can only predict the address of the next instruction.
+memory and for extracting the different instruction ﬁelds are the same as those
+we considered for SEQ (see the fetch stage in Section 4.3.4).
+The PC selection logic chooses between three program counter sources. As a
+mispredicted branch enters the memory stage, the value of valP for this instruction
+(indicating the address of the following instruction) is read from pipeline register
+M (signal M_valA). When a ret instruction enters the write-back stage, the return
+address is read from pipeline register W (signal W_valM). All other cases use the
+predicted value of the PC, stored in pipeline register F (signal F_predPC):
+word f_pc = [
+# Mispredicted branch.
+Fetch at incremented PC
+M_icode == IJXX && !M_Cnd : M_valA;
+# Completion of RET instruction
+W_icode == IRET : W_valM;
+# Default: Use predicted value of PC
+1 : F_predPC;
+];

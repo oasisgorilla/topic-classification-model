@@ -1,0 +1,54 @@
+Vice President and Editorial Director: Marcia J. Horton
+Executive Editor: Matt Goldstein
+Editorial Assistant: Kelsey Loanes
+Acquisitions Editor, Global Editions: Karthik Subramanian
+VP of Marketing: Christy Lesko
+Director of Field Marketing: Tim Galligan
+Product Marketing Manager: Bram van Kempen
+Field Marketing Manager: Demetrius Hall
+Marketing Assistant: Jon Bryant
+Director of Product Management: Erin Gregg
+Team Lead Product Management: Scott Disanno
+Program Manager: Joanne Manning
+Project Editor, Global Editions: K.K. Neelakantan
+Senior Production Manufacturing Controller,
+Global Editions: Trudy Kimber
+Procurement Manager: Mary Fischer
+Senior Specialist, Program Planning and Support:
+Maura Zaldivar-Garcia
+Media Production Manager, Global Editions:
+Vikram Kumar
+Cover Designer: Lumina Datamatics
+Manager, Rights Management: Rachel Youdelman
+Associate Project Manager, Rights Management:
+William J. Opaluch
+Full-Service Project Management: Paul Anagnostopoulos,
+Windfall Software
+Pearson Education Limited
+Edinburgh Gate
+Harlow
+Essex CM20 2JE
+England
+and Associated Companies throughout the world
+Visit us on the World Wide Web at:
+www.pearsonglobaleditions.com
+© Pearson Education Limited 2016
+The rights of Randal E. Bryant and David R. O’Hallaron to be identiﬁed as the authors of this work have been asserted by
+them in accordance with the Copyright, Designs and Patents Act 1988.
+Authorized adaptation from the United States edition, entitled Computer Systems: A Programmer’s Perspective, 3rd edition,
+ISBN 978-0-13-409266-9, by Randal E. Bryant and David R. O’Hallaron published by Pearson Education © 2016.
+All rights reserved. No part of this publication may be reproduced, stored in a retrieval system, or transmitted in any form
+or by any means, electronic, mechanical, photocopying, recording or otherwise, without either the prior written permission of
+the publisher or a license permitting restricted copying in the United Kingdom issued by the Copyright Licensing Agency Ltd,
+Saffron House, 6-10 Kirby Street, London EC1N 8TS.
+All trademarks used herein are the property of their respective owners. The use of any trademark in this text does not vest in
+the author or publisher any trademark ownership rights in such trademarks, nor does the use of such trademarks imply any
+afﬁliation with or endorsement of this book by such owners.
+British Library Cataloguing-in-Publication Data
+A catalogue record for this book is available from the British Library
+10 9 8 7 6 5 4 3 2 1
+ISBN 10: 1-292-10176-8
+ISBN 13: 978-1-292-10176-7  (Print)
+Typeset in 10/12 Times Ten, ITC Stone Sans by Windfall Software
+Printed in Malaysia
+ISBN 13: 978-1-488-67207-1  (PDF)

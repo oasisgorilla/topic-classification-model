@@ -1,0 +1,61 @@
+Section 5.9
+Enhancing Parallelism
+579
+%rax
+%rbp
+%rdx
+%xmm0
+vmulsd 8(%rax,%rdx,8), %xmm0, %xmm0
+vmulsd %xmm0, %xmm1, %xmm1
+vmovsd (%rax,%rdx,8), %xmm0
+addq $2,%rdx
+cmpq %rdx,%rbp
+jg loop 
+%rax
+%rbp
+%rdx
+%xmm0
+%xmm1
+%xmm1
+load
+load
+mul
+mul
+add
+cmp
+jg
+Figure 5.27
+Graphical representation of inner-loop code for combine7. Each
+iteration gets decoded into similar operations as for combine5 or combine6, but with
+different data dependencies.
+%rax
+%rbp
+%rdx
+%xmm1
+%xmm1
+%rdx
+data[i ]
+data[i +1]
+load
+load
+mul
+mul
+add
+cmp
+(a)
+(b)
+jg
+%rdx
+%xmm1
+%xmm1
+%rdx
+load
+load
+mul
+mul
+add
+Figure 5.28
+Abstracting combine7 operations as a data-ﬂow graph. We rearrange,
+simplify, and abstract the representation of Figure 5.27 to show the data dependencies
+between successive iterations. The upper mul operation multiplies two 2-vector elements
+with each other, while the lower one multiplies the result by loop variable acc.

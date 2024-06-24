@@ -1,0 +1,79 @@
+Section 5.5
+Reducing Procedure Calls
+549
+code/opt/vec.c
+1
+data_t *get_vec_start(vec_ptr v)
+2
+{
+3
+return v->data;
+4
+}
+code/opt/vec.c
+1
+/* Direct access to vector data */
+2
+void combine3(vec_ptr v, data_t *dest)
+3
+{
+4
+long i;
+5
+long length = vec_length(v);
+6
+data_t *data = get_vec_start(v);
+7
+8
+*dest = IDENT;
+9
+for (i = 0; i < length; i++) {
+10
+*dest = *dest OP data[i];
+11
+}
+12
+}
+Figure 5.9
+Eliminating function calls within the loop. The resulting code does not
+show a performance gain, but it enables additional optimizations.
+Suppose instead that we add a function get_vec_start to our abstract data
+type. This function returns the starting address of the data array, as shown in
+Figure 5.9. We could then write the procedure shown as combine3 in this ﬁgure,
+having no function calls in the inner loop. Rather than making a function call to
+retrieve each vector element, it accesses the array directly. A purist might say that
+this transformation seriously impairs the program modularity. In principle, the
+user of the vector abstract data type should not even need to know that the vector
+contents are stored as an array, rather than as some other data structure such as a
+linked list. A more pragmatic programmer would argue that this transformation
+is a necessary step toward achieving high-performance results.
+Integer
+Floating point
+Function
+Page
+Method
++
+*
++
+*
+combine2
+545
+Move vec_length
+7.02
+9.03
+9.02
+11.03
+combine3
+549
+Direct data access
+7.17
+9.02
+9.02
+11.03
+Surprisingly, there is no apparent performance improvement. Indeed, the
+performance for integer sum has gotten slightly worse. Evidently, other operations
+in the inner loop are forming a bottleneck that limits the performance more
+than the call to get_vec_element. We will return to this function later (Section
+5.11.2) and see why the repeated bounds checking by combine2 does not incur a
+performance penalty. For now, we can view this transformation as one of a series
+of steps that will ultimately lead to greatly improved performance.

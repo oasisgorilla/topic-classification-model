@@ -1,0 +1,74 @@
+920
+Chapter 9
+Virtual Memory
+Solution to Problem 9.8 (page 897)
+There is nothing very tricky here. But the solution requires you to understand
+how the rest of our simple implicit-list allocator works and how to manipulate
+and traverse blocks.
+code/vm/malloc/mm.c
+1
+static void *find_fit(size_t asize)
+2
+{
+3
+/* First-fit search */
+4
+void *bp;
+5
+6
+for (bp = heap_listp; GET_SIZE(HDRP(bp)) > 0; bp = NEXT_BLKP(bp)) {
+7
+if (!GET_ALLOC(HDRP(bp)) && (asize <= GET_SIZE(HDRP(bp)))) {
+8
+return bp;
+9
+}
+10
+}
+11
+return NULL; /* No fit */
+12
+#endif
+13
+}
+code/vm/malloc/mm.c
+Solution to Problem 9.9 (page 897)
+This is another warm-up exercise to help you become familiar with allocators.
+Notice that for this allocator the minimum block size is 16 bytes. If the remainder
+of the block after splitting would be greater than or equal to the minimum block
+size, then we go ahead and split the block (lines 6–10). The only tricky part here
+is to realize that you need to place the new allocated block (lines 6 and 7) before
+moving to the next block (line 8).
+code/vm/malloc/mm.c
+1
+static void place(void *bp, size_t asize)
+2
+{
+3
+size_t csize = GET_SIZE(HDRP(bp));
+4
+5
+if ((csize - asize) >= (2*DSIZE)) {
+6
+PUT(HDRP(bp), PACK(asize, 1));
+7
+PUT(FTRP(bp), PACK(asize, 1));
+8
+bp = NEXT_BLKP(bp);
+9
+PUT(HDRP(bp), PACK(csize-asize, 0));
+10
+PUT(FTRP(bp), PACK(csize-asize, 0));
+11
+}
+12
+else {
+13
+PUT(HDRP(bp), PACK(csize, 1));
+14
+PUT(FTRP(bp), PACK(csize, 1));
+15
+}
+16
+}
+code/vm/malloc/mm.c

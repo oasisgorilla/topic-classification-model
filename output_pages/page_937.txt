@@ -1,0 +1,70 @@
+936
+Chapter 10
+System-Level I/O
+code/io/cpﬁle.c
+1
+#include "csapp.h"
+2
+3
+int main(int argc, char **argv)
+4
+{
+5
+int n;
+6
+rio_t rio;
+7
+char buf[MAXLINE];
+8
+9
+Rio_readinitb(&rio, STDIN_FILENO);
+10
+while((n = Rio_readlineb(&rio, buf, MAXLINE)) != 0)
+11
+Rio_writen(STDOUT_FILENO, buf, n);
+12
+}
+code/io/cpﬁle.c
+Figure 10.5
+Copying a text ﬁle from standard input to standard output.
+code/include/csapp.h
+1
+#define RIO_BUFSIZE 8192
+2
+typedef struct {
+3
+int rio_fd;
+/* Descriptor for this internal buf */
+4
+int rio_cnt;
+/* Unread bytes in internal buf */
+5
+char *rio_bufptr;
+/* Next unread byte in internal buf */
+6
+char rio_buf[RIO_BUFSIZE]; /* Internal buffer */
+7
+} rio_t;
+code/include/csapp.h
+code/src/csapp.c
+1
+void rio_readinitb(rio_t *rp, int fd)
+2
+{
+3
+rp->rio_fd = fd;
+4
+rp->rio_cnt = 0;
+5
+rp->rio_bufptr = rp->rio_buf;
+6
+}
+code/src/csapp.c
+Figure 10.6
+A read buffer of type rio_t and the rio_readinitb function that initializes it.
+The heart of the Rio read routines is the rio_read function shown in Fig-
+ure 10.7. The rio_read function is a buffered version of the Linux read function.
+When rio_read is called with a request to read n bytes, there are rp->rio_cnt
+unread bytes in the read buffer. If the buffer is empty, then it is replenished with
+a call to read. Receiving a short count from this invocation of read is not an er-
+ror; it simply has the effect of partially ﬁlling the read buffer. Once the buffer is

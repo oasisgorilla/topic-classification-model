@@ -1,0 +1,83 @@
+494
+Chapter 4
+Processor Architecture
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+F
+D
+E
+F
+D
+E
+M
+W
+W
+W
+W
+0x000: irmovq $1,%rax
+0x00a: xorq %rsp,%rsp #CC = 100
+0x00c: pushq %rax
+0x00e: addq %rax,%rax
+0x010: irmovq $2,%rax
+# prog10
+# prog10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+. . .
+Cycle 6
+mem_error = 1
+set_cc ← 0
+M
+New CC = 000
+E
+Figure 4.63
+Processing invalid memory reference exception. On cycle 6, the invalid
+memory reference by the pushq instruction causes the updating of the condition codes
+to be disabled. The pipeline starts injecting bubbles into the memory stage and stalling
+the excepting instruction in the write-back stage.
+Condition
+Trigger
+Processing ret
+IRET ∈{D icode, E icode, M icode}
+Load/use hazard
+E icode ∈{IMRMOVQ, IPOPQ} && E dstM ∈{d srcA, d srcB}
+Mispredicted branch
+E icode = IJXX && !e Cnd
+Exception
+m stat ∈{SADR, SINS, SHLT} || W stat ∈{SADR, SINS, SHLT}
+Figure 4.64
+Detection conditions for pipeline control logic. Four different conditions
+require altering the pipeline ﬂow by either stalling the pipeline or canceling partially
+executed instructions.
+These expressions are implemented by simple blocks of combinational logic that
+must generate their results before the end of the clock cycle in order to control
+the action of the pipeline registers as the clock rises to start the next cycle. During
+a clock cycle, pipeline registers D, E, and M hold the states of the instructions
+that are in the decode, execute, and memory pipeline stages, respectively. As
+we approach the end of the clock cycle, signals d_srcA and d_srcB will be set to
+the register IDs of the source operands for the instruction in the decode stage.
+Detecting a ret instruction as it passes through the pipeline simply involves
+checking the instruction codes of the instructions in the decode, execute, and
+memory stages. Detecting a load/use hazard involves checking the instruction
+type (mrmovq or popq) of the instruction in the execute stage and comparing its
+destination register with the source registers of the instruction in the decode stage.
+The pipeline control logic should detect a mispredicted branch while the jump

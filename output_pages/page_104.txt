@@ -1,0 +1,44 @@
+Section 2.2
+Integer Representations
+103
+Aside
+More on ﬁxed-size integer types
+For some programs, it is essential that data types be encoded using representations with speciﬁc sizes.
+For example, when writing programs to enable a machine to communicate over the Internet according
+to a standard protocol, it is important to have data types compatible with those speciﬁed by the protocol.
+We have seen that some C data types, especially long, have different ranges on different machines,
+and in fact the C standards only specify the minimum ranges for any data type, not the exact ranges.
+Although we can choose data types that will be compatible with standard representations on most
+machines, there is no guarantee of portability.
+We have already encountered the 32- and 64-bit versions of ﬁxed-size integer types (Figure 2.3);
+they are part of a larger class of data types. The ISO C99 standard introduces this class of integer types
+in the ﬁle stdint.h. This ﬁle deﬁnes a set of data types with declarations of the form intN_t and
+uintN_t, specifying N-bit signed and unsigned integers, for different values of N. The exact values of
+N are implementation dependent, but most compilers allow values of 8, 16, 32, and 64. Thus, we can
+unambiguously declare an unsigned 16-bit variable by giving it type uint16_t, and a signed variable
+of 32 bits as int32_t.
+Along with these data types are a set of macros deﬁning the minimum and maximum values for
+each value of N. These have names of the form INTN_MIN, INTN_MAX, and UINTN_MAX.
+Formatted printing with ﬁxed-width types requires use of macros that expand into format strings
+in a system-dependent manner. So, for example, the values of variables x and y of type int32_t and
+uint64_t can be printed by the following call to printf:
+printf("x = %" PRId32 ", y = %" PRIu64 "\n", x, y);
+When compiled as a 64-bit program, macro PRId32 expands to the string "d", while PRIu64 expands
+to the pair of strings "l" "u". When the C preprocessor encounters a sequence of string constants
+separated only by spaces (or other whitespace characters), it concatenates them together. Thus, the
+above call to printf becomes
+printf("x = %d, y = %lu\n", x, y);
+Using the macros ensures that a correct format string will be generated regardless of how the code is
+compiled.
+Figure 2.14 also shows the representations of constants −1 and 0. Note that −1
+has the same bit representation as UMax—a string of all ones. Numeric value 0 is
+represented as a string of all zeros in both representations.
+The C standards do not require signed integers to be represented in two’s-
+complement form, but nearly all machines do so. Programmers who are concerned
+with maximizing portability across all possible machines should not assume any
+particular range of representable values, beyond the ranges indicated in Figure
+2.11, nor should they assume any particular representation of signed numbers.
+On the other hand, many programs are written assuming a two’s-complement
+representation of signed numbers, and the “typical” ranges shown in Figures 2.9
+and 2.10, and these programs are portable across a broad range of machines
+and compilers. The ﬁle <limits.h> in the C library deﬁnes a set of constants

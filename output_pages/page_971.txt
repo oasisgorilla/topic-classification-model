@@ -1,0 +1,37 @@
+970
+Chapter 11
+Network Programming
+We then use this type whenever we need to cast a sockaddr_in structure to a
+generic sockaddr structure.
+11.4.2
+The socket Function
+Clients and servers use the socket function to create a socket descriptor.
+#include <sys/types.h>
+#include <sys/socket.h>
+int socket(int domain, int type, int protocol);
+Returns: nonnegative descriptor if OK, −1 on error
+If we wanted the socket to be the end point for a connection, then we could call
+socket with the following hardcoded arguments:
+clientfd = Socket(AF_INET, SOCK_STREAM, 0);
+where AF_INET indicates that we are using 32-bit IP addresses and SOCK_
+STREAM indicates that the socket will be an end point for a connection. However,
+the best practice is to use the getaddrinfo function (Section 11.4.7) to generate
+these parameters automatically, so that the code is protocol-independent. We will
+show you how to use getaddrinfo with the socket function in Section 11.4.8.
+The clientfd descriptor returned by socket is only partially opened and
+cannot yet be used for reading and writing. How we ﬁnish opening the socket
+depends on whether we are a client or a server. The next section describes how
+we ﬁnish opening the socket if we are a client.
+11.4.3
+The connect Function
+A client establishes a connection with a server by calling the connect function.
+#include <sys/socket.h>
+int connect(int clientfd, const struct sockaddr *addr,
+socklen_t addrlen);
+Returns: 0 if OK, −1 on error
+The connect function attempts to establish an Internet connection with the server
+at socket address addr, where addrlen is sizeof(sockaddr_in). The connect
+function blocks until either the connection is successfully established or an error
+occurs. If successful, the clientfd descriptor is now ready for reading and writing,
+and the resulting connection is characterized by the socket pair
+(x:y, addr.sin_addr:addr.sin_port)

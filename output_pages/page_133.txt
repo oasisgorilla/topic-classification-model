@@ -1,0 +1,86 @@
+132
+Chapter 2
+Representing and Manipulating Information
+Web Aside DATA:TNEG
+Bit-level representation of two’s-complement negation
+There are several clever ways to determine the two’s-complement negation of a value represented
+at the bit level. The following two techniques are both useful, such as when one encounters the value
+0xfffffffa when debugging a program, and they lend insight into the nature of the two’s-complement
+representation.
+One technique for performing two’s-complement negation at the bit level is to complement the bits
+and then increment the result. In C, we can state that for any integer value x, computing the expressions
+-x and ~x + 1 will give identical results.
+Here are some examples with a 4-bit word size:
+⃗
+x
+~⃗
+x
+incr(~⃗
+x)
+[0101]
+5
+[1010]
+−6
+[1011]
+−5
+[0111]
+7
+[1000]
+−8
+[1001]
+−7
+[1100]
+−4
+[0011]
+3
+[0100]
+4
+[0000]
+0
+[1111]
+−1
+[0000]
+0
+[1000]
+−8
+[0111]
+7
+[1000]
+−8
+For our earlier example, we know that the complement of 0xf is 0x0 and the complement of 0xa
+is 0x5, and so 0xfffffffa is the two’s-complement representation of −6.
+A second way to perform two’s-complement negation of a number x is based on splitting the bit
+vector into two parts. Let k be the position of the rightmost 1, so the bit-level representation of x has the
+form [xw−1, xw−2, . . . , xk+1, 1, 0, . . . 0]. (This is possible as long as x ̸= 0.) The negation is then written
+in binary form as [~xw−1, ~xw−2, . . . ~ xk+1, 1, 0, . . . , 0]. That is, we complement each bit to the left of
+bit position k.
+We illustrate this idea with some 4-bit numbers, where we highlight the rightmost pattern 1, 0, . . . , 0
+in italics:
+x
+−x
+[1100]
+−4
+[0100]
+4
+[1000]
+−8
+[1000]
+−8
+[0101]
+5
+[1011]
+−5
+[0111]
+7
+[1001]
+−7
+2.3.4
+Unsigned Multiplication
+Integers x and y in the range 0 ≤x, y ≤2w −1 can be represented as w-bit un-
+signed numbers, but their product x . y can range between 0 and (2w −1)2 =
+22w −2w+1 + 1. This could require as many as 2w bits to represent. Instead, un-
+signed multiplication in C is deﬁned to yield the w-bit value given by the low-order
+w bits of the 2w-bit integer product. Let us denote this value as x *u
+w y.
+Truncating an unsigned number to w bits is equivalent to computing its value
+modulo 2w, giving the following:

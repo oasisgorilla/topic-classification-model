@@ -1,0 +1,46 @@
+Section 8.1
+Exceptions
+759
+mechanisms for creating new processes, waiting for processes to terminate,
+notifying other processes of exceptional events in the system, and detecting
+and responding to these events. If you understand these ECF mechanisms,
+then you can use them to write interesting programs such as Unix shells and
+Web servers.
+. Understanding ECF will help you understand concurrency. ECF is a basic
+mechanism for implementing concurrency in computer systems. The following
+are all examples of concurrency in action: an exception handler that interrupts
+the execution of an application program; processes and threads whose exe-
+cution overlap in time; and a signal handler that interrupts the execution of
+an application program. Understanding ECF is a ﬁrst step to understanding
+concurrency. We will return to study it in more detail in Chapter 12.
+. Understanding ECF will help you understand how software exceptions work.
+Languages such as C++ and Java provide software exception mechanisms via
+try, catch, and throw statements. Software exceptions allow the program
+to make nonlocal jumps (i.e., jumps that violate the usual call/return stack
+discipline) in response to error conditions. Nonlocal jumps are a form of
+application-level ECF and are provided in C via the setjmp and longjmp
+functions. Understanding these low-level functions will help you understand
+how higher-level software exceptions can be implemented.
+Up to this point in your study of systems, you have learned how applications
+interact with the hardware. This chapter is pivotal in the sense that you will begin
+to learn how your applications interact with the operating system. Interestingly,
+these interactions all revolve around ECF. We describe the various forms of ECF
+that exist at all levels of a computer system. We start with exceptions, which lie at
+the intersection of the hardware and the operating system. We also discuss system
+calls, which are exceptions that provide applications with entry points into the
+operating system. We then move up a level of abstraction and describe processes
+and signals, which lie at the intersection of applications and the operating system.
+Finally, we discuss nonlocal jumps, which are an application-level form of ECF.
+8.1
+Exceptions
+Exceptions are a form of exceptional control ﬂow that are implemented partly
+by the hardware and partly by the operating system. Because they are partly
+implemented in hardware, the details vary from system to system. However, the
+basic ideas are the same for every system. Our aim in this section is to give you a
+general understanding of exceptions and exception handling and to help demystify
+what is often a confusing aspect of modern computer systems.
+An exception is an abrupt change in the control ﬂow in response to some
+change in the processor’s state. Figure 8.1 shows the basic idea.
+In the ﬁgure, the processor is executing some current instruction Icurr when a
+signiﬁcant change in the processor’s state occurs. The state is encoded in various
+bits and signals inside the processor. The change in state is known as an event.

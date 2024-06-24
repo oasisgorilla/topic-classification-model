@@ -1,0 +1,16 @@
+Computer Systems
+A Programmer’s Perspective
+third edition
+global edition
+Randal E. Bryant
+Carnegie Mellon University
+David R. O’Hallaron
+Carnegie Mellon University
+Global Edition contributions by
+Manasa S.
+NMAM Institute of Technology
+Mohit Tahiliani
+National Institute of Technology Karnataka
+Boston Columbus Hoboken Indianapolis New York San Francisco
+Amsterdam Cape Town Dubai London Madrid Milan Munich Paris Montreal Toronto
+Delhi Mexico City Sao Paulo Sydney Hong Kong Seoul Singapore Taipei Tokyo

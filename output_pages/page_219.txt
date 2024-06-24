@@ -1,0 +1,55 @@
+218
+Chapter 3
+Machine-Level Representation of Programs
+will see, the more complex addressing modes are useful when referencing array
+and structure elements.
+Practice Problem 3.1 (solution page 361)
+Assume the following values are stored at the indicated memory addresses and
+registers:
+Address
+Value
+Register
+Value
+0x100
+0xFF
+%rax
+0x100
+0x104
+0xAB
+%rcx
+0x1
+0x108
+0x13
+%rdx
+0x3
+0x10C
+0x11
+Fill in the following table showing the values for the indicated operands:
+Operand
+Value
+%rax
+0x104
+$0x108
+(%rax)
+4(%rax)
+9(%rax,%rdx)
+260(%rcx,%rdx)
+0xFC(,%rcx,4)
+(%rax,%rdx,4)
+3.4.2
+Data Movement Instructions
+Among the most heavily used instructions are those that copy data from one lo-
+cation to another. The generality of the operand notation allows a simple data
+movement instruction to express a range of possibilities that in many machines
+would require a number of different instructions. We present a number of differ-
+ent data movement instructions, differing in their source and destination types,
+what conversions they perform, and other side effects they may have. In our pre-
+sentation, we group the many different instructions into instruction classes, where
+the instructions in a class perform the same operation but with different operand
+sizes.
+Figure 3.4 lists the simplest form of data movement instructions—mov class.
+These instructions copy data from a source location to a destination location,
+without any transformation. The class consists of four instructions: movb, movw,
+movl, and movq. All four of these instructions have similar effects; they differ
+primarily in that they operate on data of different sizes: 1, 2, 4, and 8 bytes,
+respectively.

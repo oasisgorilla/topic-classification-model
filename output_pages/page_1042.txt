@@ -1,0 +1,47 @@
+Section 12.5
+Synchronizing Threads with Semaphores
+1041
+Producer
+thread
+Consumer
+thread
+Bounded
+buffer
+Figure 12.23
+Producer-consumer problem. The producer generates items and inserts
+them into a bounded buffer. The consumer removes items from the buffer and then
+consumes them.
+operation to notify another thread that some condition in the program state has
+become true. Two classical and useful examples are the producer-consumer and
+readers-writers problems.
+Producer-Consumer Problem
+The producer-consumer problem is shown in Figure 12.23. A producer and con-
+sumer thread share a bounded buffer with n slots. The producer thread repeatedly
+produces new items and inserts them in the buffer. The consumer thread repeat-
+edly removes items from the buffer and then consumes (uses) them. Variants with
+multiple producers and consumers are also possible.
+Since inserting and removing items involves updating shared variables, we
+must guarantee mutually exclusive access to the buffer. But guaranteeing mutual
+exclusion is not sufﬁcient. We also need to schedule accesses to the buffer. If the
+buffer is full (there are no empty slots), then the producer must wait until a slot
+becomes available. Similarly, if the buffer is empty (there are no available items),
+then the consumer must wait until an item becomes available.
+Producer-consumer interactions occur frequently in real systems. For exam-
+ple, in a multimedia system, the producer might encode video frames while the
+consumer decodes and renders them on the screen. The purpose of the buffer is
+to reduce jitter in the video stream caused by data-dependent differences in the
+encoding and decoding times for individual frames. The buffer provides a reser-
+voir of slots to the producer and a reservoir of encoded frames to the consumer.
+Another common example is the design of graphical user interfaces. The producer
+detects mouse and keyboard events and inserts them in the buffer. The consumer
+removes the events from the buffer in some priority-based manner and paints the
+screen.
+In this section, we will develop a simple package, called Sbuf, for building
+producer-consumer programs. In the next section, we look at how to use it to
+build an interesting concurrent server based on prethreading. Sbuf manipulates
+bounded buffers of type sbuf_t (Figure 12.24). Items are stored in a dynamically
+allocated integer array (buf) with n items. The front and rear indices keep
+track of the ﬁrst and last items in the array. Three semaphores synchronize access
+to the buffer. The mutex semaphore provides mutually exclusive buffer access.
+Semaphores slots and items are counting semaphores that count the number of
+empty slots and available items, respectively.

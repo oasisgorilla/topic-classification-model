@@ -1,0 +1,48 @@
+366
+Chapter 3
+Machine-Level Representation of Programs
+Solution to Problem 3.13 (page 240)
+It is important to understand that assembly code does not keep track of the type
+of a program value. Instead, the different instructions determine the operand
+sizes and whether they are signed or unsigned. When mapping from instruction
+sequences back to C code, we must do a bit of detective work to infer the data
+types of the program values.
+A. The sufﬁx ‘l’ and the register identiﬁers indicate 32-bit operands, while the
+comparison is for a two’s-complement <. We can infer that data_t must be
+int.
+B. The sufﬁx ‘w’ and the register identiﬁers indicate 16-bit operands, while the
+comparison is for a two’s-complement >=. We can infer that data_t must be
+short.
+C. The sufﬁx ‘b’ and the register identiﬁers indicate 8-bit operands, while
+the comparison is for an unsigned <=. We can infer that data_t must be
+unsigned char.
+D. The sufﬁx ‘q’ and the register identiﬁers indicate 64-bit operands, while
+the comparison is for !=, which is the same whether the arguments are
+signed, unsigned, or pointers. We can infer that data_t could be either long,
+unsigned long, or some form of pointer.
+Solution to Problem 3.14 (page 241)
+This problem is similar to Problem 3.13, except that it involves test instructions
+rather than cmp instructions.
+A. The sufﬁx ‘q’ and the register identiﬁers indicate a 64-bit operand, while the
+comparison is for >=, which must be signed. We can infer that data_t must
+be long.
+B. The sufﬁx ‘w’ and the register identiﬁer indicate a 16-bit operand, while the
+comparison is for ==, which is the same for signed or unsigned. We can infer
+that data_t must be either short or unsigned short.
+C. The sufﬁx ‘b’ and the register identiﬁer indicate an 8-bit operand, while the
+comparison is for unsigned >. We can infer that data_t must be unsigned
+char.
+D. The sufﬁx ‘l’ and the register identiﬁer indicate 32-bit operands, while the
+comparison is for <. We can infer that data_t must be int.
+Solution to Problem 3.15 (page 245)
+This exercise requires you to examine disassembled code in detail and reason
+about the encodings for jump targets. It also gives you practice in hexadecimal
+arithmetic.
+A. The je instruction has as its target 0x4003fc + 0x02. As the original disas-
+sembled code shows, this is 0x4003fe:
+4003fa: 74 02
+je
+4003fe
+4003fc: ff d0
+callq
+*%rax

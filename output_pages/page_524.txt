@@ -1,0 +1,53 @@
+Solutions to Practice Problems
+523
+Stage
+cmovXX rA, rB
+Execute
+valE ←0 + valA
+Cnd ←Cond(CC, ifun)
+Memory
+Write back
+if (Cnd) R[rB] ←valE
+PC update
+PC ←valP
+Solution to Problem 4.18 (page 430)
+We can see that this instruction is located at address 0x037 and is 9 bytes long.
+The ﬁrst byte has value 0x80, while the last 8 bytes are a byte-reversed version of
+0x0000000000000041, the call target. The stack pointer was set to 128 by the popq
+instruction (line 7).
+Generic
+Speciﬁc
+Stage
+call Dest
+call 0x041
+Fetch
+icode:ifun ←M1[PC]
+icode:ifun ←M1[0x037] = 8:0
+valC ←M8[PC + 1]
+valC ←M8[0x038] = 0x041
+valP ←PC + 9
+valP ←0x037 + 9 = 0x040
+Decode
+valB ←R[%rsp]
+valB ←R[%rsp] = 128
+Execute
+valE ←valB + −8
+valE ←128 + −8 = 120
+Memory
+M8[valE] ←valP
+M8[120] ←0x040
+Write back
+R[%rsp] ←valE
+R[%rsp] ←120
+PC update
+PC ←valC
+PC ←0x041
+The effect of this instruction is to set %rsp to 120, to store 0x040 (the return
+address) at this memory address, and to set the PC to 0x041 (the call target).
+Solution to Problem 4.19 (page 442)
+All of the HCL code in this and other practice problems is straightforward, but
+trying to generate it yourself will help you think about the different instructions
+and how they are processed. For this problem, we can simply look at the set of
+Y86-64 instructions (Figure 4.2) and determine which have a constant ﬁeld.
+bool need_valC =
+icode in { IIRMOVQ, IRMMOVQ, IMRMOVQ, IJXX, ICALL };

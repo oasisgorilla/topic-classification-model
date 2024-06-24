@@ -1,0 +1,43 @@
+986
+Chapter 11
+Network Programming
+identiﬁes an HTML ﬁle called /index.html on Internet host www.google.com
+that is managed by a Web server listening on port 80. The port number is op-
+tional and defaults to the well-known HTTP port 80. URLs for executable ﬁles
+can include program arguments after the ﬁlename. A ‘?’ character separates the
+ﬁlename from the arguments, and each argument is separated by an ‘&’ character.
+For example, the URL
+http://bluefish.ics.cs.cmu.edu:8000/cgi-bin/adder?15000&213
+identiﬁes an executable called /cgi-bin/adder that will be called with two argu-
+ment strings: 15000 and 213. Clients and servers use different parts of the URL
+during a transaction. For instance, a client uses the preﬁx
+http://www.google.com:80
+to determine what kind of server to contact, where the server is, and what port it
+is listening on. The server uses the sufﬁx
+/index.html
+to ﬁnd the ﬁle on its ﬁlesystem and to determine whether the request is for static
+or dynamic content.
+There are several points to understand about how servers interpret the sufﬁx
+of a URL:
+. There are no standard rules for determining whether a URL refers to static
+or dynamic content. Each server has its own rules for the ﬁles it manages.
+A classic (old-fashioned) approach is to identify a set of directories, such as
+cgi-bin, where all executables must reside.
+. The initial ‘/’ in the sufﬁx does not denote the Linux root directory. Rather, it
+denotes the home directory for whatever kind of content is being requested.
+For example, a server might be conﬁgured so that all static content is stored
+in directory /usr/httpd/html and all dynamic content is stored in directory
+/usr/httpd/cgi-bin.
+. The minimal URL sufﬁx is the ‘/’ character, which all servers expand to some
+default home page such as /index.html. This explains why it is possible to
+fetch the home page of a site by simply typing a domain name to the browser.
+The browser appends the missing ‘/’ to the URL and passes it to the server,
+which expands the ‘/’ to some default ﬁlename.
+11.5.3
+HTTP Transactions
+Since HTTP is based on text lines transmitted over Internet connections, we can
+use the Linux telnet program to conduct transactions with any Web server on
+the Internet. The telnet program has been largely supplanted by ssh as a remote
+login tool, but it is very handy for debugging servers that talk to clients with text
+lines over connections. For example, Figure 11.24 uses telnet to request the home
+page from the AOL Web server.

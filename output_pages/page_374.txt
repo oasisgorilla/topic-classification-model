@@ -1,0 +1,44 @@
+Solutions to Practice Problems
+373
+for (i = 64; i != 0; i--) {
+val = (val << 1) | (x & 0x1);
+x >>= 1;
+}
+return val;
+}
+B. The code was generated using the guarded-do transformation, but the com-
+piler detected that, since i is initialized to 64, it will satisfy the test i ̸= 0, and
+therefore the initial test is not required.
+C. This code reverses the bits in x, creating a mirror image. It does this by
+shifting the bits of x from left to right, and then ﬁlling these bits in as it
+shifts val from right to left.
+Solution to Problem 3.29 (page 268)
+Our stated rule for translating a for loop into a while loop is just a bit too
+simplistic—this is the only aspect that requires special consideration.
+A. Applying our translation rule would yield the following code:
+/* Naive translation of for loop into while loop */
+/* WARNING: This is buggy code */
+long sum = 0;
+long i = 0;
+while (i < 10) {
+if (i & 1)
+/* This will cause an infinite loop */
+continue;
+sum += i;
+i++;
+}
+This code has an inﬁnite loop, since the continue statement would prevent
+index variable i from being updated.
+B. The general solution is to replace the continue statement with a goto
+statement that skips the rest of the loop body and goes directly to the update
+portion:
+/* Correct translation of for loop into while loop */
+long sum = 0;
+long i = 0;
+while (i < 10) {
+if (i & 1)
+goto update;
+sum += i;
+update:
+i++;
+}

@@ -1,0 +1,73 @@
+382
+Chapter 3
+Machine-Level Representation of Programs
+struct {
+int
+*a;
+char
+*h;
+double f;
+long
+e;
+float
+b;
+int
+g;
+short
+d;
+char
+c;
+} rec;
+with the following offsets:
+Field
+a
+h
+f
+e
+b
+g
+d
+c
+Size
+8
+8
+8
+8
+4
+4
+2
+1
+Offset
+0
+8
+16
+24
+32
+36
+40
+42
+The structure must be padded by 5 bytes to satisfy the 8-byte alignment
+requirement, giving a total of 48 bytes.
+Solution to Problem 3.46 (page 318)
+This problem covers a wide range of topics, such as stack frames, string represen-
+tations, ASCII code, and byte ordering. It demonstrates the dangers of out-of-
+bounds memory references and the basic ideas behind buffer overﬂow.
+A. Stack after line 3:
+00 00 00 00 00 40 00 76
+01 23 45 67 89 AB CD EF
+buf = %rsp
+Return address
+Saved %rbx
+B. Stack after line 5:
+00 00 00 00 00 40 00 34
+33 32 31 30 39 38 37 36
+35 34 33 32 31 30 39 38
+37 36 35 34 33 32 31 30
+buf = %rsp
+Return address
+Saved %rbx
+C. The program is attempting to return to address 0x040034. The low-order 2
+bytes were overwritten by the code for character ‘4’ and the terminating null
+character.
+D. The saved value of register %rbx was set to 0x3332313039383736. This value
+will be loaded into the register before get_line returns.

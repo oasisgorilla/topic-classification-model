@@ -1,0 +1,95 @@
+Section 3.6
+Control
+263
+(a) C code
+long fact_while(long n)
+{
+long result = 1;
+while (n > 1) {
+result *= n;
+n = n-1;
+}
+return result;
+}
+(b) Equivalent goto version
+long fact_while_gd_goto(long n)
+{
+long result = 1;
+if (n <= 1)
+goto done;
+loop:
+result *= n;
+n = n-1;
+if (n != 1)
+goto loop;
+done:
+return result;
+}
+(c) Corresponding assembly-language code
+long fact_while(long n)
+n in %rdi
+1
+fact_while:
+2
+cmpq
+$1, %rdi
+Compare n:1
+3
+jle
+.L7
+If <=, goto done
+4
+movl
+$1, %eax
+Set result = 1
+5
+.L6:
+loop:
+6
+imulq
+%rdi, %rax
+Compute result *= n
+7
+subq
+$1, %rdi
+Decrement n
+8
+cmpq
+$1, %rdi
+Compare n:1
+9
+jne
+.L6
+If !=, goto loop
+10
+rep; ret
+Return
+11
+.L7:
+done:
+12
+movl
+$1, %eax
+Compute result = 1
+13
+ret
+Return
+Figure 3.21
+C and assembly code for while version of factorial using guarded-
+do translation. The fact_while_gd_goto function illustrates the operation of the
+assembly-code version.
+9
+jg
+.L7
+10
+rep; ret
+11
+.L8:
+12
+movq
+%rsi, %rax
+13
+ret
+We can see that the compiler used a guarded-do translation, using the jle
+instruction on line 3 to skip over the loop code when the initial test fails. Fill in
+the missing parts of the C code. Note that the control structure in the assembly

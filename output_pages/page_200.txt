@@ -1,0 +1,46 @@
+CHAPTER 3
+Machine-Level Representation
+of Programs
+3.1
+A Historical Perspective
+202
+3.2
+Program Encodings
+205
+3.3
+Data Formats
+213
+3.4
+Accessing Information
+215
+3.5
+Arithmetic and Logical Operations
+227
+3.6
+Control
+236
+3.7
+Procedures
+274
+3.8
+Array Allocation and Access
+291
+3.9
+Heterogeneous Data Structures
+301
+3.10
+Combining Control and Data in Machine-Level Programs
+312
+3.11
+Floating-Point Code
+329
+3.12
+Summary
+345
+Bibliographic Notes
+346
+Homework Problems
+347
+Solutions to Practice Problems
+361
+199

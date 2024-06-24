@@ -1,0 +1,83 @@
+102
+Chapter 2
+Representing and Manipulating Information
+⃗
+x
+Hexadecimal
+Binary
+B2U4(⃗
+x)
+B2T4(⃗
+x)
+0xA
+[1010]
+23 + 21 = 10
+−23 + 21 = −6
+0x1
+0xB
+0x2
+0x7
+0xC
+Figure 2.14 shows the bit patterns and numeric values for several important
+numbers for different word sizes. The ﬁrst three give the ranges of representable
+integers in terms of the values of UMaxw, TMinw, and TMaxw. We will refer
+to these three special values often in the ensuing discussion. We will drop the
+subscript w and refer to the values UMax, TMin, and TMax when w can be inferred
+from context or is not central to the discussion.
+A few points are worth highlighting about these numbers. First, as observed
+in Figures 2.9 and 2.10, the two’s-complement range is asymmetric: |TMin| =
+|TMax| + 1; that is, there is no positive counterpart to TMin. As we shall see, this
+leads to some peculiar properties of two’s-complement arithmetic and can be the
+source of subtle program bugs. This asymmetry arises because half the bit patterns
+(those with the sign bit set to 1) represent negative numbers, while half (those
+with the sign bit set to 0) represent nonnegative numbers. Since 0 is nonnegative,
+this means that it can represent one less positive number than negative. Second,
+the maximum unsigned value is just over twice the maximum two’s-complement
+value: UMax = 2TMax + 1. All of the bit patterns that denote negative numbers in
+two’s-complement notation become positive values in an unsigned representation.
+Word size w
+Value
+8
+16
+32
+64
+UMaxw
+0xFF
+0xFFFF
+0xFFFFFFFF
+0xFFFFFFFFFFFFFFFF
+255
+65,535
+4,294,967,295
+18,446,744,073,709,551,615
+TMinw
+0x80
+0x8000
+0x80000000
+0x8000000000000000
+−128
+−32,768
+−2,147,483,648
+−9,223,372,036,854,775,808
+TMaxw
+0x7F
+0x7FFF
+0x7FFFFFFF
+0x7FFFFFFFFFFFFFFF
+127
+32,767
+2,147,483,647
+9,223,372,036,854,775,807
+−1
+0xFF
+0xFFFF
+0xFFFFFFFF
+0xFFFFFFFFFFFFFFFF
+0
+0x00
+0x0000
+0x00000000
+0x0000000000000000
+Figure 2.14
+Important numbers. Both numeric values and hexadecimal representa-
+tions are shown.

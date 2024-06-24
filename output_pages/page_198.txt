@@ -1,0 +1,12 @@
+Solutions to Practice Problems
+197
+F.
+1.0/2 == 1/2.0
+Yes, the numerators and denominators will both be converted to ﬂoating-
+point representations before the division is performed.
+G. d*d >= 0.0
+Yes, although it may overﬂow to +∞.
+H. (f+d)-f == d
+No. For example, when f is 1.0e20 and d is 1.0, the expression f+d will be
+rounded to 1.0e20, and so the expression on the left-hand side will evaluate
+to 0.0, while the right-hand side will be 1.0.

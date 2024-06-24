@@ -1,0 +1,65 @@
+Section 5.12
+Understanding Memory Performance
+593
+Figure 5.34
+Detail of load and store
+units. The store unit
+maintains a buffer of
+pending writes. The load
+unit must check its address
+with those in the store
+unit to detect a write/read
+dependency.
+Load unit
+Store unit
+Store buffer
+Address
+Address
+Address
+Data
+Data
+Data
+Matching
+addresses
+Address
+Data
+Data cache
+As a consequence, a series of ascending values will be stored in this location. In
+general, if function write_read is called with arguments src and dest pointing
+to the same memory location, and with argument cnt having some value n > 0, the
+net effect is to set the location to n −1. This example illustrates a phenomenon we
+will call a write/read dependency—the outcome of a memory read depends on a
+recent memory write. Our performance measurements show that Example B has
+a CPE of 7.3. The write/read dependency causes a slowdown in the processing of
+around 6 clock cycles.
+To see how the processor can distinguish between these two cases and why
+one runs slower than the other, we must take a more detailed look at the load and
+store execution units, as shown in Figure 5.34. The store unit includes a store buffer
+containing the addresses and data of the store operations that have been issued
+to the store unit, but have not yet been completed, where completion involves
+updating the data cache. This buffer is provided so that a series of store operations
+can be executed without having to wait for each one to update the cache. When
+a load operation occurs, it must check the entries in the store buffer for matching
+addresses. If it ﬁnds a match (meaning that any of the bytes being written have the
+same address as any of the bytes being read), it retrieves the corresponding data
+entry as the result of the load operation.
+gcc generates the following code for the inner loop of write_read:
+Inner loop of write_read
+src in %rdi, dst in %rsi, val in %rax
+.L3:
+loop:
+movq
+%rax, (%rsi)
+Write val to dst
+movq
+(%rdi), %rax
+t = *src
+addq
+$1, %rax
+val = t+1
+subq
+$1, %rdx
+cnt--
+jne
+.L3
+If != 0, goto loop

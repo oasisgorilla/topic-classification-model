@@ -1,0 +1,45 @@
+Section 8.4
+Process Control
+781
+. WNOHANG | WUNTRACED: Return immediately, with a return value of
+0, if none of the children in the wait set has stopped or terminated, or with a
+return value equal to the PID of one of the stopped or terminated children.
+Checking the Exit Status of a Reaped Child
+If the statusp argument is non-NULL, then waitpid encodes status information
+about the child that caused the return in status, which is the value pointed to
+by statusp. The wait.h include ﬁle deﬁnes several macros for interpreting the
+status argument:
+WIFEXITED(status). Returns true if the child terminated normally, via a call
+to exit or a return.
+WEXITSTATUS(status). Returns the exit status of a normally terminated
+child. This status is only deﬁned if WIFEXITED() returned true.
+WIFSIGNALED(status). Returns true if the child process terminated be-
+cause of a signal that was not caught.
+WTERMSIG(status). Returns the number of the signal that caused the child
+process to terminate. This status is only deﬁned if WIFSIGNALED()
+returned true.
+WIFSTOPPED(status). Returns true if the child that caused the return is
+currently stopped.
+WSTOPSIG(status). Returns the number of the signal that caused the child
+to stop. This status is only deﬁned if WIFSTOPPED() returned true.
+WIFCONTINUED(status). Returns true if the child process was restarted by
+receipt of a SIGCONT signal.
+Error Conditions
+If the calling process has no children, then waitpid returns −1 and sets errno to
+ECHILD. If the waitpid function was interrupted by a signal, then it returns −1
+and sets errno to EINTR.
+Practice Problem 8.3 (solution page 833)
+List all of the possible output sequences for the following program:
+code/ecf/global-waitprob0.c
+1
+int main()
+2
+{
+3
+if (Fork() == 0) {
+4
+printf("9"); fflush(stdout);
+5
+}
+6
+else {

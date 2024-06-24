@@ -1,0 +1,49 @@
+884
+Chapter 9
+Virtual Memory
+Unused
+Start
+of
+heap
+8/0
+16/1
+32/0
+16/1
+0/1
+Double-
+word
+aligned
+Figure 9.36
+Organizing the heap with an implicit free list. Allocated blocks are shaded. Free blocks are
+unshaded. Headers are labeled with (size (bytes)/allocated bit).
+(the allocated bit) to indicate whether the block is allocated or free. For example,
+suppose we have an allocated block with a block size of 24 (0x18) bytes. Then its
+header would be
+0x00000018 | 0x1 = 0x00000019
+Similarly, a free block with a block size of 40 (0x28) bytes would have a header of
+0x00000028 | 0x0 = 0x00000028
+The header is followed by the payload that the application requested when it
+called malloc. The payload is followed by a chunk of unused padding that can be
+any size. There are a number of reasons for the padding. For example, the padding
+might be part of an allocator’s strategy for combating external fragmentation. Or
+it might be needed to satisfy the alignment requirement.
+Given the block format in Figure 9.35, we can organize the heap as a sequence
+of contiguous allocated and free blocks, as shown in Figure 9.36.
+We call this organization an implicit free list because the free blocks are linked
+implicitly by the size ﬁelds in the headers. The allocator can indirectly traverse
+the entire set of free blocks by traversing all of the blocks in the heap. Notice that
+we need some kind of specially marked end block—in this example, a terminating
+header with the allocated bit set and a size of zero. (As we will see in Section 9.9.12,
+setting the allocated bit simpliﬁes the coalescing of free blocks.)
+The advantage of an implicit free list is simplicity. A signiﬁcant disadvantage is
+that the cost of any operation that requires a search of the free list, such as placing
+allocated blocks, will be linear in the total number of allocated and free blocks in
+the heap.
+It is important to realize that the system’s alignment requirement and the
+allocator’s choice of block format impose a minimum block size on the allocator.
+No allocated or free block may be smaller than this minimum. For example, if
+we assume a double-word alignment requirement, then the size of each block
+must be a multiple of two words (8 bytes). Thus, the block format in Figure 9.35
+induces a minimum block size of two words: one word for the header and another
+to maintain the alignment requirement. Even if the application were to request a
+single byte, the allocator would still create a two-word block.

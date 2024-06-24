@@ -1,0 +1,79 @@
+Section 8.5
+Signals
+813
+code/ecf/procmask1.c
+1
+/* WARNING: This code is buggy! */
+2
+void handler(int sig)
+3
+{
+4
+int olderrno = errno;
+5
+sigset_t mask_all, prev_all;
+6
+pid_t pid;
+7
+8
+Sigfillset(&mask_all);
+9
+while ((pid = waitpid(-1, NULL, 0)) > 0) { /* Reap a zombie child */
+10
+Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+11
+deletejob(pid); /* Delete the child from the job list */
+12
+Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+13
+}
+14
+if (errno != ECHILD)
+15
+Sio_error("waitpid error");
+16
+errno = olderrno;
+17
+}
+18
+19
+int main(int argc, char **argv)
+20
+{
+21
+int pid;
+22
+sigset_t mask_all, prev_all;
+23
+24
+Sigfillset(&mask_all);
+25
+Signal(SIGCHLD, handler);
+26
+initjobs(); /* Initialize the job list */
+27
+28
+while (1) {
+29
+if ((pid = Fork()) == 0) { /* Child process */
+30
+Execve("/bin/date", argv, NULL);
+31
+}
+32
+Sigprocmask(SIG_BLOCK, &mask_all, &prev_all); /* Parent process */
+33
+addjob(pid);
+/* Add the child to the job list */
+34
+Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+35
+}
+36
+exit(0);
+37
+}
+code/ecf/procmask1.c
+Figure 8.39
+A shell program with a subtle synchronization error. If the child terminates before the parent
+is able to run, then addjob and deletejob will be called in the wrong order.

@@ -1,0 +1,170 @@
+Index
+1101
+IA32 (Intel Architecture 32-bit)
+microprocessors, 81, 204
+machine language, 201–202
+registers, 215–216
+iaddq [Y86-64] immediate add, 405
+IBM
+Freescale microprocessors, 388, 397
+out-of-order processing, 558
+RISC design, 397–399
+ICALL [Y86-64] instruction code for
+call instruction, 440
+ICANN (Internet Corporation for
+Assigned Names and Numbers),
+963
+icode (instruction code), 420, 441
+ICUs (instruction control units), 554
+identiﬁers, register, 394
+idivl [x86-64] signed divide, 235
+idivq [x86-64] signed divide, 234
+IDs (identiﬁers)
+processes, 775–776
+register, 394–395
+IEEE. See Institute for Electrical and
+Electronics Engineers (IEEE)
+if [C] conditional statement, 247–249
+ifun (instruction function), 420, 441
+IHALT [Y86-64] instruction code for
+halt instruction, 440
+IIRMOVQ [Y86-64] instruction code for
+irmovq instruction, 440
+ijk matrix multiplication, 680–682, 681
+IJXX [Y86-64] instruction code for
+jump instructions, 440
+ikj matrix multiplication, 680–682, 681
+illegal instruction exceptions, 440
+imem_error signal, 441
+immediate add instruction, 405
+immediate coalescing, 886
+immediate offset, 217
+immediate operands, 217
+immediate to register move
+instruction, 392
+implicit dynamic memory allocators,
+876
+implicit free lists, 883–885, 884
+implicit thread termination, 1024
+implicitly reentrant functions, 1059
+implied leading 1 representation, 150
+IMRMOVQ [Y86-64] instruction code for
+mrmovq instruction, 440
+imul [instruction class] multiply, 228
+imulq [x86-64] signed multiply, 234,
+234
+in [HCL] set membership test, 417
+in_addr [Unix] IP address structure,
+961
+inc [instruction class] increment, 228
+include ﬁles, 722
+#include [C] preprocessor directive,
+206
+incq instruction, 230
+increment instruction, 228, 230
+indeﬁnite integer values, 161
+index.html ﬁle, 986
+index registers, 217
+indexes for direct-mapped caches,
+658–660
+indirect jumps, 242, 270
+inefﬁciencies in loops, 544–548
+inet_ntoa [Unix] convert network-
+to-application, 1060
+inet_ntop [Unix] convert network-
+to-application, 962
+inet_pton [Unix] convert
+application-to-network, 962
+inﬁnity
+constants, 160
+representation, 150–151
+info frame command, 316
+info registers command, 316
+information, 38–40
+information access with x86-64
+registers, 215–216
+data movement, 218–225
+operand speciﬁers, 216–218
+information storage, 70
+addressing and byte ordering, 78–85
+bit-level operations, 90–92
+Boolean algebra, 86–89
+code, 85–86
+data sizes, 75–78
+disks. See disks
+ﬂoating point. See ﬂoating-point
+representation and programs
+hexadecimal, 72–75
+integers. See integers
+locality. See locality
+logical operations, 92–93
+memory. See memory
+segregated, 899
+shift operations, 93–95
+strings, 85
+summary, 684
+init function, 779
+init_pool function, 1017, 1019
+initial state in progress graphs, 1035
+initialize nonlocal handler jump
+function, 819
+initialize nonlocal jump functions, 819
+initialize read buffer function, 934,
+936
+initialize semaphore function, 1038
+initialize thread function, 1026
+initializing threads, 1026
+inline assembly, 214
+inline substitution, 537
+inlining, 537
+INOP [Y86-64] instruction code for
+nop instruction, 440
+input events, 1016
+input/output. See I/O (input/output)
+insert item in bounded buffer function,
+1043
+install portable handler function, 811
+installing signal handlers, 799
+Institute for Electrical and Electronics
+Engineers (IEEE)
+description, 145
+ﬂoating-point representation and
+programs, 148–150
+denormalized, 150
+normalized, 149–150
+special values, 151
+Standard 754, 145
+standards, 145
+Posix standards, 52
+instr_valid signal, 441–442
+instruction caches (i-caches), 554, 667
+instruction code (icode), 420, 441
+instruction control units (ICUs), 554
+instruction function (ifun), 420, 441
+instruction-level parallelism, 62, 533,
+554, 598
+instruction memory in SEQ timing,
+437
+instruction set architectures (ISAs),
+46, 63, 206, 388
+instruction set simulators, 402
+instructions
+classes, 218
+decoding, 554
+excepting, 481
+fetch locality, 643–644
+issuing, 463–464
+jump, 46, 241–245
+load, 46
+low-level. See machine-level
+programming
+move, 250–256, 586–589
+operate, 46
+pipelining, 504–505, 585
+privileged, 771
+store, 46
+update, 45–46
+Y86-64. See Y86-64 instruction set
+architecture
+instructions per cycle (IPC), 507
+int [C] integer data type, 76

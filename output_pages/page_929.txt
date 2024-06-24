@@ -1,0 +1,50 @@
+928
+Chapter 10
+System-Level I/O
+Aside
+End of line (EOL) indicators
+One of the clumsy aspects of working with text ﬁles is that different systems use different characters to
+mark the end of a line. Linux and Mac OS X use ’\n’ (0xa), which is the ASCII line feed (LF) character.
+However, MS Windows and Internet protocols such as HTTP use the sequence ‘\r\n’ (0xd 0xa), which
+is the ASCII carriage return (CR) character followed by a line feed (LF). If you create a ﬁle foo.txt
+in Windows and then view it in a Linux text editor, you’ll see an annoying ^M at the end of each line,
+which is how Linux tools display the CR character. You can remove these unwanted CR characters
+from foo.txt in place by running the following command:
+linux> perl -pi -e "s/\r\n/\n/g" foo.txt
+least two entries: . (dot) is a link to the directory itself, and .. (dot-dot) is
+a link to the parent directory in the directory hierarchy (see below). You can
+create a directory with the mkdir command, view its contents with ls, and
+delete it with rmdir.
+. A socket is a ﬁle that is used to communicate with another process across a
+network (Section 11.4).
+Other ﬁle types include named pipes, symbolic links, and character and block
+devices, which are beyond our scope.
+The Linux kernel organizes all ﬁles in a single directory hierarchy anchored
+by the root directory named / (slash). Each ﬁle in the system is a direct or indirect
+descendant of the root directory. Figure 10.1 shows a portion of the directory
+hierarchy on our Linux system.
+As part of its context, each process has a current working directory that
+identiﬁes its current location in the directory hierarchy. You can change the shell’s
+current working directory with the cd command.
+bash
+bin/
+tty1
+group
+passwd
+droh/
+bryant/
+stdio.h
+include/
+bin/
+dev/
+etc/
+/
+home/
+usr/
+hello.c
+sys/
+vim
+unistd.h
+Figure 10.1
+Portion of the Linux directory hierarchy. A trailing slash denotes a
+directory.

@@ -1,0 +1,44 @@
+Homework Problems
+173
+/* Get the sign bits */
+unsigned sx = ux >> 31;
+unsigned sy = uy >> 31;
+/* Give an expression using only ux, uy, sx, and sy */
+return
+;
+}
+2.85 ◆
+Given a ﬂoating-point format with a k-bit exponent and an n-bit fraction, write
+formulas for the exponent E, the signiﬁcand M, the fraction f , and the value V
+for the quantities that follow. In addition, describe the bit representation.
+A. The number 7.0
+B. The largest odd integer that can be represented exactly
+C. The reciprocal of the smallest positive normalized value
+2.86 ◆
+Intel-compatible processors also support an “extended-precision” ﬂoating-point
+format with an 80-bit word divided into a sign bit, k = 15 exponent bits, a single
+integer bit, and n = 63 fraction bits. The integer bit is an explicit copy of the
+implied bit in the IEEE ﬂoating-point representation. That is, it equals 1 for
+normalized values and 0 for denormalized values. Fill in the following table giving
+the approximate values of some “interesting” numbers in this format:
+Extended precision
+Description
+Value
+Decimal
+Smallest positive denormalized
+Smallest positive normalized
+Largest normalized
+This format can be used in C programs compiled for Intel-compatible ma-
+chines by declaring the data to be of type long double. However, it forces the
+compiler to generate code based on the legacy 8087 ﬂoating-point instructions.
+The resulting program will most likely run much slower than would be the case
+for data type float or double.
+2.87 ◆
+The 2008 version of the IEEE ﬂoating-point standard, named IEEE 754-2008,
+includes a 16-bit “half-precision” ﬂoating-point format. It was originally devised
+by computer graphics companies for storing data in which a higher dynamic range
+is required than can be achieved with 16-bit integers. This format has 1 sign
+bit, 5 exponent bits (k = 5), and 10 fraction bits (n = 10). The exponent bias is
+25−1 −1 = 15.
+Fill in the table that follows for each of the numbers given, with the following
+instructions for each column:

@@ -1,0 +1,42 @@
+64
+Chapter 1
+A Tour of Computer Systems
+hierarchy. Storage devices that are higher in the hierarchy serve as caches for de-
+vices that are lower in the hierarchy. Programmers can optimize the performance
+of their C programs by understanding and exploiting the memory hierarchy.
+The operating system kernel serves as an intermediary between the applica-
+tion and the hardware. It provides three fundamental abstractions: (1) Files are
+abstractions for I/O devices. (2) Virtual memory is an abstraction for both main
+memory and disks. (3) Processes are abstractions for the processor, main memory,
+and I/O devices.
+Finally, networks provide ways for computer systems to communicate with
+one another. From the viewpoint of a particular system, the network is just another
+I/O device.
+Bibliographic Notes
+Ritchie has written interesting ﬁrsthand accounts of the early days of C and
+Unix [91, 92]. Ritchie and Thompson presented the ﬁrst published account of
+Unix [93]. Silberschatz, Galvin, and Gagne [102] provide a comprehensive history
+of the different ﬂavors of Unix. The GNU (www.gnu.org) and Linux (www.linux
+.org) Web pages have loads of current and historical information. The Posix
+standards are available online at (www.unix.org).
+Solutions to Practice Problems
+Solution to Problem 1.1 (page 58)
+This problem illustrates that Amdahl’s law applies to more than just computer
+systems.
+A. In terms of Equation 1.1, we have α = 0.6 and k = 1.5. More directly, travel-
+ing the 1,500 kilometers through Montana will require 10 hours, and the rest
+of the trip also requires 10 hours. This will give a speedup of 25/(10 + 10) =
+1.25×.
+B. In terms of Equation 1.1, we have α = 0.6, and we require S = 1.67, from
+which we can solve for k. More directly, to speed up the trip by 1.67×, we
+must decrease the overall time to 15 hours. The parts outside of Montana
+will still require 10 hours, so we must drive through Montana in 5 hours.
+This requires traveling at 300 km/hr, which is pretty fast for a truck!
+Solution to Problem 1.2 (page 59)
+Amdahl’s law is best understood by working through some examples. This one
+requires you to look at Equation 1.1 from an unusual perspective. This problem
+is a simple application of the equation. You are given S = 4 and α = 0.9, and you
+must then solve for k:
+4 = 1/(1 −0.9) + 0.9/k
+0.4 + 3.6/k = 1.0
+k = 6.0

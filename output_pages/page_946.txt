@@ -1,0 +1,49 @@
+Section 10.9
+I/O Redirection
+945
+7
+8
+fd = Open("foobar.txt", O_RDONLY, 0);
+9
+if (Fork() == 0) {
+10
+Read(fd, &c, 1);
+11
+exit(0);
+12
+}
+13
+Wait(NULL);
+14
+Read(fd, &c, 1);
+15
+printf("c = %c\n", c);
+16
+exit(0);
+17
+}
+10.9
+I/O Redirection
+Linux shells provide I/O redirection operators that allow users to associate stan-
+dard input and output with disk ﬁles. For example, typing
+linux> ls > foo.txt
+causes the shell to load and execute the ls program, with standard output redi-
+rected to disk ﬁle foo.txt. As we will see in Section 11.5, a Web server performs
+a similar kind of redirection when it runs a CGI program on behalf of the client.
+So how does I/O redirection work? One way is to use the dup2 function.
+#include <unistd.h>
+int dup2(int oldfd, int newfd);
+Returns: nonnegative descriptor if OK, −1 on error
+The dup2 function copies descriptor table entry oldfd to descriptor table entry
+newfd, overwriting the previous contents of descriptor table entry newfd. If newfd
+was already open, then dup2 closes newfd before it copies oldfd.
+Suppose that before calling dup2(4,1), we have the situation in Figure 10.12,
+where descriptor 1 (standard output) corresponds to ﬁle A (say, a terminal)
+and descriptor 4 corresponds to ﬁle B (say, a disk ﬁle). The reference counts
+for A and B are both equal to 1. Figure 10.15 shows the situation after calling
+dup2(4,1). Both descriptors now point to ﬁle B; ﬁle A has been closed and its
+ﬁle table and v-node table entries deleted; and the reference count for ﬁle B has
+been incremented. From this point on, any data written to standard output are
+redirected to ﬁle B.
+Practice Problem 10.4 (solution page 951)
+How would you use dup2 to redirect standard input to descriptor 5?

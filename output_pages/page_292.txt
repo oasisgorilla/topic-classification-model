@@ -1,0 +1,66 @@
+Section 3.8
+Array Allocation and Access
+291
+long rfun(unsigned long x) {
+if (
+)
+return
+;
+unsigned long nx =
+;
+long rv = rfun(nx);
+return
+;
+}
+gcc generates the following assembly code:
+long rfun(unsigned long x)
+x in %rdi
+1
+rfun:
+2
+pushq
+%rbx
+3
+movq
+%rdi, %rbx
+4
+movl
+$0, %eax
+5
+testq
+%rdi, %rdi
+6
+je
+.L2
+7
+shrq
+$2, %rdi
+8
+call
+rfun
+9
+addq
+%rbx, %rax
+10
+.L2:
+11
+popq
+%rbx
+12
+ret
+A. What value does rfun store in the callee-saved register %rbx?
+B. Fill in the missing expressions in the C code shown above.
+3.8
+Array Allocation and Access
+Arrays in C are one means of aggregating scalar data into larger data types. C
+uses a particularly simple implementation of arrays, and hence the translation
+into machine code is fairly straightforward. One unusual feature of C is that we
+can generate pointers to elements within arrays and perform arithmetic with these
+pointers. These are translated into address computations in machine code.
+Optimizing compilers are particularly good at simplifying the address compu-
+tations used by array indexing. This can make the correspondence between the C
+code and its translation into machine code somewhat difﬁcult to decipher.
+3.8.1
+Basic Principles
+For data type T and integer constant N, consider a declaration of the form
+T A[N];

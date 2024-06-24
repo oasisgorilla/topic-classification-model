@@ -1,0 +1,25 @@
+36
+About the Authors
+David R. O’Hallaron is a professor of computer science
+and electrical and computer engineering at Carnegie
+Mellon University. He received his PhD from the Uni-
+versity of Virginia. He served as the director of Intel
+Labs, Pittsburgh, from 2007 to 2010.
+He has taught computer systems courses at the un-
+dergraduate and graduate levels for 20 years on such
+topics as computer architecture, introductory com-
+puter systems, parallel processor design, and Internet
+services. Together with Professor Bryant, he developed
+the course at Carnegie Mellon that led to this book. In
+2004, he was awarded the Herbert Simon Award for Teaching Excellence by the
+CMU School of Computer Science, an award for which the winner is chosen based
+on a poll of the students.
+Professor O’Hallaron works in the area of computer systems, with speciﬁc in-
+terests in software systems for scientiﬁc computing, data-intensive computing, and
+virtualization. The best-known example of his work is the Quake project, an en-
+deavor involving a group of computer scientists, civil engineers, and seismologists
+who have developed the ability to predict the motion of the ground during strong
+earthquakes. In 2003, Professor O’Hallaron and the other members of the Quake
+team won the Gordon Bell Prize, the top international prize in high-performance
+computing. His current work focuses on the notion of autograding, that is, pro-
+grams that evaluate the quality of other programs.

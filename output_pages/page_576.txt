@@ -1,0 +1,44 @@
+Section 5.9
+Enhancing Parallelism
+575
+Figure 5.24
+Data-ﬂow representation
+of combine6 operating
+on a vector of length n.
+We now have two critical
+paths, each containing n/2
+operations.
+data[0]
+data[1]
+load
+mul
+load
+mul
+add
+data[2]
+data[3]
+load
+mul
+load
+mul
+add
+data[n-2]
+data[n-1]
+load
+mul
+load
+mul
+add
+Critical paths
+one for the odd-numbered elements (program value acc1). Each of these critical
+paths contains only n/2 operations, thus leading to a CPE of around 5.00/2 = 2.50.
+A similar analysis explains our observed CPE of around L/2 for operations with
+latency L for the different combinations of data type and combining operation.
+Operationally, the programs are exploiting the capabilities of the functional units
+to increase their utilization by a factor of 2. The only exception is for integer
+addition. We have reduced the CPE to below 1.0, but there is still too much loop
+overhead to achieve the theoretical limit of 0.50.
+We can generalize the multiple accumulator transformation to unroll the loop
+by a factor of k and accumulate k values in parallel, yielding k × k loop unrolling.
+Figure 5.25 demonstrates the effect of applying this transformation for values
+up to k = 10. We can see that, for sufﬁciently large values of k, the program can

@@ -1,0 +1,52 @@
+74
+Chapter 2
+Representing and Manipulating Information
+n
+2n (decimal)
+2n (hexadecimal)
+5
+32
+0x20
+23
+32,768
+0x2000
+12
+64
+0x100
+Converting between decimal and hexadecimal representations requires using
+multiplication or division to handle the general case. To convert a decimal num-
+ber x to hexadecimal, we can repeatedly divide x by 16, giving a quotient q and a
+remainder r, such that x = q . 16 + r. We then use the hexadecimal digit represent-
+ing r as the least signiﬁcant digit and generate the remaining digits by repeating
+the process on q. As an example, consider the conversion of decimal 314,156:
+314,156 = 19,634 . 16 + 12
+(C)
+19,634 = 1,227 . 16 + 2
+(2)
+1,227 = 76 . 16 + 11
+(B)
+76 = 4 . 16 + 12
+(C)
+4 = 0 . 16 + 4
+(4)
+From this we can read off the hexadecimal representation as 0x4CB2C.
+Conversely, to convert a hexadecimal number to decimal, we can multiply
+each of the hexadecimal digits by the appropriate power of 16. For example, given
+the number 0x7AF, we compute its decimal equivalent as 7 . 162 + 10 . 16 + 15 =
+7 . 256 + 10 . 16 + 15 = 1,792 + 160 + 15 = 1,967.
+Practice Problem 2.3 (solution page 180)
+A single byte can be represented by 2 hexadecimal digits. Fill in the missing
+entries in the following table, giving the decimal, binary, and hexadecimal values
+of different byte patterns:
+Decimal
+Binary
+Hexadecimal
+0
+0000 0000
+0x00
+158
+76
+145
+1010 1110
+0011 1100
+1111 0001

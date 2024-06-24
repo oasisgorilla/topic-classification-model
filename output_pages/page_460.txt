@@ -1,0 +1,61 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+459
+Memory
+Execute
+Decode
+Fetch
+PC
+valM
+data out
+read
+write
+Data
+memory
+Addr
+Data
+Mem.
+control
+Cnd
+valE
+CC
+ALU
+ALU
+fun.
+ALU
+A
+ALU
+B
+valA valB dstE dstM srcA srcB
+dstE dstM srcA srcB
+Register
+file
+Write back
+A
+B
+E
+M
+icode ifun
+rA
+rB
+valC
+valP
+PC
+increment
+Instruction
+memory
+PC
+PC
+plcode
+pValC
+pValM
+pCnd
+pValP
+Stat
+dmem_error
+Stat
+instr_valid
+imem_error
+Figure 4.40
+SEQ+ hardware structure. Shifting the PC computation from the end of
+the clock cycle to the beginning makes it more suitable for pipelining.

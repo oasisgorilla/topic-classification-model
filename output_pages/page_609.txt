@@ -1,0 +1,56 @@
+608
+Chapter 5
+Optimizing Program Performance
+This function ﬁlls n bytes of the memory area starting at s with copies of the low-
+order byte of c. For example, it can be used to zero out a region of memory by
+giving argument 0 for c, but other values are possible.
+The following is a straightforward implementation of memset:
+1
+/* Basic implementation of memset */
+2
+void *basic_memset(void *s, int c, size_t n)
+3
+{
+4
+size_t cnt = 0;
+5
+unsigned char *schar = s;
+6
+while (cnt < n) {
+7
+*schar++ = (unsigned char) c;
+8
+cnt++;
+9
+}
+10
+return s;
+11
+}
+Implement a more efﬁcient version of the function by using a word of data
+type unsigned long to pack eight copies of c, and then step through the region
+using word-level writes. You might ﬁnd it helpful to do additional loop unrolling
+as well. On our reference machine, we were able to reduce the CPE from 1.00 for
+the straightforward implementation to 0.127. That is, the program is able to write
+8 bytes every clock cycle.
+Here are some additional guidelines. To ensure portability, let K denote the
+value of sizeof(unsigned long) for the machine on which you run your program.
+. You may not call any library functions.
+. Your code should work for arbitrary values of n, including when it is not a
+multiple of K. You can do this in a manner similar to the way we ﬁnish the
+last few iterations with loop unrolling.
+. You should write your code so that it will compile and run correctly on any
+machine regardless of the value of K. Make use of the operation sizeof to
+do this.
+. On some machines, unaligned writes can be much slower than aligned ones.
+(On some non-x86 machines, they can even cause segmentation faults.) Write
+your code so that it starts with byte-level writes until the destination address
+is a multiple of K, then do word-level writes, and then (if necessary) ﬁnish
+with byte-level writes.
+. Beware of the case where cnt is small enough that the upper bounds on
+some of the loops become negative. With expressions involving the sizeof
+operator, the testing may be performed with unsigned arithmetic. (See Sec-
+tion 2.2.8 and Problem 2.72.)
+5.18 ◆◆◆
+We considered the task of polynomial evaluation in Practice Problems 5.5 and 5.6,
+with both a direct evaluation and an evaluation by Horner’s method. Try to write

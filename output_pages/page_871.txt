@@ -1,0 +1,42 @@
+870
+Chapter 9
+Virtual Memory
+memory. Fortunately, memory mapping provides us with a clean mechanism for
+controlling how objects are shared by multiple processes.
+An object can be mapped into an area of virtual memory as either a shared
+object or a private object. If a process maps a shared object into an area of its virtual
+address space, then any writes that the process makes to that area are visible to
+any other processes that have also mapped the shared object into their virtual
+memory. Further, the changes are also reﬂected in the original object on disk.
+Changes made to an area mapped to a private object, on the other hand, are
+not visible to other processes, and any writes that the process makes to the area
+are not reﬂected back to the object on disk. A virtual memory area into which a
+shared object is mapped is often called a shared area. Similarly for a private area.
+Suppose that process 1 maps a shared object into an area of its virtual memory,
+as shown in Figure 9.29(a). Now suppose that process 2 maps the same shared ob-
+Figure 9.29
+A shared object. (a) After
+process 1 maps the shared
+object. (b) After process
+2 maps the same shared
+object. (Note that the
+physical pages are not
+necessarily contiguous.)
+Process 1
+virtual memory
+Process 2
+virtual memory
+Physical
+memory
+Shared
+object
+(a)
+Process 1
+virtual memory
+Process 2
+virtual memory
+Physical
+memory
+Shared
+object
+(b)

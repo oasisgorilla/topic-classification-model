@@ -1,0 +1,58 @@
+1042
+Chapter 12
+Concurrent Programming
+code/conc/sbuf.h
+1
+typedef struct {
+2
+int *buf;
+/* Buffer array */
+3
+int n;
+/* Maximum number of slots */
+4
+int front;
+/* buf[(front+1)%n] is first item */
+5
+int rear;
+/* buf[rear%n] is last item */
+6
+sem_t mutex;
+/* Protects accesses to buf */
+7
+sem_t slots;
+/* Counts available slots */
+8
+sem_t items;
+/* Counts available items */
+9
+} sbuf_t;
+code/conc/sbuf.h
+Figure 12.24
+sbuf_t: Bounded buffer used by the Sbuf package.
+Figure 12.25 shows the implementation of the Sbuf package. The sbuf_init
+function allocates heap memory for the buffer, sets front and rear to indicate
+an empty buffer, and assigns initial values to the three semaphores. This function
+is called once, before calls to any of the other three functions. The sbuf_deinit
+function frees the buffer storage when the application is through using it. The
+sbuf_insert function waits for an available slot, locks the mutex, adds the item,
+unlocks the mutex, and then announces the availability of a new item. The sbuf_
+remove function is symmetric. After waiting for an available buffer item, it locks
+the mutex, removes the item from the front of the buffer, unlocks the mutex, and
+then signals the availability of a new slot.
+Practice Problem 12.9 (solution page 1074)
+Let p denote the number of producers, c the number of consumers, and n the
+buffer size in units of items. For each of the following scenarios, indicate whether
+the mutex semaphore in sbuf_insert and sbuf_remove is necessary or not.
+A. p = 1, c = 1, n > 1
+B. p = 1, c = 1, n = 1
+C. p > 1, c > 1, n = 1
+Readers-Writers Problem
+The readers-writers problem is a generalization of the mutual exclusion problem.
+A collection of concurrent threads is accessing a shared object such as a data
+structure in main memory or a database on disk. Some threads only read the
+object, while others modify it. Threads that modify the object are called writers.
+Threads that only read it are called readers. Writers must have exclusive access to
+the object, but readers may share the object with an unlimited number of other
+readers. In general, there are an unbounded number of concurrent readers and
+writers.

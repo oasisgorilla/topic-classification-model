@@ -1,0 +1,52 @@
+Homework Problems
+685
+work to increase locality by automatically performing the kinds of manual code
+transformations we discussed in Section 6.6 [22, 32, 66, 72, 79, 87, 119]. Carter
+and colleagues have proposed a cache-aware memory controller [17]. Other re-
+searchers have developed cache-oblivious algorithms that are designed to run well
+without any explicit knowledge of the structure of the underlying cache mem-
+ory [30, 38, 39, 9].
+There is a large body of literature on building and using disk storage. Many
+storage researchers look for ways to aggregate individual disks into larger, more
+robust, and more secure storage pools [20, 40, 41, 83, 121]. Others look for ways
+to use caches and locality to improve the performance of disk accesses [12, 21].
+Systems such as Exokernel provide increased user-level control of disk and mem-
+ory resources [57]. Systems such as the Andrew File System [78] and Coda [94]
+extend the memory hierarchy across computer networks and mobile notebook
+computers. Schindler and Ganger developed an interesting tool that automatically
+characterizes the geometry and performance of SCSI disk drives [95]. Researchers
+have investigated techniques for building and using ﬂash-based SSDs [8, 81].
+Homework Problems
+6.22 ◆◆
+Suppose you are asked to design a rotating disk where the number of bits per
+track is constant. You know that the number of bits per track is determined
+by the circumference of the innermost track, which you can assume is also the
+circumference of the hole. Thus, if you make the hole in the center of the disk
+larger, the number of bits per track increases, but the total number of tracks
+decreases. If you let r denote the radius of the platter, and x . r the radius of the
+hole, what value of x maximizes the capacity of the disk?
+6.23 ◆
+Estimate the average time (in ms) to access a sector on the following disk:
+Parameter
+Value
+Rotational rate
+12,000 RPM
+Tavg seek
+3 ms
+Average number of sectors/track
+500
+6.24 ◆◆
+Suppose that a 2 MB ﬁle consisting of 512-byte logical blocks is stored on a disk
+drive with the following characteristics:
+Parameter
+Value
+Rotational rate
+18,000 RPM
+Tavg seek
+8 ms
+Average number of sectors/track
+2,000
+Surfaces
+4
+Sector size
+512 bytes

@@ -1,0 +1,40 @@
+Solutions to Practice Problems
+525
+word mem_data = [
+# Value from register
+icode in { IRMMOVQ, IPUSHQ } : valA;
+# Return PC
+icode == ICALL : valP;
+# Default: Don’t write anything
+];
+Solution to Problem 4.26 (page 446)
+This code is similar to the code for mem_read.
+bool mem_write = icode in { IRMMOVQ, IPUSHQ, ICALL };
+Solution to Problem 4.27 (page 447)
+Computingthe Statﬁeldrequirescollectingstatusinformationfromseveralstages:
+## Determine instruction status
+word Stat = [
+imem_error || dmem_error : SADR;
+!instr_valid: SINS;
+icode == IHALT : SHLT;
+1 : SAOK;
+];
+Solution to Problem 4.28 (page 453)
+This problem is an interesting exercise in trying to ﬁnd the optimal balance among
+a set of partitions. It provides a number of opportunities to compute throughputs
+and latencies in pipelines.
+A. For a two-stage pipeline, the best partition would be to have blocks A, B,
+and C in the ﬁrst stage and D, E, and F in the second. The ﬁrst stage has a
+delay of 170 ps, giving a total cycle time of 170 + 20 = 190 ps. We therefore
+have a throughput of 5.26 GIPS and a latency of 380 ps.
+B. For a three-stage pipeline, we should have blocks A and B in the ﬁrst stage,
+blocks C and D in the second, and blocks E and F in the third. The ﬁrst
+two stages have a delay of 110 ps, giving a total cycle time of 130 ps and a
+throughput of 7.69 GIPS. The latency is 390 ps.
+C. For a four-stage pipeline, we should have block A in the ﬁrst stage, blocks B
+and C in the second, block D in the third, and blocks E and F in the fourth.
+The second stage requires 90 ps, giving a total cycle time of 110 ps and a
+throughput of 9.09 GIPS. The latency is 440 ps.
+D. The optimal design would be a ﬁve-stage pipeline, with each block in its
+own stage, except that the ﬁfth stage has blocks E and F. The cycle time is
+80 + 20 = 100 ps, for a throughput of around 10.00 GIPS and a latency of

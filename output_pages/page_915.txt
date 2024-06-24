@@ -1,0 +1,72 @@
+914
+Chapter 9
+Virtual Memory
+B. Address translation
+Parameter
+Value
+VPN
+TLB index
+TLB tag
+TLB hit? (Y/N)
+Page fault? (Y/N)
+PPN
+C. Physical address format
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+D. Physical memory reference
+Parameter
+Value
+Byte offset
+Cache index
+Cache tag
+Cache hit? (Y/N)
+Cache byte returned
+9.13 ◆
+Repeat Problem 9.11 for the following address.
+Virtual address: 0x0040
+12
+11
+13
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+A. Address translation
+Parameter
+Value
+VPN
+TLB index
+TLB tag
+TLB hit? (Y/N)
+Page fault? (Y/N)
+PPN
+B. Physical address format
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0

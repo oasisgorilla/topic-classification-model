@@ -1,0 +1,70 @@
+Section 12.7
+Other Concurrency Issues
+1063
+code/conc/norace.c
+1
+#include "csapp.h"
+2
+#define N 4
+3
+4
+void *thread(void *vargp);
+5
+6
+int main()
+7
+{
+8
+pthread_t tid[N];
+9
+int i, *ptr;
+10
+11
+for (i = 0; i < N; i++) {
+12
+ptr = Malloc(sizeof(int));
+13
+*ptr = i;
+14
+Pthread_create(&tid[i], NULL, thread, ptr);
+15
+}
+16
+for (i = 0; i < N; i++)
+17
+Pthread_join(tid[i], NULL);
+18
+exit(0);
+19
+}
+20
+21
+/* Thread routine */
+22
+void *thread(void *vargp)
+23
+{
+24
+int myid = *((int *)vargp);
+25
+Free(vargp);
+26
+printf("Hello from thread %d\n", myid);
+27
+return NULL;
+28
+}
+code/conc/norace.c
+Figure 12.43
+A correct version of the program in Figure 12.42 without a race.
+12.7.5
+Deadlocks
+Semaphores introduce the potential for a nasty kind of run-time error, called
+deadlock, where a collection of threads is blocked, waiting for a condition that
+will never be true. The progress graph is an invaluable tool for understanding
+deadlock. For example, Figure 12.44 shows the progress graph for a pair of threads
+that use two semaphores for mutual exclusion. From this graph, we can glean some
+important insights about deadlock:
+. The programmer has incorrectly ordered the P and V operations such that
+the forbidden regions for the two semaphores overlap. If some execution
+trajectory happens to reach the deadlock state d, then no further progress is

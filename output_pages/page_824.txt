@@ -1,0 +1,43 @@
+Bibliographic Notes
+823
+8.8
+Summary
+Exceptional control ﬂow (ECF) occurs at all levels of a computer system and is a
+basic mechanism for providing concurrency in a computer system.
+At the hardware level, exceptions are abrupt changes in the control ﬂow that
+are triggered by events in the processor. The control ﬂow passes to a software
+handler, which does some processing and then returns control to the interrupted
+control ﬂow.
+There are four different types of exceptions: interrupts, faults, aborts, and
+traps. Interrupts occur asynchronously (with respect to any instructions) when
+an external I/O device such as a timer chip or a disk controller sets the in-
+terrupt pin on the processor chip. Control returns to the instruction follow-
+ing the faulting instruction. Faults and aborts occur synchronously as the re-
+sult of the execution of an instruction. Fault handlers restart the faulting in-
+struction, while abort handlers never return control to the interrupted ﬂow.
+Finally, traps are like function calls that are used to implement the system calls
+that provide applications with controlled entry points into the operating sys-
+tem code.
+At the operating system level, the kernel uses ECF to provide the funda-
+mental notion of a process. A process provides applications with two important
+abstractions: (1) logical control ﬂows that give each program the illusion that it
+has exclusive use of the processor, and (2) private address spaces that provide the
+illusion that each program has exclusive use of the main memory.
+At the interface between the operating system and applications, applications
+can create child processes, wait for their child processes to stop or terminate, run
+new programs, and catch signals from other processes. The semantics of signal
+handling is subtle and can vary from system to system. However, mechanisms exist
+on Posix-compliant systems that allow programs to clearly specify the expected
+signal-handling semantics.
+Finally, at the application level, C programs can use nonlocal jumps to bypass
+the normal call/return stack discipline and branch directly from one function to
+another.
+Bibliographic Notes
+Kerrisk is the essential reference for all aspects of programming in the Linux
+environment [62]. The Intel ISA speciﬁcation contains a detailed discussion of
+exceptions and interrupts on Intel processors [50]. Operating systems texts [102,
+106, 113] contain additional information on exceptions, processes, and signals.
+The classic work by W. Richard Stevens [111] is a valuable and highly readable
+description of how to work with processes and signals from application programs.
+Bovet and Cesati [11] give a wonderfully clear description of the Linux kernel,
+including details of the process and signal implementations.

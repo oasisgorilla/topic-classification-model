@@ -1,0 +1,62 @@
+236
+Chapter 3
+Machine-Level Representation of Programs
+This compiles to the following assembly code:
+void remdiv(long x, long y, long *qp, long *rp)
+x in %rdi, y in %rsi, qp in %rdx, rp in %rcx
+1
+remdiv:
+2
+movq
+%rdx, %r8
+Copy qp
+3
+movq
+%rdi, %rax
+Move x to lower 8 bytes of dividend
+4
+cqto
+Sign-extend to upper 8 bytes of dividend
+5
+idivq
+%rsi
+Divide by y
+6
+movq
+%rax, (%r8)
+Store quotient at qp
+7
+movq
+%rdx, (%rcx)
+Store remainder at rp
+8
+ret
+In this code, argument rp must ﬁrst be saved in a different register (line 2),
+since argument register %rdx is required for the division operation. Lines 3–4 then
+prepare the dividend by copying and sign-extending x. Following the division, the
+quotient in register %rax gets stored at qp (line 6), while the remainder in register
+%rdx gets stored at rp (line 7).
+Unsigned division makes use of the divq instruction. Typically, register %rdx
+is set to zero beforehand.
+Practice Problem 3.12 (solution page 365)
+Consider the following function for computing the quotient and remainder of two
+unsigned 64-bit numbers:
+void uremdiv(unsigned long x, unsigned long y,
+unsigned long *qp, unsigned long *rp) {
+unsigned long q = x/y;
+unsigned long r = x%y;
+*qp = q;
+*rp = r;
+}
+Modify the assembly code shown for signed division to implement this function.
+3.6
+Control
+So far, we have only considered the behavior of straight-line code, where instruc-
+tions follow one another in sequence. Some constructs in C, such as conditionals,
+loops, and switches, require conditional execution, where the sequence of oper-
+ations that get performed depends on the outcomes of tests applied to the data.
+Machine code provides two basic low-level mechanisms for implementing condi-
+tional behavior: it tests data values and then alters either the control ﬂow or the
+data ﬂow based on the results of these tests.
+Data-dependent control ﬂow is the more general and more common approach
+for implementing conditional behavior, and so we will examine this ﬁrst. Normally,

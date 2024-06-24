@@ -1,0 +1,48 @@
+Section 2.3
+Integer Arithmetic
+139
+[(0 . . . 0) (1 . . . 1) (0 . . . 0) . . . (1 . . . 1)]
+For example, 14 can be written as [(0 . . . 0)(111)(0)]. Consider a run of ones from
+bit position n down to bit position m (n ≥m). (For the case of 14, we have n = 3
+and m = 1.) We can compute the effect of these bits on the product using either of
+two different forms:
+Form A: (x<<n) + (x<<(n −1)) + . . . + (x<<m)
+Form B: (x<<(n + 1)) - (x<<m)
+By adding together the results for each run, we are able to compute x * K with-
+out any multiplications. Of course, the trade-off between using combinations of
+shifting, adding, and subtracting versus a single multiplication instruction depends
+on the relative speeds of these instructions, and these can be highly machine de-
+pendent. Most compilers only perform this optimization when a small number of
+shifts, adds, and subtractions sufﬁce.
+Practice Problem 2.39 (solution page 192)
+How could we modify the expression for form B for the case where bit position n
+is the most signiﬁcant bit?
+Practice Problem 2.40 (solution page 192)
+For each of the following values of K, ﬁnd ways to express x * K using only the
+speciﬁed number of operations, where we consider both additions and subtrac-
+tions to have comparable cost. You may need to use some tricks beyond the simple
+form A and B rules we have considered so far.
+K
+Shifts
+Add/Subs
+Expression
+7
+1
+1
+30
+4
+3
+28
+2
+1
+55
+2
+2
+Practice Problem 2.41 (solution page 192)
+For a run of ones starting at bit position n down to bit position m (n ≥m), we saw
+that we can generate two forms of code, A and B. How should the compiler decide
+which form to use?
+2.3.7
+Dividing by Powers of 2
+Integer division on most machines is even slower than integer multiplication—
+requiring 30 or more clock cycles. Dividing by a power of 2 can also be performed

@@ -1,0 +1,37 @@
+Section 12.3
+Concurrent Programming with Threads
+1025
+. The thread terminates explicitly by calling the pthread_exit function. If
+the main thread calls pthread_exit, it waits for all other peer threads to
+terminate and then terminates the main thread and the entire process with
+a return value of thread_return.
+#include <pthread.h>
+void pthread_exit(void *thread_return);
+Never returns
+. Some peer thread calls the Linux exit function, which terminates the process
+and all threads associated with the process.
+. Another peer thread terminates the current thread by calling the pthread_
+cancel function with the ID of the current thread.
+#include <pthread.h>
+int pthread_cancel(pthread_t tid);
+Returns: 0 if OK, nonzero on error
+12.3.5
+Reaping Terminated Threads
+Threads wait for other threads to terminate by calling the pthread_join function.
+#include <pthread.h>
+int pthread_join(pthread_t tid, void **thread_return);
+Returns: 0 if OK, nonzero on error
+The pthread_join function blocks until thread tid terminates, assigns the generic
+(void *) pointer returned by the thread routine to the location pointed to by
+thread_return, and then reaps any memory resources held by the terminated
+thread.
+Notice that, unlike the Linux wait function, the pthread_join function can
+only wait for a speciﬁc thread to terminate. There is no way to instruct pthread_
+join to wait for an arbitrary thread to terminate. This can complicate our code by
+forcing us to use other, less intuitive mechanisms to detect process termination.
+Indeed, Stevens argues convincingly that this is a bug in the speciﬁcation [110].
+12.3.6
+Detaching Threads
+At any point in time, a thread is joinable or detached. A joinable thread can be
+reaped and killed by other threads. Its memory resources (such as the stack) are
+not freed until it is reaped by another thread. In contrast, a detached thread cannot

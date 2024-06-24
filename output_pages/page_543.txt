@@ -1,0 +1,85 @@
+542
+Chapter 5
+Optimizing Program Performance
+code/opt/vec.c
+1
+/* Create vector of specified length */
+2
+vec_ptr new_vec(long len)
+3
+{
+4
+/* Allocate header structure */
+5
+vec_ptr result = (vec_ptr) malloc(sizeof(vec_rec));
+6
+data_t *data = NULL;
+7
+if (!result)
+8
+return NULL;
+/* Couldn’t allocate storage */
+9
+result->len = len;
+10
+/* Allocate array */
+11
+if (len > 0) {
+12
+data = (data_t *)calloc(len, sizeof(data_t));
+13
+if (!data) {
+14
+free((void *) result);
+15
+return NULL; /* Couldn’t allocate storage */
+16
+}
+17
+}
+18
+/* Data will either be NULL or allocated array */
+19
+result->data = data;
+20
+return result;
+21
+}
+22
+23
+/*
+24
+* Retrieve vector element and store at dest.
+25
+* Return 0 (out of bounds) or 1 (successful)
+26
+*/
+27
+int get_vec_element(vec_ptr v, long index, data_t *dest)
+28
+{
+29
+if (index < 0 || index >= v->len)
+30
+return 0;
+31
+*dest = v->data[index];
+32
+return 1;
+33
+}
+34
+35
+/* Return length of vector */
+36
+long vec_length(vec_ptr v)
+37
+{
+38
+return v->len;
+39
+}
+code/opt/vec.c
+Figure 5.4
+Implementation of vector abstract data type. In the actual program, data
+type data_t is declared to be int, long, float, or double.

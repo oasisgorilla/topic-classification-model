@@ -1,0 +1,45 @@
+434
+Chapter 4
+Processor Architecture
+PC update. The new value of the program counter is selected to be either
+valP, the address of the next instruction, valC, the destination address
+speciﬁed by a call or jump instruction, or valM, the return address read
+from memory.
+Figure 4.23 gives a more detailed view of the hardware required to implement
+SEQ (although we will not see the complete details until we examine the individual
+stages). We see the same set of hardware units as earlier, but now the wires are
+shown explicitly. In this ﬁgure, as well as in our other hardware diagrams, we use
+the following drawing conventions:
+. Clocked registers are shown as white rectangles.The program counter PC is the
+only clocked register in SEQ.
+. Hardware units are shown as light blue boxes. These include the memories,
+the ALU, and so forth. We will use the same basic set of units for all of our
+processor implementations. We will treat these units as “black boxes” and not
+go into their detailed designs.
+. Control logic blocks are drawn as gray rounded rectangles.These blocks serve
+to select from among a set of signal sources or to compute some Boolean func-
+tion. We will examine these blocks in complete detail, including developing
+HCL descriptions.
+. Wire names are indicated in white circles.These are simply labels on the wires,
+not any kind of hardware element.
+. Word-wide data connections are shown as medium lines. Each of these lines
+actually represents a bundle of 64 wires, connected in parallel, for transferring
+a word from one part of the hardware to another.
+. Byte and narrower data connections are shown as thin lines.Each of these lines
+actually represents a bundle of four or eight wires, depending on what type of
+values must be carried on the wires.
+. Single-bit connections are shown as dotted lines.These represent control values
+passed between the units and blocks on the chip.
+All of the computations we have shown in Figures 4.18 through 4.21 have the
+property that each line represents either the computation of a speciﬁc value, such
+as valP, or the activation of some hardware unit, such as the memory. These com-
+putations and actions are listed in the second column of Figure 4.24. In addition
+to the signals we have already described, this list includes four register ID signals:
+srcA, the source of valA; srcB, the source of valB; dstE, the register to which valE
+gets written; and dstM, the register to which valM gets written.
+The two right-hand columns of this ﬁgure show the computations for the
+OPq and mrmovq instructions to illustrate the values being computed. To map the
+computations into hardware, we want to implement control logic that will transfer
+the data between the different hardware units and operate these units in such a way
+that the speciﬁed operations are performed for each of the different instruction
+types. That is the purpose of the control logic blocks, shown as gray rounded boxes

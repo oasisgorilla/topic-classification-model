@@ -1,0 +1,80 @@
+454
+Chapter 4
+Processor Architecture
+B. Where should two registers be inserted to maximize the throughput of a
+three-stage pipeline? What would be the throughput and latency?
+C. Where should three registers be inserted to maximize the throughput of a
+4-stage pipeline? What would be the throughput and latency?
+D. What is the minimum number of stages that would yield a design with the
+maximum achievable throughput? Describe this design, its throughput, and
+its latency.
+Diminishing Returns of Deep Pipelining
+Figure 4.37 illustrates another limitation of pipelining. In this example, we have
+divided the computation into six stages, each requiring 50 ps. Inserting a pipeline
+register between each pair of stages yields a six-stage pipeline. The minimum
+clock period for this system is 50 + 20 = 70 picoseconds, giving a throughput of
+14.29 GIPS. Thus, in doubling the number of pipeline stages, we improve the
+performance by a factor of 14.29/8.33 = 1.71. Even though we have cut the time
+required for each computation block by a factor of 2, we do not get a doubling of
+the throughput, due to the delay through the pipeline registers. This delay becomes
+a limiting factor in the throughput of the pipeline. In our new design, this delay
+consumes 28.6% of the total clock period.
+Modern processors employ very deep pipelines (15 or more stages) in an
+attempt to maximize the processor clock rate. The processor architects divide the
+instruction execution into a large number of very simple steps so that each stage
+can have a very small delay. The circuit designers carefully design the pipeline
+registers to minimize their delay. The chip designers must also carefully design the
+clock distribution network to ensure that the clock changes at the exact same time
+across the entire chip. All of these factors contribute to the challenge of designing
+high-speed microprocessors.
+Practice Problem 4.29 (solution page 526)
+Suppose we could take the system of Figure 4.32 and divide it into an arbitrary
+number of pipeline stages k, each having a delay of 300/k, and with each pipeline
+register having a delay of 20 ps.
+Comb.
+logic
+Comb.
+logic
+Comb.
+logic
+Comb.
+logic
+Comb.
+logic
+Comb.
+logic
+50 ps
+R
+e
+g
+50 ps
+20 ps
+20 ps
+20 ps
+20 ps
+20 ps
+20 ps
+50 ps
+R
+e
+g
+50 ps
+Delay = 420 ps, throughput = 14.29 GIPS
+Clock
+R
+e
+g
+50 ps
+R
+e
+g
+50 ps
+R
+e
+g
+R
+e
+g
+Figure 4.37
+Limitations of pipelining due to overhead. As the combinational logic is
+split into shorter blocks, the delay due to register updating becomes a limiting factor.

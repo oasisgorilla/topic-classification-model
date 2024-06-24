@@ -1,0 +1,45 @@
+506
+Chapter 4
+Processor Architecture
+backed up by slower and larger memories. At the level closest to the processor,
+the cache memories provide fast access to the most heavily referenced memory
+locations. A typical processor has two ﬁrst-level caches—one for reading instruc-
+tions and one for reading and writing data. Another type of cache memory, known
+as a translation look-aside buffer, or TLB, provides a fast translation from virtual
+to physical addresses. Using a combination of TLBs and caches, it is indeed pos-
+sible to read instructions and read or write data in a single clock cycle most of
+the time. Thus, our simpliﬁed view of memory referencing by our processors is
+actually quite reasonable.
+Although the caches hold the most heavily referenced memory locations,
+there will be times when a cache miss occurs, where some reference is made to
+a location that is not held in the cache. In the best case, the missing data can be
+retrieved from a higher-level cache or from the main memory of the processor,
+requiring 3 to 20 clock cycles. Meanwhile, the pipeline simply stalls, holding the
+instruction in the fetch or memory stage until the cache can perform the read
+or write operation. In terms of our pipeline design, this can be implemented by
+adding more stall conditions to the pipeline control logic. A cache miss and the
+consequent synchronization with the pipeline is handled completely by hardware,
+keeping the time required down to a small number of clock cycles.
+In some cases, the memory location being referenced is actually stored in
+the disk or nonvolatile memory. When this occurs, the hardware signals a page
+fault exception. Like other exceptions, this will cause the processor to invoke the
+operating system’s exception handler code. This code will then set up a transfer
+from the disk to the main memory. Once this completes, the operating system will
+return to the original program, where the instruction causing the page fault will be
+re-executed. This time, the memory reference will succeed, although it might cause
+a cache miss. Having the hardware invoke an operating system routine, which then
+returns control back to the hardware, allows the hardware and system software
+to cooperate in the handling of page faults. Since accessing a disk can require
+millions of clock cycles, the several thousand cycles of processing performed by
+the OS page fault handler has little impact on performance.
+From the perspective of the processor, the combination of stalling to han-
+dle short-duration cache misses and exception handling to handle long-duration
+page faults takes care of any unpredictability in memory access times due to the
+structure of the memory hierarchy.
+4.6
+Summary
+We have seen that the instruction set architecture, or ISA, provides a layer of
+abstraction between the behavior of a processor—in terms of the set of instructions
+and their encodings—and how the processor is implemented. The ISA provides
+a very sequential view of program execution, with one instruction executed to
+completion before the next one begins.

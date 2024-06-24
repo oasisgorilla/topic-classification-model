@@ -1,0 +1,45 @@
+Section 10.2
+Files
+927
+Opening ﬁles. An application announces its intention to access an I/O device
+by asking the kernel to open the corresponding ﬁle. The kernel returns
+a small nonnegative integer, called a descriptor, that identiﬁes the ﬁle
+in all subsequent operations on the ﬁle. The kernel keeps track of all
+information about the open ﬁle. The application only keeps track of the
+descriptor.
+Each process created by a Linux shell begins life with three open ﬁles:
+standard input (descriptor 0), standard output (descriptor 1), and standard
+error (descriptor 2). The header ﬁle <unistd.h> deﬁnes constants STDIN_
+FILENO, STDOUT_FILENO, and STDERR_FILENO, which can be used instead
+of the explicit descriptor values.
+Changing the current ﬁle position. The kernel maintains a ﬁle position k, initially
+0, for each open ﬁle. The ﬁle position is a byte offset from the beginning
+of a ﬁle. An application can set the current ﬁle position k explicitly by
+performing a seek operation.
+Reading and writing ﬁles. A read operation copies n > 0 bytes from a ﬁle to
+memory, starting at the current ﬁle position k and then incrementing k
+by n. Given a ﬁle with a size of m bytes, performing a read operation
+when k ≥m triggers a condition known as end-of-ﬁle (EOF), which can
+be detected by the application. There is no explicit “EOF character” at
+the end of a ﬁle.
+Similarly, a write operation copies n > 0 bytes from memory to a ﬁle,
+starting at the current ﬁle position k and then updating k.
+Closing ﬁles. When an application has ﬁnished accessing a ﬁle, it informs the
+kernel by asking it to close the ﬁle. The kernel responds by freeing
+the data structures it created when the ﬁle was opened and restoring the
+descriptor to a pool of available descriptors. When a process terminates
+for any reason, the kernel closes all open ﬁles and frees their memory
+resources.
+10.2
+Files
+Each Linux ﬁle has a type that indicates its role in the system:
+. A regular ﬁle contains arbitrary data. Application programs often distinguish
+between text ﬁles, which are regular ﬁles that contain only ASCII or Unicode
+characters, and binary ﬁles, which are everything else. To the kernel there is
+no difference between text and binary ﬁles.
+A Linux text ﬁle consists of a sequence of text lines, where each line is a
+sequence of characters terminated by a newline character (‘\n’). The newline
+character is the same as the ASCII line feed character (LF) and has a numeric
+value of 0x0a.
+. A directory is a ﬁle consisting of an array of links, where each link maps a
+ﬁlename to a ﬁle, which may be another directory. Each directory contains at

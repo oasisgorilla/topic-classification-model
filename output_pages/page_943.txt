@@ -1,0 +1,59 @@
+942
+Chapter 10
+System-Level I/O
+code/io/readdir.c
+1
+#include "csapp.h"
+2
+3
+int main(int argc, char **argv)
+4
+{
+5
+DIR *streamp;
+6
+struct dirent *dep;
+7
+8
+streamp = Opendir(argv[1]);
+9
+10
+errno = 0;
+11
+while ((dep = readdir(streamp)) != NULL) {
+12
+printf("Found file: %s\n", dep->d_name);
+13
+}
+14
+if (errno != 0)
+15
+unix_error("readdir error");
+16
+17
+Closedir(streamp);
+18
+exit(0);
+19
+}
+code/io/readdir.c
+Figure 10.11
+Reading the contents of a directory.
+10.8
+Sharing Files
+Linux ﬁles can be shared in a number of different ways. Unless you have a clear
+picture of how the kernel represents open ﬁles, the idea of ﬁle sharing can be quite
+confusing. The kernel represents open ﬁles using three related data structures:
+Descriptor table. Each process has its own separate descriptor table whose en-
+tries are indexed by the process’s open ﬁle descriptors. Each open descrip-
+tor entry points to an entry in the ﬁle table.
+File table. The set of open ﬁles is represented by a ﬁle table that is shared by all
+processes. Each ﬁle table entry consists of (for our purposes) the current
+ﬁle position, a reference count of the number of descriptor entries that
+currently point to it, and a pointer to an entry in the v-node table. Closing
+a descriptor decrements the reference count in the associated ﬁle table
+entry. The kernel will not delete the ﬁle table entry until its reference
+count is zero.
+v-node table. Like the ﬁle table, the v-node table is shared by all processes. Each
+entry contains most of the information in the stat structure, including the
+st_mode and st_size members.

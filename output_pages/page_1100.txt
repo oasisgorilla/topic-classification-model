@@ -1,0 +1,171 @@
+Index
+1099
+ﬂushed instructions, 558
+FNONE [Y86-64] default function code,
+440
+footers of blocks, 887
+for [C] general loop statement,
+264–268
+guarded-do translation, 261
+jump-to-middle translation, 259
+forbidden regions, 1039
+foreground processes, 789
+fork [Unix] create child process, 776
+child processes, 737
+example, 777–779
+running programs, 789–792
+virtual memory, 872
+fork.c [CS:APP] fork example, 777
+formal veriﬁcation in pipelining, 502
+format strings, 83
+formats for machine-level data,
+213–215
+formatted disk capacity, 632
+formatted printing, 83
+formatting
+disks, 632
+machine-level code, 211–213
+forwarding
+for data hazards, 472–475
+load, 513
+forwarding priority, 487–488
+FPGAs (ﬁeld-programmable gate
+arrays), 503
+FPM DRAM (fast page mode
+DRAM), 621
+fprintf [C Stdlib] function, 83
+fractional binary numbers, 145–148
+fractional ﬂoating-point representa-
+tion, 148–156, 173
+fragmentation, 882
+dynamic memory allocation, 882
+false, 886
+frame pointers, 326
+frames
+Ethernet, 956
+stack, 276, 276–277, 312, 326–329
+free blocks, 875
+coalescing, 886–887
+splitting, 885–886
+free bounded buffer function, 1043
+free [C Stdlib] deallocate heap
+storage, 877, 877–879
+interpositioning libraries, 744
+wrappers for, 747
+free heap block function, 896
+free heap blocks, referencing data in,
+910–911
+free lists
+creating, 893–895
+dynamic memory allocation, 883–
+885
+explicit, 898–899
+implicit, 884
+manipulating, 892–893
+segregated, 899–901
+free software, 42
+free up getaddrinfo resources function,
+973
+freeaddrinfo [Unix] free up
+getaddrinfo resources, 973,
+974
+FreeBSD open-source operating
+system, 122–123
+freeing blocks, 896
+Freescale
+processor family, 388
+RISC design, 397
+front side bus (FSB), 624
+fstat [Unix] fetch ﬁle metadata, 939
+full duplex connections, 965
+full duplex streams, 948
+fully associative caches, 662
+line matching and word selection,
+663–664
+set selection, 663
+fully linked executable object ﬁles, 732
+fully pipelined functional units, 559
+function calls
+performance strategies, 597
+PIC, 741–743
+function part in Y86-64 instruction
+speciﬁer, 394
+functional units, 556–557, 559–560
+functions
+pointers to, 314
+reentrant, 802, 1059
+static libraries, 720–724
+system-level, 766
+thread-safe and thread-unsafe,
+1056, 1056–1058
+wrapper, 747
+in Y86 instructions, 395
+gai_error [CS:APP] reports GAI-
+style errors, 1079
+gai_strerror [Unix] print
+getaddrinfo error message,
+974
+GAI-style error handling, 1078,
+1078–1079
+gaps between disk sectors, 626, 632
+garbage, 902
+garbage collection, 876, 902
+garbage collectors, 876, 902
+basics, 902–903
+conservative, 903, 905–
+906
+Mark&Sweep, 903–906
+overview, 901–902
+gates, logic, 409
+gcc (GNU compiler collection)
+compiler
+code formatting, 211–212
+inline assembly, 214
+options, 71
+working with, 204–205
+gdb GNU debugger, 209, 315, 315–
+316
+general protection faults, 765
+general-purpose registers, 215, 215–
+216
+geometry of disks, 626–627
+get address of shared library symbol
+function, 738
+“get from” operator (C++), 926
+GET method in HTTP, 987
+get parent process ID function, 775
+get process group ID function, 795
+get process ID function, 775
+get thread ID function, 1024
+getaddrinfo [Unix] convert host and
+service names, 973, 973–976
+getenv [C Stdlib] read environment
+variable, 787
+gethostbyaddr [Unix] get DNS host
+entry, 1060
+gethostbyname [Unix] get DNS host
+entry, 1060
+getnameinfo [Unix] convert socket
+address to host and service
+names, 976, 976–978
+getpeername function [C Stdlib]
+security vulnerability, 122–123
+getpgrp [Unix] get process group ID,
+795
+getpid [Unix] get process ID, 775
+getppid [Unix] get parent process
+ID, 775
+getrusage [Unix] function, 847
+gets function, 315, 317–318
+GHz (gigahertz), 538
+giga-instructions per second (GIPS),
+449
+gigabytes, 628
+gigahertz (GHz), 538
+GIPS (giga-instructions per second),
+449
+global IP Internet. See Internet
+Global Offset Table (GOT), 741,
+741–743
+global symbols, 711
+global variable mapping, 1030–1031

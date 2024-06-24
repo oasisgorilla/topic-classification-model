@@ -1,0 +1,65 @@
+118
+Chapter 2
+Representing and Manipulating Information
+principle: Truncation of a two’s-complement number
+Let ⃗
+x be the bit vector [xw−1, xw−2, . . . , x0], and let ⃗
+′x be the result of truncating
+it to k bits: ⃗
+x′ = [xk−1, xk−2, . . . , x0]. Let x = B2Tw(⃗
+x) and x′ = B2Tk(⃗
+x′). Then
+x′ = U2Tk(x mod 2k).
+In this formulation, x mod 2k will be a number between 0 and 2k −1. Applying
+function U2Tk to it will have the effect of converting the most signiﬁcant bit xk−1
+from having weight 2k−1 to having weight −2k−1. We can see this with the example
+of converting value x = 53,191from int to short. Since 216 = 65,536 ≥x, we have
+x mod 216 = x. But when we convert this number to a 16-bit two’s-complement
+number, we get x′ = 53,191 −65,536 = −12,345.
+derivation: Truncation of a two’s-complement number
+Using a similar argument to the one we used for truncation of an unsigned number
+shows that
+B2Tw([xw−1, xw−2, . . . , x0]) mod 2k = B2Uk([xk−1, xk−2, . . . , x0])
+That is, x mod 2k can be represented by an unsigned number having bit-level rep-
+resentation [xk−1, xk−2, . . . , x0]. Converting this to a two’s-complement number
+gives x′ = U2Tk(x mod 2k).
+Summarizing, the effect of truncation for unsigned numbers is
+B2Uk([xk−1, xk−2, . . . , x0]) = B2Uw([xw−1, xw−2, . . . , x0]) mod 2k
+(2.9)
+while the effect for two’s-complement numbers is
+B2Tk([xk−1, xk−2, . . . , x0]) = U2Tk(B2Uw([xw−1, xw−2, . . . , x0]) mod 2k) (2.10)
+Practice Problem 2.24 (solution page 186)
+Suppose we truncate a 4-bit value (represented by hex digits 0 through F) to a 3-
+bit value (represented as hex digits 0 through 7.) Fill in the table below showing
+the effect of this truncation for some cases, in terms of the unsigned and two’s-
+complement interpretations of those bit patterns.
+Hex
+Unsigned
+Two’s complement
+Original
+Truncated
+Original
+Truncated
+Original
+Truncated
+1
+1
+1
+1
+3
+3
+3
+3
+5
+5
+5
+5
+C
+4
+12
+−4
+E
+6
+14
+−2
+Explain how Equations 2.9 and 2.10 apply to these cases.

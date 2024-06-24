@@ -1,0 +1,54 @@
+1054
+Chapter 12
+Concurrent Programming
+Figure 12.35
+Performance of psum-
+local (Figure 12.34).
+Summing a sequence of
+231 elements using four
+processor cores.
+1.2
+1.0
+0.8
+0.6
+0.4
+0.2
+0
+1
+1.06
+Threads
+Elapsed time (s)
+2
+0.54
+4
+0.28
+0.29
+8
+16
+0.3
+An important lesson to take away from this exercise is that writing parallel
+programs is tricky. Seemingly small changes to the code have a signiﬁcant impact
+on performance.
+Characterizing the Performance of Parallel Programs
+Figure 12.35 plots the total elapsed running time of the psum-local program in
+Figure 12.34 as a function of the number of threads. In each case, the program
+runs on a system with four processor cores and sums a sequence of n = 231 ele-
+ments. We see that running time decreases as we increase the number of threads,
+up to four threads, at which point it levels off and even starts to increase a
+little.
+In the ideal case, we would expect the running time to decrease linearly with
+the number of cores. That is, we would expect running time to drop by half each
+time we double the number of threads. This is indeed the case until we reach
+the point (t > 4) where each of the four cores is busy running at least one thread.
+Running time actually increases a bit as we increase the number of threads because
+of the overhead of context switching multiple threads on the same core. For this
+reason, parallel programs are often written so that each core runs exactly one
+thread.
+Although absolute running time is the ultimate measure of any program’s
+performance, there are some useful relative measures that can provide insight
+into how well a parallel program is exploiting potential parallelism. The speedup
+of a parallel program is typically deﬁned as
+Sp = T1
+Tp
+where p is the number of processor cores and Tk is the running time on k cores. This
+formulation is sometimes referred to as strong scaling. When T1 is the execution

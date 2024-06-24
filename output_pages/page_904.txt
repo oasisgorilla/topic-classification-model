@@ -1,0 +1,52 @@
+Section 9.10
+Garbage Collection
+903
+Figure 9.49
+A garbage collector’s
+view of memory as a
+directed graph.
+Root nodes
+Heap nodes
+Reachable
+Unreachable
+(garbage)
+Figure 9.50
+Integrating a conserva-
+tive garbage collector
+and a C malloc package.
+C application
+program
+malloc()
+Conservative
+garbage
+collector
+free()
+Dynamic storage allocator
+Garbage collectors for languages like ML and Java, which exert tight control
+over how applications create and use pointers, can maintain an exact representa-
+tion of the reachability graph and thus can reclaim all garbage. However, collectors
+for languages like C and C++ cannot in general maintain exact representations
+of the reachability graph. Such collectors are known as conservative garbage col-
+lectors. They are conservative in the sense that each reachable block is correctly
+identiﬁed as reachable, while some unreachable nodes might be incorrectly iden-
+tiﬁed as reachable.
+Collectors can provide their service on demand, or they can run as separate
+threads in parallel with the application, continuously updating the reachability
+graph and reclaiming garbage. For example, consider how we might incorporate a
+conservative collector for C programs into an existing malloc package, as shown
+in Figure 9.50.
+The application calls malloc in the usual manner whenever it needs heap
+space. If malloc is unable to ﬁnd a free block that ﬁts, then it calls the garbage col-
+lector in hopes of reclaiming some garbage to the free list. The collector identiﬁes
+the garbage blocks and returns them to the heap by calling the free function. The
+key idea is that the collector calls free instead of the application. When the call
+to the collector returns, malloc tries again to ﬁnd a free block that ﬁts. If that fails,
+then it can ask the operating system for additional memory. Eventually, malloc
+returns a pointer to the requested block (if successful) or the NULL pointer (if
+unsuccessful).
+9.10.2
+Mark&Sweep Garbage Collectors
+A Mark&Sweep garbage collector consists of a mark phase, which marks all
+reachable and allocated descendants of the root nodes, followed by a sweep phase,
+which frees each unmarked allocated block. Typically, one of the spare low-order
+bits in the block header is used to indicate whether a block is marked or not.

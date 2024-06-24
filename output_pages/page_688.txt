@@ -1,0 +1,105 @@
+Homework Problems
+687
+B. List all of the hex memory addresses that will hit in set 4.
+C. List all of the hex memory addresses that will hit in set 5.
+D. List all of the hex memory addresses that will hit in set 7.
+6.29 ◆◆
+Suppose we have a system with the following properties:
+. The memory is byte addressable.
+. Memory accesses are to 1-byte words (not to 4-byte words).
+. Addresses are 12 bits wide.
+. The cache is two-way set associative (E = 2), with a 4-byte block size (B = 4)
+and four sets (S = 4).
+The contents of the cache are as follows, with all addresses, tags, and values given
+in hexadecimal notation:
+Set index
+Tag
+Valid
+Byte 0
+Byte 1
+Byte 2
+Byte 3
+0
+00
+1
+40
+41
+42
+43
+83
+1
+FE
+97
+CC
+D0
+1
+00
+1
+44
+45
+46
+47
+83
+0
+—
+—
+—
+—
+2
+00
+1
+48
+49
+4A
+4B
+40
+0
+—
+—
+—
+—
+3
+FF
+1
+9A
+C0
+03
+FF
+00
+0
+—
+—
+—
+—
+A. The following diagram shows the format of an address (1 bit per box).
+Indicate (by labeling the diagram) the ﬁelds that would be used to determine
+the following:
+CO. The cache block offset
+CI. The cache set index
+CT. The cache tag
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+B. For each of the following memory accesses, indicate if it will be a cache hit
+or miss when carried out in sequence as listed. Also give the value of a read
+if it can be inferred from the information in the cache.
+Operation
+Address
+Hit?
+Read value (or unknown)
+Read
+0x834
+Write
+0x836
+Read
+0xFFD

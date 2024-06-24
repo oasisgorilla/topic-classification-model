@@ -1,0 +1,59 @@
+1064
+Chapter 12
+Concurrent Programming
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+Thread 2
+Thread 1
+A trajectory that deadlocks
+A trajectory that does not deadlock
+P(s)
+P(t)
+P(s)
+P(t)
+V(s)
+V(t)
+V(t)
+V(s)
+Initially
+s1
+t1
+Forbidden
+region 
+for s
+Forbidden
+region 
+for t
+Deadlock
+state
+d
+Deadlock
+region
+Figure 12.44
+Progress graph for a program that can deadlock.
+possible because the overlapping forbidden regions block progress in every
+legal direction. In other words, the program is deadlocked because each
+thread is waiting for the other to do a V operation that will never occur.
+. The overlapping forbidden regions induce a set of states called the deadlock
+region. If a trajectory happens to touch a state in the deadlock region, then
+deadlock is inevitable. Trajectories can enter deadlock regions, but they can
+never leave.
+. Deadlock is an especially difﬁcult issue because it is not always predictable.
+Some lucky execution trajectories will skirt the deadlock region, while others
+will be trapped by it. Figure 12.44 shows an example of each. The implications
+for a programmer are scary. You might run the same program a thousand times
+without any problem, but then the next time it deadlocks. Or the program
+might work ﬁne on one machine but deadlock on another. Worst of all,
+the error is often not repeatable because different executions have different
+trajectories.
+Programs deadlock for many reasons, and preventing them is a difﬁcult prob-
+lem in general. However, when binary semaphores are used for mutual exclusion,
+as in Figure 12.44, then you can apply the following simple and effective rule to
+prevent deadlocks:

@@ -1,0 +1,58 @@
+Section 2.1
+Information Storage
+73
+The hex values B, D, and E can be translated to decimal by computing their values
+relative to the ﬁrst three.
+For example, suppose you are given the number 0x173A4C. You can convert
+this to binary format by expanding each hexadecimal digit, as follows:
+Hexadecimal
+1
+7
+3
+A
+4
+C
+Binary
+0001
+0111
+0011
+1010
+0100
+1100
+This gives the binary representation 000101110011101001001100.
+Conversely, given a binary number 1111001010110110110011, you convert it
+to hexadecimal by ﬁrst splitting it into groups of 4 bits each. Note, however, that if
+the total number of bits is not a multiple of 4, you should make the leftmost group
+be the one with fewer than 4 bits, effectively padding the number with leading
+zeros. Then you translate each group of bits into the corresponding hexadecimal
+digit:
+Binary
+11
+1100
+1010
+1101
+1011
+0011
+Hexadecimal
+3
+C
+A
+D
+B
+3
+Practice Problem 2.1 (solution page 179)
+Perform the following number conversions:
+A. 0x25B9D2 to binary
+B. binary 1010111001001001 to hexadecimal
+C. 0xA8B3D to binary
+D. binary 1100100010110110010110 to hexadecimal
+When a value x is a power of 2, that is, x = 2n for some nonnegative integer
+n, we can readily write x in hexadecimal form by remembering that the binary
+representation of x is simply 1 followed by n zeros. The hexadecimal digit 0
+represents 4 binary zeros. So, for n written in the form i + 4j, where 0 ≤i ≤3,
+we can write x with a leading hex digit of 1 (i = 0), 2 (i = 1), 4 (i = 2), or 8
+(i = 3), followed by j hexadecimal 0s. As an example, for x = 2,048 = 211, we
+have n = 11 = 3 + 4 . 2, giving hexadecimal representation 0x800.
+Practice Problem 2.2 (solution page 179)
+Fill in the blank entries in the following table, giving the decimal and hexadecimal
+representations of different powers of 2:

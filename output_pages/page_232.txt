@@ -1,0 +1,45 @@
+Section 3.5
+Arithmetic and Logical Operations
+231
+possible. The different shift instructions can specify the shift amount either as
+an immediate value or with the single-byte register %cl. (These instructions are
+unusual in only allowing this speciﬁc register as the operand.) In principle, having
+a 1-byte shift amount would make it possible to encode shift amounts ranging up
+to 28 −1 = 255. With x86-64, a shift instruction operating on data values that are
+w bits long determines the shift amount from the low-order m bits of register
+%cl, where 2m = w. The higher-order bits are ignored. So, for example, when
+register %cl has hexadecimal value 0xFF, then instruction salb would shift by
+7, while salw would shift by 15, sall would shift by 31, and salq would shift
+by 63.
+As Figure 3.10 indicates, there are two names for the left shift instruction: sal
+and shl. Both have the same effect, ﬁlling from the right with zeros. The right
+shift instructions differ in that sar performs an arithmetic shift (ﬁll with copies of
+the sign bit), whereas shr performs a logical shift (ﬁll with zeros). The destination
+operand of a shift operation can be either a register or a memory location. We
+denote the two different right shift operations in Figure 3.10 as >>A (arithmetic)
+and >>L (logical).
+Practice Problem 3.9 (solution page 364)
+Suppose we want to generate assembly code for the following C function:
+long shift_left4_rightn(long x, long n)
+{
+x <<= 4;
+x >>= n;
+return x;
+}
+The code that follows is a portion of the assembly code that performs the
+actual shifts and leaves the ﬁnal value in register %rax. Two key instructions
+have been omitted. Parameters x and n are stored in registers %rdi and %rsi,
+respectively.
+long shift_left4_rightn(long x, long n)
+x in %rdi, n in %rsi
+shift_left4_rightn:
+movq
+%rdi, %rax
+Get x
+x <<= 4
+movl
+%esi, %ecx
+Get n (4 bytes)
+x >>= n
+Fill in the missing instructions, following the annotations on the right. The
+right shift should be performed arithmetically.

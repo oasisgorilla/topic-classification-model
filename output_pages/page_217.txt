@@ -1,0 +1,98 @@
+216
+Chapter 3
+Machine-Level Representation of Programs
+31
+63
+15
+7
+0
+%eax
+%ax
+%al
+%ebx
+%bx
+%bl
+%ecx
+%cx
+%cl
+%edx
+%dx
+%esi
+%si
+%edi
+%di
+%ebp
+%bp
+%esp
+%rax
+%rbx
+%rcx
+%rdx
+%rsi
+%rdi
+%rbp
+%rsp
+%sp
+%dl
+%sil
+%dil
+%bpl
+%spl
+%r8d
+%r8
+%r8w
+%r8b
+%r9
+%r10
+%r11
+%r12
+%r13
+%r14
+%r15
+Return value
+Callee saved
+4th argument
+3rd argument
+2nd argument
+1st argument
+Callee saved
+Stack pointer
+5th argument
+6th argument
+Caller saved
+Caller saved
+Callee saved
+Callee saved
+Callee saved
+Callee saved
+%r9d
+%r9w
+%r9b
+%r10d
+%r10w
+%r10b
+%r11d
+%r11w
+%r11b
+%r12d
+%r12w
+%r12b
+%r13d
+%r13w
+%r13b
+%r14d
+%r14w
+%r14b
+%r15d
+%r15w
+%r15b
+Figure 3.2
+Integer registers. The low-order portions of all 16 registers can be accessed
+as byte, word (16-bit), double word (32-bit), and quad word (64-bit) quantities.
+arguments, returning values from functions, and storing local and temporary data.
+We will cover these conventions in our presentation, especially in Section 3.7,
+where we describe the implementation of procedures.
+3.4.1
+Operand Speciﬁers
+Most instructions have one or more operands specifying the source values to use
+in performing an operation and the destination location into which to place the

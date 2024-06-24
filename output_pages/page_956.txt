@@ -1,0 +1,50 @@
+Section 11.2
+Networks
+955
+Aside
+Client-server transactions versus database transactions
+Client-server transactions are not database transactions and do not share any of their properties, such
+as atomicity. In our context, a transaction is simply a sequence of steps carried out by a client and a
+server.
+4. The client receives the response and manipulates it. For example, after a Web
+browser receives a page from the server, it displays it on the screen.
+It is important to realize that clients and servers are processes and not ma-
+chines, or hosts as they are often called in this context. A single host can run many
+different clients and servers concurrently, and a client and server transaction can
+be on the same or different hosts. The client-server model is the same, regardless
+of the mapping of clients and servers to hosts.
+11.2
+Networks
+Clients and servers often run on separate hosts and communicate using the hard-
+ware and software resources of a computer network. Networks are sophisticated
+systems, and we can only hope to scratch the surface here. Our aim is to give you
+a workable mental model from a programmer’s perspective.
+To a host, a network is just another I/O device that serves as a source and sink
+for data, as shown in Figure 11.2.
+Figure 11.2
+Hardware organization
+of a network host.
+CPU chip
+Register file
+ALU
+Bus interface
+I/O
+bridge
+System bus
+Memory bus
+Main
+memory
+I/O bus
+Expansion slots
+Disk
+controller
+Network
+adapter
+Network
+Graphics
+adapter
+Monitor
+Mouse Keyboard
+USB
+controller
+Disk

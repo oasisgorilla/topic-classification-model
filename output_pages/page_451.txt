@@ -1,0 +1,92 @@
+450
+Chapter 4
+Processor Architecture
+Clock
+Comb.
+logic
+A
+R
+e
+g
+(a) Hardware: Three-stage pipeline
+100 ps
+20 ps
+Comb.
+logic
+B
+R
+e
+g
+100 ps
+20 ps
+Comb.
+logic
+C
+R
+e
+g
+100 ps
+20 ps
+(b) Pipeline diagram
+Time
+Delay  360 ps
+Throughput  8.33 GIPS
+I1
+I2
+I3
+A
+B
+C
+A
+B
+C
+A
+B
+C
+Figure 4.33
+Three-stage pipelined computation hardware. The computation is split
+into stages A, B, and C. On each 120 ps cycle, each instruction progresses through one
+stage.
+Figure 4.34
+Three-stage pipeline
+timing. The rising edge of
+the clock signal controls the
+movement of instructions
+from one pipeline stage to
+the next.
+Clock
+I1
+I2
+I3
+120
+0
+240
+360
+Time
+480
+600
+A
+B
+C
+A
+B
+C
+A
+B
+C
+this system, we could cycle the clocks every 100 + 20 = 120 picoseconds, giving
+a throughput of around 8.33 GIPS. Since processing a single instruction requires
+3 clock cycles, the latency of this pipeline is 3 × 120 = 360 ps. We have increased
+the throughput of the system by a factor of 8.33/3.12 = 2.67 at the expense of
+some added hardware and a slight increase in the latency (360/320 = 1.12). The
+increased latency is due to the time overhead of the added pipeline registers.
+4.4.2
+A Detailed Look at Pipeline Operation
+To better understand how pipelining works, let us look in some detail at the timing
+and operation of pipeline computations. Figure 4.34 shows the pipeline diagram
+for the three-stage pipeline we have already looked at (Figure 4.33). The transfer
+of the instructions between pipeline stages is controlled by a clock signal, as shown
+above the pipeline diagram. Every 120 ps, this signal rises from 0 to 1, initiating
+the next set of pipeline stage evaluations.
+Figure 4.35 traces the circuit activity between times 240 and 360, as instruc-
+tion I1 (shown in dark gray) propagates through stage C, I2 (shown in blue)

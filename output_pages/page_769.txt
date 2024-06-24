@@ -1,0 +1,47 @@
+768
+Chapter 8
+Exceptional Control Flow
+8.2
+Processes
+Exceptions are the basic building blocks that allow the operating system kernel
+to provide the notion of a process, one of the most profound and successful ideas
+in computer science.
+When we run a program on a modern system, we are presented with the
+illusion that our program is the only one currently running in the system. Our
+program appears to have exclusive use of both the processor and the memory.
+The processor appears to execute the instructions in our program, one after the
+other, without interruption. Finally, the code and data of our program appear to
+be the only objects in the system’s memory. These illusions are provided to us by
+the notion of a process.
+The classic deﬁnition of a process is an instance of a program in execution.
+Each program in the system runs in the context of some process. The context
+consists of the state that the program needs to run correctly. This state includes the
+program’s code and data stored in memory, its stack, the contents of its general-
+purpose registers, its program counter, environment variables, and the set of open
+ﬁle descriptors.
+Each time a user runs a program by typing the name of an executable object
+ﬁle to the shell, the shell creates a new process and then runs the executable object
+ﬁle in the context of this new process. Application programs can also create new
+processes and run either their own code or other applications in the context of the
+new process.
+A detailed discussion of how operating systems implement processes is be-
+yond our scope. Instead, we will focus on the key abstractions that a process
+provides to the application:
+. An independent logical control ﬂow that provides the illusion that our pro-
+gram has exclusive use of the processor.
+. A private address space that provides the illusion that our program has exclu-
+sive use of the memory system.
+Let’s look more closely at these abstractions.
+8.2.1
+Logical Control Flow
+A process provides each program with the illusion that it has exclusive use of the
+processor, even though many other programs are typically running concurrently
+on the system. If we were to use a debugger to single-step the execution of
+our program, we would observe a series of program counter (PC) values that
+corresponded exclusively to instructions contained in our program’s executable
+object ﬁle or in shared objects linked into our program dynamically at run time.
+This sequence of PC values is known as a logical control ﬂow, or simply logical
+ﬂow.
+Consider a system that runs three processes, as shown in Figure 8.12. The
+single physical control ﬂow of the processor is partitioned into three logical ﬂows,
+one for each process. Each vertical line represents a portion of the logical ﬂow for

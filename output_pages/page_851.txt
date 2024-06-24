@@ -1,0 +1,56 @@
+850
+Chapter 9
+Virtual Memory
+Symbol
+Description
+Basic parameters
+N = 2n
+Number of addresses in virtual address space
+M = 2m
+Number of addresses in physical address space
+P = 2p
+Page size (bytes)
+Components of a virtual address (VA)
+VPO
+Virtual page offset (bytes)
+VPN
+Virtual page number
+TLBI
+TLB index
+TLBT
+TLB tag
+Components of a physical address (PA)
+PPO
+Physical page offset (bytes)
+PPN
+Physical page number
+CO
+Byte offset within cache block
+CI
+Cache index
+CT
+Cache tag
+Figure 9.11
+Summary of address translation symbols.
+that are important to hardware designers but are beyond our scope. For your
+reference, Figure 9.11 summarizes the symbols that we will be using throughout
+this section.
+Formally, address translation is a mapping between the elements of an N-
+element virtual address space (VAS) and an M-element physical address space
+(PAS),
+MAP: VAS →PAS ∪∅
+where
+MAP(A) =
+ A′
+if data at virtual addr. A are present at physical addr. A′ in PAS
+∅
+if data at virtual addr. A are not present in physical memory
+Figure 9.12 shows how the MMU uses the page table to perform this mapping.
+A control register in the CPU, the page table base register (PTBR) points to the
+current page table. The n-bit virtual address has two components: a p-bit virtual
+page offset (VPO) and an (n −p)-bit virtual page number (VPN). The MMU uses
+the VPN to select the appropriate PTE. For example, VPN 0 selects PTE 0, VPN 1
+selects PTE 1, and so on. The corresponding physical address is the concatenation
+of the physical page number (PPN) from the page table entry and the VPO from
+the virtual address. Notice that since the physical and virtual pages are both P
+bytes, the physical page offset (PPO) is identical to the VPO.

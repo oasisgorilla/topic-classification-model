@@ -1,0 +1,57 @@
+840
+Chapter 9
+Virtual Memory
+Figure 9.2
+A system that uses virtual
+addressing.
+Main memory
+0:
+1:
+2:
+3:
+4:
+5:
+6:
+7:
+Physical
+address
+(PA)
+Virtual
+address
+(VA)
+Address
+translation
+CPU
+CPU chip
+MMU
+4100
+4
+M1:
+Data word
+. . .
+With virtual addressing, the CPU accesses main memory by generating a vir-
+tual address (VA), which is converted to the appropriate physical address before
+being sent to main memory. The task of converting a virtual address to a physical
+one is known as address translation. Like exception handling, address translation
+requires close cooperation between the CPU hardware and the operating sys-
+tem. Dedicated hardware on the CPU chip called the memory management unit
+(MMU) translates virtual addresses on the ﬂy, using a lookup table stored in main
+memory whose contents are managed by the operating system.
+9.2
+Address Spaces
+An address space is an ordered set of nonnegative integer addresses
+{0, 1, 2, . . .}
+If the integers in the address space are consecutive, then we say that it is a linear
+address space. To simplify our discussion, we will always assume linear address
+spaces. In a system with virtual memory, the CPU generates virtual addresses from
+an address space of N = 2n addresses called the virtual address space:
+{0, 1, 2, . . . , N −1}
+The size of an address space is characterized by the number of bits that are
+needed to represent the largest address. For example, a virtual address space
+with N = 2n addresses is called an n-bit address space. Modern systems typically
+support either 32-bit or 64-bit virtual address spaces.
+A system also has a physical address space that corresponds to the M bytes of
+physical memory in the system:
+{0, 1, 2, . . . , M −1}
+M is not required to be a power of 2, but to simplify the discussion, we will assume
+that M = 2m.

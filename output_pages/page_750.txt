@@ -1,0 +1,43 @@
+Section 7.15
+Summary
+749
+7.14
+Tools for Manipulating Object Files
+There are a number of tools available on Linux systems to help you understand
+and manipulate object ﬁles. In particular, the GNU binutils package is especially
+helpful and runs on every Linux platform.
+ar. Creates static libraries, and inserts, deletes, lists, and extracts members.
+strings. Lists all of the printable strings contained in an object ﬁle.
+strip. Deletes symbol table information from an object ﬁle.
+nm. Lists the symbols deﬁned in the symbol table of an object ﬁle.
+size. Lists the names and sizes of the sections in an object ﬁle.
+readelf. Displays the complete structure of an object ﬁle, including all of the
+information encoded in the ELF header. Subsumes the functionality of
+size and nm.
+objdump. The mother of all binary tools. Can display all of the information in an
+object ﬁle. Its most useful function is disassembling the binary instructions
+in the .text section.
+Linux systems also provide the ldd program for manipulating shared libraries:
+ldd: Lists the shared libraries that an executable needs at run time.
+7.15
+Summary
+Linking can be performed at compile time by static linkers and at load time and run
+time by dynamic linkers. Linkers manipulate binary ﬁles called object ﬁles, which
+come in three different forms: relocatable, executable, and shared. Relocatable
+object ﬁles are combined by static linkers into an executable object ﬁle that can
+be loaded into memory and executed. Shared object ﬁles (shared libraries) are
+linked and loaded by dynamic linkers at run time, either implicitly when the calling
+program is loaded and begins executing, or on demand, when the program calls
+functions from the dlopen library.
+The two main tasks of linkers are symbol resolution, where each global symbol
+in an object ﬁle is bound to a unique deﬁnition, and relocation, where the ultimate
+memory address for each symbol is determined and where references to those
+objects are modiﬁed.
+Static linkers are invoked by compiler drivers such as gcc. They combine
+multiple relocatable object ﬁles into a single executable object ﬁle. Multiple object
+ﬁles can deﬁne the same symbol, and the rules that linkers use for silently resolving
+these multiple deﬁnitions can introduce subtle bugs in user programs.
+Multiple object ﬁles can be concatenated in a single static library. Linkers
+use libraries to resolve symbol references in other object modules. The left-to-
+right sequential scan that many linkers use to resolve symbol references is another
+source of confusing link-time errors.

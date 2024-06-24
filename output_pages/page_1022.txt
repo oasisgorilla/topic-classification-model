@@ -1,0 +1,45 @@
+Section 12.3
+Concurrent Programming with Threads
+1021
+Aside
+Event-driven Web servers
+Despite the disadvantages outlined in Section 12.2.2, modern high-performance servers such as Node.js,
+nginx, and Tornado use event-driven programming based on I/O multiplexing, mainly because of the
+signiﬁcant performance advantage compared to processes and threads.
+12.2.2
+Pros and Cons of I/O Multiplexing
+The server in Figure 12.8 provides a nice example of the advantages and disad-
+vantages of event-driven programming based on I/O multiplexing. One advantage
+is that event-driven designs give programmers more control over the behavior of
+their programs than process-based designs. For example, we can imagine writ-
+ing an event-driven concurrent server that gives preferred service to some clients,
+which would be difﬁcult for a concurrent server based on processes.
+Another advantage is that an event-driven server based on I/O multiplexing
+runs in the context of a single process, and thus every logical ﬂow has access to
+the entire address space of the process. This makes it easy to share data between
+ﬂows. A related advantage of running as a single process is that you can debug
+your concurrent server as you would any sequential program, using a familiar
+debugging tool such as gdb. Finally, event-driven designs are often signiﬁcantly
+more efﬁcient than process-based designs because they do not require a process
+context switch to schedule a new ﬂow.
+A signiﬁcant disadvantage of event-driven designs is coding complexity. Our
+event-driven concurrent echo server requires three times more code than the
+process-based server. Unfortunately, the complexity increases as the granularity
+of the concurrency decreases. By granularity, we mean the number of instructions
+that each logical ﬂow executes per time slice. For instance, in our example concur-
+rent server, the granularity of concurrency is the number of instructions required
+to read an entire text line. As long as some logical ﬂow is busy reading a text line,
+no other logical ﬂow can make progress. This is ﬁne for our example, but it makes
+our event-driven server vulnerable to a malicious client that sends only a partial
+text line and then halts. Modifying an event-driven server to handle partial text
+lines is a nontrivial task, but it is handled cleanly and automatically by a process-
+based design. Another signiﬁcant disadvantage of event-based designs is that they
+cannot fully utilize multi-core processors.
+12.3
+Concurrent Programming with Threads
+To this point, we have looked at two approaches for creating concurrent logical
+ﬂows. With the ﬁrst approach, we use a separate process for each ﬂow. The kernel
+schedules each process automatically, and each process has its own private address
+space, which makes it difﬁcult for ﬂows to share data. With the second approach,
+we create our own logical ﬂows and use I/O multiplexing to explicitly schedule
+the ﬂows. Because there is only one process, ﬂows share the entire address space.

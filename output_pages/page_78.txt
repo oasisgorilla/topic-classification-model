@@ -1,0 +1,42 @@
+Section 2.1
+Information Storage
+77
+New to C?
+Declaring pointers
+For any data type T , the declaration
+T *p;
+indicates that p is a pointer variable, pointing to an object of type T . For example,
+char *p;
+is the declaration of a pointer to an object of type char.
+sizes. Even when compiled for 64-bit systems, data type int is usually just 4 bytes.
+Data type long commonly has 4 bytes in 32-bit programs and 8 bytes in 64-bit
+programs.
+To avoid the vagaries of relying on “typical” sizes and different compiler set-
+tings, ISO C99 introduced a class of data types where the data sizes are ﬁxed
+regardless of compiler and machine settings. Among these are data types int32_t
+and int64_t, having exactly 4 and 8 bytes, respectively. Using ﬁxed-size integer
+types is the best way for programmers to have close control over data represen-
+tations.
+Most of the data types encode signed values, unless preﬁxed by the keyword
+unsigned or using the speciﬁc unsigned declaration for ﬁxed-size data types. The
+exception to this is data type char. Although most compilers and machines treat
+these as signed data, the C standard does not guarantee this. Instead, as indicated
+by the square brackets, the programmer should use the declaration signed char
+to guarantee a 1-byte signed value. In many contexts, however, the program’s
+behavior is insensitive to whether data type char is signed or unsigned.
+The C language allows a variety of ways to order the keywords and to include
+or omit optional keywords. As examples, all of the following declarations have
+identical meaning:
+unsigned long
+unsigned long int
+long unsigned
+long unsigned int
+We will consistently use the forms found in Figure 2.3.
+Figure 2.3 also shows that a pointer (e.g., a variable declared as being of
+type char *) uses the full word size of the program. Most machines also support
+two different ﬂoating-point formats: single precision, declared in C as float,
+and double precision, declared in C as double. These formats use 4 and 8 bytes,
+respectively.
+Programmers should strive to make their programs portable across different
+machines and compilers. One aspect of portability is to make the program insensi-
+tive to the exact sizes of the different data types. The C standards set lower bounds

@@ -1,0 +1,170 @@
+1102
+Index
+int [HCL] integer signal, 412
+int data types, integral, 97
+INT_MAX constant, maximum signed
+integer, 104
+INT_MIN constant, minimum signed
+integer, 104
+int32_t [Unix] ﬁxed-size, 77
+integer arithmetic, 120, 228
+division by powers of 2, 139–143
+multiplication by constants, 137–
+139
+overview, 143–144
+two’s complement addition, 126–131
+two’s complement multiplication,
+133–137
+two’s complement negation, 131
+unsigned addition, 120–126
+integer bits in ﬂoating-point
+representation, 173
+integer expressions in HCL, 412–416
+integer indeﬁnite values, 161
+integer operation instruction, 440
+integer registers in x86-64, 215–216
+integers, 68, 95–96
+arithmetic operations. See integer
+arithmetic
+bit-level operations, 90–92
+bit representation expansion, 112–116
+byte order, 79–80
+data types, 96–98
+shift operations, 93–95
+signed and unsigned conversions,
+106–112
+signed vs. unsigned guidelines,
+119–120
+truncating, 117–118
+two’s complement representation,
+100–106
+unsigned encoding, 98–100
+integral data types, 96, 96–98
+integration of caches and VM, 853
+Intel assembly-code format, 213, 330,
+347
+Intel Corporation, 201
+Intel microprocessors
+8086, 62, 203
+80286, 203
+Core 2, 204, 624
+Core i7. See Core i7 microproces-
+sors
+data alignment, 312
+evolution, 203–204
+ﬂoating-point representation, 173
+Haswell, 204, 251, 330, 559
+i386, 203
+i486, 203
+northbridge and southbridge
+chipsets, 624
+out-of-order processing, 558
+Pentium, 203
+Pentium II, 203
+Pentium III, 203–204
+Pentium 4, 204
+Pentium 4E, 204
+PentiumPro, 203, 558
+Sandy Bridge, 204
+x86-64. See x86-64 microprocessors
+Y86-64. See Y86-64 instruction set
+architecture
+interconnected networks (internets),
+957, 957–958
+interfaces
+bus, 624
+host bus, 633
+interlocks, load, 477
+internal exceptions in pipelining, 480
+internal fragmentation, 882
+internal read function, 937
+International Standards Organization
+(ISO), 40, 71
+Internet, 957
+connections, 965–967
+domain names, 963–965
+IP addresses, 961–963
+organization, 960–961
+origins, 967
+internet addresses, 958
+Internet Corporation for Assigned
+Names and Numbers (ICANN),
+963
+Internet domain names, 961
+Internet Domain Survey, 966
+Internet hosts, number of, 966
+Internet Protocol (IP), 960
+Internet Software Consortium, 966
+Internet worms, 320
+internets (interconnected networks),
+957, 957–958
+interpositioning libraries, 743, 743–
+744
+compile-time, 744–745
+link-time, 744, 746
+run-time, 746–748
+interpretation of bit patterns, 68
+interprocess communication (IPC),
+1013
+interrupt handlers, 762
+interruptions, 800
+interrupts, 762, 762–763
+interval counting schemes, 600
+INTN_MAX [C] maximum value of
+N-bit signed data type, 103
+INTN_MIN [C] minimum value of
+N-bit signed data type, 103
+intN_t [C] N-bit signed integer data
+type, 103
+<inttypes.h> ﬁxed-size integer
+types, 234
+invalid address status code, 400
+invariants, semaphore, 1038
+I/O (input/output), 45, 926
+memory-mapped, 634
+ports, 634
+redirection, 945, 945–946
+system-level. See system-level I/O
+Unix, 55, 926, 926–927
+I/O bridges, 623
+I/O buses, 624, 632, 634
+I/O devices, 45
+addressing, 634
+connecting, 632–633
+I/O multiplexing, 1009
+concurrent programming with,
+1014–1021
+event-driven servers based on,
+1016–1021
+pros and cons, 1021
+IOPL [Y86-64] instruction code for
+integer operation instruction,
+440
+IP (Internet Protocol), 960
+IP address structure, 961, 962
+IP addresses, 960, 961–963
+IPC (instructions per cycle), 507
+IPC (interprocess communication),
+1013
+iPhone 5S, 389
+IPOPQ [Y86-64] instruction code for
+popq instruction, 440
+IPUSHQ [Y86-64] instruction code for
+pushq instruction, 440
+IPv6, 961
+IRET [Y86-64] instruction code for
+ret instruction, 440
+IRMMOVQ [Y86-64] instruction code for
+rmmovq instruction, 440
+irmovq [Y86-64] immediate to register
+move, 392, 440
+IRRMOVQ [Y86-64] instruction code for
+rrmovq instruction, 440
+ISAs (instruction set architectures),
+46, 63, 206, 388
+ISO (International Standards
+Organization), 40, 71
+ISO C11 C standard, 71
+ISO C90 C standard, 71
+ISO C99 C standard, 71, 77, 360
+integral data types, 103

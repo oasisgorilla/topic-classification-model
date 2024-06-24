@@ -1,0 +1,166 @@
+Index
+1119
+v-node tables, 942
+V semaphore operation, 1037, 1037–
+1038
+VA. See virtual addresses (VA)
+vaddsd [x86-64] double-precision
+addition, 338
+vaddss [x86-64] single-precision
+addition, 338
+valgrind program, 605
+valid bit
+cache lines, 651
+page tables, 843
+values, pointers, 72, 313
+vandpd [x86-64] and packed double
+precision, 341
+vandps [x86-64] and packed single
+precision, 341
+variable-size stack frames, 326–329
+variable-size arrays, 298–301
+variables
+mapping, 1030–1031
+nonexistent, 910
+shared, 1028–1031, 1029
+storage classes, 1030–1031
+VAX computers (Digital Equipment
+Corporation), Boolean
+operations, 92
+vcvtps2pd [x86-64] convert packed
+single to packed double
+precision, 334
+vcvtsi2sd [x86-64] convert integer to
+double precision, 333
+vcvtsi2sdq [x86-64] convert quad-
+word integer to double precision,
+333
+vcvtsi2ss [x86-64] convert integer to
+single precision, 333
+vcvtsi2ssq [x86-64] convert quad-
+word integer to single precision,
+333
+vcvttsd2si [x86-64] convert double
+precision to integer, 333
+vcvttsd2siq [x86-64] convert double
+precision to quad-word integer,
+333
+vcvttss2si [x86-64] convert single
+precision to integer, 333
+vcvttss2siq [x86-64] convert single
+precision to quad-word integer,
+333
+vdivsd [x86-64] double-precision
+division, 338
+vdivss [x86-64] single-precision
+division, 338
+vector data types, 62, 540–543
+vector dot product function, 658
+vector registers, 207, 582
+vector sum function, 670, 671–672
+vectors, bit, 87, 87–88
+veriﬁcation in pipelining, 502
+Verilog hardware description language
+for logic design, 409
+Y86-64 pipelining implementation,
+503
+vertical bars || for or operation, 409
+VHDL hardware description
+language, 409
+victim blocks, 648
+Video RAM (VRAM), 622
+virtual address spaces, 54, 70, 840
+virtual addresses (VA)
+machine-level programming, 206–
+207
+vs. physical, 839–840
+Y86-64, 392
+virtual machines
+as abstraction, 63
+Java byte code, 346
+virtual memory (VM), 51, 54, 70,
+838
+as abstraction, 63
+address spaces, 840–841
+address translation. See address
+translation
+bugs, 906–911
+for caching, 841–847
+characteristics, 838–839
+Core i7, 861–864
+dynamic memory allocation. See
+dynamic memory allocation
+garbage collection, 901–906
+Linux, 866–869
+in loading, 735
+managing, 875
+mapping. See memory mapping
+for memory management, 847–848
+for memory protection, 848–849
+overview, 54–55
+physical vs. virtual addresses,
+839–840
+summary, 911–912
+virtual page numbers (VPNs), 850
+virtual page offset (VPO), 850
+virtual pages (VPs), 325, 841, 841–842
+viruses, 321–322
+VLOG implementation of Y86-64
+pipelining, 503
+VM. See virtual memory (VM)
+vmaxsd [x86-64] double-precision
+maximum, 338
+vmaxss [x86-64] single-precision
+maximum, 338
+vminsd [x86-64] double-precision
+minimum, 338
+vminss [x86-64] single-precision
+minimum, 338
+vmovapd [x86-64] move aligned,
+packed double precision, 332
+vmovaps [x86-64] move aligned,
+packed single precision, 332
+vmovsd [x86-64] move double
+precision, 332
+vmovss [x86-64] move single precision,
+332
+vmulsd [x86-64] double-precision
+multiplication, 338
+vmulss [x86-64] single-precision
+multiplication, 338
+void* [C] untyped pointers, 84
+volatile [C] volatile type qualiﬁer,
+805–806
+VP (virtual pages), 325, 841, 841–842
+VPNs (virtual page numbers), 850
+VPO (virtual page offset), 850
+VRAM (video RAM), 622
+vsubsd [x86-64] double-precision
+subtraction, 338
+vsubss [x86-64] single-precision
+subtraction, 338
+vtune program, 605
+vulnerabilities, security, 122–123
+vunpcklpd [x86-64] unpack and
+interleave low packed double
+precision, 334
+vunpcklps [x86-64] unpack and
+interleave low packed single
+precision, 334
+vxorpd [x86-64] exclusive-or packed
+double precision, 341
+vxorps [x86-64] exclusive-or packed
+single precision, 341
+wait [Unix] wait for child process, 782
+wait for child process functions, 780,
+782–785
+wait for client connection request
+function, 972, 972–973
+wait for signal instruction, 817
+wait.h ﬁle, 782
+wait sets, 780, 780
+waiting for signals, 814–817
+waitpid [Unix] wait for child process,
+779, 782–785
+waitpid1 [CS:APP] waitpid
+example, 783

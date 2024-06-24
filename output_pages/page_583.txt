@@ -1,0 +1,40 @@
+582
+Chapter 5
+Optimizing Program Performance
+For the line labeled “Product computation,” we can use parentheses to cre-
+ate ﬁve different associations of the computation, as follows:
+r = ((r * x) * y) * z; /* A1 */
+r = (r * (x * y)) * z; /* A2 */
+r = r * ((x * y) * z); /* A3 */
+r = r * (x * (y * z)); /* A4 */
+r = (r * x) * (y * z); /* A5 */
+Assume we run these functions on a machine where ﬂoating-point multiplication
+has a latency of 5 clock cycles. Determine the lower bound on the CPE set by
+the data dependencies of the multiplication. (Hint: It helps to draw a data-ﬂow
+representation of how r is computed on every iteration.)
+Web Aside OPT:SIMD
+Achieving greater parallelism with vector instructions
+As described in Section 3.1, Intel introduced the SSE instructions in 1999, where SSE is the acronym for
+“streaming SIMD extensions” and, in turn, SIMD (pronounced “sim-dee”) is the acronym for “single
+instruction, multiple data.” The SSE capability has gone through multiple generations, with more
+recent versions being named advanced vector extensions, or AVX. The SIMD execution model involves
+operating on entire vectors of data within single instructions. These vectors are held in a special set of
+vector registers, named %ymm0–%ymm15. Current AVX vector registers are 32 bytes long, and therefore
+each can hold eight 32-bit numbers or four 64-bit numbers, where the numbers can be either integer
+or ﬂoating-point values. AVX instructions can then perform vector operations on these registers, such
+as adding or multiplying eight or four sets of values in parallel. For example, if YMM register %ymm0
+contains eight single-precision ﬂoating-point numbers, which we denote a0, . . . , a7, and %rcx contains
+the memory address of a sequence of eight single-precision ﬂoating-point numbers, which we denote
+b0, . . . , b7, then the instruction
+vmulps
+(%rcs), %ymm0, %ymm1
+will read the eight values from memory and perform eight multiplications in parallel, computing
+ai ←ai . bi, for 0 ≤i ≤7 and storing the resulting eight products in vector register %ymm1. We see
+that a single instruction is able to generate a computation over multiple data values, hence the term
+“SIMD.”
+gcc supports extensions to the C language that let programmers express a program in terms of
+vector operations that can be compiled into the vector instructions of AVX (as well as code based
+on the earlier SSE instructions). This coding style is preferable to writing code directly in assembly
+language, since gcc can also generate code for the vector instructions found on other processors.
+Using a combination of gcc instructions, loop unrolling, and multiple accumulators, we are able to
+achieve the following performance for our combining functions:

@@ -1,0 +1,51 @@
+736
+Chapter 7
+Linking
+Figure 7.16
+Dynamic linking with
+shared libraries.
+main2.c
+libc.so
+libvector.so
+libc.so
+libvector.so
+main2.o
+prog2l
+Translators
+(cpp,cc1,as)
+Linker (ld)
+Fully linked
+executable in memory
+Partially linked
+executable object file
+vector.h
+Loader
+(execve)
+Dynamic linker (ld-linux.so)
+Relocatable
+object file
+Relocation and
+symbol table info
+Code and data
+object ﬁle. Once we have created the library, we would then link it into our example
+program in Figure 7.7:
+linux> gcc -o prog2l main2.c ./libvector.so
+This creates an executable object ﬁle prog2l in a form that can be linked with
+libvector.so at run time. The basic idea is to do some of the linking statically
+when the executable ﬁle is created, and then complete the linking process dynami-
+cally when the program is loaded. It is important to realize that none of the code or
+data sections from libvector.so are actually copied into the executable prog2l
+at this point. Instead, the linker copies some relocation and symbol table informa-
+tion that will allow references to code and data in libvector.so to be resolved
+at load time.
+When the loader loads and runs the executable prog2l, it loads the partially
+linked executable prog2l, using the techniques discussed in Section 7.9. Next, it
+notices that prog2l contains a .interp section, which contains the path name of
+the dynamic linker, which is itself a shared object (e.g., ld-linux.so on Linux
+systems). Instead of passing control to the application, as it would normally do,
+the loader loads and runs the dynamic linker. The dynamic linker then ﬁnishes the
+linking task by performing the following relocations:
+. Relocating the text and data of libc.so into some memory segment
+. Relocating the text and data of libvector.so into another memory segment
+. Relocating any references in prog2l to symbols deﬁned by libc.so and
+libvector.so

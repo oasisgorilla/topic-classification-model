@@ -1,0 +1,56 @@
+Solutions to Practice Problems
+613
+long v2 = src2[i2];
+long take1 = v1 < v2;
+dest[id++] = take1 ? v1 : v2;
+i1 += take1;
+i2 += (1-take1);
+}
+We measured a CPE of around 12.0 for this version of the code, a modest improve-
+ment over the original CPE of 15.0.
+Solution to Problem 5.10 (page 595)
+This problem requires you to analyze the potential load-store interactions in a
+program.
+A. It will set each element a[i] to i + 1, for 0 ≤i ≤998.
+B. It will set each element a[i] to 0, for 1 ≤i ≤999.
+C. In the second case, the load of one iteration depends on the result of the store
+from the previous iteration. Thus, there is a write/read dependency between
+successive iterations.
+D. It will give a CPE of 1.2, the same as for Example A, since there are no
+dependencies between stores and subsequent loads.
+Solution to Problem 5.11 (page 597)
+We can see that this function has a write/read dependency between successive
+iterations—the destination value p[i] on one iteration matches the source value
+p[i-1] on the next. A critical path is therefore formed for each iteration consisting
+of a store (from the previous iteration), a load, and a ﬂoating-point addition.
+The CPE measurement of 9.0 is consistent with our measurement of 7.3 for the
+CPE of write_read when there is a data dependency, since write_read involves
+an integer addition (1 clock-cycle latency), while psum1 involves a ﬂoating-point
+addition (3 clock-cycle latency).
+Solution to Problem 5.12 (page 597)
+Here is a revised version of the function:
+1
+void psum1a(float a[], float p[], long n)
+2
+{
+3
+long i;
+4
+/* last_val holds p[i-1]; val holds p[i] */
+5
+float last_val, val;
+6
+last_val = p[0] = a[0];
+7
+for (i = 1; i < n; i++) {
+8
+val
+= last_val + a[i];
+9
+p[i] = val;
+10
+last_val = val;
+11
+}
+12
+}

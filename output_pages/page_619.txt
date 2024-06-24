@@ -1,0 +1,62 @@
+618
+Chapter 6
+The Memory Hierarchy
+Transistors
+Relative
+Relative
+per bit
+access time
+Persistent?
+Sensitive?
+cost
+Applications
+SRAM
+6
+1×
+Yes
+No
+1,000×
+Cache memory
+DRAM
+1
+10×
+No
+Yes
+1×
+Main memory, frame buffers
+Figure 6.2
+Characteristics of DRAM and SRAM memory.
+Dynamic RAM
+DRAM stores each bit as charge on a capacitor. This capacitor is very small—
+typically around 30 femtofarads—that is, 30 × 10−15 farads. Recall, however, that
+a farad is a very large unit of measure. DRAM storage can be made very dense—
+each cell consists of a capacitor and a single access transistor. Unlike SRAM,
+however, a DRAM memory cell is very sensitive to any disturbance. When the
+capacitor voltage is disturbed, it will never recover. Exposure to light rays will
+cause the capacitor voltages to change. In fact, the sensors in digital cameras and
+camcorders are essentially arrays of DRAM cells.
+Various sources of leakage current cause a DRAM cell to lose its charge
+within a time period of around 10 to 100 milliseconds. Fortunately, for computers
+operating with clock cycle times measured in nanoseconds, this retention time is
+quite long. The memory system must periodically refresh every bit of memory by
+reading it out and then rewriting it. Some systems also use error-correcting codes,
+where the computer words are encoded using a few more bits (e.g., a 64-bit word
+might be encoded using 72 bits), such that circuitry can detect and correct any
+single erroneous bit within a word.
+Figure 6.2 summarizes the characteristics of SRAM and DRAM memory.
+SRAM is persistent as long as power is applied. Unlike DRAM, no refresh is
+necessary. SRAM can be accessed faster than DRAM. SRAM is not sensitive to
+disturbances such as light and electrical noise. The trade-off is that SRAM cells
+use more transistors than DRAM cells and thus have lower densities, are more
+expensive, and consume more power.
+Conventional DRAMs
+The cells (bits) in a DRAM chip are partitioned into d supercells, each consisting
+of w DRAM cells. A d × w DRAM stores a total of dw bits of information. The
+supercells are organized as a rectangular array with r rows and c columns, where
+rc = d. Each supercell has an address of the form (i, j), where i denotes the row
+and j denotes the column.
+For example, Figure 6.3 shows the organization of a 16 × 8 DRAM chip with
+d = 16 supercells, w = 8 bits per supercell, r = 4 rows, and c = 4 columns. The
+shaded box denotes the supercell at address (2, 1). Information ﬂows in and out
+of the chip via external connectors called pins. Each pin carries a 1-bit signal.
+Figure 6.3 shows two of these sets of pins: eight data pins that can transfer 1 byte

@@ -1,0 +1,55 @@
+1078
+Appendix A
+Error Handling
+A.1
+Error Handling in Unix Systems
+The systems-level function calls that we will encounter in this book use three
+different styles for returning errors: Unix-style, Posix-style, and GAI-style.
+Unix-Style Error Handling
+Functions such as fork and wait that were developed in the early days of Unix (as
+well as some older Posix functions) overload the function return value with both
+error codes and useful results. For example, when the Unix-style wait function
+encounters an error (e.g., there is no child process to reap), it returns −1 and sets
+the global variable errno to an error code that indicates the cause of the error. If
+wait completes successfully, then it returns the useful result, which is the PID of
+the reaped child. Unix-style error-handling code is typically of the following form:
+1
+if ((pid = wait(NULL)) < 0) {
+2
+fprintf(stderr, "wait error: %s\n", strerror(errno));
+3
+exit(0);
+4
+}
+The strerror function returns a text description for a particular value of
+errno.
+Posix-Style Error Handling
+Many of the newer Posix functions such as Pthreads use the return value only
+to indicate success (zero) or failure (nonzero). Any useful results are returned
+in function arguments that are passed by reference. We refer to this approach as
+Posix-style error handling. For example, the Posix-style pthread_create function
+indicates success or failure with its return value and returns the ID of the newly
+created thread (the useful result) by reference in its ﬁrst argument. Posix-style
+error-handling code is typically of the following form:
+1
+if ((retcode = pthread_create(&tid, NULL, thread, NULL)) != 0) {
+2
+fprintf(stderr, "pthread_create error: %s\n", strerror(retcode));
+3
+exit(0);
+4
+}
+The strerror function returns a text description for a particular value of
+retcode.
+GAI-Style Error Handling
+The getaddrinfo (GAI) and getnameinfo functions return zero on success and
+a nonzero value on failure. GAI error-handling code is typically of the follow-
+ing form:
+1
+if ((retcode = getaddrinfo(host, service, &hints, &result)) != 0) {
+2
+fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(retcode));
+3
+exit(0);
+4
+}

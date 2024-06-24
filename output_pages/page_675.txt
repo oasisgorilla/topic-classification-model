@@ -1,0 +1,62 @@
+674
+Chapter 6
+The Memory Hierarchy
+Determine the cache performance for the following code:
+1
+for (i = 31; i >= 0; i--) {
+2
+for (j = 31; j >= 0; j--) {
+3
+total_x += grid[i][j].x;
+4
+}
+5
+}
+6
+7
+for (i = 31; i >= 0; i--) {
+8
+for (j = 31; j >= 0; j--) {
+9
+total_y += grid[i][j].y;
+10
+}
+11
+}
+A. What is the total number of reads?
+B. What is the total number of reads that miss in the cache?
+C. What is the miss rate?
+Practice Problem 6.19 (solution page 702)
+Given the assumptions of Practice Problem 6.18, determine the cache perfor-
+mance of the following code:
+1
+for (i = 31; i >= 0; i--){
+2
+for (j = 31; j >= 0; j--) {
+3
+total_x += grid[j][i].x;
+4
+total_y += grid[j][i].y;
+5
+}
+6
+}
+A. What is the total number of reads?
+B. What is the total number of reads that hit in the cache?
+C. What is the hit rate?
+D. What would the miss hit be if the cache were twice as big?
+Practice Problem 6.20 (solution page 702)
+Given the assumptions of Practice Problem 6.18, determine the cache perfor-
+mance of the following code:
+1
+for (i = 31; i >= 0; i--){
+2
+for (j = 31; j >= 0; j--) {
+3
+total_x += grid[i][j].x;
+4
+total_y += grid[i][j].y;
+5
+}
+6
+}

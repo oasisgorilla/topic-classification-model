@@ -1,0 +1,64 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+495
+instruction is in the execute stage, so that it can set up the conditions required to
+recover from the misprediction as the instruction enters the memory stage. When a
+jump instruction is in the execute stage, the signal e_Cnd indicates whether or not
+the jump should be taken. We detect an excepting instruction by examining the
+instruction status values in the memory and write-back stages. For the memory
+stage, we use the signal m_stat, computed within the stage, rather than M_stat
+from the pipeline register. This internal signal incorporates the possibility of a
+data memory address error.
+Pipeline Control Mechanisms
+Figure 4.65 shows low-level mechanisms that allow the pipeline control logic to
+hold back an instruction in a pipeline register or to inject a bubble into the pipeline.
+These mechanisms involve small extensions to the basic clocked register described
+x
+y
+x
+x
+n
+o
+p
+x
+State = x
+(a) Normal
+State = y
+Input = y
+stall
+= 0
+bubble
+= 0
+Output = x
+Output = y
+Rising
+clock
+State = x
+(b) Stall
+State = x
+Input = y
+stall
+= 1
+bubble
+= 0
+Output = x
+Output = x
+Rising
+clock
+State = x
+(c) Bubble
+State = nop
+Input = y
+stall
+= 0
+bubble
+= 1
+Output = x
+Output = nop
+Rising
+clock
+Figure 4.65
+Additional pipeline register operations. (a) Under normal conditions,
+the state and output of the register are set to the value at the input when the clock rises.
+(b) When operated in stall mode, the state is held ﬁxed at its previous value. (c) When
+operated in bubble mode, the state is overwritten with that of a nop operation.

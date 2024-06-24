@@ -1,0 +1,39 @@
+Section 4.3
+Sequential Y86-64 Implementations
+445
+icode in { ICALL, IPUSHQ } : -8;
+icode in { IRET, IPOPQ } : 8;
+# Other instructions don’t need ALU
+];
+Practice Problem 4.23 (solution page 524)
+Based on the ﬁrst operand of the ﬁrst step of the execute stage in Figures 4.18 to
+4.21, write an HCL description for the signal aluB in SEQ.
+Looking at the operations performed by the ALU in the execute stage, we
+can see that it is mostly used as an adder. For the OPq instructions, however, we
+want it to use the operation encoded in the ifun ﬁeld of the instruction. We can
+therefore write the HCL description for the ALU control as follows:
+word alufun = [
+icode == IOPQ : ifun;
+1 : ALUADD;
+];
+The execute stage also includes the condition code register. Our ALU gen-
+erates the three signals on which the condition codes are based—zero, sign, and
+overﬂow—every time it operates. However, we only want to set the condition
+codes when an OPq instruction is executed. We therefore generate a signal set_cc
+that controls whether or not the condition code register should be updated:
+bool set_cc = icode in { IOPQ };
+The hardware unit labeled “cond” uses a combination of the condition codes
+and the function code to determine whether a conditional branch or data transfer
+should take place (Figure 4.3). It generates the Cnd signal used both for the setting
+of dstE with conditional moves and in the next PC logic for conditional branches.
+For other instructions, the Cnd signal may be set to either 1 or 0, depending on
+the instruction’s function code and the setting of the condition codes, but it will
+be ignored by the control logic. We omit the detailed design of this unit.
+Practice Problem 4.24 (solution page 524)
+The conditional move instructions, abbreviated cmovXX, have instruction code
+IRRMOVQ. As Figure 4.28 shows, we can implement these instructions by making
+use of the Cnd signal, generated in the execute stage. Modify the HCL code for
+dstE to implement these instructions.
+Memory Stage
+The memory stage has the task of either reading or writing program data. As
+shown in Figure 4.30, two control blocks generate the values for the memory

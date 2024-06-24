@@ -1,0 +1,49 @@
+1016
+Chapter 12
+Concurrent Programming
+become ready for reading:
+listenfd
+stdin
+ready_set ({0}):
+0
+3
+0
+2
+0
+1
+1
+0
+Once select returns, we use the FD_ISSET macro to determine which de-
+scriptors are ready for reading. If standard input is ready (line 25), we call the
+command function, which reads, parses, and responds to the command before re-
+turning to the main routine. If the listening descriptor is ready (line 27), we call
+accept to get a connected descriptor and then call the echo function from Fig-
+ure 11.22, which echoes each line from the client until the client closes its end of
+the connection.
+While this program is a good example of using select, it still leaves something
+to be desired. The problem is that once it connects to a client, it continues echoing
+input lines until the client closes its end of the connection. Thus, if you type a
+command to standard input, you will not get a response until the server is ﬁnished
+with the client. A better approach would be to multiplex at a ﬁner granularity,
+echoing (at most) one text line each time through the server loop.
+Practice Problem 12.3 (solution page 1072)
+In Linux systems, typing Ctrl+D indicates EOF on standard input. What happens
+if you type Ctrl+D to the program in Figure 12.6 while it is echoing each line of
+the client?
+12.2.1
+A Concurrent Event-Driven Server Based on I/O Multiplexing
+I/O multiplexing can be used as the basis for concurrent event-driven programs,
+where ﬂows make progress as a result of certain events. The general idea is to
+model logical ﬂows as state machines. Informally, a state machine is a collection of
+states, input events, and transitions that map states and input events to states. Each
+transition maps an (input state, input event) pair to an output state. A self-loop is
+a transition between the same input and output state. State machines are typically
+drawn as directed graphs, where nodes represent states, directed arcs represent
+transitions, and arc labels represent input events. A state machine begins execution
+in some initial state. Each input event triggers a transition from the current state
+to the next state.
+For each new client k, a concurrent server based on I/O multiplexing creates
+a new state machine sk and associates it with connected descriptor dk. As shown
+in Figure 12.7, each state machine sk has one state (“waiting for descriptor dk to
+be ready for reading”), one input event (“descriptor dk is ready for reading”), and
+one transition (“read a text line from descriptor dk”).

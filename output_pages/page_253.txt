@@ -1,0 +1,42 @@
+252
+Chapter 3
+Machine-Level Representation of Programs
+Aside
+How did you determine this penalty?
+Assume the probability of misprediction is p, the time to execute the code without misprediction is
+TOK, and the misprediction penalty is TMP. Then the average time to execute the code as a function of
+p is Tavg(p) = (1 −p)TOK + p(TOK + TMP) = TOK + pTMP. We are given TOK and Tran, the average time
+when p = 0.5, and we want to determine TMP. Substituting into the equation, we get Tran = Tavg(0.5) =
+TOK + 0.5TMP, and therefore TMP = 2(Tran −TOK). So, for TOK = 8 and Tran = 17.5, we get TMP = 19.
+On the other hand, the code compiled using conditional moves requires
+around 8 clock cycles regardless of the data being tested. The ﬂow of control
+does not depend on data, and this makes it easier for the processor to keep its
+pipeline full.
+Practice Problem 3.19 (solution page 368)
+Running on a new processor model, our code required around 45 cycles when the
+branching pattern was random, and around 25 cycles when the pattern was highly
+predictable.
+A. What is the approximate miss penalty?
+B. How many cycles would the function require when the branch is mispre-
+dicted?
+Figure 3.18 illustrates some of the conditional move instructions available with
+x86-64. Each of these instructions has two operands: a source register or memory
+location S, and a destination register R. As with the different set (Section 3.6.2)
+and jump (Section 3.6.3) instructions, the outcome of these instructions depends
+on the values of the condition codes. The source value is read from either memory
+or the source register, but it is copied to the destination only if the speciﬁed
+condition holds.
+The source and destination values can be 16, 32, or 64 bits long. Single-
+byte conditional moves are not supported. Unlike the unconditional instructions,
+where the operand length is explicitly encoded in the instruction name (e.g., movw
+and movl), the assembler can infer the operand length of a conditional move
+instruction from the name of the destination register, and so the same instruction
+name can be used for all operand lengths.
+Unlike conditional jumps, the processor can execute conditional move in-
+structions without having to predict the outcome of the test. The processor simply
+reads the source value (possibly from memory), checks the condition code, and
+then either updates the destination register or keeps it the same. We will explore
+the implementation of conditional moves in Chapter 4.
+To understand how conditional operations can be implemented via condi-
+tional data transfers, consider the following general form of conditional expression
+and assignment:

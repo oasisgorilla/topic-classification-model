@@ -1,0 +1,60 @@
+Section 6.3
+The Memory Hierarchy
+647
+Aside
+Other memory hierarchies
+We have shown you one example of a memory hierarchy, but other combinations are possible, and
+indeed common. For example, many sites, including Google datacenters, back up local disks onto
+archival magnetic tapes. At some of these sites, human operators manually mount the tapes onto tape
+drives as needed. At other sites, tape robots handle this task automatically. In either case, the collection
+of tapes represents a level in the memory hierarchy, below the local disk level, and the same general
+principles apply. Tapes are cheaper per byte than disks, which allows sites to archive multiple snapshots
+of their local disks. The trade-off is that tapes take longer to access than disks. As another example,
+solid state disks are playing an increasingly important role in the memory hierarchy, bridging the gulf
+between DRAM and rotating disk.
+4
+9
+14
+3
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+Level k:
+Level k + 1:
+Smaller, faster, more expensive
+device at level k caches a
+subset of the blocks from level k + 1.
+Larger, slower, cheaper storage
+device at level k + 1 is partitioned
+into blocks. 
+Data are copied between
+levels in block-size transfer units.
+Figure 6.22
+The basic principle of caching in a memory hierarchy.
+at level k + 1. In other words, each level in the hierarchy caches data objects from
+the next lower level. For example, the local disk serves as a cache for ﬁles (such
+as Web pages) retrieved from remote disks over the network, the main memory
+serves as a cache for data on the local disks, and so on, until we get to the smallest
+cache of all, the set of CPU registers.
+Figure 6.22 shows the general concept of caching in a memory hierarchy. The
+storage at level k + 1 is partitioned into contiguous chunks of data objects called
+blocks. Each block has a unique address or name that distinguishes it from other
+blocks. Blocks can be either ﬁxed size (the usual case) or variable size (e.g., the
+remote HTML ﬁles stored on Web servers). For example, the level k + 1 storage
+in Figure 6.22 is partitioned into 16 ﬁxed-size blocks, numbered 0 to 15.
+Similarly, the storage at level k is partitioned into a smaller set of blocks that
+are the same size as the blocks at level k + 1. At any point in time, the cache at
+level k contains copies of a subset of the blocks from level k + 1. For example, in

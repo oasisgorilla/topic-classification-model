@@ -1,0 +1,47 @@
+Section 6.1
+Storage Technologies
+623
+A programmable ROM (PROM) can be programmed exactly once. PROMs
+include a sort of fuse with each memory cell that can be blown once by zapping it
+with a high current.
+An erasable programmable ROM (EPROM)has a transparent quartz window
+that permits light to reach the storage cells. The EPROM cells are cleared to zeros
+by shining ultraviolet light through the window. Programming an EPROM is done
+by using a special device to write ones into the EPROM. An EPROM can be
+erased and reprogrammed on the order of 1,000 times. An electrically erasable
+PROM (EEPROM) is akin to an EPROM, but it does not require a physically
+separate programming device, and thus can be reprogrammed in-place on printed
+circuit cards. An EEPROM can be reprogrammed on the order of 105 times before
+it wears out.
+Flash memory is a type of nonvolatile memory, based on EEPROMs, that
+has become an important storage technology. Flash memories are everywhere,
+providing fast and durable nonvolatile storage for a slew of electronic devices,
+including digital cameras, cell phones, and music players, as well as laptop, desktop,
+and server computer systems. In Section 6.1.3, we will look in detail at a new form
+of ﬂash-based disk drive, known as a solid state disk (SSD), that provides a faster,
+sturdier, and less power-hungry alternative to conventional rotating disks.
+Programs stored in ROM devices are often referred to as ﬁrmware. When a
+computer system is powered up, it runs ﬁrmware stored in a ROM. Some systems
+provide a small set of primitive input and output functions in ﬁrmware—for
+example, a PC’s BIOS (basic input/output system) routines. Complicated devices
+such as graphics cards and disk drive controllers also rely on ﬁrmware to translate
+I/O (input/output) requests from the CPU.
+Accessing Main Memory
+Data ﬂows back and forth between the processor and the DRAM main memory
+over shared electrical conduits called buses. Each transfer of data between the
+CPU and memory is accomplished with a series of steps called a bus transaction.
+A read transaction transfers data from the main memory to the CPU. A write
+transaction transfers data from the CPU to the main memory.
+A bus is a collection of parallel wires that carry address, data, and control
+signals. Depending on the particular bus design, data and address signals can share
+the same set of wires or can use different sets. Also, more than two devices can
+share the same bus. The control wires carry signals that synchronize the transaction
+and identify what kind of transaction is currently being performed. For example,
+is this transaction of interest to the main memory, or to some other I/O device
+such as a disk controller? Is the transaction a read or a write? Is the information
+on the bus an address or a data item?
+Figure 6.6 shows the conﬁguration of an example computer system. The main
+components are the CPU chip, a chipset that we will call an I/O bridge (which
+includes the memory controller), and the DRAM memory modules that make up
+main memory. These components are connected by a pair of buses: a system bus
+that connects the CPU to the I/O bridge, and a memory bus that connects the I/O

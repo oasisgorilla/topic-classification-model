@@ -1,0 +1,67 @@
+332
+Chapter 3
+Machine-Level Representation of Programs
+Instruction
+Source
+Destination
+Description
+vmovss
+M32
+X
+Move single precision
+vmovss
+X
+M32
+Move single precision
+vmovsd
+M64
+X
+Move double precision
+vmovsd
+X
+M64
+Move double precision
+vmovaps
+X
+X
+Move aligned, packed single precision
+vmovapd
+X
+X
+Move aligned, packed double precision
+Figure 3.46
+Floating-point movement instructions. These operations transfer values
+between memory and registers, as well as between pairs of registers. (X: XMM register
+(e.g., %xmm3); M32: 32-bit memory range; M64: 64-bit memory range)
+3.11.1
+Floating-Point Movement and Conversion Operations
+Figure 3.46 shows a set of instructions for transferring ﬂoating-point data between
+memory and XMM registers, as well as from one XMM register to another without
+any conversions. Those that reference memory are scalar instructions, meaning
+that they operate on individual, rather than packed, data values. The data are
+held either in memory (indicated in the table as M32 and M64) or in XMM registers
+(shown in the table as X). These instructions will work correctly regardless of the
+alignment of data, although the code optimization guidelines recommend that 32-
+bit memory data satisfy a 4-byte alignment and that 64-bit data satisfy an 8-byte
+alignment. Memory references are speciﬁed in the same way as for the integer mov
+instructions, with all of the different possible combinations of displacement, base
+register, index register, and scaling factor.
+Gcc uses the scalar movement operations only to transfer data from memory
+to an XMM register or from an XMM register to memory. For transferring data
+between two XMM registers, it uses one of two different instructions for copying
+the entire contents of one XMM register to another—namely, vmovaps for single-
+precision and vmovapd for double-precision values. For these cases, whether the
+program copies the entire register or just the low-order value affects neither the
+program functionality nor the execution speed, and so using these instructions
+rather than ones speciﬁc to scalar data makes no real difference. The letter ‘a’
+in these instruction names stands for “aligned.” When used to read and write
+memory, they will cause an exception if the address does not satisfy a 16-byte
+alignment. For transferring between two registers, there is no possibility of an
+incorrect alignment.
+As an example of the different ﬂoating-point move operations, consider the
+C function
+float float_mov(float v1, float *src, float *dst) {
+float v2 = *src;
+*dst = v1;
+return v2;
+}

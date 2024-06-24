@@ -1,0 +1,47 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+493
+Figure 4.55, we see that our implementation achieves the desired effect, but with
+a slightly peculiar fetching of an incorrect instruction for three consecutive cycles.
+When a mispredicted branch occurs, we have described the desired pipeline
+operation in Section 4.5.5 and illustrated it in Figure 4.56. The misprediction will
+be detected as the jump instruction reaches the execute stage. The control logic
+then injects bubbles into the decode and execute stages on the next cycle, causing
+the two incorrectly fetched instructions to be canceled. On the same cycle, the
+pipeline reads the correct instruction into the fetch stage.
+For an instruction that causes an exception, we must make the pipelined im-
+plementation match the desired ISA behavior, with all prior instructions complet-
+ing and with none of the following instructions having any effect on the program
+state. Achieving these effects is complicated by the facts that (1) exceptions are
+detected during two different stages (fetch and memory) of program execution,
+and (2) the program state is updated in three different stages (execute, memory,
+and write-back).
+Our stage designs include a status code stat in each pipeline register to track
+the status of each instruction as it passes through the pipeline stages. When an
+exception occurs, we record that information as part of the instruction’s status and
+continue fetching, decoding, and executing instructions as if nothing were amiss.
+As the excepting instruction reaches the memory stage, we take steps to prevent
+later instructions from modifying the programmer-visible state by (1) disabling
+the setting of condition codes by instructions in the execute stage, (2) injecting
+bubbles into the memory stage to disable any writing to the data memory, and (3)
+stalling the write-back stage when it has an excepting instruction, thus bringing
+the pipeline to a halt.
+The pipeline diagram in Figure 4.63 illustrates how our pipeline control han-
+dles the situation where an instruction causing an exception is followed by one that
+would change the condition codes. On cycle 6, the pushq instruction reaches the
+memory stage and generates a memory error. On the same cycle, the addq instruc-
+tion in the execute stage generates new values for the condition codes. We disable
+the setting of condition codes when an excepting instruction is in the memory or
+write-back stage (by examining the signals m_stat and W_stat and then setting the
+signal set_cc to zero). We can also see the combination of injecting bubbles into the
+memory stage and stalling the excepting instruction in the write-back stage in the
+example of Figure 4.63—the pushq instruction remains stalled in the write-back
+stage, and none of the subsequent instructions get past the execute stage.
+By this combination of pipelining the status signals, controlling the setting of
+condition codes, and controlling the pipeline stages, we achieve the desired behav-
+ior for exceptions: all instructions prior to the excepting instruction are completed,
+while none of the following instructions has any effect on the programmer-visible
+state.
+Detecting Special Control Conditions
+Figure 4.64 summarizes the conditions requiring special pipeline control. It gives
+expressions describing the conditions under which the three special cases arise.

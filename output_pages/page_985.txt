@@ -1,0 +1,38 @@
+984
+Chapter 11
+Network Programming
+Aside
+What does EOF on a connection mean?
+The idea of EOF is often confusing to students, especially in the context of Internet connections. First,
+we need to understand that there is no such thing as an EOF character. Rather, EOF is a condition that
+is detected by the kernel. An application ﬁnds out about the EOF condition when it receives a zero
+return code from the read function. For disk ﬁles, EOF occurs when the current ﬁle position exceeds
+the ﬁle length. For Internet connections, EOF occurs when a process closes its end of the connection.
+The process at the other end of the connection detects the EOF when it attempts to read past the last
+byte in the stream.
+11.5
+Web Servers
+So far we have discussed network programming in the context of a simple echo
+server. In this section, we will show you how to use the basic ideas of network
+programming to build your own small, but quite functional, Web server.
+11.5.1
+Web Basics
+Web clients and servers interact using a text-based application-level protocol
+known as HTTP (hypertext transfer protocol). HTTP is a simple protocol. A Web
+client (known as a browser) opens an Internet connection to a server and requests
+some content. The server responds with the requested content and then closes the
+connection. The browser reads the content and displays it on the screen.
+What distinguishes Web services from conventional ﬁle retrieval services such
+as FTP? The main difference is that Web content can be written in a language
+known as HTML (hypertext markup language). An HTML program (page) con-
+tains instructions (tags) that tell the browser how to display various text and
+graphical objects in the page. For example, the code
+<b> Make me bold! </b>
+tells the browser to print the text between the <b> and </b> tags in boldface type.
+However, the real power of HTML is that a page can contain pointers (hyperlinks)
+to content stored on any Internet host. For example, an HTML line of the form
+<a href="http://www.cmu.edu/index.html">Carnegie Mellon</a>
+tells the browser to highlight the text object Carnegie Mellon and to create a
+hyperlink to an HTML ﬁle called index.html that is stored on the CMU Web
+server. If the user clicks on the highlighted text object, the browser requests the
+corresponding HTML ﬁle from the CMU server and displays it.

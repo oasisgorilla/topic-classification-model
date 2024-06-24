@@ -1,0 +1,65 @@
+694
+Chapter 6
+The Memory Hierarchy
+A. What is the total number of writes?
+B. What is the total number of writes that hit in the cache?
+C. What is the hit rate?
+6.40 ◆
+Given the assumptions in Problem 6.38, determine the cache performance of the
+following code:
+1
+for (i = 15; i >= 0; i--) {
+2
+for (j = 15; j >= 0; j--) {
+3
+square[i][j].y = 1;
+4
+}
+5
+}
+6
+for (i = 15; i >= 0; i--) {
+7
+for (j = 15; j >= 0; j--) {
+8
+square[i][j].c = 0;
+9
+square[i][j].m = 0;
+10
+square[i][j].k = 0;
+11
+}
+12
+}
+A. What is the total number of writes?
+B. What is the total number of writes that hit in the cache?
+C. What is the hit rate?
+6.41 ◆◆
+You are writing a new 3D game that you hope will earn you fame and fortune. You
+are currently working on a function to blank the screen buffer before drawing the
+next frame. The screen you are working with is a 640 × 480 array of pixels. The
+machine you are working on has a 32 KB direct-mapped cache with 8-byte lines.
+The C structures you are using are as follows:
+1
+struct pixel {
+2
+char r;
+3
+char g;
+4
+char b;
+5
+char a;
+6
+};
+7
+8
+struct pixel buffer[480][640];
+9
+int i, j;
+10
+char *cptr;
+11
+int *iptr;
+Assume the following:
+. sizeof(char) = 1 and sizeof(int) = 4.

@@ -1,0 +1,43 @@
+906
+Chapter 9
+Virtual Memory
+The balanced tree approach is correct in the sense that it is guaranteed to mark
+all of the nodes that are reachable from the roots. This is a necessary guarantee,
+as application users would certainly not appreciate having their allocated blocks
+prematurely returned to the free list. However, it is conservative in the sense that
+it may incorrectly mark blocks that are actually unreachable, and thus it may fail
+to free some garbage. While this does not affect the correctness of application
+programs, it can result in unnecessary external fragmentation.
+The fundamental reason that Mark&Sweep collectors for C programs must
+be conservative is that the C language does not tag memory locations with type
+information. Thus, scalars like ints or floats can masquerade as pointers. For
+example, suppose that some reachable allocated block contains an int in its
+payload whose value happens to correspond to an address in the payload of some
+other allocated block b. There is no way for the collector to infer that the data is
+really an int and not a pointer. Therefore, the allocator must conservatively mark
+block b as reachable, when in fact it might not be.
+9.11
+Common Memory-Related Bugs in C Programs
+Managing and using virtual memory can be a difﬁcult and error-prone task for
+C programmers. Memory-related bugs are among the most frightening because
+they often manifest themselves at a distance, in both time and space, from the
+source of the bug. Write the wrong data to the wrong location, and your program
+can run for hours before it ﬁnally fails in some distant part of the program. We
+conclude our discussion of virtual memory with a look at of some of the common
+memory-related bugs.
+9.11.1
+Dereferencing Bad Pointers
+As we learned in Section 9.7.2, there are large holes in the virtual address space of a
+process that are not mapped to any meaningful data. If we attempt to dereference
+a pointer into one of these holes, the operating system will terminate our program
+with a segmentation exception. Also, some areas of virtual memory are read-only.
+Attempting to write to one of these areas terminates the program with a protection
+exception.
+A common example of dereferencing a bad pointer is the classic scanf bug.
+Suppose we want to use scanf to read an integer from stdin into a variable.
+The correct way to do this is to pass scanf a format string and the address of the
+variable:
+scanf("%d", &val)
+However, it is easy for new C programmers (and experienced ones too!) to pass
+the contents of val instead of its address:
+scanf("%d", val)

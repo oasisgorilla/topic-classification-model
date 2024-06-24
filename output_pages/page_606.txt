@@ -1,0 +1,46 @@
+Bibliographic Notes
+605
+structure by a good one, and so these aspects of program design should remain
+a primary concern for programmers. We also have seen that optimization block-
+ers, such as memory aliasing and procedure calls, seriously restrict the ability of
+compilers to perform extensive optimizations. Again, the programmer must take
+primary responsibility for eliminating these. These should simply be considered
+parts of good programming practice, since they serve to eliminate unneeded work.
+Tuning performance beyond a basic level requires some understanding of the
+processor’s microarchitecture, describing the underlying mechanisms by which
+the processor implements its instruction set architecture. For the case of out-
+of-order processors, just knowing something about the operations, capabilities,
+latencies, and issue times of the functional units establishes a baseline for predict-
+ing program performance.
+We have studied a series of techniques—including loop unrolling, creating
+multiple accumulators, and reassociation—that can exploit the instruction-level
+parallelism provided by modern processors. As we get deeper into the optimiza-
+tion, it becomes important to study the generated assembly code and to try to
+understand how the computation is being performed by the machine. Much can
+be gained by identifying the critical paths determined by the data dependencies
+in the program, especially between the different iterations of a loop. We can also
+compute a throughput bound for a computation, based on the number of oper-
+ations that must be computed and the number and issue times of the units that
+perform those operations.
+Programs that involve conditional branches or complex interactions with
+the memory system are more difﬁcult to analyze and optimize than the simple
+loop programs we ﬁrst considered. The basic strategy is to try to make branches
+more predictable or make them amenable to implementation using conditional
+data transfers. We must also watch out for the interactions between store and
+load operations. Keeping values in local variables, allowing them to be stored in
+registers, can often be helpful.
+When working with large programs, it becomes important to focus our op-
+timization efforts on the parts that consume the most time. Code proﬁlers and
+related tools can help us systematically evaluate and improve program perfor-
+mance. We described gprof, a standard Unix proﬁling tool. More sophisticated
+proﬁlers are available, such as the vtune program development system from In-
+tel, and valgrind, commonly available on Linux systems. These tools can break
+down the execution time below the procedure level to estimate the performance
+of each basic block of the program. (A basic block is a sequence of instructions that
+has no transfers of control out of its middle, and so the block is always executed
+in its entirety.)
+Bibliographic Notes
+Our focus has been to describe code optimization from the programmer’s perspec-
+tive, demonstrating how to write code that will make it easier for compilers to gen-
+erate efﬁcient code. An extended paper by Chellappa, Franchetti, and P¨
+uschel [19]

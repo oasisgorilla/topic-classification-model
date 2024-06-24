@@ -1,0 +1,166 @@
+Index
+1095
+convert double precision to quad-word
+integer instruction, 333
+convert double to single precision
+instruction, 335
+convert host and service names
+function, 973, 973–976
+convert host-to-network long function,
+961
+convert host-to-network short
+function, 961
+convert integer to double precision
+instruction, 333
+convert integer to single precision
+instruction, 333
+convert network-to-application
+function, 962
+convert network-to-host long function,
+961
+convert network-to-host short
+function, 961
+convert packed single to packed
+double precision instruction, 334
+convert quad-word integer to double
+precision instruction, 333
+convert quad-word integer to single
+precision instruction, 333
+convert quad word to oct word
+instruction, 234
+convert single precision to integer
+instruction, 333
+convert single precision to quad-word
+integer instruction, 333
+convert single to double precision
+instruction, 334
+convert socket address to host and
+service names function, 976,
+976–978
+copy_elements function, 136
+copy ﬁle descriptor function, 945
+copy_from_kernel function, 122–123
+copy-on-write technique, 871, 871–872
+copying
+bytes in memory, 169
+descriptor tables, 945
+text ﬁles, 936
+Core 2 microprocessors, 204, 624
+Core i7 microprocessors, 61
+abstract operation model, 561–567
+address translation, 862–864
+caches, 667
+Haswell, 543
+memory mountain, 677
+Nehalem, 204
+page table entries, 862–864
+QuickPath interconnect, 624
+virtual memory, 861–864
+core memory, 793
+cores in multi-core processors, 204,
+641, 1008
+correct signal handling, 806–810
+counting semaphores, 1039
+CPE (cycles per element) metric, 538,
+540, 543–544
+cpfile [CS:APP] text ﬁle copy, 936
+CPI (cycles per instruction)
+ﬁve-stage pipelines, 507
+in performance analysis, 500–504
+CPUs. See central processing units
+(CPUs)
+cqto [x86-64] convert quad word to
+oct word, 234, 235
+CR (carriage return) characters, 928
+CR3 register, 862
+Cray 1 supercomputer, 389
+create/change environment variable
+function, 788
+create child process function, 776,
+777–779
+create thread function, 1024
+critical path analysis, 534
+critical paths, 561, 565
+critical sections in progress graphs,
+1036
+CS:APP
+header ﬁles, 782
+wrapper functions, 774, 1077
+csapp.c [CS:APP] CS:APP wrapper
+functions, 774, 1077
+csapp.h [CS:APP] CS:APP header
+ﬁle, 774, 782, 1077
+csh [Unix] Unix shell program, 789
+CT (cache tags), 859
+ctest script, 501
+ctime function, 1060
+ctime_ts [CS:APP] thread-safe non-
+reentrant wrapper for ctime,
+1058
+Ctrl+C key
+nonlocal jumps, 821
+signals, 794, 797, 831
+Ctrl+Z key, 797, 831
+current working directory, 928
+cvtsd2ss [x86-64] convert double to
+single precision, 335
+cvtss2sd [x86-64] convert single to
+double precision, 334
+cycles per element (CPE) metric, 538,
+540, 543–544
+cycles per instruction (CPI)
+ﬁve-stage pipelines, 507
+in performance analysis, 500–504
+cylinders
+disk, 627
+spare, 632
+%cx [x86-64] low order 16 bits of
+register %rcx, 216
+d-caches (data caches), 556, 667
+data
+conditional transfers, 250–256
+forwarding, 472–475, 473
+sizes, 75–78
+data alignment, 309, 309–312
+data caches (d-caches), 556, 667
+data dependencies in pipelining, 455,
+465–467
+data-ﬂow graphs, 561–566
+data formats in machine-level
+programming, 213–215
+data hazards, 465
+avoiding, 477–480
+classes, 471
+forwarding for, 472–475
+load/use, 475–477
+stalling, 469–472
+Y86-64 pipelining, 465–469
+data memory in SEQ timing, 437
+data movement instructions, 218–225
+data references
+locality, 642–643
+PIC, 740–741
+.data section, 710
+data segments, 732
+data structures, 301
+data alignment, 309–312
+structures, 301–305
+unions, 305–309
+data transfer, procedures, 281–284
+data types. See types
+database transactions, 955
+datagrams, 960
+ddd debugger with graphical user
+interface, 315
+DDR SDRAM (double data-rate
+synchronous DRAM), 622
+deadlocks, 1063, 1063–1066
+deallocate heap storage function, 877
+.debug section, 711
+debugging, 315–316
+dec [instruction class] decrement, 228
+decimal notation, 68
+decimal system conversions, 73–75
+declarations
+arrays, 291–292, 299
+pointers, 77

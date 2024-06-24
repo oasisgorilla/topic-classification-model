@@ -1,0 +1,41 @@
+Section 6.4
+Cache Memories
+655
+Word Selection in Direct-Mapped Caches
+Once we have a hit, we know that w is somewhere in the block. This last step
+determines where the desired word starts in the block. As shown in Figure 6.29,
+the block offset bits provide us with the offset of the ﬁrst byte in the desired word.
+Similar to our view of a cache as an array of lines, we can think of a block as an
+array of bytes, and the byte offset as an index into that array. In the example, the
+block offset bits of 1002 indicate that the copy of w starts at byte 4 in the block.
+(We are assuming that words are 4 bytes long.)
+Line Replacement on Misses in Direct-Mapped Caches
+If the cache misses, then it needs to retrieve the requested block from the next
+level in the memory hierarchy and store the new block in one of the cache lines of
+the set indicated by the set index bits. In general, if the set is full of valid cache lines,
+then one of the existing lines must be evicted. For a direct-mapped cache, where
+each set contains exactly one line, the replacement policy is trivial: the current line
+is replaced by the newly fetched line.
+Putting It Together: A Direct-Mapped Cache in Action
+The mechanisms that a cache uses to select sets and identify lines are extremely
+simple. They have to be, because the hardware must perform them in a few
+nanoseconds. However, manipulating bits in this way can be confusing to us
+humans. A concrete example will help clarify the process. Suppose we have a
+direct-mapped cache described by
+(S, E, B, m) = (4, 1, 2, 4)
+In other words, the cache has four sets, one line per set, 2 bytes per block, and 4-
+bit addresses. We will also assume that each word is a single byte. Of course, these
+assumptions are totally unrealistic, but they will help us keep the example simple.
+When you are ﬁrst learning about caches, it can be very instructive to enumer-
+ate the entire address space and partition the bits, as we’ve done in Figure 6.30 for
+our 4-bit example. There are some interesting things to notice about this enumer-
+ated space:
+. The concatenation of the tag and index bits uniquely identiﬁes each block in
+memory. For example, block 0 consists of addresses 0 and 1, block 1 consists
+of addresses 2 and 3, block 2 consists of addresses 4 and 5, and so on.
+. Since there are eight memory blocks but only four cache sets, multiple blocks
+map to the same cache set (i.e., they have the same set index). For example,
+blocks 0 and 4 both map to set 0, blocks 1 and 5 both map to set 1, and so on.
+. Blocks that map to the same cache set are uniquely identiﬁed by the tag. For
+example, block 0 has a tag bit of 0 while block 4 has a tag bit of 1, block 1 has
+a tag bit of 0 while block 5 has a tag bit of 1, and so on.

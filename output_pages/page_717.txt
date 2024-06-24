@@ -1,0 +1,55 @@
+716
+Chapter 7
+Linking
+Aside
+Mangling of linker symbols in C++ and Java
+Both C++ and Java allow overloaded methods that have the same name in the source code but different
+parameter lists. So how does the linker tell the difference between these different overloaded functions?
+Overloaded functions in C++ and Java work because the compiler encodes each unique method and
+parameter list combination into a unique name for the linker. This encoding process is called mangling,
+and the inverse process is known as demangling.
+Happily, C++ and Java use compatible mangling schemes. A mangled class name consists of the
+integer number of characters in the name followed by the original name. For example, the class Foo
+is encoded as 3Foo. A method is encoded as the original method name, followed by __, followed
+by the mangled class name, followed by single letter encodings of each argument. For example,
+Foo::bar(int, long) is encoded as bar__3Fooil. Similar schemes are used to mangle global variable
+and template names.
+7.6.1
+How Linkers Resolve Duplicate Symbol Names
+The input to the linker is a collection of relocatable object modules. Each of these
+modules deﬁnes a set of symbols, some of which are local (visible only to the
+module that deﬁnes it), and some of which are global (visible to other modules).
+What happens if multiple modules deﬁne global symbols with the same name?
+Here is the approach that Linux compilation systems use.
+At compile time, the compiler exports each global symbol to the assembler
+as either strong or weak, and the assembler encodes this information implicitly
+in the symbol table of the relocatable object ﬁle. Functions and initialized global
+variables get strong symbols. Uninitialized global variables get weak symbols.
+Given this notion of strong and weak symbols, Linux linkers use the following
+rules for dealing with duplicate symbol names:
+Rule 1. Multiple strong symbols with the same name are not allowed.
+Rule 2. Given a strong symbol and multiple weak symbols with the same name,
+choose the strong symbol.
+Rule 3. Given multiple weak symbols with the same name, choose any of the
+weak symbols.
+For example, suppose we attempt to compile and link the following two C modules:
+1
+/* foo1.c */
+2
+int main()
+3
+{
+4
+return 0;
+5
+}
+1
+/* bar1.c */
+2
+int main()
+3
+{
+4
+return 0;
+5
+}

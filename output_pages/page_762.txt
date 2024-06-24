@@ -1,0 +1,70 @@
+Section 8.1
+Exceptions
+761
+Figure 8.2
+Exception table. The
+exception table is a
+jump table where entry
+k contains the address
+of the handler code for
+exception k.
+Code for
+exception handler 0
+Code for
+exception handler 1
+Code for
+exception handler 2
+Code for
+exception handler n  1
+. . .
+. . .
+0
+1
+2
+n  1
+Exception
+table
+Figure 8.3
+Generating the address
+of an exception handler.
+The exception number is
+an index into the exception
+table.
+. . .
+0
+1
+2
+n – 1
+Exception table
+Address of entry
+for exception # k
+Exception number
+(x 8)
+Exception table
+base register
++
+which component performs which task. Let’s look at the division of labor between
+hardware and software in more detail.
+Each type of possible exception in a system is assigned a unique nonnegative
+integer exception number. Some of these numbers are assigned by the designers
+of the processor. Other numbers are assigned by the designers of the operating
+system kernel (the memory-resident part of the operating system). Examples of
+the former include divide by zero, page faults, memory access violations, break-
+points, and arithmetic overﬂows. Examples of the latter include system calls and
+signals from external I/O devices.
+At system boot time (when the computer is reset or powered on), the operat-
+ing system allocates and initializes a jump table called an exception table, so that
+entry k contains the address of the handler for exception k. Figure 8.2 shows the
+format of an exception table.
+At run time (when the system is executing some program), the processor
+detects that an event has occurred and determines the corresponding exception
+number k. The processor then triggers the exception by making an indirect pro-
+cedure call, through entry k of the exception table, to the corresponding handler.
+Figure 8.3 shows how the processor uses the exception table to form the address of
+the appropriate exception handler. The exception number is an index into the ex-
+ception table, whose starting address is contained in a special CPU register called
+the exception table base register.
+An exception is akin to a procedure call, but with some important differences:
+. As with a procedure call, the processor pushes a return address on the stack
+before branching to the handler. However, depending on the class of excep-
+tion, the return address is either the current instruction (the instruction that

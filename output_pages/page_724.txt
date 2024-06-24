@@ -1,0 +1,61 @@
+Section 7.6
+Symbol Resolution
+723
+code/link/main2.c
+1
+#include <stdio.h>
+2
+#include "vector.h"
+3
+4
+int x[2] = {1, 2};
+5
+int y[2] = {3, 4};
+6
+int z[2];
+7
+8
+int main()
+9
+{
+10
+addvec(x, y, z, 2);
+11
+printf("z = [%d %d]\n", z[0], z[1]);
+12
+return 0;
+13
+}
+code/link/main2.c
+Figure 7.7
+Example program 2. This program invokes a function in the libvector
+library.
+main2.c vector.h
+libvector.a
+libc.a
+addvec.o
+printf.o and any other
+modules called by printf.o
+main2.o
+Translators
+(cpp, cc1, as)
+Linker (ld)
+prog2c
+Fully linked
+executable object file
+Relocatable
+object files
+Source files
+Static libraries
+Figure 7.8
+Linking with static libraries.
+or equivalently,
+linux> gcc -c main2.c
+linux> gcc -static -o prog2c main2.o -L. -lvector
+Figure 7.8 summarizes the activity of the linker. The -static argument tells the
+compiler driver that the linker should build a fully linked executable object ﬁle
+that can be loaded into memory and run without any further linking at load time.
+The -lvector argument is a shorthand for libvector.a, and the -L. argument
+tells the linker to look for libvector.a in the current directory.
+When the linker runs, it determines that the addvec symbol deﬁned by
+addvec.o is referenced by main2.o, so it copies addvec.o into the executable.

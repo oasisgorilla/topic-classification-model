@@ -1,0 +1,51 @@
+Section 4.1
+The Y86-64 Instruction Set Architecture
+397
+Aside
+RISC and CISC instruction sets
+x86-64 is sometimes labeled as a “complex instruction set computer” (CISC—pronounced “sisk”),
+and is deemed to be the opposite of ISAs that are classiﬁed as “reduced instruction set computers”
+(RISC—pronounced “risk”). Historically, CISC machines came ﬁrst, having evolved from the earliest
+computers. By the early 1980s, instruction sets for mainframe and minicomputers had grown quite large,
+as machine designers incorporated new instructions to support high-level tasks, such as manipulating
+circular buffers, performing decimal arithmetic, and evaluating polynomials. The ﬁrst microprocessors
+appeared in the early 1970s and had limited instruction sets, because the integrated-circuit technology
+then posed severe constraints on what could be implemented on a single chip. Microprocessors evolved
+quickly and, by the early 1980s, were following the same path of increasing instruction set complexity
+that had been the case for mainframes and minicomputers. The x86 family took this path, evolving into
+IA32, and more recently into x86-64. The x86 line continues to evolve as new classes of instructions are
+added based on the needs of emerging applications.
+The RISC design philosophy developed in the early 1980s as an alternative to these trends. A group
+of hardware and compiler experts at IBM, strongly inﬂuenced by the ideas of IBM researcher John
+Cocke, recognized that they could generate efﬁcient code for a much simpler form of instruction set. In
+fact, many of the high-level instructions that were being added to instruction sets were very difﬁcult to
+generate with a compiler and were seldom used. A simpler instruction set could be implemented with
+much less hardware and could be organized in an efﬁcient pipeline structure, similar to those described
+later in this chapter. IBM did not commercialize this idea until many years later, when it developed the
+Power and PowerPC ISAs.
+The RISC concept was further developed by Professors David Patterson, of the University of
+California at Berkeley, and John Hennessy, of Stanford University. Patterson gave the name RISC to
+this new class of machines, and CISC to the existing class, since there had previously been no need to
+have a special designation for a nearly universal form of instruction set.
+When comparing CISC with the original RISC instruction sets, we ﬁnd the following general
+characteristics:
+CISC
+Early RISC
+A large number of instructions. The Intel
+document describing the complete set of
+instructions [51] is over 1,200 pages long.
+Many fewer instructions—typically less than 100.
+Some instructions with long execution times.
+These include instructions that copy an entire
+block from one part of memory to another and
+others that copy multiple registers to and from
+memory.
+No instruction with a long execution time. Some
+early RISC machines did not even have an
+integer multiply instruction, requiring compilers
+to implement multiplication as a sequence of
+additions.
+Variable-size encodings. x86-64 instructions can
+range from 1 to 15 bytes.
+Fixed-length encodings. Typically all instructions
+are encoded as 4 bytes.

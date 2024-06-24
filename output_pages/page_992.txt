@@ -1,0 +1,74 @@
+Section 11.5
+Web Servers
+991
+Aside
+Passing arguments in HTTP POST requests to CGI programs
+For POST requests, the child would also need to redirect standard input to the connected descriptor.
+The CGI program would then read the arguments in the request body from standard input.
+code/netp/tiny/cgi-bin/adder.c
+1
+#include "csapp.h"
+2
+3
+int main(void) {
+4
+char *buf, *p;
+5
+char arg1[MAXLINE], arg2[MAXLINE], content[MAXLINE];
+6
+int n1=0, n2=0;
+7
+8
+/* Extract the two arguments */
+9
+if ((buf = getenv("QUERY_STRING")) != NULL) {
+10
+p = strchr(buf, ’&’);
+11
+*p = ’\0’;
+12
+strcpy(arg1, buf);
+13
+strcpy(arg2, p+1);
+14
+n1 = atoi(arg1);
+15
+n2 = atoi(arg2);
+16
+}
+17
+18
+/* Make the response body */
+19
+sprintf(content, "QUERY_STRING=%s", buf);
+20
+sprintf(content, "Welcome to add.com: ");
+21
+sprintf(content, "%sTHE Internet addition portal.\r\n<p>", content);
+22
+sprintf(content, "%sThe answer is: %d + %d = %d\r\n<p>",
+23
+content, n1, n2, n1 + n2);
+24
+sprintf(content, "%sThanks for visiting!\r\n", content);
+25
+26
+/* Generate the HTTP response */
+27
+printf("Connection: close\r\n");
+28
+printf("Content-length: %d\r\n", (int)strlen(content));
+29
+printf("Content-type: text/html\r\n\r\n");
+30
+printf("%s", content);
+31
+fflush(stdout);
+32
+33
+exit(0);
+34
+}
+code/netp/tiny/cgi-bin/adder.c
+Figure 11.27
+CGI program that sums two integers.

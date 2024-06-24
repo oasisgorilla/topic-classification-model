@@ -1,0 +1,61 @@
+182
+Chapter 2
+Representing and Manipulating Information
+Solution to Problem 2.9 (page 89)
+This problem illustrates how Boolean algebra can be used to describe and reason
+about real-world systems. We can see that this color algebra is identical to the
+Boolean algebra over bit vectors of length 3.
+A. Colors are complemented by complementing the values of R, G, and B.
+From this, we can see that white is the complement of black, yellow is the
+complement of blue, magenta is the complement of green, and cyan is the
+complement of red.
+B. We perform Boolean operations based on a bit-vector representation of the
+colors. From this we get the following:
+Blue (001)
+|
+Green (010)
+=
+Cyan (011)
+Yellow (110)
+&
+Cyan (011)
+=
+Green (010)
+Red (100)
+^
+Magenta (101)
+=
+Blue (001)
+Solution to Problem 2.10 (page 90)
+This procedure relies on the fact that exclusive-or is commutative and associative,
+and that a ^ a = 0 for any a.
+Step
+*x
+*y
+Initially
+a
+b
+Step 1
+a
+a ^ b
+Step 2
+a ^ (a ^ b) = (a ^ a) ^ b = b
+a ^ b
+Step 3
+b
+b ^ (a ^ b) = (b ^ b) ^ a = a
+See Problem 2.11 for a case where this function will fail.
+Solution to Problem 2.11 (page 91)
+This problem illustrates a subtle and interesting feature of our inplace swap
+routine.
+A. Both first and last have value k, so we are attempting to swap the middle
+element with itself.
+B. In this case, arguments x and y to inplace_swap both point to the same
+location. When we compute *x ^ *y, we get 0. We then store 0 as the middle
+element of the array, and the subsequent steps keep setting this element to
+0. We can see that our reasoning in Problem 2.10 implicitly assumed that x
+and y denote different locations.
+C. Simply replace the test in line 4 of reverse_array to be first < last, since
+there is no need to swap the middle element with itself.
+Solution to Problem 2.12 (page 91)
+Here are the expressions:

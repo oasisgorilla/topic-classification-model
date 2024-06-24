@@ -1,0 +1,76 @@
+646
+Chapter 6
+The Memory Hierarchy
+CPU registers hold words 
+retrieved from cache memory.
+L1 cache holds cache lines 
+retrieved from L2 cache.
+L2 cache holds cache lines
+retrieved from L3 cache.
+Main memory holds disk blocks 
+retrieved from local disks.
+Local disks hold files
+retrieved from disks on
+remote network servers.
+Regs
+L3 cache
+(SRAM)
+L2 cache
+(SRAM)
+L1 cache
+(SRAM)
+Main memory
+(DRAM)
+Local secondary storage
+(local disks)
+Remote secondary storage
+(distributed file systems, Web servers)
+Smaller,
+faster,
+and
+costlier
+(per byte)
+storage
+devices
+Larger,
+slower,
+and
+cheaper
+(per byte)
+storage
+devices
+L0:
+L1:
+L2:
+L3:
+L4:
+L5:
+L6:
+L3 cache holds cache lines
+retrieved from memory.
+Figure 6.21
+The memory hierarchy.
+In one of the happier coincidences of computing, these fundamental properties of
+hardware and software complement each other beautifully. Their complementary
+nature suggests an approach for organizing memory systems, known as the mem-
+ory hierarchy, that is used in all modern computer systems. Figure 6.21 shows a
+typical memory hierarchy.
+In general, the storage devices get slower, cheaper, and larger as we move
+from higher to lower levels. At the highest level (L0) are a small number of fast
+CPU registers that the CPU can access in a single clock cycle. Next are one or
+more small to moderate-size SRAM-based cache memories that can be accessed
+in a few CPU clock cycles. These are followed by a large DRAM-based main
+memory that can be accessed in tens to hundreds of clock cycles. Next are slow
+but enormous local disks. Finally, some systems even include an additional level
+of disks on remote servers that can be accessed over a network. For example,
+distributed ﬁle systems such as the Andrew File System (AFS) or the Network
+File System (NFS) allow a program to access ﬁles that are stored on remote
+network-connected servers. Similarly, the World Wide Web allows programs to
+access remote ﬁles stored on Web servers anywhere in the world.
+6.3.1
+Caching in the Memory Hierarchy
+In general, a cache (pronounced “cash”) is a small, fast storage device that acts as
+a staging area for the data objects stored in a larger, slower device. The process of
+using a cache is known as caching (pronounced “cashing”).
+The central idea of a memory hierarchy is that for each k, the faster and smaller
+storage device at level k serves as a cache for the larger and slower storage device

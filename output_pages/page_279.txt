@@ -1,0 +1,71 @@
+278
+Chapter 3
+Machine-Level Representation of Programs
+%rip
+%rsp
+0x400563
+0x7fffffffe840
+(a) Executing call
+%rip
+%rsp
+0x400540
+0x7fffffffe838
+0x400568
+(b) After call
+%rip
+%rsp
+0x400568
+0x7fffffffe840
+(c) After ret
+Figure 3.26
+Illustration of call and ret functions. The call instruction transfers control to the start of a
+function, while the ret instruction returns back to the instruction following the call.
+Figure 3.26 illustrates the execution of the call and ret instructions for the
+multstore and main functions introduced in Section 3.2.2. The following are
+excerpts of the disassembled code for the two functions:
+Beginning of function multstore
+1
+0000000000400540 <multstore>:
+2
+400540:
+53
+push
+%rbx
+3
+400541:
+48 89 d3
+mov
+%rdx,%rbx
+. . .
+Return from function multstore
+4
+40054d:
+c3
+retq
+. . .
+Call to multstore from main
+5
+400563:
+e8 d8 ff ff ff
+callq
+400540 <multstore>
+6
+400568:
+48 8b 54 24 08
+mov
+0x8(%rsp),%rdx
+In this code, we can see that the call instruction with address 0x400563 in
+main calls function multstore. This status is shown in Figure 3.26(a), with the
+indicated values for the stack pointer %rsp and the program counter %rip. The
+effect of the call is to push the return address 0x400568 onto the stack and to jump
+to the ﬁrst instruction in function multstore, at address 0x0400540 (3.26(b)).
+The execution of function multstore continues until it hits the ret instruction
+at address 0x40054d. This instruction pops the value 0x400568 from the stack
+and jumps to this address, resuming the execution of main just after the call
+instruction (3.26(c)).
+As a more detailed example of passing control to and from procedures, Figure
+3.27(a) shows the disassembled code for two functions, top and leaf, as well as
+the portion of code in function main where top gets called. Each instruction is
+identiﬁed by labels L1–L2 (in leaf), T1–T4 (in top), and M1–M2 in main. Part (b)
+of the ﬁgure shows a detailed trace of the code execution, in which main calls
+top(100), causing top to call leaf(95). Function leaf returns 97 to top, which

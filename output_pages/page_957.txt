@@ -1,0 +1,49 @@
+956
+Chapter 11
+Network Programming
+Figure 11.3
+Ethernet segment.
+Host
+Host
+Host
+Hub
+100 Mb/s
+100 Mb/s
+An adapter plugged into an expansion slot on the I/O bus provides the physical
+interface to the network. Data received from the network are copied from the
+adapter across the I/O and memory buses into memory, typically by a DMA
+transfer. Similarly, data can also be copied from memory to the network.
+Physically, a network is a hierarchical system that is organized by geographical
+proximity. At the lowest level is a LAN (local area network) that spans a building
+or a campus. The most popular LAN technology by far is Ethernet, which was de-
+veloped in the mid-1970s at Xerox PARC. Ethernet has proven to be remarkably
+resilient, evolving from 3 Mb/s to 10 Gb/s.
+An Ethernet segment consists of some wires (usually twisted pairs of wires)
+and a small box called a hub, as shown in Figure 11.3. Ethernet segments typically
+span small areas, such as a room or a ﬂoor in a building. Each wire has the same
+maximum bit bandwidth, typically 100 Mb/s or 1 Gb/s. One end is attached to
+an adapter on a host, and the other end is attached to a port on the hub. A hub
+slavishly copies every bit that it receives on each port to every other port. Thus,
+every host sees every bit.
+Each Ethernet adapter has a globally unique 48-bit address that is stored in
+a nonvolatile memory on the adapter. A host can send a chunk of bits called a
+frame to any other host on the segment. Each frame includes some ﬁxed number
+of header bits that identify the source and destination of the frame and the frame
+length, followed by a payload of data bits. Every host adapter sees the frame, but
+only the destination host actually reads it.
+Multiple Ethernet segments can be connected into larger LANs, called
+bridged Ethernets, using a set of wires and small boxes called bridges, as shown
+in Figure 11.4. Bridged Ethernets can span entire buildings or campuses. In a
+bridged Ethernet, some wires connect bridges to bridges, and others connect
+bridges to hubs. The bandwidths of the wires can be different. In our example,
+the bridge–bridge wire has a 1 Gb/s bandwidth, while the four hub–bridge wires
+have bandwidths of 100 Mb/s.
+Bridges make better use of the available wire bandwidth than hubs. Using a
+clever distributed algorithm, they automatically learn over time which hosts are
+reachable from which ports and then selectively copy frames from one port to
+another only when it is necessary. For example, if host A sends a frame to host B,
+which is on the segment, then bridge X will throw away the frame when it arrives
+at its input port, thus saving bandwidth on the other segments. However, if host A
+sends a frame to host C on a different segment, then bridge X will copy the frame
+only to the port connected to bridge Y, which will copy the frame only to the port
+connected to host C’s segment.

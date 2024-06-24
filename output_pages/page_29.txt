@@ -1,0 +1,44 @@
+28
+Preface
+processes, signals, performance optimization, virtual memory, I/O, and network
+and concurrent programming.
+This approach allowed us to teach the ICS course in a way that is practical,
+concrete, hands-on, and exciting for the students. The response from our students
+and faculty colleagues was immediate and overwhelmingly positive, and we real-
+ized that others outside of CMU might beneﬁt from using our approach. Hence
+this book, which we developed from the ICS lecture notes, and which we have
+now revised to reﬂect changes in technology and in how computer systems are
+implemented.
+Via the multiple editions and multiple translations of this book, ICS and many
+variants have become part of the computer science and computer engineering
+curricula at hundreds of colleges and universities worldwide.
+For Instructors: Courses Based on the Book
+Instructors can use the CS:APP book to teach a number of different types of
+systems courses. Five categories of these courses are illustrated in Figure 2. The
+particular course depends on curriculum requirements, personal taste, and
+the backgrounds and abilities of the students. From left to right in the ﬁgure,
+the courses are characterized by an increasing emphasis on the programmer’s
+perspective of a system. Here is a brief description.
+ORG. A computer organization course with traditional topics covered in an un-
+traditional style. Traditional topics such as logic design, processor architec-
+ture, assembly language, and memory systems are covered. However, there
+is more emphasis on the impact for the programmer. For example, data rep-
+resentations are related back to the data types and operations of C programs,
+and the presentation on assembly code is based on machine code generated
+by a C compiler rather than handwritten assembly code.
+ORG+. The ORG course with additional emphasis on the impact of hardware
+on the performance of application programs. Compared to ORG, students
+learn more about code optimization and about improving the memory per-
+formance of their C programs.
+ICS. The baseline ICS course, designed to produce enlightened programmers who
+understand the impact of the hardware, operating system, and compilation
+system on the performance and correctness of their application programs.
+A signiﬁcant difference from ORG+ is that low-level processor architecture
+is not covered. Instead, programmers work with a higher-level model of a
+modern out-of-order processor. The ICS course ﬁts nicely into a 10-week
+quarter, and can also be stretched to a 15-week semester if covered at a
+more leisurely pace.
+ICS+. The baseline ICS course with additional coverage of systems programming
+topics such as system-level I/O, network programming, and concurrent pro-
+gramming. This is the semester-long Carnegie Mellon course, which covers
+every chapter in CS:APP except low-level processor architecture.

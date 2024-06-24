@@ -1,0 +1,67 @@
+490
+Chapter 4
+Processor Architecture
+Stat
+Stat
+M_icode
+M_Cnd
+W_icode
+W_dstM
+m_valM
+M_dstE
+M_dstM
+M_valA
+M_valE
+W_dstE
+W_valM
+W_valE
+W
+icode
+valE
+valM
+dstE dstM
+M
+icode
+stat
+stat
+Cnd
+valE
+valA
+dstE dstM
+data out
+data in
+read
+m_stat
+dmem_error
+write
+Data
+memory
+Addr
+Stat
+Mem.
+read
+Mem.
+write
+Figure 4.61
+PIPE memory stage logic. Many of the signals from pipeline registers
+M and W are passed down to earlier stages to provide write-back results, instruction
+addresses, and forwarded results.
+causing an exception is passing through later pipeline stages, and therefore any
+updating of the condition codes should be suppressed. This aspect of the design is
+discussed in Section 4.5.8.
+Practice Problem 4.35 (solution page 527)
+Our second case in the HCL code for d_valA uses signal e_dstE to see whether
+to select the ALU output e_valE as the forwarding source. Suppose instead that
+we use signal E_dstE, the destination register ID in pipeline register E for this
+selection. Write a Y86-64 program that would give an incorrect result with this
+modiﬁed forwarding logic.
+Memory Stage
+Figure 4.61 shows the memory stage logic for PIPE. Comparing this to the memory
+stage for SEQ (Figure 4.30), we see that, as noted before, the block labeled “Mem.
+data” in SEQ is not present in PIPE. This block served to select between data
+sources valP (for call instructions) and valA, but this selection is now performed
+by the block labeled “Sel+Fwd A” in the decode stage. Most other blocks in this
+stage are identical to their counterparts in SEQ, with an appropriate renaming
+of the signals. In this ﬁgure, you can also see that many of the values in pipeline
+registers and M and W are supplied to other parts of the circuit as part of the
+forwarding and pipeline control logic.

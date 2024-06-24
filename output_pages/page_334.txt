@@ -1,0 +1,89 @@
+Section 3.11
+Floating-Point Code
+333
+Instruction
+Source
+Destination
+Description
+vcvttss2si
+X/M32
+R32
+Convert with truncation single precision to integer
+vcvttsd2si
+X/M64
+R32
+Convert with truncation double precision to integer
+vcvttss2siq
+X/M32
+R64
+Convert with truncation single precision to quad word integer
+vcvttsd2siq
+X/M64
+R64
+Convert with truncation double precision to quad word integer
+Figure 3.47
+Two-operand ﬂoating-point conversion operations. These convert ﬂoating-point data to
+integers. (X: XMM register (e.g., %xmm3); R32: 32-bit general-purpose register (e.g., %eax); R64: 64-bit
+general-purpose register (e.g., %rax); M32: 32-bit memory range; M64: 64-bit memory range)
+Instruction
+Source 1
+Source 2
+Destination
+Description
+vcvtsi2ss
+M32/R32
+X
+X
+Convert integer to single precision
+vcvtsi2sd
+M32/R32
+X
+X
+Convert integer to double precision
+vcvtsi2ssq
+M64/R64
+X
+X
+Convert quad word integer to single precision
+vcvtsi2sdq
+M64/R64
+X
+X
+Convert quad word integer to double precision
+Figure 3.48
+Three-operand ﬂoating-point conversion operations. These instructions convert from the
+data type of the ﬁrst source to the data type of the destination. The second source value has no effect on the
+low-order bytes of the result. (X: XMM register (e.g., %xmm3); M32: 32-bit memory range; M64: 64-bit memory
+range)
+and its associated x86-64 assembly code
+float float_mov(float v1, float *src, float *dst)
+v1 in %xmm0, src in %rdi, dst in %rsi
+1
+float_mov:
+2
+vmovaps %xmm0, %xmm1
+Copy v1
+3
+vmovss
+(%rdi), %xmm0
+Read v2 from src
+4
+vmovss
+%xmm1, (%rsi)
+Write v1 to dst
+5
+ret
+Return v2 in %xmm0
+We can see in this example the use of the vmovaps instruction to copy data from
+one register to another and the use of the vmovss instruction to copy data
+from memory to an XMM register and from an XMM register to memory.
+Figures 3.47 and 3.48 show sets of instructions for converting between ﬂoating-
+point and integer data types, as well as between different ﬂoating-point formats.
+These are all scalar instructions operating on individual data values. Those in
+Figure 3.47 convert from a ﬂoating-point value read from either an XMM register
+or memory and write the result to a general-purpose register (e.g., %rax, %ebx,
+etc.). When converting ﬂoating-point values to integers, they perform truncation,
+rounding values toward zero, as is required by C and most other programming
+languages.
+The instructions in Figure 3.48 convert from integer to ﬂoating point. They
+use an unusual three-operand format, with two sources and a destination. The

@@ -1,0 +1,66 @@
+498
+Chapter 4
+Processor Architecture
+That is, it would be handled like a mispredicted branch, but with a stall in the
+fetch stage. Fortunately, on the next cycle, the PC selection logic will choose the
+address of the instruction following the jump, rather than the predicted program
+counter, and so it does not matter what happens with the pipeline register F. We
+conclude that the pipeline will correctly handle this combination.
+Combination B involves a load/use hazard, where the loading instruction sets
+register %rsp and the ret instruction then uses this register as a source operand,
+since it must pop the return address from the stack. The pipeline control logic
+should hold back the ret instruction in the decode stage.
+Practice Problem 4.38 (solution page 528)
+Write a Y86-64 assembly-language program that causes combination B to arise
+and completes with a halt instruction if the pipeline operates correctly.
+Combining the control actions for the combination B conditions (Figure 4.66),
+we get the following pipeline control actions:
+Pipeline register
+Condition
+F
+D
+E
+M
+W
+Processing ret
+stall
+bubble
+normal
+normal
+normal
+Load/use hazard
+stall
+stall
+bubble
+normal
+normal
+Combination
+stall
+bubble+stall
+bubble
+normal
+normal
+Desired
+stall
+stall
+bubble
+normal
+normal
+If both sets of actions were triggered, the control logic would try to stall the ret
+instruction to avoid the load/use hazard but also inject a bubble into the decode
+stage due to the ret instruction. Clearly, we do not want the pipeline to perform
+both sets of actions. Instead, we want it to just take the actions for the load/use
+hazard. The actions for processing the ret instruction should be delayed for one
+cycle.
+This analysis shows that combination B requires special handling. In fact, our
+original implementation of the PIPE control logic did not handle this combination
+correctly. Even though the design had passed many simulation tests, it had a subtle
+bug that was uncovered only by the analysis we have just shown. When a program
+having combination B was executed, the control logic would set both the bubble
+and the stall signals for pipeline register D to 1. This example shows the importance
+of systematic analysis. It would be unlikely to uncover this bug by just running
+normal programs. If left undetected, the pipeline would not faithfully implement
+the ISA behavior.
+Control Logic Implementation
+Figure 4.68 shows the overall structure of the pipeline control logic. Based on
+signals from the pipeline registers and pipeline stages, the control logic generates

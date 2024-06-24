@@ -1,0 +1,72 @@
+Section 11.2
+Networks
+959
+Host A
+Client
+Protocol
+software
+Protocol
+software
+LAN1
+adapter
+Host B
+Server
+Protocol
+software
+Data
+Internet packet
+LAN1 frame
+LAN1
+LAN2
+(1)
+Data
+PH FH1
+(2)
+LAN2 frame
+Data
+PH FH2
+(5)
+Data
+PH FH1
+(3)
+Data
+PH FH2
+(6)
+Data
+PH FH2
+(7)
+Data
+(8)
+Data
+PH FH1
+(4)
+LAN1
+adapter
+LAN2
+adapter
+Router
+LAN2
+adapter
+Figure 11.7
+How data travel from one host to another on an internet. PH: internet
+packet header; FH1: frame header for LAN1; FH2: frame header for LAN2.
+3. The LAN1 adapter copies the frame to the network.
+4. When the frame reaches the router, the router’s LAN1 adapter reads it from
+the wire and passes it to the protocol software.
+5. The router fetches the destination internet address from the internet packet
+header and uses this as an index into a routing table to determine where to
+forward the packet, which in this case is LAN2. The router then strips off the
+old LAN1 frame header, prepends a new LAN2 frame header addressed to
+host B, and passes the resulting frame to the adapter.
+6. The router’s LAN2 adapter copies the frame to the network.
+7. When the frame reaches host B, its adapter reads the frame from the wire and
+passes it to the protocol software.
+8. Finally, the protocol software on host B strips off the packet header and frame
+header. The protocol software will eventually copy the resulting data into the
+server’s virtual address space when the server invokes a system call that reads
+the data.
+Of course, we are glossing over many difﬁcult issues here. What if different
+networks have different maximum frame sizes? How do routers know where to
+forward frames? How are routers informed when the network topology changes?
+What if a packet gets lost? Nonetheless, our example captures the essence of the
+internet idea, and encapsulation is the key.

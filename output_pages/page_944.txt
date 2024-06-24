@@ -1,0 +1,87 @@
+Section 10.8
+Sharing Files
+943
+Figure 10.12
+Typical kernel data
+structures for open
+ﬁles. In this example,
+two descriptors reference
+distinct ﬁles. There is no
+sharing.
+Descriptor table
+(one table
+per process)
+Open file table
+(shared by
+all processes)
+v-node table
+(shared by
+all processes)
+stdin   fd 0
+stdout   fd 1
+stderr   fd 2
+ fd 3
+fd 4
+File size
+File access
+File type
+File B
+File pos
+refcnt1
+…
+File A
+File pos
+refcnt1
+…
+…
+File size
+File access
+File type
+…
+Figure 10.13
+File sharing. This example
+shows two descriptors
+sharing the same disk ﬁle
+through two open ﬁle table
+entries.
+Descriptor table
+(one table
+per process)
+Open file table
+(shared by
+all processes)
+v-node table
+(shared by
+all processes)
+fd 0
+fd 1
+fd 2
+fd 3
+fd 4
+File size
+File access
+File type
+File B
+File pos
+refcnt1
+…
+File A
+File pos
+refcnt1
+…
+…
+Figure 10.12 shows an example where descriptors 1 and 4 reference two
+different ﬁles through distinct open ﬁle table entries. This is the typical situation,
+where ﬁles are not shared and where each descriptor corresponds to a distinct ﬁle.
+Multiple descriptors can also reference the same ﬁle through different ﬁle
+table entries, as shown in Figure 10.13. This might happen, for example, if you
+were to call the open function twice with the same ﬁlename. The key idea is that
+each descriptor has its own distinct ﬁle position, so different reads on different
+descriptors can fetch data from different locations in the ﬁle.
+We can also understand how parent and child processes share ﬁles. Suppose
+that before a call to fork, the parent process has the open ﬁles shown in Fig-
+ure 10.12. Then Figure 10.14 shows the situation after the call to fork.
+The child gets its own duplicate copy of the parent’s descriptor table. Parent
+and child share the same set of open ﬁle tables and thus share the same ﬁle pos-
+ition. An important consequence is that the parent and child must both close their
+descriptors before the kernel will delete the corresponding ﬁle table entry.

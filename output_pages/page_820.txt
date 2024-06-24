@@ -1,0 +1,42 @@
+Section 8.6
+Nonlocal Jumps
+819
+#include <setjmp.h>
+int setjmp(jmp_buf env);
+int sigsetjmp(sigjmp_buf env, int savesigs);
+Returns: 0 from setjmp, nonzero from longjmps
+The setjmp function saves the current calling environment in the env buffer, for
+later use by longjmp, and returns 0. The calling environment includes the program
+counter, stack pointer, and general-purpose registers. For subtle reasons beyond
+our scope, the value that setjmp returns should not be assigned to a variable:
+rc = setjmp(env);
+/* Wrong! */
+However, it can be safely used as a test in a switch or conditional statement [62].
+#include <setjmp.h>
+void longjmp(jmp_buf env, int retval);
+void siglongjmp(sigjmp_buf env, int retval);
+Never returns
+The longjmp function restores the calling environment from the env buffer and
+then triggers a return from the most recent setjmp call that initialized env. The
+setjmp then returns with the nonzero return value retval.
+The interactions between setjmp and longjmp can be confusing at ﬁrst glance.
+The setjmp function is called once but returns multiple times: once when the
+setjmp is ﬁrst called and the calling environment is stored in the env buffer,
+and once for each corresponding longjmp call. On the other hand, the longjmp
+function is called once but never returns.
+An important application of nonlocal jumps is to permit an immediate return
+from a deeply nested function call, usually as a result of detecting some error
+condition. If an error condition is detected deep in a nested function call, we can
+use a nonlocal jump to return directly to a common localized error handler instead
+of laboriously unwinding the call stack.
+Figure 8.43 shows an example of how this might work. The main routine ﬁrst
+calls setjmp to save the current calling environment, and then calls function foo,
+which in turn calls function bar. If foo or bar encounter an error, they return
+immediately from the setjmp via a longjmp call. The nonzero return value of the
+setjmp indicates the error type, which can then be decoded and handled in one
+place in the code.
+The feature of longjmp that allows it to skip up through all intermediate calls
+can have unintended consequences. For example, if some data structures were
+allocated in the intermediate function calls with the intention to deallocate them
+at the end of the function, the deallocation code gets skipped, thus creating a
+memory leak.

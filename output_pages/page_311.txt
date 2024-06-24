@@ -1,0 +1,55 @@
+310
+Chapter 3
+Machine-Level Representation of Programs
+Alignment is enforced by making sure that every data type is organized and
+allocated in such a way that every object within the type satisﬁes its alignment
+restrictions. The compiler places directives in the assembly code indicating the
+desired alignment for global data. For example, the assembly-code declaration of
+the jump table on page 271 contains the following directive on line 2:
+.align 8
+This ensures that the data following it (in this case the start of the jump table) will
+start with an address that is a multiple of 8. Since each table entry is 8 bytes long,
+the successive elements will obey the 8-byte alignment restriction.
+For code involving structures, the compiler may need to insert gaps in the
+ﬁeld allocation to ensure that each structure element satisﬁes its alignment re-
+quirement. The structure will then have some required alignment for its starting
+address.
+For example, consider the structure declaration
+struct S1 {
+int
+i;
+char c;
+int
+j;
+};
+Suppose the compiler used the minimal 9-byte allocation, diagrammed as follows:
+Offset 
+Contents 
+i
+0
+4
+5
+9
+c
+j
+Then it would be impossible to satisfy the 4-byte alignment requirement for both
+ﬁelds i (offset 0) and j (offset 5). Instead, the compiler inserts a 3-byte gap (shown
+here as shaded in blue) between ﬁelds c and j:
+Offset 
+Contents 
+i
+0
+4
+5
+8
+12
+c
+j
+As a result, j has offset 8, and the overall structure size is 12 bytes. Furthermore,
+the compiler must ensure that any pointer p of type struct S1* satisﬁes a 4-byte
+alignment. Using our earlier notation, let pointer p have value xp. Then xp must
+be a multiple of 4. This guarantees that both p->i (address xp) and p->j (address
+xp + 8) will satisfy their 4-byte alignment requirements.
+In addition, the compiler may need to add padding to the end of the structure
+so that each element in an array of structures will satisfy its alignment requirement.
+For example, consider the following structure declaration:

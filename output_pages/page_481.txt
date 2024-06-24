@@ -1,0 +1,89 @@
+480
+Chapter 4
+Processor Architecture
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+0x000: xorq %rax,%rax
+0x002: jne target # Not taken
+0x016: irmovl $2,%rdx # Target
+       
+0x020: irmovl $3,%rbx # Target+1
+      
+0x00b: irmovq $1,%rax # Fall through
+0x015: halt
+# prog7
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+bubble
+bubble
+bubble
+bubble
+Figure 4.56
+Processing mispredicted branch instructions. The pipeline predicts
+branches will be taken and so starts fetching instructions at the jump target. Two
+instructions are fetched before the misprediction is detected in cycle 4 when the jump
+instruction ﬂows through the execute stage. In cycle 5, the pipeline cancels the two
+target instructions by injecting bubbles into the decode and execute stages, and it also
+fetches the instruction following the jump.
+reaches the execute stage, where it can cause the condition codes to change. At
+this point, the pipeline can simply cancel (sometimes called instruction squashing)
+the two misfetched instructions by injecting bubbles into the decode and execute
+stages on the following cycle while also fetching the instruction following the jump
+instruction. The two misfetched instructions will then simply disappear from the
+pipeline and therefore not have any effect on the programmer-visible state. The
+only drawback is that two clock cycles’ worth of instruction processing capability
+have been wasted.
+This discussion of control hazards indicates that they can be handled by
+careful consideration of the pipeline control logic. Techniques such as stalling
+and injecting bubbles into the pipeline dynamically adjust the pipeline ﬂow when
+special conditions arise. As we will discuss in Section 4.5.8, a simple extension to
+the basic clocked register design will enable us to stall stages and to inject bubbles
+into pipeline registers as part of the pipeline control logic.
+4.5.6
+Exception Handling
+As we will discuss in Chapter 8, a variety of activities in a processor can lead
+to exceptional control ﬂow, where the normal chain of program execution gets
+broken. Exceptions can be generated either internally, by the executing program,
+or externally, by some outside signal. Our instruction set architecture includes
+three different internally generated exceptions, caused by (1) a halt instruction,
+(2) an instruction with an invalid combination of instruction and function code,
+and (3) an attempt to access an invalid address, either for instruction fetch or
+data read or write. A more complete processor design would also handle external
+exceptions, such as when the processor receives a signal that the network interface
+has received a new packet or the user has clicked a mouse button. Handling

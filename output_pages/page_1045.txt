@@ -1,0 +1,45 @@
+1044
+Chapter 12
+Concurrent Programming
+Readers-writers interactions occur frequently in real systems. For example,
+in an online airline reservation system, an unlimited number of customers are al-
+lowed to concurrently inspect the seat assignments, but a customer who is booking
+a seat must have exclusive access to the database. As another example, in a multi-
+threaded caching Web proxy, an unlimited number of threads can fetch existing
+pages from the shared page cache, but any thread that writes a new page to the
+cache must have exclusive access.
+The readers-writers problem has several variations, each based on the priori-
+ties of readers and writers. The ﬁrst readers-writers problem, which favors readers,
+requires that no reader be kept waiting unless a writer has already been granted
+permission to use the object. In other words, no reader should wait simply because
+a writer is waiting. The second readers-writers problem, which favors writers, re-
+quires that once a writer is ready to write, it performs its write as soon as possible.
+Unlike the ﬁrst problem, a reader that arrives after a writer must wait, even if the
+writer is also waiting.
+Figure 12.26 shows a solution to the ﬁrst readers-writers problem. Like the
+solutions to many synchronization problems, it is subtle and deceptively simple.
+The w semaphore controls access to the critical sections that access the shared
+object. The mutex semaphore protects access to the shared readcnt variable,
+which counts the number of readers currently in the critical section. A writer locks
+the w mutex each time it enters the critical section and unlocks it each time it leaves.
+This guarantees that there is at most one writer in the critical section at any point
+in time. On the other hand, only the ﬁrst reader to enter the critical section locks
+w, and only the last reader to leave the critical section unlocks it. The w mutex
+is ignored by readers who enter and leave while other readers are present. This
+means that as long as a single reader holds the w mutex, an unbounded number of
+readers can enter the critical section unimpeded.
+A correct solution to either of the readers-writers problems can result in
+starvation, where a thread blocks indeﬁnitely and fails to make progress. For
+example, in the solution in Figure 12.26, a writer could wait indeﬁnitely while
+a stream of readers arrived.
+Practice Problem 12.10 (solution page 1074)
+The solution to the ﬁrst readers-writers problem in Figure 12.26 gives priority to
+readers, but this priority is weak in the sense that a writer leaving its critical section
+might restart a waiting writer instead of a waiting reader. Describe a scenario
+where this weak priority would allow a collection of writers to starve a reader.
+12.5.5
+Putting It Together: A Concurrent Server Based on Prethreading
+We have seen how semaphores can be used to access shared variables and to
+schedule accesses to shared resources. To help you understand these ideas more
+clearly, let us apply them to a concurrent server based on a technique called
+prethreading.

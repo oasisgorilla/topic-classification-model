@@ -1,0 +1,51 @@
+Section 9.6
+Address Translation
+851
+Page table
+base register
+(PTBR)
+Physical address
+Virtual address
+Virtual page number (VPN)
+Virtual page offset (VPO)
+Page
+table
+Valid
+Physical page number (PPN)
+The VPN acts
+as an index into
+the page table
+If valid = 0,
+then page
+not in memory
+(page fault)
+Physical page number (PPN)
+Physical page offset (PPO)
+n–1
+p   p–1
+p   p–1
+0
+m–1
+0
+Figure 9.12
+Address translation with a page table.
+Figure 9.13(a) shows the steps that the CPU hardware performs when there
+is a page hit.
+Step 1. The processor generates a virtual address and sends it to the MMU.
+Step 2. The MMU generates the PTE address and requests it from the cache/
+main memory.
+Step 3. The cache/main memory returns the PTE to the MMU.
+Step 4. The MMU constructs the physical address and sends it to the cache/main
+memory.
+Step 5. The cache/main memory returns the requested data word to the pro-
+cessor.
+Unlike a page hit, which is handled entirely by hardware, handling a page
+fault requires cooperation between hardware and the operating system kernel
+(Figure 9.13(b)).
+Steps 1 to 3. The same as steps 1 to 3 in Figure 9.13(a).
+Step 4. The valid bit in the PTE is zero, so the MMU triggers an exception,
+which transfers control in the CPU to a page fault exception handler in
+the operating system kernel.
+Step 5. The fault handler identiﬁes a victim page in physical memory, and if that
+page has been modiﬁed, pages it out to disk.
+Step 6. The fault handler pages in the new page and updates the PTE in memory.

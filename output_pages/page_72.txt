@@ -1,0 +1,51 @@
+Section 2.1
+Information Storage
+71
+Aside
+The evolution of the C programming language
+As was described in an aside on page 40, the C programming language was ﬁrst developed by Dennis
+Ritchie of Bell Laboratories for use with the Unix operating system (also developed at Bell Labs). At
+the time, most system programs, such as operating systems, had to be written largely in assembly code
+in order to have access to the low-level representations of different data types. For example, it was
+not feasible to write a memory allocator, such as is provided by the malloc library function, in other
+high-level languages of that era.
+The original Bell Labs version of C was documented in the ﬁrst edition of the book by Brian
+Kernighan and Dennis Ritchie [60]. Over time, C has evolved through the efforts of several standard-
+ization groups. The ﬁrst major revision of the original Bell Labs C led to the ANSI C standard in 1989,
+by a group working under the auspices of the American National Standards Institute. ANSI C was a
+major departure from Bell Labs C, especially in the way functions are declared. ANSI C is described
+in the second edition of Kernighan and Ritchie’s book [61], which is still considered one of the best
+references on C.
+The International Standards Organization took over responsibility for standardizing the C lan-
+guage, adopting a version that was substantially the same as ANSI C in 1990 and hence is referred to
+as “ISO C90.”
+This same organization sponsored an updating of the language in 1999, yielding “ISO C99.” Among
+other things, this version introduced some new data types and provided support for text strings requiring
+characters not found in the English language. A more recent standard was approved in 2011, and hence
+is named “ISO C11,” again adding more data types and features. Most of these recent additions have
+been backward compatible, meaning that programs written according to the earlier standard (at least
+as far back as ISO C90) will have the same behavior when compiled according to the newer standards.
+The GNU Compiler Collection (gcc) can compile programs according to the conventions of several
+different versions of the C language, based on different command-line options, as shown in Figure 2.1.
+For example, to compile program prog.c according to ISO C11, we could give the command line
+linux> gcc -std=c11 prog.c
+The options -ansi and -std=c89 have identical effect—the code is compiled according to the ANSI
+or ISO C90 standard. (C90 is sometimes referred to as “C89,” since its standardization effort began in
+1989.) The option -std=c99 causes the compiler to follow the ISO C99 convention.
+As of the writing of this book, when no option is speciﬁed, the program will be compiled according
+to a version of C based on ISO C90, but including some features of C99, some of C11, some of
+C++, and others speciﬁc to gcc. The GNU project is developing a version that combines ISO C11,
+plus other features, that can be speciﬁed with the command-line option -std=gnu11. (Currently, this
+implementation is incomplete.) This will become the default version.
+C version
+gcc command-line option
+GNU 89
+none, -std=gnu89
+ANSI, ISO C90
+-ansi, -std=c89
+ISO C99
+-std=c99
+ISO C11
+-std=c11
+Figure 2.1
+Specifying different versions of C to gcc.

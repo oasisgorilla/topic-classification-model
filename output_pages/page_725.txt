@@ -1,0 +1,45 @@
+724
+Chapter 7
+Linking
+Since the program doesn’t reference any symbols deﬁned by multvec.o, the linker
+does not copy this module into the executable. The linker also copies the printf.o
+module from libc.a, along with a number of other modules from the C run-time
+system.
+7.6.3
+How Linkers Use Static Libraries to Resolve References
+While static libraries are useful, they are also a source of confusion to program-
+mers because of the way the Linux linker uses them to resolve external references.
+During the symbol resolution phase, the linker scans the relocatable object ﬁles
+and archives left to right in the same sequential order that they appear on the
+compiler driver’s command line. (The driver automatically translates any .c ﬁles
+on the command line into .o ﬁles.) During this scan, the linker maintains a set E
+of relocatable object ﬁles that will be merged to form the executable, a set U of
+unresolved symbols (i.e., symbols referred to but not yet deﬁned), and a set D of
+symbols that have been deﬁned in previous input ﬁles. Initially, E, U, and D are
+empty.
+. For each input ﬁle f on the command line, the linker determines if f is an
+object ﬁle or an archive. If f is an object ﬁle, the linker adds f to E, updates
+U and D to reﬂect the symbol deﬁnitions and references in f , and proceeds
+to the next input ﬁle.
+. If f is an archive, the linker attempts to match the unresolved symbols in U
+against the symbols deﬁned by the members of the archive. If some archive
+member m deﬁnes a symbol that resolves a reference in U, then m is added
+to E, and the linker updates U and D to reﬂect the symbol deﬁnitions and
+references in m. This process iterates over the member object ﬁles in the
+archive until a ﬁxed point is reached where U and D no longer change. At
+this point, any member object ﬁles not contained in E are simply discarded
+and the linker proceeds to the next input ﬁle.
+. If U is nonempty when the linker ﬁnishes scanning the input ﬁles on the
+command line, it prints an error and terminates. Otherwise, it merges and
+relocates the object ﬁles in E to build the output executable ﬁle.
+Unfortunately, this algorithm can result in some bafﬂing link-time errors
+because the ordering of libraries and object ﬁles on the command line is signiﬁcant.
+If the library that deﬁnes a symbol appears on the command line before the object
+ﬁle that references that symbol, then the reference will not be resolved and linking
+will fail. For example, consider the following:
+linux> gcc -static ./libvector.a main2.c
+/tmp/cc9XH6Rp.o: In function ‘main’:
+/tmp/cc9XH6Rp.o(.text+0x18): undefined reference to ‘addvec’
+What happened? When libvector.a is processed, U is empty, so no member
+object ﬁles from libvector.a are added to E. Thus, the reference to addvec is
+never resolved and the linker emits an error message and terminates.

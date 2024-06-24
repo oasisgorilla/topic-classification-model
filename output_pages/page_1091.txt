@@ -1,0 +1,167 @@
+1090
+Index
+addq [Y86-64] add, 392, 438
+address exceptions, status code for,
+440
+address of operator (&) [C]
+local variables, 284
+logic gates, 409
+pointers, 84, 224, 293, 313
+address order of free lists, 899
+address partitioning in caches, 651,
+651–652
+address-space layout randomization
+(ASLR), 321, 321–322
+address spaces, 840
+child processes, 777
+linear, 840
+private, 770
+virtual, 840–841
+address translation, 840
+caches and VM integration, 853
+Core i7, 862–864
+end-to-end, 857–861
+multi-level page tables, 855–857
+optimizing, 866
+overview, 849–852
+TLBs for, 853–855
+addresses and addressing
+byte ordering, 78–85
+effective, 726
+ﬂat, 203
+internet, 958
+invalid address status code, 400
+I/O devices, 634
+IP, 960, 961–963
+machine-level programming, 206–
+207
+operands, 217
+out of bounds. See buffer overﬂow
+physical vs. virtual, 839–840
+pointers, 293, 313
+procedure return, 276
+segmented, 323–324
+sockets, 966, 969–970
+structures, 301–303
+symbol relocation, 726–727
+virtual, 840
+virtual memory, 70
+Y86-64, 392, 395
+addressing modes, 217
+adjacency matrices, 696
+ADR [Y86-64] status code indicating
+invalid address, 400
+Advanced Micro Devices (AMD),
+201, 204
+Intel compatibility, 204
+x86-64. See x86-64 microprocessors
+Advanced Research Projects
+Administration (ARPA), 967
+advanced vector extensions (AVX)
+instructions, 330, 582–583
+AFS (Andrew File System), 646
+aggregate data types, 207
+aggregate payloads, 881
+%al [x86-64] low order 8 of register
+%rax, 216
+alarm [Unix] schedule alarm to self,
+798, 799
+algebra, Boolean, 86–89, 88
+aliasing memory, 535, 536
+.align directive, 402
+alignment
+data, 309, 309–312
+memory blocks, 880
+alloca [Unix] stack storage allocation
+function, 321, 326, 360
+allocate and initialize bounded buffer
+function, 1043
+allocate heap block function, 896,
+897
+allocate heap storage function, 876
+allocated bit, 884
+allocated blocks
+vs. free, 875
+placement, 885
+allocation
+blocks, 896
+dynamic memory. See dynamic
+memory allocation
+pages, 846
+allocators
+block allocation, 896
+block freeing and coalescing, 896
+free list creation, 893–895
+free list manipulation, 892–893
+general design, 890–892
+practice problems, 897–898
+requirements and goals, 880–881
+styles, 875–876
+Alpha (Compaq Computer Corp.)
+RISC processors, 399
+alternate representations of signed
+integers, 104
+ALUADD [Y86-64] function code for
+addq instruction, 440
+ALUs (arithmetic/logic units), 46
+combinational circuits, 416
+in execute stage, 421
+sequential Y86-64 implementation,
+444–445
+always taken branch prediction
+strategy, 464
+AMD (Advanced Micro Devices),
+201, 204
+Intel compatibility, 204
+microprocessor data alignment, 312
+x86-64. See x86-64 microprocessors
+Amdahl, Gene, 58
+Amdahl’s law, 58, 58–60, 598, 604
+American National Standards
+Institute (ANSI), 40, 71
+ampersands (&) address operator, 284
+local addresses, 284
+logic gates, 409
+pointers, 84, 224, 293, 313
+and [instruction class] and, 228
+and instruction, 228
+and operations
+Boolean, 87–88
+execute stage, 444
+HCL expressions, 410–411
+logic gates, 409
+logical, 92–93
+and packed double precision
+instruction, 341
+and packed single precision
+instruction, 341
+andq [Y86-64] and, 392
+Andreesen, Marc, 985
+Andrew File System (AFS), 646
+anonymous ﬁles, 869
+ANSI (American National Standards
+Institute), 40, 71
+AOK [Y86-64] status code for normal
+operation, 399
+app_error [CS:APP] reports
+application errors, 1079
+application binary interface (ABI),
+346
+applications, loading and linking
+shared libraries from, 737–739
+ar Linux archiver, 722, 749
+arbitrary size arithmetic, 121
+Archimedes, 176
+architecture
+ﬂoating-point, 329, 329–332
+Y86. See Y86-64 instruction set
+architecture
+archives, 722
+areal density of disks, 627
+areas
+shared, 870
+swap, 869
+virtual memory, 866
+arguments
+execve function, 786
+Web servers, 989–990

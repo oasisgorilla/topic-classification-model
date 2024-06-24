@@ -1,0 +1,55 @@
+Section 5.9
+Enhancing Parallelism
+581
+6
+5
+4
+3
+2
+1
+0
+1
+2
+3
+4
+Unrolling factor k
+CPE
+5
+6
+double *
+double +
+long *
+long +
+7
+8
+9
+10
+Figure 5.30
+CPE performance for k × 1a loop unrolling. All of the CPEs improve with
+this transformation, nearly approaching their throughput bounds.
+the outcome. We would argue that the difference would be immaterial for most
+applications.
+In summary, a reassociation transformation can reduce the number of opera-
+tions along the critical path in a computation, resulting in better performance by
+better utilizing the multiple functional units and their pipelining capabilities. Most
+compilers will not attempt any reassociations of ﬂoating-point operations, since
+these operations are not guaranteed to be associative. Current versions of gcc do
+perform reassociations of integer operations, but not always with good effects. In
+general, we have found that unrolling a loop and accumulating multiple values in
+parallel is a more reliable way to achieve improved program performance.
+Practice Problem 5.8 (solution page 612)
+Consider the following function for computing the product of an array of n double-
+precision numbers. We have unrolled the loop by a factor of 3.
+double aprod(double a[], long n)
+{
+long i;
+double x, y, z;
+double r = 1;
+for (i = 0; i < n-2; i+= 3) {
+x = a[i]; y = a[i+1]; z = a[i+2];
+r = r * x * y * z; /* Product computation */
+}
+for (; i < n; i++)
+r *= a[i];
+return r;
+}

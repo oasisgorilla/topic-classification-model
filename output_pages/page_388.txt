@@ -1,0 +1,27 @@
+CHAPTER 4
+Processor Architecture
+4.1
+The Y86-64 Instruction Set Architecture
+391
+4.2
+Logic Design and the Hardware Control Language HCL
+408
+4.3
+Sequential Y86-64 Implementations
+420
+4.4
+General Principles of Pipelining
+448
+4.5
+Pipelined Y86-64 Implementations
+457
+4.6
+Summary
+506
+Bibliographic Notes
+509
+Homework Problems
+509
+Solutions to Practice Problems
+516
+387

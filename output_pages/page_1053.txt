@@ -1,0 +1,71 @@
+1052
+Chapter 12
+Concurrent Programming
+code/conc/psum-mutex.c
+1
+/* Thread routine for psum-mutex.c */
+2
+void *sum_mutex(void *vargp)
+3
+{
+4
+long myid = *((long *)vargp);
+/* Extract the thread ID */
+5
+long start = myid * nelems_per_thread; /* Start element index */
+6
+long end = start + nelems_per_thread;
+/* End element index */
+7
+long i;
+8
+9
+for (i = start; i < end; i++) {
+10
+P(&mutex);
+11
+gsum += i;
+12
+V(&mutex);
+13
+}
+14
+return NULL;
+15
+}
+code/conc/psum-mutex.c
+Figure 12.32
+Thread routine for psum-mutex. Each peer thread sums into a shared global variable protected
+by a mutex.
+code/conc/psum-array.c
+1
+/* Thread routine for psum-array.c */
+2
+void *sum_array(void *vargp)
+3
+{
+4
+long myid = *((long *)vargp);
+/* Extract the thread ID */
+5
+long start = myid * nelems_per_thread; /* Start element index */
+6
+long end = start + nelems_per_thread;
+/* End element index */
+7
+long i;
+8
+9
+for (i = start; i < end; i++) {
+10
+psum[myid] += i;
+11
+}
+12
+return NULL;
+13
+}
+code/conc/psum-array.c
+Figure 12.33
+Thread routine for psum-array. Each peer thread accumulates its partial sum in a private
+array element that is not shared with any other peer thread.

@@ -1,0 +1,55 @@
+1010
+Chapter 12
+Concurrent Programming
+Figure 12.2
+Step 2: Server forks a
+child process to service
+the client.
+Client 1
+clientfd
+Client 2
+clientfd
+connfd(4)
+Child 1
+listenfd(3)
+Server
+Data
+transfers
+Figure 12.3
+Step 3: Server accepts
+another connection
+request.
+Client 1
+clientfd
+Client 2
+clientfd
+connfd(4)
+connfd(5)
+Child 1
+listenfd(3)
+Server
+Data
+transfers
+Connection
+request
+descriptor. Otherwise, the ﬁle table entry for connected descriptor 4 will never
+be released, and the resulting memory leak will eventually consume the available
+memory and crash the system.
+Now suppose that after the parent creates the child for client 1, it accepts
+a new connection request from client 2 and returns a new connected descriptor
+(say, 5), as shown in Figure 12.3. The parent then forks another child, which begins
+servicing its client using connected descriptor 5, as shown in Figure 12.4. At this
+point, the parent is waiting for the next connection request and the two children
+are servicing their respective clients concurrently.
+12.1.1
+A Concurrent Server Based on Processes
+Figure 12.5 shows the code for a concurrent echo server based on processes.
+The echo function called in line 29 comes from Figure 11.22. There are several
+important points to make about this server:
+. First, servers typically run for long periods of time, so we must include a
+SIGCHLD handler that reaps zombie children (lines 4–9). Since SIGCHLD
+signals are blocked while the SIGCHLD handler is executing, and since Linux
+signals are not queued, the SIGCHLD handler must be prepared to reap
+multiple zombie children.
+. Second, the parent and the child must close their respective copies of connfd
+(lines 33 and 30, respectively). As we have mentioned, this is especially im-

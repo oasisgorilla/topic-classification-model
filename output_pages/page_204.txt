@@ -1,0 +1,44 @@
+Section 3.1
+A Historical Perspective
+203
+vantage of technology improvements as well as to satisfy the demands for higher
+performance and for supporting more advanced operating systems.
+The list that follows shows some models of Intel processors and some of their
+key features, especially those affecting machine-level programming. We use the
+number of transistors required to implement the processors as an indication of
+how they have evolved in complexity. In this table, “K” denotes 1,000 (103), “M”
+denotes 1,000,000 (106), and “G” denotes 1,000,000,000 (109).
+8086 (1978, 29 K transistors). One of the ﬁrst single-chip, 16-bit microproces-
+sors. The 8088, a variant of the 8086 with an 8-bit external bus, formed
+the heart of the original IBM personal computers. IBM contracted with
+then-tiny Microsoft to develop the MS-DOS operating system. The orig-
+inal models came with 32,768 bytes of memory and two ﬂoppy drives (no
+hard drive). Architecturally, the machines were limited to a 655,360-byte
+address space—addresses were only 20 bits long (1,048,576 bytes address-
+able), and the operating system reserved 393,216 bytes for its own use.
+In 1980, Intel introduced the 8087 ﬂoating-point coprocessor (45 K tran-
+sistors) to operate alongside an 8086 or 8088 processor, executing the
+ﬂoating-point instructions. The 8087 established the ﬂoating-point model
+for the x86 line, often referred to as “x87.”
+80286 (1982, 134 K transistors). Added more (and now obsolete) addressing
+modes. Formed the basis of the IBM PC-AT personal computer, the
+original platform for MS Windows.
+i386 (1985, 275 K transistors). Expanded the architecture to 32 bits. Added the
+ﬂat addressing model used by Linux and recent versions of the Windows
+operating system. This was the ﬁrst machine in the series that could fully
+support a Unix operating system.
+i486 (1989, 1.2 M transistors). Improved performance and integrated the ﬂoat-
+ing-point unit onto the processor chip but did not signiﬁcantly change the
+instruction set.
+Pentium (1993, 3.1 M transistors). Improved performance but only added mi-
+nor extensions to the instruction set.
+PentiumPro (1995, 5.5 M transistors). Introduced a radically new processor
+design, internally known as the P6 microarchitecture. Added a class of
+“conditional move” instructions to the instruction set.
+Pentium/MMX (1997, 4.5 M transistors). Added new class of instructions to the
+Pentium processor for manipulating vectors of integers. Each datum can
+be 1, 2, or 4 bytes long. Each vector totals 64 bits.
+Pentium II (1997, 7 M transistors). Continuation of the P6 microarchitecture.
+Pentium III (1999, 8.2 M transistors). Introduced SSE, a class of instructions for
+manipulating vectors of integer or ﬂoating-point data. Each datum can be
+1, 2, or 4 bytes, packed into vectors of 128 bits. Later versions of this chip

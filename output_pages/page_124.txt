@@ -1,0 +1,49 @@
+Section 2.3
+Integer Arithmetic
+123
+Aside
+Security vulnerability in getpeername (continued)
+We can see that this problem arises due to the mismatch between data types: in one place the
+length parameter is signed; in another place it is unsigned. Such mismatches can be a source of bugs
+and, as this example shows, can even lead to security vulnerabilities. Fortunately, there were no reported
+cases where a programmer had exploited the vulnerability in FreeBSD. They issued a security advisory
+“FreeBSD-SA-02:38.signed-error” advising system administrators on how to apply a patch that would
+remove the vulnerability. The bug can be ﬁxed by declaring parameter maxlen to copy_from_kernel
+to be of type size_t, to be consistent with parameter n of memcpy. We should also declare local variable
+len and the return value to be of type size_t.
+We can characterize operation +u
+w as follows:
+principle: Unsigned addition
+For x and y such that 0 ≤x, y < 2w:
+x +u
+w y =
+ x + y,
+x + y < 2w
+Normal
+x + y −2w,
+2w ≤x + y < 2w+1
+Overﬂow
+(2.11)
+The two cases of Equation 2.11 are illustrated in Figure 2.22, showing the
+sum x + y on the left mapping to the unsigned w-bit sum x +u
+w y on the right. The
+normal case preserves the value of x + y, while the overﬂow case has the effect of
+decrementing this sum by 2w.
+derivation: Unsigned addition
+In general, we can see that if x + y < 2w, the leading bit in the (w + 1)-bit represen-
+tation of the sum will equal 0, and hence discarding it will not change the numeric
+value. On the other hand, if 2w ≤x + y < 2w+1, the leading bit in the (w + 1)-bit
+representation of the sum will equal 1, and hence discarding it is equivalent to
+subtracting 2w from the sum.
+An arithmetic operation is said to overﬂow when the full integer result cannot
+ﬁt within the word size limits of the data type. As Equation 2.11 indicates, overﬂow
+2w
+0
+2w+1
+Overflow
+Normal
+x +uy
+x + y
+Figure 2.22
+Relation between integer addition and unsigned addition. When x + y
+is greater than 2w −1, the sum overﬂows.

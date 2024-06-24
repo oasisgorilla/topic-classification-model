@@ -1,0 +1,43 @@
+30
+Preface
+For Instructors: Classroom-Tested Laboratory Exercises
+The ICS+ course at Carnegie Mellon receives very high evaluations from students.
+Median scores of 5.0/5.0 and means of 4.6/5.0 are typical for the student course
+evaluations. Students cite the fun, exciting, and relevant laboratory exercises as
+the primary reason. The labs are available from the CS:APP Web page. Here are
+examples of the labs that are provided with the book.
+Data Lab. This lab requires students to implement simple logical and arithmetic
+functions, but using a highly restricted subset of C. For example, they must
+compute the absolute value of a number using only bit-level operations. This
+lab helps students understand the bit-level representations of C data types
+and the bit-level behavior of the operations on data.
+Binary Bomb Lab. A binary bomb is a program provided to students as an object-
+code ﬁle. When run, it prompts the user to type in six different strings. If
+any of these are incorrect, the bomb “explodes,” printing an error message
+and logging the event on a grading server. Students must “defuse” their
+own unique bombs by disassembling and reverse engineering the programs
+to determine what the six strings should be. The lab teaches students to
+understand assembly language and also forces them to learn how to use a
+debugger.
+Buffer Overﬂow Lab. Students are required to modify the run-time behavior of
+a binary executable by exploiting a buffer overﬂow vulnerability. This lab
+teaches the students about the stack discipline and about the danger of
+writing code that is vulnerable to buffer overﬂow attacks.
+Architecture Lab. Several of the homework problems of Chapter 4 can be com-
+bined into a lab assignment, where students modify the HCL description of
+a processor to add new instructions, change the branch prediction policy, or
+add or remove bypassing paths and register ports. The resulting processors
+can be simulated and run through automated tests that will detect most of
+the possible bugs. This lab lets students experience the exciting parts of pro-
+cessor design without requiring a complete background in logic design and
+hardware description languages.
+Performance Lab. Students must optimize the performance of an application ker-
+nel function such as convolution or matrix transposition. This lab provides
+a very clear demonstration of the properties of cache memories and gives
+students experience with low-level program optimization.
+Cache Lab. In this alternative to the performance lab, students write a general-
+purpose cache simulator, and then optimize a small matrix transpose kernel
+to minimize the number of misses on a simulated cache. We use the Valgrind
+tool to generate real address traces for the matrix transpose kernel.
+Shell Lab. Students implement their own Unix shell program with job control,
+including the Ctrl+C and Ctrl+Z keystrokes and the fg, bg, and jobs com-

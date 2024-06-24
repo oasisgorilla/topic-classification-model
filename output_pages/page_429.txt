@@ -1,0 +1,57 @@
+428
+Chapter 4
+Processor Architecture
+Aside
+Tracing the execution of a pushq instruction
+Let us trace the processing of the pushq instruction on line 6 of the object code shown in Figure 4.17.
+At this point, we have 9 in register %rdx and 128 in register %rsp. We can also see that the instruction is
+located at address 0x02a and consists of 2 bytes having values 0xa0 and 0x2f. The stages would proceed
+as follows:
+Generic
+Speciﬁc
+Stage
+pushq rA
+pushq %rdx
+Fetch
+icode:ifun ←M1[PC]
+icode:ifun ←M1[0x02a] = a:0
+rA :rB ←M1[PC + 1]
+rA :rB ←M1[0x02b] = 2:f
+valP ←PC + 2
+valP ←0x02a + 2 = 0x02c
+Decode
+valA ←R[rA]
+valA ←R[%rdx] = 9
+valB ←R[%rsp]
+valB ←R[%rsp] = 128
+Execute
+valE ←valB + (−8)
+valE ←128 + (−8) = 120
+Memory
+M8[valE] ←valA
+M8[120] ←9
+Write back
+R[%rsp] ←valE
+R[%rsp] ←120
+PC update
+PC ←valP
+PC ←0x02c
+As this trace shows, the instruction has the effect of setting %rsp to 120, writing 9 to address 120,
+and incrementing the PC by 2.
+Practice Problem 4.16 (solution page 522)
+Assume the two register writes in the write-back stage for popq occur in the order
+listed in Figure 4.20. What would be the effect of executing popq %rsp? Does this
+conform to the desired behavior for Y86-64, as determined in Problem 4.8?
+Figure 4.21 indicates the processing of our three control transfer instructions:
+the different jumps, call, and ret. We see that we can implement these instruc-
+tions with the same overall ﬂow as the preceding ones.
+As with integer operations, we can process all of the jumps in a uniform
+manner, since they differ only when determining whether or not to take the
+branch. A jump instruction proceeds through fetch and decode much like
+the previous instructions, except that it does not require a register speciﬁer byte.
+In the execute stage, we check the condition codes and the jump condition to de-
+termine whether or not to take the branch, yielding a 1-bit signal Cnd. During the
+PC update stage, we test this ﬂag and set the PC to valC (the jump target) if the
+ﬂag is 1 and to valP (the address of the following instruction) if the ﬂag is 0. Our
+notation x ? a : b is similar to the conditional expression in C—it yields a when x
+is 1 and b when x is 0.

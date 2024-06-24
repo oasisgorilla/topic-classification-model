@@ -1,0 +1,69 @@
+810
+Chapter 8
+Exceptional Control Flow
+9
+Sio_putl(--counter);
+10
+Sigprocmask(SIG_SETMASK, &prev_mask, NULL); /* Restore sigs */
+11
+12
+_exit(0);
+13
+}
+14
+15
+int main()
+16
+{
+17
+pid_t pid;
+18
+sigset_t mask, prev_mask;
+19
+20
+printf("%ld", counter);
+21
+fflush(stdout);
+22
+23
+signal(SIGUSR1, handler1);
+24
+if ((pid = Fork()) == 0) {
+25
+while(1) {};
+26
+}
+27
+Kill(pid, SIGUSR1);
+28
+Waitpid(-1, NULL, 0);
+29
+30
+Sigfillset(&mask);
+31
+Sigprocmask(SIG_BLOCK, &mask, &prev_mask);
+/* Block sigs */
+32
+printf("%ld", ++counter);
+33
+Sigprocmask(SIG_SETMASK, &prev_mask, NULL); /* Restore sigs */
+34
+35
+exit(0);
+36
+}
+code/ecf/signalprob0.c
+Portable Signal Handling
+Another ugly aspect of Unix signal handling is that different systems have different
+signal-handling semantics. For example:
+. The semantics of the signal function varies.Some older Unix systems restore
+the action for signal k to its default after signal k has been caught by a handler.
+On these systems, the handler must explicitly reinstall itself, by calling signal,
+each time it runs.
+. System calls can be interrupted. System calls such as read, wait, and accept
+that can potentially block the process for a long period of time are called
+slow system calls. On some older versions of Unix, slow system calls that are
+interrupted when a handler catches a signal do not resume when the signal
+handler returns but instead return immediately to the user with an error
+condition and errno set to EINTR. On these systems, programmers must
+include code that manually restarts interrupted system calls.

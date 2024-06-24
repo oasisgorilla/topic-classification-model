@@ -1,0 +1,44 @@
+Section 5.14
+Identifying and Eliminating Performance Bottlenecks
+601
+5.14.2
+Using a Proﬁler to Guide Optimization
+As an example of using a proﬁler to guide program optimization, we created an ap-
+plication that involves several different tasks and data structures. This application
+analyzes the n-gram statistics of a text document, where an n-gram is a sequence
+of n words occurring in a document. For n = 1, we collect statistics on individual
+words, for n = 2 on pairs of words, and so on. For a given value of n, our program
+reads a text ﬁle, creates a table of unique n-grams and how many times each one
+occurs, then sorts the n-grams in descending order of occurrence.
+As a benchmark, we ran it on a ﬁle consisting of the complete works of William
+Shakespeare, totaling 965,028 words, of which 23,706 are unique. We found that
+for n = 1, even a poorly written analysis program can readily process the entire ﬁle
+in under 1 second, and so we set n = 2 to make things more challenging. For the
+case of n = 2, n-grams are referred to as bigrams (pronounced “bye-grams”). We
+determined that Shakespeare’s works contain 363,039 unique bigrams. The most
+common is “I am,” occurring 1,892 times. Perhaps his most famous bigram, “to
+be,” occurs 1,020 times. Fully 266,018 of the bigrams occur only once.
+Our program consists of the following parts. We created multiple versions,
+starting with simple algorithms for the different parts and then replacing them
+with more sophisticated ones:
+1. Each word is read from the ﬁle and converted to lowercase. Our initial version
+used the function lower1 (Figure 5.7), which we know to have quadratic run
+time due to repeated calls to strlen.
+2. A hash function is applied to the string to create a number between 0 and
+s −1, for a hash table with s buckets. Our initial function simply summed the
+ASCII codes for the characters modulo s.
+3. Each hash bucket is organized as a linked list. The program scans down this
+list looking for a matching entry. If one is found, the frequency for this n-gram
+is incremented. Otherwise, a new list element is created. Our initial version
+performed this operation recursively, inserting new elements at the end of the
+list.
+4. Once the table has been generated, we sort all of the elements according to
+the frequencies. Our initial version used insertion sort.
+Figure 5.38 shows the proﬁle results for six different versions of our n-gram-
+frequency analysis program. For each version, we divide the time into the follow-
+ing categories:
+Sort. Sorting n-grams by frequency
+List. Scanning the linked list for a matching n-gram, inserting a new element if
+necessary
+Lower. Converting strings to lowercase
+Strlen. Computing string lengths

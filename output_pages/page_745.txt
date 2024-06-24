@@ -1,0 +1,46 @@
+744
+Chapter 7
+Linking
+library function is called, validate and trace its input and output values, or even
+replace it with a completely different implementation.
+Here’s the basic idea: Given some target function to be interposed on, you
+create a wrapper functionwhose prototype is identical to the target function. Using
+some particular interpositioning mechanism, you then trick the system into calling
+the wrapper function instead of the target function. The wrapper function typically
+executes its own logic, then calls the target function and passes its return value
+back to the caller.
+Interpositioning can occur at compile time, link time, or run time as the
+program is being loaded and executed. To explore these different mechanisms,
+we will use the example program in Figure 7.20(a) as a running example. It calls
+the malloc and free functions from the C standard library (libc.so). The call to
+malloc allocates a block of 32 bytes from the heap and returns a pointer to the
+block. The call to free gives the block back to the heap, for use by subsequent
+calls to malloc. Our goal is to use interpositioning to trace the calls to malloc and
+free as the program runs.
+7.13.1
+Compile-Time Interpositioning
+Figure 7.20 shows how to use the C preprocessor to interpose at compile time.
+Each wrapper function in mymalloc.c (Figure 7.20(c)) calls the target function,
+prints a trace, and returns. The local malloc.h header ﬁle (Figure 7.20(b)) instructs
+the preprocessor to replace each call to a target function with a call to its wrapper.
+Here is how to compile and link the program:
+linux> gcc -DCOMPILETIME -c mymalloc.c
+linux> gcc -I. -o intc int.c mymalloc.o
+The interpositioning happens because of the -I. argument, which tells the C
+preprocessor to look for malloc.h in the current directory before looking in the
+usual system directories. Notice that the wrappers in mymalloc.c are compiled
+with the standard malloc.h header ﬁle.
+Running the program gives the following trace:
+linux> ./intc
+malloc(32)=0x9ee010
+free(0x9ee010)
+7.13.2
+Link-Time Interpositioning
+The Linux static linker supports link-time interpositioning with the --wrap f ﬂag.
+This ﬂag tells the linker to resolve references to symbol f as __wrap_f (two
+underscores for the preﬁx), and to resolve references to symbol __real_f
+(two underscores for the preﬁx) as f. Figure 7.21 shows the wrappers for our
+example program.
+Here is how to compile the source ﬁles into relocatable object ﬁles:
+linux> gcc -DLINKTIME -c mymalloc.c
+linux> gcc -c int.c

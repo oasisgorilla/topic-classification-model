@@ -1,0 +1,30 @@
+AP PE N DIX A
+Error Handling
+Programmers should always check the error codes returned by system-level func-
+tions. There are many subtle ways that things can go wrong, and it only makes
+sense to use the status information that the kernel is able to provide us. Unfortu-
+nately, programmers are often reluctant to do error checking because it clutters
+their code, turning a single line of code into a multi-line conditional statement.
+Error checking is also confusing because different functions indicate errors in dif-
+ferent ways.
+We were faced with a similar problem when writing this text. On the one hand,
+we would like our code examples to be concise and simple to read. On the other
+hand, we do not want to give students the wrong impression that it is OK to skip
+error checking. To resolve these issues, we have adopted an approach based on
+error-handling wrappers that was pioneered by W. Richard Stevens in his network
+programming text [110].
+The idea is that given some base system-level function foo, we deﬁne a
+wrapper function Foo with identical arguments, but with the ﬁrst letter capitalized.
+The wrapper calls the base function and checks for errors. If it detects an error, the
+wrapper prints an informative message and terminates the process. Otherwise, it
+returns to the caller. Notice that if there are no errors, the wrapper behaves exactly
+like the base function. Put another way, if a program runs correctly with wrappers,
+it will run correctly if we render the ﬁrst letter of each wrapper in lowercase and
+recompile.
+The wrappers are packaged in a single source ﬁle (csapp.c) that is compiled
+and linked into each program. A separate header ﬁle (csapp.h) contains the
+function prototypes for the wrappers.
+This appendix gives a tutorial on the different kinds of error handling in Unix
+systems and gives examples of the different styles of error-handling wrappers.
+Copies of the csapp.h and csapp.c ﬁles are available at the CS:APP Web site.
+1077

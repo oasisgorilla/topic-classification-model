@@ -1,0 +1,88 @@
+Section 12.2
+Concurrent Programming with I/O Multiplexing
+1015
+code/conc/select.c
+1
+#include "csapp.h"
+2
+void echo(int connfd);
+3
+void command(void);
+4
+5
+int main(int argc, char **argv)
+6
+{
+7
+int listenfd, connfd;
+8
+socklen_t clientlen;
+9
+struct sockaddr_storage clientaddr;
+10
+fd_set read_set, ready_set;
+11
+12
+if (argc != 2) {
+13
+fprintf(stderr, "usage: %s <port>\n", argv[0]);
+14
+exit(0);
+15
+}
+16
+listenfd = Open_listenfd(argv[1]);
+17
+18
+FD_ZERO(&read_set);
+/* Clear read set */
+19
+FD_SET(STDIN_FILENO, &read_set); /* Add stdin to read set */
+20
+FD_SET(listenfd, &read_set);
+/* Add listenfd to read set */
+21
+22
+while (1) {
+23
+ready_set = read_set;
+24
+Select(listenfd+1, &ready_set, NULL, NULL, NULL);
+25
+if (FD_ISSET(STDIN_FILENO, &ready_set))
+26
+command(); /* Read command line from stdin */
+27
+if (FD_ISSET(listenfd, &ready_set)) {
+28
+clientlen = sizeof(struct sockaddr_storage);
+29
+connfd = Accept(listenfd, (SA *)&clientaddr, &clientlen);
+30
+echo(connfd); /* Echo client input until EOF */
+31
+Close(connfd);
+32
+}
+33
+}
+34
+}
+35
+36
+void command(void) {
+37
+char buf[MAXLINE];
+38
+if (!Fgets(buf, MAXLINE, stdin))
+39
+exit(0); /* EOF */
+40
+printf("%s", buf); /* Process the input command */
+41
+}
+code/conc/select.c
+Figure 12.6
+An iterative echo server that uses I/O multiplexing. The server uses
+select to wait for connection requests on a listening descriptor and commands on
+standard input.

@@ -1,0 +1,46 @@
+Section 6.3
+The Memory Hierarchy
+649
+Whenever there is a miss, the cache at level k must implement some placement
+policy that determines where to place the block it has retrieved from level k + 1.
+The most ﬂexible placement policy is to allow any block from level k + 1 to be
+stored in any block at level k. For caches high in the memory hierarchy (close to
+the CPU) that are implemented in hardware and where speed is at a premium,
+this policy is usually too expensive to implement because randomly placed blocks
+are expensive to locate.
+Thus, hardware caches typically implement a simpler placement policy that
+restricts a particular block at level k + 1 to a small subset (sometimes a singleton)
+of the blocks at level k. For example, in Figure 6.22, we might decide that a block
+i at level k + 1 must be placed in block (i mod 4) at level k. For example, blocks
+0, 4, 8, and 12 at level k + 1 would map to block 0 at level k; blocks 1, 5, 9, and
+13 would map to block 1; and so on. Notice that our example cache in Figure 6.22
+uses this policy.
+Restrictive placement policies of this kind lead to a type of miss known as
+a conﬂict miss, in which the cache is large enough to hold the referenced data
+objects, but because they map to the same cache block, the cache keeps missing.
+For example, in Figure 6.22, if the program requests block 0, then block 8, then
+block 0, then block 8, and so on, each of the references to these two blocks would
+miss in the cache at level k, even though this cache can hold a total of four blocks.
+Programs often run as a sequence of phases (e.g., loops) where each phase
+accesses some reasonably constant set of cache blocks. For example, a nested loop
+might access the elements of the same array over and over again. This set of blocks
+is called the working set of the phase. When the size of the working set exceeds
+the size of the cache, the cache will experience what are known as capacity misses.
+In other words, the cache is just too small to handle this particular working set.
+Cache Management
+As we have noted, the essence of the memory hierarchy is that the storage device
+at each level is a cache for the next lower level. At each level, some form of logic
+must manage the cache. By this we mean that something has to partition the cache
+storage into blocks, transfer blocks between different levels, decide when there are
+hits and misses, and then deal with them. The logic that manages the cache can be
+hardware, software, or a combination of the two.
+For example, the compiler manages the register ﬁle, the highest level of
+the cache hierarchy. It decides when to issue loads when there are misses, and
+determines which register to store the data in. The caches at levels L1, L2, and
+L3 are managed entirely by hardware logic built into the caches. In a system
+with virtual memory, the DRAM main memory serves as a cache for data blocks
+stored on disk, and is managed by a combination of operating system software
+and address translation hardware on the CPU. For a machine with a distributed
+ﬁle system such as AFS, the local disk serves as a cache that is managed by the
+AFS client process running on the local machine. In most cases, caches operate
+automatically and do not require any speciﬁc or explicit actions from the program.

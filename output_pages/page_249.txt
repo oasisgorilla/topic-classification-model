@@ -1,0 +1,45 @@
+248
+Chapter 3
+Machine-Level Representation of Programs
+That is, the compiler generates separate blocks of code for then-statement and
+else-statement. It inserts conditional and unconditional branches to make sure the
+correct block is executed.
+Practice Problem 3.16 (solution page 367)
+When given the C code
+void cond(short a, short *p)
+{
+if (a && *p < a)
+*p = a;
+}
+gcc generates the following assembly code:
+void cond(short a, short *p)
+a in %rdi, p in %rsi
+cond:
+testq
+%rdi, %rdi
+je
+.L1
+cmpq
+%rsi, (%rdi)
+jle
+.L1
+movq
+%rdi, (%rsi)
+.L1:
+rep; ret
+A. Write a goto version in C that performs the same computation and mimics
+the control ﬂow of the assembly code, in the style shown in Figure 3.16(b).
+You might ﬁnd it helpful to ﬁrst annotate the assembly code as we have done
+in our examples.
+B. Explain why the assembly code contains two conditional branches, even
+though the C code has only one if statement.
+Practice Problem 3.17 (solution page 367)
+An alternate rule for translating if statements into goto code is as follows:
+t = test-expr;
+if (t)
+goto true;
+else-statement
+goto done;
+true:
+then-statement
+done:

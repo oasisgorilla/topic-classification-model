@@ -1,0 +1,73 @@
+356
+Chapter 3
+Machine-Level Representation of Programs
+10
+movq
+72(%rsp), %rax
+11
+addq
+64(%rsp), %rax
+12
+addq
+80(%rsp), %rax
+13
+addq
+$104, %rsp
+14
+ret
+A. We can see on line 2 of function eval that it allocates 104 bytes on the stack.
+Diagram the stack frame for eval, showing the values that it stores on the
+stack prior to calling process.
+B. What value does eval pass in its call to process?
+C. How does the code for process access the elements of structure argument s?
+D. How does the code for process set the ﬁelds of result structure r?
+E. Complete your diagram of the stack frame for eval, showing how eval
+accesses the elements of structure r following the return from process.
+F.
+What general principles can you discern about how structure values are
+passed as function arguments and how they are returned as function results?
+3.68 ◆◆◆
+In the following code, A and B are constants deﬁned with #define:
+1
+typedef struct {
+2
+int x[A][B]; /* Unknown constants A and B */
+3
+long y;
+4
+} str1;
+5
+6
+typedef struct {
+7
+char array[B];
+8
+int t;
+9
+short s[A];
+10
+long u;
+11
+} str2;
+12
+13
+void setVal(str1 *p, str2 *q) {
+14
+long v1 = q->t;
+15
+long v2 = q->u;
+16
+p->y = v1+v2;
+17
+}
+Gcc generates the following code for setVal:
+void setVal(str1 *p, str2 *q)
+p in %rdi, q in %rsi
+1
+setVal:
+2
+movslq
+8(%rsi), %rax
+3
+addq
+32(%rsi), %rax

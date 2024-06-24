@@ -1,0 +1,128 @@
+Section 3.6
+Control
+271
+void switch_eg(long x, long n, long *dest)
+x in %rdi, n in %rsi, dest in %rdx
+1
+switch_eg:
+2
+subq
+$100, %rsi
+Compute index = n-100
+3
+cmpq
+$6, %rsi
+Compare index:6
+4
+ja
+.L8
+If >, goto loc_def
+5
+jmp
+*.L4(,%rsi,8)
+Goto *jg[index]
+6
+.L3:
+loc_A:
+7
+leaq
+(%rdi,%rdi,2), %rax
+3*x
+8
+leaq
+(%rdi,%rax,4), %rdi
+val = 13*x
+9
+jmp
+.L2
+Goto done
+10
+.L5:
+loc_B:
+11
+addq
+$10, %rdi
+x = x + 10
+12
+.L6:
+loc_C:
+13
+addq
+$11, %rdi
+val = x + 11
+14
+jmp
+.L2
+Goto done
+15
+.L7:
+loc_D:
+16
+imulq
+%rdi, %rdi
+val = x * x
+17
+jmp
+.L2
+Goto done
+18
+.L8:
+loc_def:
+19
+movl
+$0, %edi
+val = 0
+20
+.L2:
+done:
+21
+movq
+%rdi, (%rdx)
+*dest = val
+22
+ret
+Return
+Figure 3.23
+Assembly code for switch statement example in Figure 3.22.
+index, corresponding to values 100–106 of n. Observe that the jump table handles
+duplicate cases by simply having the same code label (loc_D) for entries 4 and 6,
+and it handles missing cases by using the label for the default case (loc_def) as
+entries 1 and 5.
+In the assembly code, the jump table is indicated by the following declarations,
+to which we have added comments:
+1
+.section
+.rodata
+2
+.align 8
+Align address to multiple of 8
+3
+.L4:
+4
+.quad
+.L3
+Case 100: loc_A
+5
+.quad
+.L8
+Case 101: loc_def
+6
+.quad
+.L5
+Case 102: loc_B
+7
+.quad
+.L6
+Case 103: loc_C
+8
+.quad
+.L7
+Case 104: loc_D
+9
+.quad
+.L8
+Case 105: loc_def
+10
+.quad
+.L7
+Case 106: loc_D

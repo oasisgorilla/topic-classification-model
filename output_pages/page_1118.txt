@@ -1,0 +1,166 @@
+Index
+1117
+swapped-out pages, 845
+swapping pages, 845
+sweep phase in Mark&Sweep garbage
+collectors, 903
+Swift, Jonathan, 79
+switch [C] multiway branch
+statement, 268–274
+switches, context, 772–773
+symbol resolution, 709, 715
+duplicate symbol names, 716–720
+static libraries, 720–724
+symbol tables, 711, 711–715
+symbolic links, 928
+symbolic methods, 502
+symbols
+address translation, 850
+caches, 653
+global, 711
+local, 712
+relocation, 725–731
+strong and weak, 716
+.symtab section, 711
+synchronization
+ﬂow, 812–814
+Java threads, 1046
+progress graphs, 1036
+threads, 1031–1035
+progress graphs, 1035–1037
+with semaphores. See sema-
+phores
+synchronization errors, 1031
+synchronous DRAM (SDRAM), 622
+synchronous exceptions, 763
+/sys ﬁlesystem, 772
+syscall function, 766
+system bus, 623
+system calls, 53, 763, 763–764
+error handling, 773–774
+Linux/x86-64 systems, 766–767
+slow, 810
+system-level functions, 766
+system-level I/O
+closing ﬁles, 930–931
+ﬁle metadata, 939–940
+I/O redirection, 945–946
+opening ﬁles, 929–931
+packages summary, 947–949
+reading ﬁles, 931–933
+rio package, 933–939
+sharing ﬁles, 942–944
+standard, 947
+summary, 949–950
+Unix I/O, 926–927
+writing ﬁles, 932–933
+system startup function, 734
+System V Unix, 52
+semaphores, 1013
+shared memory, 1013
+T2B (two’s complement to binary
+conversion), 96, 101, 107
+T2U (two’s complement to unsigned
+conversion), 96, 107, 107–109
+tables
+descriptor, 943, 945
+exception, 761, 761
+GOTs, 741, 741–743
+hash, 603–604
+header, 710, 732
+jump, 269, 270–271, 761
+page, 772, 842–844, 843, 855–857,
+859
+program header, 732, 732
+symbol, 711, 711–715
+tag bits, 651, 652
+tags, boundary, 887, 887–890, 895
+Tanenbaum, Andrew S., 56
+target functions in interpositioning
+libraries, 744
+targets, jump, 242, 242–245
+TCP (Transmission Control Protocol),
+960
+TCP/IP (Transmission Control
+Protocol/Internet Protocol),
+960
+tcsh [Unix] Unix shell program, 789
+telnet remote login program, 986,
+986–987
+temporal locality, 640
+blocking for, 683
+exploiting, 650
+terminate another thread function,
+1025
+terminate current thread function, 1025
+terminate process function, 775
+terminated processes, 775
+terminating
+processes, 775–779
+threads, 1024–1025
+test [instruction class] Test, 238
+test byte instruction, 238
+test double word instruction, 238
+test instructions, 238
+test quad word instruction, 238
+test signal set membership instruction,
+801
+test word instruction, 238
+testb [x86-64] test byte, 238
+testing Y86-64 pipeline design, 501
+testl [x86-64] test double word, 238
+testq [x86-64] test quad word, 238
+testw [x86-64] test word, 238
+text ﬁles, 39, 927, 928, 936
+text lines, 927, 934
+text representation
+ASCII, 85
+Unicode, 86
+.text section, 710
+Thompson, Ken, 52
+thrashing
+direct-mapped caches, 658, 658–659
+pages, 846
+thread contexts, 1022, 1029
+thread IDs (TIDs), 1022
+thread-level concurrency, 60–62
+thread-level parallelism, 62
+thread routines, 1023, 1024
+thread-safe functions, 1056, 1056–1058
+thread-unsafe functions, 1056, 1056–
+1058
+threads, 53, 54, 1009, 1021–1022
+concurrent server based on, 1027–
+1028
+creating, 1024
+detaching, 1025–1026
+execution model, 1022–1023
+initializing, 1026
+library functions for, 1060–1061
+mapping variables in, 1030–1031
+memory models, 1029–1030
+for parallelism, 1049–1054
+Posix, 1023–1024
+races, 1061–1063
+reaping, 1025
+safety issues, 1056–1058
+shared variables with, 1028–1031, 1029
+synchronizing, 1031–1035
+progress graphs, 1035–1037
+with semaphores. See sema-
+phores
+terminating, 1024–1025
+three-stage pipelines, 450–452
+throughput, 560
+dynamic memory allocators, 881
+pipelining for. See pipelining
+read, 675
+throughput bounds, 554, 560
+TIDs (thread IDs), 1022
+time slicing, 769
+timing, SEQ, 436–439
+Tiny [CS:APP] Web server, 992,
+992–1000
+TLB index (TLBI), 853
+TLB tags (TLBT), 853, 859
+TLBI (TLB index), 853

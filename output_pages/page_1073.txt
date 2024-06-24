@@ -1,0 +1,41 @@
+1072
+Chapter 12
+Concurrent Programming
+B. In the second part of the lab, you will upgrade your proxy to deal with
+multiple open connections at once by spawning a separate thread to handle
+each request. While your proxy is waiting for a remote server to respond to
+a request so that it can serve one browser, it should be working on a pending
+request from another browser.
+Check your proxy solution using a real Web browser.
+Solutions to Practice Problems
+Solution to Problem 12.1 (page 1011)
+When the parent process on the concurrent server starts executing, the reference
+counter increments from 0 to 1 for the associated ﬁle table. When this parent
+process forks the child process, the reference counter is incremented from 1
+to 2. When the parent closes its copy of the descriptor, the reference count is
+decremented from 2 to 1. Similarly, when the child’s end of connection closes, the
+reference counter is decremented from 1 to 0.
+Solution to Problem 12.2 (page 1011)
+When a process terminates for any reason, the kernel closes all open descriptors.
+Thus, the parent’s copy of the connected ﬁle descriptor will be closed automatically
+when the parent exits.
+Solution to Problem 12.3 (page 1016)
+Recall that the echo function from Figure 11.22 echoes each line from the client
+until the client loses its end of the connection. If Ctrl+D is typed when the echo
+function is under execution, the server would consider it to be the EOF and may
+assume that the client has closed its end of connection and hence, may stop echoing
+back to the client.
+Solution to Problem 12.4 (page 1020)
+pool.nready is an integer variable. We reinitialize the pool.nready variable with
+the value obtained from the call to select so as to store the total number of ready
+descriptors returned by select.
+Solution to Problem 12.5 (page 1028)
+Yes, there are chances of memory leak if lines 31 or 32 are deleted from Fig-
+ure 12.14. Since the threads are not explicitly reaped, each thread must be de-
+tached so that its memory resource will be reclaimed when it terminates. Similarly,
+it is important to free the memory block that was allocated by the main thread.
+Solution to Problem 12.6 (page 1031)
+The main idea here is that stack variables are private, whereas global and static
+variables are shared. Static variables such as cnt are a little tricky because the
+sharing is limited to the functions within their scope—in this case, the thread
+routine.

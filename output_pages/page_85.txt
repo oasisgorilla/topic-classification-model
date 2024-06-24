@@ -1,0 +1,40 @@
+84
+Chapter 2
+Representing and Manipulating Information
+New to C?
+Pointers and arrays
+In function show_bytes (Figure 2.4), we see the close connection between pointers and arrays, as will
+be discussed in detail in Section 3.8. We see that this function has an argument start of type byte_
+pointer (which has been deﬁned to be a pointer to unsigned char), but we see the array reference
+start[i] on line 8. In C, we can dereference a pointer with array notation, and we can reference array
+elements with pointer notation. In this example, the reference start[i] indicates that we want to read
+the byte that is i positions beyond the location pointed to by start.
+New to C?
+Pointer creation and dereferencing
+In lines 13, 17, and 21 of Figure 2.4 we see uses of two operations that give C (and therefore C++) its
+distinctive character. The C “address of” operator ‘&’ creates a pointer. On all three lines, the expression
+&x creates a pointer to the location holding the object indicated by variable x. The type of this pointer
+depends on the type of x, and hence these three pointers are of type int *, float *, and void **,
+respectively. (Data type void * is a special kind of pointer with no associated type information.)
+The cast operator converts from one data type to another. Thus, the cast (byte_pointer) &x
+indicates that whatever type the pointer &x had before, the program will now reference a pointer to
+data of type unsigned char. The casts shown here do not change the actual pointer; they simply direct
+the compiler to refer to the data being pointed to according to the new data type.
+Aside
+Generating an ASCII table
+You can display a table showing the ASCII character code by executing the command man ascii.
+Practice Problem 2.5 (solution page 180)
+Consider the following three calls to show_bytes:
+int a = 0x12345678;
+byte_pointer ap = (byte_pointer) &a;
+show_bytes(ap, 1); /* A. */
+show_bytes(ap, 2); /* B. */
+show_bytes(ap, 3); /* C. */
+Indicate the values that will be printed by each call on a little-endian machine
+and on a big-endian machine:
+A. Little endian:
+Big endian:
+B. Little endian:
+Big endian:
+C. Little endian:
+Big endian:

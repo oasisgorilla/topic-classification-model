@@ -1,0 +1,55 @@
+Section 2.4
+Floating Point
+149
+31
+s
+exp
+frac
+30
+Single precision
+23
+0
+22
+63
+s
+exp
+frac (51:32)
+62
+Double precision
+52
+32
+51
+31
+frac (31:0)
+0
+Figure 2.32
+Standard ﬂoating-point formats. Floating-point numbers are represented
+by three ﬁelds. For the two most common formats, these are packed in 32-bit (single-
+precision) or 64-bit (double-precision) words.
+The bit representation of a ﬂoating-point number is divided into three ﬁelds to
+encode these values:
+. The single sign bit s directly encodes the sign s.
+. The k-bit exponent ﬁeld exp = ek−1 . . . e1e0 encodes the exponent E.
+. The n-bit fraction ﬁeld frac = fn−1 . . . f1f0 encodes the signiﬁcand M, but
+the value encoded also depends on whether or not the exponent ﬁeld equals
+0.
+Figure 2.32 shows the packing of these three ﬁelds into words for the two
+most common formats. In the single-precision ﬂoating-point format (a float
+in C), ﬁelds s, exp, and frac are 1, k = 8, and n = 23 bits each, yielding a 32-
+bit representation. In the double-precision ﬂoating-point format (a double in C),
+ﬁelds s, exp, and frac are 1, k = 11, and n = 52 bits each, yielding a 64-bit
+representation.
+The value encoded by a given bit representation can be divided into three
+different cases (the latter having two variants), depending on the value of exp.
+These are illustrated in Figure 2.33 for the single-precision format.
+Case 1: Normalized Values
+This is the most common case. It occurs when the bit pattern of exp is neither
+all zeros (numeric value 0) nor all ones (numeric value 255 for single precision,
+2047 for double). In this case, the exponent ﬁeld is interpreted as representing a
+signed integer in biased form. That is, the exponent value is E = e −Bias, where
+e is the unsigned number having bit representation ek−1 . . . e1e0 and Bias is a bias
+value equal to 2k−1 −1 (127 for single precision and 1023 for double). This yields
+exponent ranges from −126 to +127 for single precision and −1022 to +1023 for
+double precision.
+The fraction ﬁeld frac is interpreted as representing the fractional value f ,
+where 0 ≤f < 1, having binary representation 0.fn−1 . . . f1f0, that is, with the

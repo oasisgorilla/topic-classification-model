@@ -1,0 +1,77 @@
+Section 11.4
+The Sockets Interface
+979
+code/src/csapp.c
+1
+int open_clientfd(char *hostname, char *port) {
+2
+int clientfd;
+3
+struct addrinfo hints, *listp, *p;
+4
+5
+/* Get a list of potential server addresses */
+6
+memset(&hints, 0, sizeof(struct addrinfo));
+7
+hints.ai_socktype = SOCK_STREAM;
+/* Open a connection */
+8
+hints.ai_flags = AI_NUMERICSERV;
+/* ... using a numeric port arg. */
+9
+hints.ai_flags |= AI_ADDRCONFIG;
+/* Recommended for connections */
+10
+Getaddrinfo(hostname, port, &hints, &listp);
+11
+12
+/* Walk the list for one that we can successfully connect to */
+13
+for (p = listp; p; p = p->ai_next) {
+14
+/* Create a socket descriptor */
+15
+if ((clientfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) < 0)
+16
+continue; /* Socket failed, try the next */
+17
+18
+/* Connect to the server */
+19
+if (connect(clientfd, p->ai_addr, p->ai_addrlen) != -1)
+20
+break; /* Success */
+21
+Close(clientfd); /* Connect failed, try another */
+22
+}
+23
+24
+/* Clean up */
+25
+Freeaddrinfo(listp);
+26
+if (!p) /* All connects failed */
+27
+return -1;
+28
+else
+/* The last connect succeeded */
+29
+return clientfd;
+30
+}
+code/src/csapp.c
+Figure 11.18
+open_clientfd: Helper function that establishes a connection with a server. It is reentrant
+and protocol-independent.
+nection with a server running on hostname and listening on port. We then walk
+the list, trying each list entry in turn, until the calls to socket and connect suc-
+ceed. If the connect fails, we are careful to close the socket descriptor before
+trying the next entry. If the connect succeeds, we free the list memory and return
+the socket descriptor to the client, which can immediately begin using Unix I/O
+to communicate with the server.
+Notice how there is no dependence on any particular version of IP anywhere
+in the code. The arguments to socket and connect are generated for us automat-
+ically by getaddrinfo, which allows our code to be clean and portable.

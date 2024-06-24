@@ -1,0 +1,59 @@
+Section 6.1
+Storage Technologies
+625
+Figure 6.7
+Memory read transaction
+for a load operation: movq
+A,%rax.
+(a) CPU places address A on the memory bus.
+Main
+memory
+Bus interface
+Register file
+I/O
+bridge
+ALU
+A
+X
+0
+A
+%rax
+(b) Main memory reads A from the bus, retrieves word x, and places it on the bus.
+Register file
+Main
+memory
+Bus interface
+I/O
+bridge
+ALU
+x
+X
+0
+A
+%rax
+(c) CPU reads word x from the bus, and copies it into register %rax.
+Register file
+Main
+memory
+Bus interface
+I/O
+bridge
+ALU
+X
+X
+0
+A
+%rax
+where the contents of register %rax are written to address A, the CPU initiates
+a write transaction. Again, there are three basic steps. First, the CPU places the
+address on the system bus. The memory reads the address from the memory bus
+and waits for the data to arrive (Figure 6.8(a)). Next, the CPU copies the data in
+%rax to the system bus (Figure 6.8(b)). Finally, the main memory reads the data
+from the memory bus and stores the bits in the DRAM (Figure 6.8(c)).
+6.1.2
+Disk Storage
+Disks are workhorse storage devices that hold enormous amounts of data, on
+the order of hundreds to thousands of gigabytes, as opposed to the hundreds or
+thousands of megabytes in a RAM-based memory. However, it takes on the order
+of milliseconds to read information from a disk, a hundred thousand times longer
+than from DRAM and a million times longer than from SRAM.

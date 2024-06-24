@@ -1,0 +1,150 @@
+1120
+Index
+waitpid2 [CS:APP] waitpid
+example, 785
+WANs (wide area networks), 957,
+957–958
+warming up caches, 648
+WCONTINUED constant, 780
+weak scaling, 1055, 1056
+weak symbols, 716
+wear leveling logic, 637
+Web clients, 984, 984
+Web servers, 737, 984
+basics, 984–985
+dynamic content, 989–990
+HTTP transactions, 986–989
+Tiny example, 992–1000
+Web content, 985–986
+well-known ports, 966
+well-known service names, 966
+while [C] loop statement, 259–264
+wide area networks (WANs), 957,
+957–958
+WIFEXITED constant, 781
+WIFEXITSTATUS constant, 781
+WIFSIGNALED constant, 781
+WIFSTOPPED constant, 781
+Windows Microsoft operating system,
+63, 81
+wire names in hardware diagrams, 434
+WNOHANG constant, 780–781
+word-level combinational circuits,
+412–416
+word selection
+direct-mapped caches, 655
+fully associative caches, 663–664
+set associative caches, 661–662
+word size, 44, 75
+words, 44, 213
+working sets, 649, 846
+world-wide data connections in
+hardware diagrams, 434
+World Wide Web, 985
+worm programs, 320–322
+wrapper functions, 747
+error handling, 774, 1077, 1079–
+1081
+interpositioning libraries, 744
+write access, 325
+write-allocate approach, 666
+write-back approach, 666
+write-back stage
+instruction processing, 421, 423–433
+PIPE processor, 485–489
+sequential processing, 436
+sequential Y86-64 implementation,
+442–444
+write [Unix] write ﬁle, 931, 932–933
+write hits, 666
+write issues for caches, 666–667
+write-only register, 563
+write operations for ﬁles, 927, 932–
+933
+write ports
+priorities, 444
+register ﬁles, 418
+write/read dependencies, 593–595
+write strategies for caches, 669
+write-through approach, 666
+write transactions, 623, 624–625
+writen function, 939
+writers in readers-writers problem,
+1042, 1044
+writing
+signal handlers, 802–811
+SSD oprations, 636
+WSTOPSIG constant, 781
+WTERMSIG constant, 781
+WUNTRACED constant, 780–781
+x86 Intel microprocessor line, 202
+x86-64 instruction set architecture vs.
+Y86-64, 396
+x86-64 microprocessors, 204
+array access, 292
+conditional move instructions,
+250–256
+data alignment, 312
+exceptions, 765–767
+Intel-compatible 64-bit micropro-
+cessors, 81
+machine language, 201–202
+registers
+data movement, 218–225
+operand speciﬁers, 216–218
+vs. Y86-64, 401–402
+x87 microprocessors, 203
+XDR library security vulnerability,
+136
+%xmm [x86-64] 16-byte media register.
+Subregion of YMM, 331
+%xmm0, return ﬂoating-point value
+register, 335, 337
+XMM, SSE vector registers, 330–332
+xor [instruction class] exclusive-or,
+228
+xorq [Y86-64] exclusive-or, 392
+Y86-64 instruction set architecture,
+389–390
+details, 406–408
+exception handling, 399–400
+hazards, 471
+instruction encoding, 394–396
+instruction set, 392–394
+programmer-visible state, 391–
+392
+programs, 400–406
+sequential implementation.
+See sequential Y86-64
+implementation
+vs. x86-64, 396
+Y86-64 pipelined implementations,
+457
+computation stages, 457–458
+control logic. See control logic in
+pipelining
+exception handling, 480–483
+hazards. See hazards in pipelining
+memory system interfacing, 505–
+506
+multicycle instructions, 504–505
+performance analysis, 500–504
+predicted values, 463–465
+register insertions, 458–462
+signals, 462–463
+stages. See PIPE processor stages
+testing, 501
+veriﬁcation, 502
+Verilog, 503
+yas Y86-64 assembler, 402
+yis Y86-64 instruction set simulator,
+402
+%ymm [x86-64] 32-byte media register,
+331
+YMM, AVX vector registers, 330–332
+zero extension, 113
+zero ﬂag condition code, 237, 342, 391
+ZF [x86-64] zero ﬂag condition code,
+237, 342, 391
+zombie processes, 779, 779–780, 806
+zones, recording, 628

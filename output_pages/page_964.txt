@@ -1,0 +1,40 @@
+Section 11.3
+The Global IP Internet
+963
+Practice Problem 11.1 (solution page 1002)
+Complete the following table:
+Dotted-decimal address
+Hex address
+107.212.122.205
+64.12.149.13
+107.212.96.29
+0x00000080
+0xFFFFFF00
+0x0A010140
+Practice Problem 11.2 (solution page 1003)
+Write a program hex2dd.c that converts its 16-bit hex argument to a 16-bit
+network byte order and prints the result. For example
+linux> ./hex2dd 0x400
+1024
+Practice Problem 11.3 (solution page 1003)
+Write a program dd2hex.c that converts its 16-bit network byte order to a 16-bit
+hex number and prints the result. For example,
+linux> ./dd2hex 1024
+0x400
+11.3.2
+Internet Domain Names
+Internet clients and servers use IP addresses when they communicate with each
+other. However, large integers are difﬁcult for people to remember, so the Internet
+also deﬁnes a separate set of more human-friendly domain names, as well as a
+mechanism that maps the set of domain names to the set of IP addresses. A domain
+name is a sequence of words (letters, numbers, and dashes) separated by periods,
+such as whaleshark.ics.cs.cmu.edu.
+The set of domain names forms a hierarchy, and each domain name encodes
+its position in the hierarchy. An example is the easiest way to understand this.
+Figure 11.10 shows a portion of the domain name hierarchy.
+The hierarchy is represented as a tree. The nodes of the tree represent domain
+names that are formed by the path back to the root. Subtrees are referred to as sub-
+domains. The ﬁrst level in the hierarchy is an unnamed root node. The next level
+is a collection of ﬁrst-level domain names that are deﬁned by a nonproﬁt organi-
+zation called ICANN (Internet Corporation for Assigned Names and Numbers).
+Common ﬁrst-level domains include com, edu, gov, org, and net.

@@ -1,0 +1,44 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+471
+Aside
+Enumerating classes of data hazards
+Hazards can potentially occur when one instruction updates part of the program state that will be
+read by a later instruction. For Y86-64, the program state includes the program registers, the program
+counter, the memory, the condition code register, and the status register. Let us look at the hazard
+possibilities in our proposed design for each of these forms of state.
+Program registers. These are the hazards we have already identiﬁed. They arise because the register
+ﬁle is read in one stage and written in another, leading to possible unintended interactions
+between different instructions.
+Program counter. Conﬂicts between updating and reading the program counter give rise to control
+hazards. No hazard arises when our fetch-stage logic correctly predicts the new value of
+the program counter before fetching the next instruction. Mispredicted branches and ret
+instructions require special handling, as will be discussed in Section 4.5.5.
+Memory. Writes and reads of the data memory both occur in the memory stage. By the time an
+instruction reading memory reaches this stage, any preceding instructions writing memory
+will have already done so. On the other hand, there can be interference between instructions
+writing data in the memory stage and the reading of instructions in the fetch stage, since the
+instruction and data memories reference a single address space. This can only happen with
+programs containing self-modifying code, where instructions write to a portion of memory
+from which instructions are later fetched. Some systems have complex mechanisms to detect
+and avoid such hazards, while others simply mandate that programs should not use self-
+modifying code. We will assume for simplicity that programs do not modify themselves, and
+therefore we do not need to take special measures to update the instruction memory based
+on updates to the data memory during program execution.
+Condition code register. These are written by integer operations in the execute stage. They are read by
+conditional moves in the execute stage and by conditional jumps in the memory stage. By the
+time a conditional move or jump reaches the execute stage, any preceding integer operation
+will have already completed this stage. No hazards can arise.
+Status register. The program status can be affected by instructions as they ﬂow through the pipeline.
+Our mechanism of associating a status code with each instruction in the pipeline enables
+the processor to come to an orderly halt when an exception occurs, as will be discussed in
+Section 4.5.6.
+This analysis shows that we only need to deal with register data hazards, control hazards, and
+making sure exceptions are handled properly. A systematic analysis of this form is important when
+designing a complex system. It can identify the potential difﬁculties in implementing the system, and it
+can guide the generation of test programs to be used in checking the correctness of the system.
+condition codes, or the program status. These are shown as white boxes in the
+pipeline diagrams of Figures 4.47 and 4.48. In these ﬁgures the arrow between
+the box labeled “D” for the addq instruction and the box labeled “E” for one of
+the pipeline bubbles indicates that a bubble was injected into the execute stage in
+place of the addq instruction that would normally have passed from the decode to

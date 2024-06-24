@@ -1,0 +1,45 @@
+Section 4.4
+General Principles of Pipelining
+455
+A. What would be the latency and the throughput of the system, as functions
+of k?
+B. What would be the ultimate limit on the throughput?
+4.4.4
+Pipelining a System with Feedback
+Up to this point, we have considered only systems in which the objects passing
+through the pipeline—whether cars, people, or instructions—are completely in-
+dependent of one another. For a system that executes machine programs such as
+x86-64 or Y86-64, however, there are potential dependencies between successive
+instructions. For example, consider the following Y86-64 instruction sequence:
+1    irmovq $50, %rax
+2    addq  %rax , %rbx
+3    mrmovq 100( %rbx ), %rdx
+In this three-instruction sequence, there is a data dependency between each
+successive pair of instructions, as indicated by the circled register names and the
+arrows between them. The irmovq instruction (line 1) stores its result in %rax,
+which then must be read by the addq instruction (line 2); and this instruction stores
+its result in %rbx, which must then be read by the mrmovq instruction (line 3).
+Another source of sequential dependencies occurs due to the instruction
+control ﬂow. Consider the following Y86-64 instruction sequence:
+1
+loop:
+2
+subq %rdx,%rbx
+3
+jne targ
+4
+irmovq $10,%rdx
+5
+jmp loop
+6
+targ:
+7
+halt
+The jne instruction (line 3) creates a control dependency since the outcome of
+the conditional test determines whether the next instruction to execute will be the
+irmovq instruction (line 4) or the halt instruction (line 7). In our design for SEQ,
+these dependencies were handled by the feedback paths shown on the right-hand
+side of Figure 4.22. This feedback brings the updated register values down to the
+register ﬁle and the new PC value down to the PC register.
+Figure 4.38 illustrates the perils of introducing pipelining into a system con-
+taining feedback paths. In the original system (Figure 4.38(a)), the result of each

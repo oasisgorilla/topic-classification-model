@@ -1,0 +1,56 @@
+Section 6.1
+Storage Technologies
+619
+Aside
+A note on terminology
+The storage community has never settled on a standard name for a DRAM array element. Computer
+architects tend to refer to it as a “cell,” overloading the term with the DRAM storage cell. Circuit
+designers tend to refer to it as a “word,” overloading the term with a word of main memory. To avoid
+confusion, we have adopted the unambiguous term “supercell.”
+Figure 6.3
+High-level view of a
+128-bit 16 × 8 DRAM
+chip.
+Memory
+controller
+2
+addr
+8
+data
+(to CPU)
+DRAM chip
+Cols
+0
+0
+1
+2
+3
+1
+2
+3
+Supercell
+(2,1)
+Internal row buffer
+Rows
+in or out of the chip, and two addr pins that carry two-bit row and column supercell
+addresses. Other pins that carry control information are not shown.
+Each DRAM chip is connected to some circuitry, known as the memory
+controller, that can transfer w bits at a time to and from each DRAM chip. To read
+the contents of supercell (i, j), the memory controller sends the row address i to
+the DRAM, followed by the column address j. The DRAM responds by sending
+the contents of supercell (i, j) back to the controller. The row address i is called
+a RAS (row access strobe) request. The column address j is called a CAS (column
+access strobe) request. Notice that the RAS and CAS requests share the same
+DRAM address pins.
+For example, to read supercell (2, 1) from the 16 × 8 DRAM in Figure 6.3, the
+memory controller sends row address 2, as shown in Figure 6.4(a). The DRAM
+responds by copying the entire contents of row 2 into an internal row buffer. Next,
+the memory controller sends column address 1, as shown in Figure 6.4(b). The
+DRAM responds by copying the 8 bits in supercell (2, 1) from the row buffer and
+sending them to the memory controller.
+One reason circuit designers organize DRAMs as two-dimensional arrays
+instead of linear arrays is to reduce the number of address pins on the chip. For
+example, if our example 128-bit DRAM were organized as a linear array of 16
+supercells with addresses 0 to 15, then the chip would need four address pins
+instead of two. The disadvantage of the two-dimensional array organization is
+that addresses must be sent in two distinct steps, which increases the access time.

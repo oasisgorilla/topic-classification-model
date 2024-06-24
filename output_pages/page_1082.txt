@@ -1,0 +1,54 @@
+Section A.2
+Error-Handling Wrappers
+1081
+code/src/csapp.c
+1
+void Kill(pid_t pid, int signum)
+2
+{
+3
+int rc;
+4
+5
+if ((rc = kill(pid, signum)) < 0)
+6
+unix_error("Kill error");
+7
+}
+code/src/csapp.c
+Figure A.3
+Wrapper for Unix-style kill function.
+code/src/csapp.c
+1
+void Pthread_detach(pthread_t tid) {
+2
+int rc;
+3
+4
+if ((rc = pthread_detach(tid)) != 0)
+5
+posix_error(rc, "Pthread_detach error");
+6
+}
+code/src/csapp.c
+Figure A.4
+Wrapper for Posix-style pthread_detach function.
+code/src/csapp.c
+1
+void Getaddrinfo(const char *node, const char *service,
+2
+const struct addrinfo *hints, struct addrinfo **res)
+3
+{
+4
+int rc;
+5
+6
+if ((rc = getaddrinfo(node, service, hints, res)) != 0)
+7
+gai_error(rc, "Getaddrinfo error");
+8
+}
+code/src/csapp.c
+Figure A.5
+Wrapper for GAI-style getaddrinfo function.

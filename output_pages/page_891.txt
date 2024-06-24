@@ -1,0 +1,58 @@
+890
+Chapter 9
+Virtual Memory
+Minimum block
+Alignment
+Allocated block
+Free block
+size (bytes)
+Single word
+Header and footer
+Header and footer
+Single word
+Header, but no footer
+Header and footer
+Double word
+Header and footer
+Header and footer
+Double word
+Header, but no footer
+Header and footer
+9.9.12
+Putting It Together: Implementing a Simple Allocator
+Building an allocator is a challenging task. The design space is large, with nu-
+merous alternatives for block format and free list format, as well as placement,
+splitting, and coalescing policies. Another challenge is that you are often forced
+to program outside the safe, familiar conﬁnes of the type system, relying on the
+error-prone pointer casting and pointer arithmetic that is typical of low-level sys-
+tems programming.
+While allocators do not require enormous amounts of code, they are subtle
+and unforgiving. Students familiar with higher-level languages such as C++ or Java
+often hit a conceptual wall when they ﬁrst encounter this style of programming. To
+help you clear this hurdle, we will work through the implementation of a simple
+allocator based on an implicit free list with immediate boundary-tag coalescing.
+The maximum block size is 232 = 4 GB. The code is 64-bit clean, running without
+modiﬁcation in 32-bit (gcc -m32) or 64-bit (gcc -m64) processes.
+General Allocator Design
+Our allocator uses a model of the memory system provided by the memlib.c
+package shown in Figure 9.41. The purpose of the model is to allow us to run
+our allocator without interfering with the existing system-level malloc package.
+The mem_init function models the virtual memory available to the heap as a
+large double-word aligned array of bytes. The bytes between mem_heap and mem_
+brk represent allocated virtual memory. The bytes following mem_brk represent
+unallocated virtual memory. The allocator requests additional heap memory by
+calling the mem_sbrk function, which has the same interface as the system’s sbrk
+function, as well as the same semantics, except that it rejects requests to shrink
+the heap.
+The allocator itself is contained in a source ﬁle (mm.c) that users can compile
+and link into their applications. The allocator exports three functions to applica-
+tion programs:
+1
+extern int mm_init(void);
+2
+extern void *mm_malloc (size_t size);
+3
+extern void mm_free (void *ptr);
+The mm_init function initializes the allocator, returning 0 if successful and
+−1 otherwise. The mm_malloc and mm_free functions have the same interfaces
+and semantics as their system counterparts. The allocator uses the block format

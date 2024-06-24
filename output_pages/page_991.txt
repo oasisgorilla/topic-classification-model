@@ -1,0 +1,47 @@
+990
+Chapter 11
+Network Programming
+Environment variable
+Description
+QUERY_STRING
+Program arguments
+SERVER_PORT
+Port that the parent is listening on
+REQUEST_METHOD
+GET or POST
+REMOTE_HOST
+Domain name of client
+REMOTE_ADDR
+Dotted-decimal IP address of client
+CONTENT_TYPE
+POST only: MIME type of the request body
+CONTENT_LENGTH
+POST only: Size in bytes of the request body
+Figure 11.26
+Examples of CGI environment variables.
+it calls fork to create a child process and calls execve to run the /cgi-bin/adder
+program in the context of the child. Programs like the adder program are often
+referred to as CGI programs because they obey the rules of the CGI standard.
+Before the call to execve, the child process sets the CGI environment variable
+QUERY_STRING to 15000&213, which the adder program can reference at run
+time using the Linux getenv function.
+How Does the Server Pass Other Information to the Child?
+CGI deﬁnes a number of other environment variables that a CGI program can
+expect to be set when it runs. Figure 11.26 shows a subset.
+Where Does the Child Send Its Output?
+A CGI program sends its dynamic content to the standard output. Before the
+child process loads and runs the CGI program, it uses the Linux dup2 function
+to redirect standard output to the connected descriptor that is associated with
+the client. Thus, anything that the CGI program writes to standard output goes
+directly to the client.
+Notice that since the parent does not know the type or size of the content that
+the child generates, the child is responsible for generating the Content-type and
+Content-length response headers, as well as the empty line that terminates the
+headers.
+Figure 11.27 shows a simple CGI program that sums its two arguments and
+returns an HTML ﬁle with the result to the client. Figure 11.28 shows an HTTP
+transaction that serves dynamic content from the adder program.
+Practice Problem 11.5 (solution page 1005)
+Assume that a CGI program needs to send dynamic content to the client. This is
+typically done by making the CGI program send its content to the standard output.
+Explain how this content is sent to the client.

@@ -1,0 +1,47 @@
+70
+Chapter 2
+Representing and Manipulating Information
+Aside
+How to read this chapter
+In this chapter, we examine the fundamental properties of how numbers and other forms of data are
+represented on a computer and the properties of the operations that computers perform on these data.
+This requires us to delve into the language of mathematics, writing formulas and equations and showing
+derivations of important properties.
+To help you navigate this exposition, we have structured the presentation to ﬁrst state a property
+as a principle in mathematical notation. We then illustrate this principle with examples and an informal
+discussion. We recommend that you go back and forth between the statement of the principle and the
+examples and discussion until you have a solid intuition for what is being said and what is important
+about the property. For more complex properties, we also provide a derivation, structured much like
+a mathematical proof. You should try to understand these derivations eventually, but you could skip
+over them on ﬁrst reading.
+We also encourage you to work on the practice problems as you proceed through the presentation.
+The practice problems engage you in active learning, helping you put thoughts into action. With these
+as background, you will ﬁnd it much easier to go back and follow the derivations. Be assured, as well,
+that the mathematical skills required to understand this material are within reach of someone with a
+good grasp of high school algebra.
+2.1
+Information Storage
+Rather than accessing individual bits in memory, most computers use blocks of
+8 bits, or bytes, as the smallest addressable unit of memory. A machine-level
+program views memory as a very large array of bytes, referred to as virtual
+memory. Every byte of memory is identiﬁed by a unique number, known as its
+address, and the set of all possible addresses is known as the virtual address space.
+As indicated by its name, this virtual address space is just a conceptual image
+presented to the machine-level program. The actual implementation (presented
+in Chapter 9) uses a combination of dynamic random access memory (DRAM),
+ﬂash memory, disk storage, special hardware, and operating system software to
+provide the program with what appears to be a monolithic byte array.
+In subsequent chapters, we will cover how the compiler and run-time system
+partitions this memory space into more manageable units to store the different
+program objects, that is, program data, instructions, and control information.
+Various mechanisms are used to allocate and manage the storage for different
+parts of the program. This management is all performed within the virtual address
+space. For example, the value of a pointer in C—whether it points to an integer,
+a structure, or some other program object—is the virtual address of the ﬁrst byte
+of some block of storage. The C compiler also associates type information with
+each pointer, so that it can generate different machine-level code to access the
+value stored at the location designated by the pointer depending on the type of
+that value. Although the C compiler maintains this type information, the actual
+machine-level program it generates has no information about data types. It simply
+treats each program object as a block of bytes and the program itself as a sequence
+of bytes.

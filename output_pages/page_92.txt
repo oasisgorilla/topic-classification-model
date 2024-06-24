@@ -1,0 +1,49 @@
+Section 2.1
+Information Storage
+91
+Practice Problem 2.11 (solution page 182)
+Armed with the function inplace_swap from Problem 2.10, you decide to write
+code that will reverse the elements of an array by swapping elements from opposite
+ends of the array, working toward the middle.
+You arrive at the following function:
+1
+void reverse_array(int a[], int cnt) {
+2
+int first, last;
+3
+for (first = 0, last = cnt-1;
+4
+first <= last;
+5
+first++,last--)
+6
+inplace_swap(&a[first], &a[last]);
+7
+}
+When you apply your function to an array containing elements 1, 2, 3, and 4,
+you ﬁnd the array now has, as expected, elements 4, 3, 2, and 1. When you try it
+on an array with elements 1, 2, 3, 4, and 5, however, you are surprised to see that
+the array now has elements 5, 4, 0, 2, and 1. In fact, you discover that the code
+always works correctly on arrays of even length, but it sets the middle element to
+0 whenever the array has odd length.
+A. For an array of odd length cnt = 2k + 1, what are the values of variables
+first and last in the ﬁnal iteration of function reverse_array?
+B. Why does this call to function inplace_swap set the array element to 0?
+C. What simple modiﬁcation to the code for reverse_array would eliminate
+this problem?
+One common use of bit-level operations is to implement masking operations,
+where a mask is a bit pattern that indicates a selected set of bits within a word. As
+an example, the mask 0xFF (having ones for the least signiﬁcant 8 bits) indicates
+the low-order byte of a word. The bit-level operation x & 0xFF yields a value
+consisting of the least signiﬁcant byte of x, but with all other bytes set to 0. For
+example, with x = 0x89ABCDEF, the expression would yield 0x000000EF. The
+expression ~0 will yield a mask of all ones, regardless of the size of the data
+representation. The same mask can be written 0xFFFFFFFF when data type int is
+32 bits, but it would not be as portable.
+Practice Problem 2.12 (solution page 182)
+Write C expressions, in terms of variable x, for the following values. Your code
+should work for any word size w ≥8. For reference, we show the result of evalu-
+ating the expressions for x = 0x87654321, with w = 32.
+A. The least signiﬁcant byte of x, with all other bits set to 0. [0x00000021]
+B. All but the least signiﬁcant byte of x complemented, with the least signiﬁcant
+byte left unchanged. [0x789ABC21]

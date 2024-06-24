@@ -1,0 +1,170 @@
+Index
+1115
+Y86-64 pipelined implementations,
+462–463
+signed [C] integer data type, 77
+signed divide instruction, 234, 235
+signed integers, 68, 76, 97–98, 103
+alternate representations, 104
+shift operations, 94
+two’s complement encoding, 100–106
+unsigned conversions, 106–112
+signed multiply instruction, 234, 234
+signed number representation
+guidelines, 119–120
+ones’ complement, 104
+sign magnitude, 104
+signed size type, 932
+signiﬁcands in ﬂoating-point
+representation, 148
+signs for ﬂoating-point representation,
+148, 148–149
+SIGPIPE signal, 1000
+sigprocmask [Unix] block and
+unblock signals, 801, 817
+sigsetjmp [Unix] init nonlocal
+handler jump, 817, 821
+sigsuspend [Unix] wait for a signal,
+817
+%sil [x86-64] low order 8 of register
+%rsi, 216
+SimAquarium game, 673–674
+SIMD (single-instruction, multiple-
+data) parallelism, 62, 330, 582,
+583
+SIMD streaming extensions (SSE)
+instructions, 312
+simple segregated storage, 899,
+899–900
+simplicity in instruction processing,
+421
+simulated concurrency, 60
+simultaneous multi-threading, 61
+single-bit data connections, 434
+single-instruction, multiple-data
+(SIMD) parallelism, 62, 330,
+582–583
+single-precision ﬂoating-point
+representation
+IEEE, 149, 149
+machine-level data, 214
+support for, 77
+SINS [Y86-64] status code for illegal
+instruction exception, 440
+sio_error [CS:APP] safely emit
+error message and terminate,
+802, 804
+sio_ltoa [CS:APP] safely emit string,
+804
+sio_putl [CS:APP] safely emit long
+int, 802, 804
+sio_puts [CS:APP] safely emit string,
+802, 804
+sio_strlen [CS:APP] safely emit
+string, 804
+size
+blocks, 884
+caches, 668–669
+data, 75–78
+word, 44, 75
+size classes, 899
+size_t [Unix] unsigned size type for
+designating sizes, 80, 119–120,
+122, 135, 932
+size tool, 749
+sizeof [C] compute size of object, 81,
+165–167, 169
+slashes (/) for root directory, 928
+sleep [Unix] suspend process, 785
+slow system calls, 810
+.so shared object ﬁle, 735
+sockaddr [Unix] generic socket
+address structure, 969
+sockaddr_in [Unix] Internet-style
+socket address structure, 969
+socket addresses, 966
+socket descriptors, 948, 970
+socket function, 970
+socket pairs, 966
+sockets, 928, 966
+sockets interface, 968, 968–969
+accept function, 972–973
+address structures, 969–970
+bind function, 971
+connect function, 970–971
+example, 980–983
+helper functions, 978–980
+host and service conversions,
+973–978
+listen function, 971
+open_clientfd function, 970–971
+socket function, 970
+Software Engineering Institute, 136
+software exceptions
+C++ and Java, 822
+ECF for, 759–760
+vs. hardware, 760
+Solaris Sun Microsystems operating
+system, 52, 81
+solid state disks (SSDs), 627, 636
+beneﬁts, 623
+operation, 636–638
+sorting performance, 602–603
+source ﬁles, 39
+source hosts, 958
+source programs, 39
+southbridge chipsets, 624
+Soviet Union, 967
+%sp [x86-64] low order 16 bits of stack
+pointer register %rsp, 216
+SPARC
+ﬁve-stage pipelines, 507
+RISC processors, 399
+Sun Microsystems processor, 81
+spare cylinders, 632
+spatial locality, 640
+caches, 679–683
+exploiting, 650
+special arithmetic operations, 233–236
+special control conditions in Y86-64
+pipelining
+detecting, 493–495
+handling, 491–493
+speciﬁers, operand, 216–218
+speculative execution, 555, 555,
+585–586
+speedup of parallel programs, 1054,
+1054–1055
+spilling, register, 584–585
+spin loops, 814
+spindles, disks, 626
+%spl [x86-64] low order 8 of stack
+pointer register %rsp, 216
+splitting
+free blocks, 885–886
+memory blocks, 883
+sprintf [C Stdlib] function, 83, 318
+Sputnik, 967
+sqrtsd [x86-64] double-precision
+square root, 338
+sqrtss [x86-64] single-precision
+square root, 338
+square root ﬂoating-point instructions,
+338
+squashing mispredicted branch
+handling, 480
+SRAM (static RAM), 49, 617, 617–618
+cache. See caches and cache memory
+vs. DRAM, 618
+trends, 638–639
+SRAM cells, 617
+srand [CS:APP] pseudorandom
+number generator seed, 1057
+SSDs (solid state disks), 627, 636
+beneﬁts, 623
+operation, 636–638
+SSE (streaming SIMD extensions)
+instructions, 203–204, 330
+alignment exceptions, 312
+parallelism, 582–583
+ssize_t [Unix] signed size type, 932

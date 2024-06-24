@@ -1,0 +1,94 @@
+Section 3.7
+Procedures
+283
+(a) C code
+void proc(long
+a1, long
+*a1p,
+int
+a2, int
+*a2p,
+short a3, short *a3p,
+char
+a4, char
+*a4p)
+{
+*a1p += a1;
+*a2p += a2;
+*a3p += a3;
+*a4p += a4;
+}
+(b) Generated assembly code
+void proc(a1, a1p, a2, a2p, a3, a3p, a4, a4p)
+Arguments passed as follows:
+a1
+in %rdi
+(64 bits)
+a1p in %rsi
+(64 bits)
+a2
+in %edx
+(32 bits)
+a2p in %rcx
+(64 bits)
+a3
+in %r8w
+(16 bits)
+a3p in %r9
+(64 bits)
+a4
+at %rsp+8
+( 8 bits)
+a4p at %rsp+16
+(64 bits)
+1
+proc:
+2
+movq
+16(%rsp), %rax
+Fetch a4p
+(64 bits)
+3
+addq
+%rdi, (%rsi)
+*a1p += a1
+(64 bits)
+4
+addl
+%edx, (%rcx)
+*a2p += a2
+(32 bits)
+5
+addw
+%r8w, (%r9)
+*a3p += a3
+(16 bits)
+6
+movl
+8(%rsp), %edx
+Fetch a4
+( 8 bits)
+7
+addb
+%dl, (%rax)
+*a4p += a4
+( 8 bits)
+8
+ret
+Return
+Figure 3.29
+Example of function with multiple arguments of different types.
+Arguments 1–6 are passed in registers, while arguments 7–8 are passed on the stack.
+Figure 3.30
+Stack frame structure for
+function proc. Arguments
+a4 and a4p are passed on
+the stack.
+Return address
+16
+8
+0
+a4
+a4p
+Stack pointer
+%rsp

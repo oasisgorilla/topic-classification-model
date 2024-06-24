@@ -1,0 +1,59 @@
+328
+Chapter 3
+Machine-Level Representation of Programs
+Figure 3.44
+Stack frame structure
+for function vframe.
+The function uses register
+%rbp as a frame pointer.
+The annotations along
+the right-hand side are
+in reference to Practice
+Problem 3.49.
+8n bytes
+8
+0
+–8
+–16
+(Unused)
+Return address
+Saved %rbp
+i
+p
+Stack pointer
+%rsp
+Frame pointer
+%rbp
+e2
+e1
+p
+s2
+s1
+Figure 3.43(b) shows portions of the code gcc generates for function vframe.
+At the beginning of the function, we see code that sets up the stack frame and
+allocates space for array p. The code starts by pushing the current value of %rbp
+onto the stack and setting %rbp to point to this stack position (lines 2–3). Next, it
+allocates 16 bytes on the stack, the ﬁrst 8 of which are used to store local variable
+i, and the second 8 of which are unused. Then it allocates space for array p (lines
+5–11). The details of how much space it allocates and where it positions p within
+this space are explored in Practice Problem 3.49. Sufﬁce it to say that by the time
+the program reaches line 11, it has (1) allocated at least 8n bytes on the stack and
+(2) positioned array p within the allocated region such that at least 8n bytes are
+available for its use.
+The code for the initialization loop shows examples of how local variables
+i and p are referenced. Line 13 shows array element p[i] being set to q. This
+instruction uses the value in register %rcx as the address for the start of p. We can
+see instances where local variable i is updated (line 15) and read (line 17). The
+address of i is given by reference -8(%rbp)—that is, at offset −8 relative to the
+frame pointer.
+At the end of the function, the frame pointer is restored to its previous value
+using the leave instruction (line 20). This instruction takes no arguments. It is
+equivalent to executing the following two instructions:
+movq %rbp, %rsp
+Set stack pointer to beginning of frame
+popq %rbp
+Restore saved %rbp and set stack ptr
+to end of caller’s frame
+That is, the stack pointer is ﬁrst set to the position of the saved value of %rbp, and
+then this value is popped from the stack into %rbp. This instruction combination
+has the effect of deallocating the entire stack frame.

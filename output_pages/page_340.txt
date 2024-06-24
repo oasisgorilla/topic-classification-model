@@ -1,0 +1,65 @@
+Section 3.11
+Floating-Point Code
+339
+7
+vsubsd
+%xmm2, %xmm0, %xmm0
+Subtract from a*x
+8
+ret
+Return
+The three ﬂoating-point arguments a, x, and b are passed in XMM registers
+%xmm0–%xmm2, while integer argument i is passed in register %edi. The standard
+two-instruction sequence is used to convert argument x to double (lines 2–3).
+Another conversion instruction is required to convert argument i to double (line
+5). The function value is returned in register %xmm0.
+Practice Problem 3.53 (solution page 384)
+For the following C function, the types of the four arguments are deﬁned by
+typedef:
+double funct1(arg1_t p, arg2_t q, arg3_t r, arg4_t s)
+{
+return p/(q+r) - s;
+}
+When compiled, gcc generates the following code:
+double funct1(arg1_t p, arg2_t q, arg3_t r, arg4_t s)
+1
+funct1:
+2
+vcvtsi2ssq
+%rsi, %xmm2, %xmm2
+3
+vaddss
+%xmm0, %xmm2, %xmm0
+4
+vcvtsi2ss
+%edi, %xmm2, %xmm2
+5
+vdivss
+%xmm0, %xmm2, %xmm0
+6
+vunpcklps
+%xmm0, %xmm0, %xmm0
+7
+vcvtps2pd
+%xmm0, %xmm0
+8
+vsubsd
+%xmm1, %xmm0, %xmm0
+9
+ret
+Determine the possible combinations of types of the four arguments (there
+may be more than one).
+Practice Problem 3.54 (solution page 385)
+Function funct2 has the following prototype:
+double funct2(double w, int x, float y, long z);
+Gcc generates the following code for the function:
+double funct2(double w, int x, float y, long z)
+w in %xmm0, x in %edi, y in %xmm1, z in %rsi
+1
+funct2:
+2
+vcvtsi2ss
+%edi, %xmm2, %xmm2
+3
+vmulss
+%xmm1, %xmm2, %xmm1

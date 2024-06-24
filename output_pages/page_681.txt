@@ -1,0 +1,43 @@
+680
+Chapter 6
+The Memory Hierarchy
+where
+c11 = a11b11 + a12b21
+c12 = a11b12 + a12b22
+c21 = a21b11 + a22b21
+c22 = a21b12 + a22b22
+A matrix multiply function is usually implemented using three nested loops, which
+are identiﬁed by their indices i, j, and k. If we permute the loops and make some
+other minor code changes, we can create the six functionally equivalent versions
+of matrix multiply shown in Figure 6.44. Each version is uniquely identiﬁed by the
+ordering of its loops.
+At a high level, the six versions are quite similar. If addition is associative,
+then each version computes an identical result.1 Each version performs O(n3) total
+operations and an identical number of adds and multiplies. Each of the n2 elements
+of A and B is read n times. Each of the n2 elements of C is computed by summing
+n values. However, if we analyze the behavior of the innermost loop iterations, we
+ﬁnd that there are differences in the number of accesses and the locality. For the
+purposes of this analysis, we make the following assumptions:
+. Each array is an n × n array of double, with sizeof(double) = 8.
+. There is a single cache with a 32-byte block size (B = 32).
+. The array size n is so large that a single matrix row does not ﬁt in the L1 cache.
+. The compiler stores local variables in registers, and thus references to local
+variables inside loops do not require any load or store instructions.
+Figure 6.45 summarizes the results of our inner-loop analysis. Notice that the
+six versions pair up into three equivalence classes, which we denote by the pair of
+matrices that are accessed in the inner loop. For example, versions ijk and jik are
+members of class AB because they reference arrays A and B (but not C) in their
+innermost loop. For each class, we have counted the number of loads (reads) and
+stores (writes) in each inner-loop iteration, the number of references to A, B, and
+C that will miss in the cache in each loop iteration, and the total number of cache
+misses per iteration.
+The inner loops of the class AB routines (Figure 6.44(a) and (b)) scan a row
+of array A with a stride of 1. Since each cache block holds four 8-byte words, the
+miss rate for A is 0.25 misses per iteration. On the other hand, the inner loop scans
+a column of B with a stride of n. Since n is large, each access of array B results in
+a miss, for a total of 1.25 misses per iteration.
+The inner loops in the class AC routines (Figure 6.44(c) and (d)) have some
+problems. Each iteration performs two loads and a store (as opposed to the
+1. As we learned in Chapter 2, ﬂoating-point addition is commutative, but in general not associative.
+In practice, if the matrices do not mix extremely large values with extremely small ones, as often is
+true when the matrices store physical properties, then the assumption of associativity is reasonable.

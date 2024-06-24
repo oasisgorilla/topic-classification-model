@@ -1,0 +1,74 @@
+212
+Chapter 3
+Machine-Level Representation of Programs
+to generate the ﬁle mstore.s. The full content of the ﬁle is as follows:
+.file
+"010-mstore.c"
+.text
+.globl
+multstore
+.type
+multstore, @function
+multstore:
+pushq
+%rbx
+movq
+%rdx, %rbx
+call
+mult2
+movq
+%rax, (%rbx)
+popq
+%rbx
+ret
+.size
+multstore, .-multstore
+.ident
+"GCC: (Ubuntu 4.8.1-2ubuntu1~12.04) 4.8.1"
+.section
+.note.GNU-stack,"",@progbits
+All of the lines beginning with ‘.’ are directives to guide the assembler and
+linker. We can generally ignore these. On the other hand, there are no explanatory
+remarks about what the instructions do or how they relate to the source code.
+To provide a clearer presentation of assembly code, we will show it in a form
+that omits most of the directives, while including line numbers and explanatory
+annotations. For our example, an annotated version would appear as follows:
+void multstore(long x, long y, long *dest)
+x in %rdi, y in %rsi, dest in %rdx
+1
+multstore:
+2
+pushq
+%rbx
+Save %rbx
+3
+movq
+%rdx, %rbx
+Copy dest to %rbx
+4
+call
+mult2
+Call mult2(x, y)
+5
+movq
+%rax, (%rbx)
+Store result at *dest
+6
+popq
+%rbx
+Restore %rbx
+7
+ret
+Return
+We typically show only the lines of code relevant to the point being discussed.
+Each line is numbered on the left for reference and annotated on the right by a
+brief description of the effect of the instruction and how it relates to the computa-
+tions of the original C code. This is a stylized version of the way assembly-language
+programmers format their code.
+We also provide Web asides to cover material intended for dedicated machine-
+language enthusiasts. One Web aside describes IA32 machine code. Having a
+background in x86-64 makes learning IA32 fairly simple. Another Web aside gives
+a brief presentation of ways to incorporate assembly code into C programs. For
+some applications, the programmer must drop down to assembly code to access
+low-level features of the machine. One approach is to write entire functions in
+assembly code and combine them with C functions during the linking stage. A

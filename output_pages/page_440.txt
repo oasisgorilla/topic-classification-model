@@ -1,0 +1,109 @@
+Section 4.3
+Sequential Y86-64 Implementations
+439
+Clock
+Cycle 1
+Cycle 1:
+Cycle 2:
+Cycle 3:
+Cycle 4:
+Cycle 5:
+Beginning of cycle 3
+End of cycle 3
+Cycle 2
+Cycle 3
+Cycle 4
+1
+1
+2
+2
+3
+4
+0x000:   irmovq $0x100,%rbx  # %rbx <-- 0x100
+0x00a:   irmovq $0x200,%rdx  # %rdx <-- 0x200
+0x014:   addq %rdx,%rbx      # %rbx <-- 0x300 CC <-- 000
+0x016:   je dest             # Not taken
+0x01f:   rmmovq %rbx,0(%rdx) # M[0x200] <-- 0x300
+Combinational
+logic
+Read
+Read
+ports
+Write
+Data
+memory
+Combinational
+logic
+Read
+Read
+ports
+Write
+ports
+Write
+%rbx
+0x300
+Beginning of cycle 4
+End of cycle 4
+3
+4
+Combinational
+logic
+CC
+000
+Read
+Read
+ports
+Write
+ports
+Write
+Combinational
+logic
+CC
+000
+Read
+Read
+ports
+Write
+ports
+Write
+000
+0x016
+0x01f
+Write
+ports
+Register
+file
+%rbx = 0x100
+PC
+0x014
+CC
+100
+PC
+0x016
+CC
+100
+PC
+0x014
+Register
+file
+%rbx = 0x100
+Data
+memory
+Data
+memory
+Register
+file
+%rbx = 0x300
+PC
+0x016
+Register
+file
+%rbx = 0x300
+Data
+memory
+Figure 4.25
+Tracing two cycles of execution by SEQ. Each cycle begins with the state
+elements (program counter, condition code register, register ﬁle, and data memory)
+set according to the previous instruction. Signals propagate through the combinational
+logic, creating new values for the state elements. These values are loaded into the state
+elements to start the next cycle.

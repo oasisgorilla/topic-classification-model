@@ -1,0 +1,70 @@
+Homework Problems
+913
+the physical address, and the cache byte value returned. Indicate whether the TLB
+misses, whether a page fault occurs, and whether a cache miss occurs. If there is
+a cache miss, enter “—” for “Cache byte returned.” If there is a page fault, enter
+“—” for “PPN” and leave parts C and D blank.
+Virtual address: 0x027c
+A. Virtual address format
+12
+11
+13
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+B. Address translation
+Parameter
+Value
+VPN
+TLB index
+TLB tag
+TLB hit? (Y/N)
+Page fault? (Y/N)
+PPN
+C. Physical address format
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+D. Physical memory reference
+Parameter
+Value
+Byte offset
+Cache index
+Cache tag
+Cache hit? (Y/N)
+Cache byte returned
+9.12 ◆
+Repeat Problem 9.11 for the following address.
+Virtual address: 0x03a9
+A. Virtual address format
+12
+11
+13
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0

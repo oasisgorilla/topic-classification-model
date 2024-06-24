@@ -1,0 +1,51 @@
+110
+Chapter 2
+Representing and Manipulating Information
+Figure 2.18
+Conversion from
+unsigned to two’s
+complement. Function
+U2T converts numbers
+greater than 2w−1 −1 to
+negative values.
++2w–1
+0
+–2w–1
+2w
+0
+2w–1
+Two’s
+complement
+Unsigned
+This principle can be justiﬁed as follows:
+derivation: Unsigned to two’s-complement conversion
+Let ⃗
+u = U2Bw(u). This bit vector will also be the two’s-complement representation
+of U2Tw(u). Equations 2.1 and 2.3 can be combined to give
+U2Tw(u) = −uw−12w + u
+(2.8)
+In the unsigned representation of u, bit uw−1determines whether or not u is greater
+than TMaxw = 2w−1 −1, giving the two cases of Equation 2.7.
+The behavior of function U2T is illustrated in Figure 2.18. For small
+(≤TMaxw) numbers, the conversion from unsigned to signed preserves the nu-
+meric value. Large (> TMaxw) numbers are converted to negative values.
+To summarize, we considered the effects of converting in both directions
+between unsigned and two’s-complement representations. For values x in the
+range 0 ≤x ≤TMaxw, we have T2Uw(x) = x and U2Tw(x) = x. That is, num-
+bers in this range have identical unsigned and two’s-complement representations.
+For values outside of this range, the conversions either add or subtract 2w. For
+example, we have T2Uw(−1) = −1 + 2w = UMaxw—the negative number clos-
+est to zero maps to the largest unsigned number. At the other extreme, one
+can see that T2Uw(TMinw) = −2w−1 + 2w = 2w−1 = TMaxw + 1—the most neg-
+ative number maps to an unsigned number just outside the range of positive
+two’s-complement numbers. Using the example of Figure 2.15, we can see that
+T2U16(−12,345) = 65,536 + −12,345 = 53,191.
+2.2.5
+Signed versus Unsigned in C
+As indicated in Figures 2.9 and 2.10, C supports both signed and unsigned arith-
+metic for all of its integer data types. Although the C standard does not spec-
+ify a particular representation of signed numbers, almost all machines use two’s
+complement. Generally, most numbers are signed by default. For example, when
+declaring a constant such as 12345 or 0x1A2B, the value is considered signed.
+Adding character ‘U’ or ‘u’ as a sufﬁx creates an unsigned constant; for example,
+12345U or 0x1A2Bu.

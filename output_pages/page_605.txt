@@ -1,0 +1,47 @@
+604
+Chapter 5
+Optimizing Program Performance
+Finally, we have reduced the run time to the point where most of the time is
+spent in strlen, and most of the calls to strlen occur as part of the lowercase con-
+version. We have already seen that function lower1 has quadratic performance,
+especially for long strings. The words in this document are short enough to avoid
+the disastrous consequences of quadratic performance; the longest bigram is just
+32 characters. Still, switching to lower2, shown as “Linear lower,” yields a signif-
+icant improvement, with the overall time dropping to around 0.2 seconds.
+With this exercise, we have shown that code proﬁling can help drop the
+time required for a simple application from 3.5 minutes down to 0.2 seconds,
+yielding a performance gain of around 1,000×. The proﬁler helps us focus our
+attention on the most time-consuming parts of the program and also provides
+useful information about the procedure call structure. Some of the bottlenecks
+in our code, such as using a quadratic sort routine, are easy to anticipate, while
+others, such as whether to append to the beginning or end of a list, emerge only
+through a careful analysis.
+We can see that proﬁling is a useful tool to have in the toolbox, but it should
+not be the only one. The timing measurements are imperfect, especially for shorter
+(less than 1 second) run times. More signiﬁcantly, the results apply only to the
+particular data tested. For example, if we had run the original function on data
+consisting of a smaller number of longer strings, we would have found that the
+lowercase conversion routine was the major performance bottleneck. Even worse,
+if it only proﬁled documents with short words, we might never detect hidden
+bottlenecks such as the quadratic performance of lower1. In general, proﬁling can
+help us optimize for typical cases, assuming we run the program on representative
+data, but we should also make sure the program will have respectable performance
+for all possible cases. This mainly involves avoiding algorithms (such as insertion
+sort) and bad programming practices (such as lower1) that yield poor asymptotic
+performance.
+Amdahl’s law, described in Section 1.9.1, provides some additional insights
+into the performance gains that can be obtained by targeted optimizations. For our
+n-gram code, we saw the total execution time drop from 209.0 to 5.4 seconds when
+we replaced insertion sort by quicksort. The initial version spent 203.7 of its 209.0
+seconds performing insertion sort, giving α = 0.974, the fraction of time subject
+to speedup. With quicksort, the time spent sorting becomes negligible, giving a
+predicted speedup of 209/α = 39.0, close to the measured speedup of 38.5. We
+were able to gain a large speedup because sorting constituted a very large fraction
+of the overall execution time. However, when one bottleneck is eliminated, a new
+one arises, and so gaining additional speedup required focusing on other parts of
+the program.
+5.15
+Summary
+Although most presentations on code optimization describe how compilers can
+generate efﬁcient code, much can be done by an application programmer to assist
+the compiler in this task. No compiler can replace an inefﬁcient algorithm or data

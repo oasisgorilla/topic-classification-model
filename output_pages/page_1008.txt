@@ -1,0 +1,33 @@
+CHAPTER 12
+Concurrent Programming
+12.1
+Concurrent Programming with Processes
+1009
+12.2
+Concurrent Programming with I/O Multiplexing
+1013
+12.3
+Concurrent Programming with Threads
+1021
+12.4
+Shared Variables in Threaded Programs
+1028
+12.5
+Synchronizing Threads with Semaphores
+1031
+12.6
+Using Threads for Parallelism
+1049
+12.7
+Other Concurrency Issues
+1056
+12.8
+Summary
+1066
+Bibliographic Notes
+1066
+Homework Problems
+1067
+Solutions to Practice Problems
+1072
+1007

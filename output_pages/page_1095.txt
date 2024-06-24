@@ -1,0 +1,167 @@
+1094
+Index
+code segments, 732, 733–734
+Cohen, Danny, 79
+cold caches, 648
+cold misses, 648
+Cold War, 967
+collectors, garbage, 875, 902
+basics, 902–903
+conservative, 903, 905–906
+Mark&Sweep, 903–906
+column access strobe (CAS) requests,
+619
+column-major sum function, 672
+combinational circuits, 410, 410–416
+combinational pipelines, 448–450,
+496–498
+common gateway interface (CGI)
+program, 989, 989–991
+Compaq Computer Corp. RISC
+processors, 399
+compare byte instruction, 238
+compare double precision, 342
+compare double word instruction, 238
+compare instructions, 238
+compare single precision, 342
+compare word instruction, 238
+comparison operations for ﬂoating-
+point code, 342–345
+compilation phase, 41
+compilation systems, 42, 42–43
+compile time, 706
+compile-time interpositioning, 744–
+745
+compiler drivers, 40, 707–708
+compilers, 42, 200
+optimizing capabilities and
+limitations, 534–538
+process, 205–206
+purpose, 207
+complement instruction, 228
+complex instruction set computers
+(CISC), 397, 397–399
+compulsory misses, 648
+computation stages in pipelining,
+457–458
+computed goto, 269
+Computer Emergency Response
+Team (CERT), 136
+computer systems, 38
+concurrency, 1008
+ECF for, 759
+ﬂow synchronizing, 812–814
+and parallelism, 60
+run, 769
+thread-level, 60–62
+concurrent execution, 769
+concurrent ﬂow, 769, 769–770
+concurrent processes, 51, 52
+concurrent programming, 1008–1009
+deadlocks, 1063–1066
+with I/O multiplexing, 1014–1021
+library functions in, 1060–1061
+with processes, 1009–1013
+races, 1061–1063
+reentrancy issues, 1059–1060
+shared variables, 1028–1031
+summary, 1066
+threads, 1021–1028
+for parallelism, 1049–1054
+safety issues, 1056–1058
+concurrent programs, 1008
+concurrent servers, 1008
+based on prethreading, 1041–1049
+based on processes, 1010–1011
+based on threads, 1027–1028
+condition code registers, 207
+hazards, 471
+SEQ timing, 437–438
+condition codes, 237, 237–238
+accessing, 238–241
+x86-64, 237
+Y86-64, 391–393
+condition variables, 1046
+conditional branches, 208, 245
+assembly form, 247
+condition codes, 237–238
+condition control, 245–249
+moves, 250–256, 586–589
+switch, 268–274
+conﬂict misses, 649, 658–660
+connect [Unix] establish connection
+with server, 970, 970–971
+connected descriptors, 972, 972–973
+connections
+EOF on, 984
+Internet, 961, 965–967
+I/O devices, 632–633
+persistent, 988
+conservative garbage collectors, 903,
+905–906
+constant words in Y86-64, 395
+constants
+ﬂoating-point code, 340–341
+free lists, 892–893
+maximum and minimum values, 104
+multiplication, 137–139
+for ranges, 103–104
+Unix, 782
+content
+dynamic, 989–990
+serving, 985
+Web, 984, 985–986
+context switches, 52, 772–773
+contexts, 772
+processes, 52, 768
+thread, 1022, 1029
+continue command, 316
+Control Data Corporation 6600
+processor, 558
+control dependencies in pipelining,
+455, 465
+control ﬂow, 758
+exceptional. See exceptional control
+ﬂow (ECF)
+logical, 768, 768–769
+machine-language procedures, 275
+control hazards, 465
+control logic blocks, 434, 434, 441, 462
+control logic in pipelining, 491
+control mechanism combinations,
+496–498
+control mechanisms, 495–496
+design testing and verifying, 501
+implementation, 498–500
+special cases, 491–493
+special conditions, 493–495
+control structures, 236–237
+condition codes, 236–241
+conditional branches, 245–249
+conditional move instructions,
+250–256
+jumps, 241–245
+loops. See loops
+switch statements, 268–274
+control transfer, 277–281, 758
+controllers
+disk, 631, 631–632
+I/O devices, 45
+memory, 619, 620
+conventional DRAMs, 618–620
+conversions
+binary
+with hexadecimal, 72–73
+signed and unsigned, 106–112
+to two’s complement, 100,
+108–109, 133
+to unsigned, 98–99
+ﬂoating point, 161, 332–337
+lowercase, 545–547
+number systems, 72–75
+convert active socket to listening
+socket function, 971
+convert application-to-network
+function, 962
+convert double precision to integer
+instruction, 333

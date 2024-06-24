@@ -1,0 +1,53 @@
+Section 12.5
+Synchronizing Threads with Semaphores
+1037
+Figure 12.21
+Safe and unsafe
+trajectories. The
+intersection of the critical
+regions forms an unsafe
+region. Trajectories that
+skirt the unsafe region
+correctly update the
+counter variable.
+Thread 2
+Critical
+section
+wrt cnt
+Critical section wrt cnt
+Thread 1
+T2
+S2
+U2
+L2
+H2
+H1
+L1
+U1
+S1
+T1
+Unsafe region
+Unsafe
+trajectory
+Safe trajectory
+Practice Problem 12.8 (solution page 1074)
+Using the progress graph in Figure 12.21, classify the following trajectories as
+either safe or unsafe.
+A. H1, L1, U1, S1, H2, L2, U2, S2, T2, T1
+B. H2, L2, H1, L1, U1, S1, T1, U2, S2, T2
+C. H1, H2, L2, U2, S2, L1, U1, S1, T1, T2
+12.5.2
+Semaphores
+Edsger Dijkstra, a pioneer of concurrent programming, proposed a classic solution
+to the problem of synchronizing different execution threads based on a special
+type of variable called a semaphore. A semaphore, s, is a global variable with a
+nonnegative integer value that can only be manipulated by two special operations,
+called P and V :
+P (s): If s is nonzero, then P decrements s and returns immediately. If s is
+zero, then suspend the thread until s becomes nonzero and the thread is
+restarted by a V operation. After restarting, the P operation decrements
+s and returns control to the caller.
+V (s): The V operation increments s by 1. If there are any threads blocked at a P
+operation waiting for s to become nonzero, then the V operation restarts
+exactly one of these threads, which then completes its P operation by
+decrementing s.

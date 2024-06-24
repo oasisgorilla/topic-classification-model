@@ -1,0 +1,85 @@
+180
+Chapter 2
+Representing and Manipulating Information
+n
+2n (decimal)
+2n (hexadecimal)
+5
+32
+0x20
+23
+8,388,608
+0x800000
+15
+32,768
+0x8000
+13
+8,192
+0x2000
+12
+4,096
+0x1000
+6
+64
+0x40
+8
+256
+0x100
+Solution to Problem 2.3 (page 74)
+This problem gives you a chance to try out conversions between hexadecimal and
+decimal representations for some smaller numbers. For larger ones, it becomes
+much more convenient and reliable to use a calculator or conversion program.
+Decimal
+Binary
+Hexadecimal
+0
+0000 0000
+0x00
+158 = 16 . 9 + 14
+1001 1110
+0x9E
+76 = 16 . 4 + 12
+0100 1100
+0x4C
+145 = 16 . 9 + 1
+1001 0001
+0x91
+16 . 10 + 14 = 174
+1010 1110
+0xAE
+16 . 3 + 12 = 60
+0011 1100
+0x3C
+16 . 15 + 1 = 241
+1111 0001
+0xF1
+16 . 7 + 5 = 117
+0111 0101
+0x75
+16 . 11 + 13 = 189
+1011 1101
+0xBD
+16 . 15 + 5 = 245
+1111 0101
+0xF5
+Solution to Problem 2.4 (page 75)
+When you begin debugging machine-level programs, you will ﬁnd many cases
+where some simple hexadecimal arithmetic would be useful. You can always
+convert numbers to decimal, perform the arithmetic, and convert them back, but
+being able to work directly in hexadecimal is more efﬁcient and informative.
+A. 0x605C + 0x5 = 0x6061. Adding 5 to hex C gives 1 with a carry of 1.
+B. 0x605C −0x20 = 0x603C. Subtracting 2 from 5 in the second digit position
+requires no borrow from the third. This gives 3.
+C. 0x605C + 32 = 0x607C. Decimal 32 (25) equals hexadecimal 0x20.
+D. 0x60FA −0x605C = 0x9E. To subtract hex C (decimal 12) from hex A (decimal
+10), we borrow 16 from the second digit, giving hex F (decimal 15). In the
+second digit, we now subtract 5 from hex E (decimal 14), giving decimal 9.
+Solution to Problem 2.5 (page 84)
+This problem tests your understanding of the byte representation of data and the
+two different byte orderings.
+A.
+Little endian: 78
+Big endian: 12
+B.
+Little endian: 78 56
+Big endian: 12 34

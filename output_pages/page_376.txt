@@ -1,0 +1,120 @@
+Solutions to Practice Problems
+375
+case 2:
+case 7:
+val = (c + b) << 2;
+break;
+case 4:
+val = a;
+break;
+default:
+val = b;
+}
+*dest = val;
+}
+Solution to Problem 3.32 (page 280)
+Tracing through the program execution at this level of detail reinforces many
+aspects of procedure call and return. We can see clearly how control is passed to
+the function when it is called, and how the calling function resumes upon return.
+We can also see how arguments get passed through registers %rdi and %rsi, and
+how results are returned via register %rax.
+Instruction
+State values (at beginning)
+Label
+PC
+Instruction
+%rdi
+%rsi
+%rax
+%rsp
+*%rsp
+Description
+M1
+0x400560
+callq
+10
+—
+—
+0x7fffffffe820
+—
+Call first(10)
+F1
+0x400548
+lea
+10
+—
+—
+0x7fffffffe818
+0x400565
+Entry of first
+F2
+0x40054c
+sub
+10
+11
+—
+0x7fffffffe818
+0x400565
+F3
+0x400550
+callq
+9
+11
+—
+0x7fffffffe818
+0x400565
+Call last(9, 11)
+L1
+0x400540
+mov
+9
+11
+—
+0x7fffffffe810
+0x400555
+Entry of last
+L2
+0x400543
+imul
+9
+11
+9
+0x7fffffffe810
+0x400555
+L3
+0x400547
+retq
+9
+11
+99
+0x7fffffffe810
+0x400555
+Return 99 from last
+F4
+0x400555
+repz repq
+9
+11
+99
+0x7fffffffe818
+0x400565
+Return 99 from first
+M2
+0x400565
+mov
+9
+11
+99
+0x7fffffffe820
+—
+Resume main
+Solution to Problem 3.33 (page 282)
+This problem is a bit tricky due to the mixing of different data sizes.
+Let us ﬁrst describe one answer and then explain the second possibility. If
+we assume the ﬁrst addition (line 3) implements *u += a, while the second (line 4)
+implements v += b, then we can see that a was passed as the ﬁrst argument in %edi
+and converted from 4 bytes to 8 before adding it to the 8 bytes pointed to by %rdx.
+This implies that a must be of type int and u must be of type long *. We can also
+see that the low-order byte of argument b is added to the byte pointed to by %rcx.
+This implies that v must be of type char *, but the type of b is ambiguous—it could
+be 1, 2, 4, or 8 bytes long. This ambiguity is resolved by noting the return value of

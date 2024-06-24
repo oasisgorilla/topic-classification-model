@@ -1,0 +1,52 @@
+414
+Chapter 4
+Processor Architecture
+We will use many forms of multiplexors in our processor designs. They allow
+us to select a word from a number of sources depending on some control condi-
+tion. Multiplexing functions are described in HCL using case expressions. A case
+expression has the following general form:
+[
+select1
+:
+expr1;
+select2
+:
+expr2;
+.
+.
+.
+selectk
+:
+exprk;
+]
+The expression contains a series of cases, where each case i consists of a Boolean
+expression selecti, indicating when this case should be selected, and an integer
+expression expri, indicating the resulting value.
+Unlike the switch statement of C, we do not require the different selection
+expressions to be mutually exclusive. Logically, the selection expressions are eval-
+uated in sequence, and the case for the ﬁrst one yielding 1 is selected. For example,
+the word-level multiplexor of Figure 4.13 can be described in HCL as
+word Out = [
+s: A;
+1: B;
+];
+In this code, the second selection expression is simply 1, indicating that this
+case should be selected if no prior one has been. This is the way to specify a default
+case in HCL. Nearly all case expressions end in this manner.
+Allowing nonexclusive selection expressions makes the HCL code more read-
+able. An actual hardware multiplexor must have mutually exclusive signals con-
+trolling which input word should be passed to the output, such as the signals s and
+!s in Figure 4.13. To translate an HCL case expression into hardware, a logic syn-
+thesis program would need to analyze the set of selection expressions and resolve
+any possible conﬂicts by making sure that only the ﬁrst matching case would be
+selected.
+The selection expressions can be arbitrary Boolean expressions, and there can
+be an arbitrary number of cases. This allows case expressions to describe blocks
+where there are many choices of input signals with complex selection criteria. For
+example, consider the diagram of a 4-way multiplexor shown in Figure 4.14. This
+circuit selects from among the four input words A, B, C, and D based on the control
+signals s1 and s0, treating the controls as a 2-bit binary number. We can express
+this in HCL using Boolean expressions to describe the different combinations of
+control bit patterns:
+word Out4 = [
+!s1 && !s0 : A; # 00

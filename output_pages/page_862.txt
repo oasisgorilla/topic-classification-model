@@ -1,0 +1,54 @@
+Section 9.7
+Case Study: The Intel Core i7/Linux Memory System
+861
+D. Physical memory reference
+Parameter
+Value
+Byte offset
+Cache index
+Cache tag
+Cache hit? (Y/N)
+Cache byte returned
+9.7
+Case Study: The Intel Core i7/Linux Memory System
+We conclude our discussion of virtual memory mechanisms with a case study of
+a real system: an Intel Core i7 running Linux. Although the underlying Haswell
+microarchitecture allows for full 64-bit virtual and physical address spaces, the
+current Core i7 implementations (and those for the foreseeable future) support a
+48-bit (256 TB) virtual address space and a 52-bit (4 PB) physical address space,
+along with a compatibility mode that supports 32-bit (4 GB) virtual and physical
+address spaces.
+Figure 9.21 gives the highlights of the Core i7 memory system. The processor
+package (chip) includes four cores, a large L3 cache shared by all of the cores, and
+DDR3 memory controller
+(shared by all cores)
+L2 unified TLB
+512 entries, 4-way
+Main memory
+MMU
+(addr translation)
+To other
+cores
+To I/O
+bridge
+L1 i-TLB
+128 entries, 4-way
+L1 d-TLB
+64 entries, 4-way
+L2 unified cache
+256 KB, 8-way
+L3 unified cache
+8 MB, 16-way
+(shared by all cores)
+L1 i-cache
+32 KB, 8-way
+L1 d-cache
+32 KB, 8-way
+Instruction
+fetch
+Registers
+QuickPath interconnect
+Processor package
+Core ×4
+Figure 9.21
+The Core i7 memory system.

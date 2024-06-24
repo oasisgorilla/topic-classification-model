@@ -1,0 +1,67 @@
+1070
+Chapter 12
+Concurrent Programming
+12.30 ◆
+Consider the following program that deadlocks.
+Initially: a = 1, b = 1, c = 1.
+Thread 1:
+Thread 2:
+Thread 3:
+P(a);
+P(c);
+P(c);
+P(b);
+P(b);
+V(c);
+V(b);
+V(b);
+P(b);
+P(c);
+V(c);
+P(a);
+V(c);
+P(a);
+V(a);
+V(a);
+V(a);
+V(b);
+A. For each thread, list the pairs of mutexes that it holds simultaneously.
+B. If a < b < c, which threads violate the mutex lock ordering rule?
+C. For these threads, show a new lock ordering that guarantees freedom from
+deadlock.
+12.31 ◆◆◆
+Implement a version of the standard I/O fgets function, called tfgets, that times
+out and returns NULL if it does not receive an input line on standard input within
+5 seconds. Your function should be implemented in a package called tfgets-
+proc.c using processes, signals, and nonlocal jumps. It should not use the Linux
+alarm function. Test your solution using the driver program in Figure 12.47.
+code/conc/tfgets-main.c
+1
+#include "csapp.h"
+2
+3
+char *tfgets(char *s, int size, FILE *stream);
+4
+5
+int main()
+6
+{
+7
+char buf[MAXLINE];
+8
+9
+if (tfgets(buf, MAXLINE, stdin) == NULL)
+10
+printf("BOOM!\n");
+11
+else
+12
+printf("%s", buf);
+13
+14
+exit(0);
+15
+}
+code/conc/tfgets-main.c
+Figure 12.47
+Driver program for Problems 12.31–12.33.

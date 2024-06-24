@@ -1,0 +1,37 @@
+Section 10.7
+Reading Directory Contents
+941
+10.7
+Reading Directory Contents
+Applications can read the contents of a directory with the readdir family of
+functions.
+#include <sys/types.h>
+#include <dirent.h>
+DIR *opendir(const char *name);
+Returns: pointer to handle if OK, NULL on error
+The opendir function takes a pathname and returns a pointer to a directory stream.
+A stream is an abstraction for an ordered list of items, in this case a list of directory
+entries.
+#include <dirent.h>
+struct dirent *readdir(DIR *dirp);
+Returns: pointer to next directory entry if OK, NULL if no more entries or error
+Each call to readdir returns a pointer to the next directory entry in the stream
+dirp, or NULL if there are no more entries. Each directory entry is a structure of
+the form
+struct dirent {
+ino_t d_ino;
+/* inode number */
+char
+d_name[256]; /* Filename */
+};
+Although some versions of Linux include other structure members, these
+are the only two that are standard across all systems. The d_name member is the
+ﬁlename, and d_ino is the ﬁle location.
+On error, readdir returns NULL and sets errno. Unfortunately, the only way
+to distinguish an error from the end-of-stream condition is to check if errno has
+been modiﬁed since the call to readdir.
+#include <dirent.h>
+int closedir(DIR *dirp);
+Returns: 0 on success, −1 on error
+The closedir function closes the stream and frees up any of its resources. Fig-
+ure 10.11 shows how we might use readdir to read the contents of a directory.

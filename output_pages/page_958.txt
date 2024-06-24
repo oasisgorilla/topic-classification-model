@@ -1,0 +1,55 @@
+Section 11.2
+Networks
+957
+Aside
+Internet versus internet
+We will always use lowercase internet to denote the general concept, and uppercase Internet to denote
+a speciﬁc implementation—namely, the global IP Internet.
+Host
+Host
+Host
+Hub
+Bridge
+Bridge
+Host
+Host
+100 Mb/s
+100 Mb/s
+100 Mb/s
+100 Mb/s
+1 Gb/s
+Host
+Host
+Hub
+Host
+Host
+Hub
+Host
+Host
+Hub
+Host
+C
+X
+A
+B
+Y
+Figure 11.4
+Bridged Ethernet segments.
+Figure 11.5
+Conceptual view of a
+LAN.
+Host
+Host
+Host
+. . .
+To simplify our pictures of LANs, we will draw the hubs and bridges and the
+wires that connect them as a single horizontal line, as shown in Figure 11.5.
+At a higher level in the hierarchy, multiple incompatible LANs can be con-
+nected by specialized computers called routers to form an internet (interconnected
+network). Each router has an adapter (port) for each network that it is connected
+to. Routers can also connect high-speed point-to-point phone connections, which
+are examples of networks known as WANs (wide area networks), so called be-
+cause they span larger geographical areas than LANs. In general, routers can be
+used to build internets from arbitrary collections of LANs and WANs. For ex-
+ample, Figure 11.6 shows an example internet with a pair of LANs and WANs
+connected by three routers.

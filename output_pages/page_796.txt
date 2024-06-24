@@ -1,0 +1,35 @@
+Section 8.5
+Signals
+795
+delivered, but the resulting pending signal will not be received until the process
+unblocks the signal.
+A pending signal is received at most once. For each process, the kernel main-
+tains the set of pending signals in the pending bit vector, and the set of blocked
+signals in the blocked bit vector.1 The kernel sets bit k in pending whenever a
+signal of type k is delivered and clears bit k in pending whenever a signal of type
+k is received.
+8.5.2
+Sending Signals
+Unix systems provide a number of mechanisms for sending signals to processes.
+All of the mechanisms rely on the notion of a process group.
+Process Groups
+Every process belongs to exactly one process group, which is identiﬁed by a
+positive integer process group ID. The getpgrp function returns the process group
+ID of the current process.
+#include <unistd.h>
+pid_t getpgrp(void);
+Returns: process group ID of calling process
+By default, a child process belongs to the same process group as its parent. A
+process can change the process group of itself or another process by using the
+setpgid function:
+#include <unistd.h>
+int setpgid(pid_t pid, pid_t pgid);
+Returns: 0 on success, −1 on error
+The setpgid function changes the process group of process pid to pgid. If pid is
+zero, the PID of the current process is used. If pgid is zero, the PID of the process
+speciﬁed by pid is used for the process group ID. For example, if process 15213 is
+the calling process, then
+setpgid(0, 0);
+creates a new process group whose process group ID is 15213, and adds process
+15213 to this new group.
+1. Also known as the signal mask.

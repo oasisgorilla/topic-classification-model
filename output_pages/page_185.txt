@@ -1,0 +1,117 @@
+184
+Chapter 2
+Representing and Manipulating Information
+Expression
+Value
+Expression
+Value
+a & b
+0x44
+a && b
+0x01
+a | b
+0x57
+a || b
+0x01
+~a | ~b
+0xBB
+!a || !b
+0x00
+a & !b
+0x00
+a && ~b
+0x01
+Solution to Problem 2.15 (page 93)
+The expression is !(x ^ y).
+That is, x^y will be zero if and only if every bit of x matches the corresponding
+bit of y. We then exploit the ability of ! to determine whether a word contains any
+nonzero bit.
+There is no real reason to use this expression rather than simply writing x ==
+y, but it demonstrates some of the nuances of bit-level and logical operations.
+Solution to Problem 2.16 (page 94)
+This problem is a drill to help you understand the different shift operations.
+Logical
+Arithmetic
+x
+a << 2
+a >> 3
+a >> 3
+Hex
+Binary
+Binary
+Hex
+Binary
+Hex
+Binary
+Hex
+0xD4
+[11010100]
+[01010000]
+0x50
+[00011010]
+0x1A
+[11111010]
+0xFA
+0x64
+[01100100]
+[10010000]
+0x90
+[00001100]
+0x0C
+[11101100]
+0xEC
+0x72
+[01110010]
+[11001000]
+0xC8
+[00001110]
+0x0E
+[00001110]
+0x0E
+0x44
+[01000100]
+[00010000]
+0x10
+[00001000]
+0x08
+[11101000]
+0xE9
+Solution to Problem 2.17 (page 101)
+In general, working through examples for very small word sizes is a very good way
+to understand computer arithmetic.
+The unsigned values correspond to those in Figure 2.2. For the two’s-
+complement values, hex digits 0 through 7 have a most signiﬁcant bit of 0, yielding
+nonnegative values, while hex digits 8 through F have a most signiﬁcant bit of 1,
+yielding a negative value.
+Hexadecimal
+Binary
+⃗
+x
+B2U4(⃗
+x)
+B2T4(⃗
+x)
+0xA
+[1010]
+23 + 21 = 10
+−23 + 22 = −6
+0x1
+[0001]
+20 = 1
+20 = 1
+0xB
+[1011]
+23 + 21 + 20 = 11
+−23 + 21 + 20 = −5
+0x2
+[0010]
+21 = 2
+21 = 2
+0x7
+[0111]
+22 + 21 + 20 = 7
+22 + 21 + 20 = 7
+0xC
+[1100]
+23 + 22 = 12
+−23 + 22 = −4

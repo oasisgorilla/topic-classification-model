@@ -1,0 +1,93 @@
+940
+Chapter 10
+System-Level I/O
+statbuf.h (included by sys/stat.h)
+/* Metadata returned by the stat and fstat functions */
+struct stat {
+dev_t
+st_dev;
+/* Device */
+ino_t
+st_ino;
+/* inode */
+mode_t
+st_mode;
+/* Protection and file type */
+nlink_t
+st_nlink;
+/* Number of hard links */
+uid_t
+st_uid;
+/* User ID of owner */
+gid_t
+st_gid;
+/* Group ID of owner */
+dev_t
+st_rdev;
+/* Device type (if inode device) */
+off_t
+st_size;
+/* Total size, in bytes */
+unsigned long st_blksize;
+/* Block size for filesystem I/O */
+unsigned long st_blocks;
+/* Number of blocks allocated */
+time_t
+st_atime;
+/* Time of last access */
+time_t
+st_mtime;
+/* Time of last modification */
+time_t
+st_ctime;
+/* Time of last change */
+};
+statbuf.h (included by sys/stat.h)
+Figure 10.9
+The stat structure.
+code/io/statcheck.c
+1
+#include "csapp.h"
+2
+3
+int main (int argc, char **argv)
+4
+{
+5
+struct stat stat;
+6
+char *type, *readok;
+7
+8
+Stat(argv[1], &stat);
+9
+if (S_ISREG(stat.st_mode))
+/* Determine file type */
+10
+type = "regular";
+11
+else if (S_ISDIR(stat.st_mode))
+12
+type = "directory";
+13
+else
+14
+type = "other";
+15
+if ((stat.st_mode & S_IRUSR)) /* Check read access */
+16
+readok = "yes";
+17
+else
+18
+readok = "no";
+19
+20
+printf("type: %s, read: %s\n", type, readok);
+21
+exit(0);
+22
+}
+code/io/statcheck.c
+Figure 10.10
+Querying and manipulating a ﬁle’s st_mode bits.

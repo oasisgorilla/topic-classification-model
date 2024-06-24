@@ -1,0 +1,143 @@
+Section 3.7
+Procedures
+279
+(a) Disassembled code for demonstrating procedure calls and returns
+Disassembly of leaf(long y)
+y in %rdi
+1
+0000000000400540 <leaf>:
+2
+400540:
+48 8d 47 02
+lea
+0x2(%rdi),%rax
+L1: z+2
+3
+400544:
+c3
+retq
+L2: Return
+4
+0000000000400545 <top>:
+Disassembly of top(long x)
+x in %rdi
+5
+400545:
+48 83 ef 05
+sub
+$0x5,%rdi
+T1: x-5
+6
+400549:
+e8 f2 ff ff ff
+callq
+400540 <leaf>
+T2: Call leaf(x-5)
+7
+40054e:
+48 01 c0
+add
+%rax,%rax
+T3: Double result
+8
+400551:
+c3
+retq
+T4: Return
+. . .
+Call to top from function main
+9
+40055b:
+e8 e5 ff ff ff
+callq
+400545 <top>
+M1: Call top(100)
+10
+400560:
+48 89 c2
+mov
+%rax,%rdx
+M2: Resume
+(b) Execution trace of example code
+Instruction
+State values (at beginning)
+Label
+PC
+Instruction
+%rdi
+%rax
+%rsp
+*%rsp
+Description
+M1
+0x40055b
+callq
+100
+—
+0x7fffffffe820
+—
+Call top(100)
+T1
+0x400545
+sub
+100
+—
+0x7fffffffe818
+0x400560
+Entry of top
+T2
+0x400549
+callq
+95
+—
+0x7fffffffe818
+0x400560
+Call leaf(95)
+L1
+0x400540
+lea
+95
+—
+0x7fffffffe810
+0x40054e
+Entry of leaf
+L2
+0x400544
+retq
+—
+97
+0x7fffffffe810
+0x40054e
+Return 97 from leaf
+T3
+0x40054e
+add
+—
+97
+0x7fffffffe818
+0x400560
+Resume top
+T4
+0x400551
+retq
+—
+194
+0x7fffffffe818
+0x400560
+Return 194 from top
+M2
+0x400560
+mov
+—
+194
+0x7fffffffe820
+—
+Resume main
+Figure 3.27
+Detailed execution of program involving procedure calls and returns. Using the stack to
+store return addresses makes it possible to return to the right point in the procedures.
+then returns 194 to main. The ﬁrst three columns describe the instruction being
+executed, including the instruction label, the address, and the instruction type. The
+next four columns show the state of the program before the instruction is executed,
+including the contents of registers %rdi, %rax, and %rsp, as well as the value at
+the top of the stack. The contents of this table should be studied carefully, as they

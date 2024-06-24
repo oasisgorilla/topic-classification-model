@@ -1,0 +1,59 @@
+606
+Chapter 5
+Optimizing Program Performance
+takes a similar approach but goes into more detail with respect to the processor’s
+characteristics.
+Many publications describe code optimization from a compiler’s perspective,
+formulating ways that compilers can generate more efﬁcient code. Muchnick’s
+book is considered the most comprehensive [80]. Wadleigh and Crawford’s book
+on software optimization [115] covers some of the material we have presented,
+but it also describes the process of getting high performance on parallel machines.
+An early paper by Mahlke et al. [75] describes how several techniques developed
+for compilers that map programs onto parallel machines can be adapted to exploit
+the instruction-level parallelism of modern processors. This paper covers the code
+transformations we presented, including loop unrolling, multiple accumulators
+(which they refer to as accumulator variable expansion), and reassociation (which
+they refer to as tree height reduction).
+Our presentation of the operation of an out-of-order processor is fairly brief
+and abstract. More complete descriptions of the general principles can be found in
+advanced computer architecture textbooks, such as the one by Hennessy and Pat-
+terson [46, Ch. 2–3]. Shen and Lipasti’s book [100] provides an in-depth treatment
+of modern processor design.
+Homework Problems
+5.13 ◆◆
+Suppose we wish to write a procedure that computes the inner product of two
+vectors u and v. An abstract version of the function has a CPE of 14–18 with x86-
+64 for different types of integer and ﬂoating-point data. By doing the same sort
+of transformations we did to transform the abstract program combine1 into the
+more efﬁcient combine4, we get the following code:
+1
+/* Inner product.
+Accumulate in temporary */
+2
+void inner4(vec_ptr u, vec_ptr v, data_t *dest)
+3
+{
+4
+long i;
+5
+long length = vec_length(u);
+6
+data_t *udata = get_vec_start(u);
+7
+data_t *vdata = get_vec_start(v);
+8
+data_t sum = (data_t) 0;
+9
+10
+for (i = 0; i < length; i++) {
+11
+sum = sum + udata[i] * vdata[i];
+12
+}
+13
+*dest = sum;
+14
+}
+Our measurements show that this function has CPEs of 1.50 for integer data
+and 3.00 for ﬂoating-point data. For data type double, the x86-64 assembly code
+for the inner loop is as follows:

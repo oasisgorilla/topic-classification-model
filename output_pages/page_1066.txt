@@ -1,0 +1,52 @@
+Section 12.7
+Other Concurrency Issues
+1065
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+. . .
+Thread 2
+Thread 1
+P(t)
+P(s)
+P(s)
+P(t)
+V(s)
+V(t)
+V(t)
+V(s)
+Initially
+s1
+t1
+Forbidden
+region
+for s
+Forbidden
+region for t
+Figure 12.45
+Progress graph for a deadlock-free program.
+Mutex lock ordering rule: Given a total ordering of all mutexes, a program is
+deadlock-free if each thread acquires its mutexes in order and releases them in
+reverse order.
+For example, we can ﬁx the deadlock in Figure 12.44 by locking s ﬁrst, then t,
+in each thread. Figure 12.45 shows the resulting progress graph.
+Practice Problem 12.15 (solution page 1075)
+Consider the following program, which attempts to use a pair of semaphores for
+mutual exclusion.
+Initially: s = 1, t = 0.
+Thread 1:
+Thread 2:
+P(s);
+P(s);
+V(s);
+V(s);
+P(t);
+P(t);
+V(t);
+V(t);
+A. Draw the progress graph for this program.
+B. Does it always deadlock?

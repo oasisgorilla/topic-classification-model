@@ -1,0 +1,39 @@
+798
+Chapter 8
+Exceptional Control Flow
+Sending Signals with the alarm Function
+A process can send SIGALRM signals to itself by calling the alarm function.
+#include <unistd.h>
+unsigned int alarm(unsigned int secs);
+Returns: remaining seconds of previous alarm, or 0 if no previous alarm
+The alarm function arranges for the kernel to send a SIGALRM signal to the
+calling process in secs seconds. If secs is 0, then no new alarm is scheduled. In
+any event, the call to alarm cancels any pending alarms and returns the number
+of seconds remaining until any pending alarm was due to be delivered (had not
+this call to alarm canceled it), or 0 if there were no pending alarms.
+8.5.3
+Receiving Signals
+When the kernel switches a process p from kernel mode to user mode (e.g.,
+returning from a system call or completing a context switch), it checks the set of
+unblocked pending signals (pending & ~blocked) for p. If this set is empty (the
+usual case), then the kernel passes control to the next instruction (Inext) in the
+logical control ﬂow of p. However, if the set is nonempty, then the kernel chooses
+some signal k in the set (typically the smallest k) and forces p to receive signal
+k. The receipt of the signal triggers some action by the process. Once the process
+completes the action, then control passes back to the next instruction (Inext) in the
+logical control ﬂow of p. Each signal type has a predeﬁned default action, which
+is one of the following:
+. The process terminates.
+. The process terminates and dumps core.
+. The process stops (suspends) until restarted by a SIGCONT signal.
+. The process ignores the signal.
+Figure 8.26 shows the default actions associated with each type of signal.
+For example, the default action for the receipt of a SIGKILL is to terminate
+the receiving process. On the other hand, the default action for the receipt of
+a SIGCHLD is to ignore the signal. A process can modify the default action
+associated with a signal by using the signal function. The only exceptions are
+SIGSTOP and SIGKILL, whose default actions cannot be changed.
+#include <signal.h>
+typedef void (*sighandler_t)(int);
+sighandler_t signal(int signum, sighandler_t handler);
+Returns: pointer to previous handler if OK, SIG_ERR on error (does not set errno)

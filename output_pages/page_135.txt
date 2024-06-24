@@ -1,0 +1,108 @@
+134
+Chapter 2
+Representing and Manipulating Information
+Mode
+x
+y
+x . y
+Truncated x . y
+Unsigned
+5
+[101]
+3
+[011]
+15
+[001111]
+7
+[111]
+Two’s complement
+−3
+[101]
+3
+[011]
+−9
+[110111]
+−1
+[111]
+Unsigned
+4
+[100]
+7
+[111]
+28
+[011100]
+4
+[100]
+Two’s complement
+−4
+[100]
+−1
+[111]
+4
+[000100]
+−4
+[100]
+Unsigned
+3
+[011]
+3
+[011]
+9
+[001001]
+1
+[001]
+Two’s complement
+3
+[011]
+3
+[011]
+9
+[001001]
+1
+[001]
+Figure 2.27
+Three-bit unsigned and two’s-complement multiplication examples.
+Although the bit-level representations of the full products may differ, those of the
+truncated products are identical.
+derivation: Bit-level equivalence of unsigned and two’s-complement multipli-
+cation
+From Equation 2.6, we have x′ = x + xw−12w and y′ = y + yw−12w. Computing the
+product of these values modulo 2w gives the following:
+(x′ . y′) mod 2w = [(x + xw−12w) . (y + yw−12w)] mod 2w
+(2.18)
+= [x . y + (xw−1y + yw−1x)2w + xw−1yw−122w] mod 2w
+= (x . y) mod 2w
+The terms with weight 2w and 22w drop out due to the modulus operator. By Equa-
+tion 2.17, we have x *t
+w y = U2Tw((x . y) mod 2w). We can apply the operation
+T2Uw to both sides to get
+T2Uw(x *t
+w y) = T2Uw(U2Tw((x . y) mod 2w)) = (x . y) mod 2w
+Combining this result with Equations 2.16 and 2.18 shows that T2Uw(x *t
+w y) =
+(x′ . y′) mod 2w = x′ *u
+w y′. We can then apply U2Bw to both sides to get
+U2Bw(T2Uw(x *t
+w y)) = T2Bw(x *t
+w y) = U2Bw(x′ *u
+w y′)
+Practice Problem 2.34 (solution page 189)
+Fill in the following table showing the results of multiplying different 3-bit num-
+bers, in the style of Figure 2.27:
+Mode
+x
+y
+x . y
+Truncated x . y
+Unsigned
+[100]
+[101]
+Two’s complement
+[100]
+[101]
+Unsigned
+[010]
+[111]
+Two’s complement
+[010]
+[111]

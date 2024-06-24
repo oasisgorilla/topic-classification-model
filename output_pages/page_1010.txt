@@ -1,0 +1,49 @@
+Section 12.1
+Concurrent Programming with Processes
+1009
+. Processes. With this approach, each logical control ﬂow is a process that is
+scheduled and maintained by the kernel. Since processes have separate virtual
+address spaces, ﬂows that want to communicate with each other must use some
+kind of explicit interprocess communication (IPC) mechanism.
+. I/Omultiplexing.Thisisaformofconcurrentprogrammingwhereapplications
+explicitly schedule their own logical ﬂows in the context of a single process.
+Logical ﬂows are modeled as state machines that the main program explicitly
+transitions from state to state as a result of data arriving on ﬁle descriptors.
+Since the program is a single process, all ﬂows share the same address space.
+. Threads. Threads are logical ﬂows that run in the context of a single process
+and are scheduled by the kernel. You can think of threads as a hybrid of the
+other two approaches, scheduled by the kernel like process ﬂows and sharing
+the same virtual address space like I/O multiplexing ﬂows.
+This chapter investigates these three different concurrent programming tech-
+niques. To keep our discussion concrete, we will work with the same motivating
+application throughout—a concurrent version of the iterative echo server from
+Section 11.4.9.
+12.1
+Concurrent Programming with Processes
+The simplest way to build a concurrent program is with processes, using familiar
+functions such as fork, exec, and waitpid. For example, a natural approach for
+building a concurrent server is to accept client connection requests in the parent
+and then create a new child process to service each new client.
+To see how this might work, suppose we have two clients and a server that is
+listening for connection requests on a listening descriptor (say, 3). Now suppose
+that the server accepts a connection request from client 1 and returns a connected
+descriptor (say, 4), as shown in Figure 12.1. After accepting the connection request,
+the server forks a child, which gets a complete copy of the server’s descriptor table.
+The child closes its copy of listening descriptor 3, and the parent closes its copy of
+connected descriptor 4, since they are no longer needed. This gives us the situation
+shown in Figure 12.2, where the child process is busy servicing the client.
+Since the connected descriptors in the parent and child each point to the
+same ﬁle table entry, it is crucial for the parent to close its copy of the connected
+Figure 12.1
+Step 1: Server accepts
+connection request from
+client.
+Client 1
+clientfd
+Client 2
+clientfd
+connfd(4)
+listenfd(3)
+Server
+Connection
+request

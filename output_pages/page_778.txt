@@ -1,0 +1,60 @@
+Section 8.4
+Process Control
+777
+code/ecf/fork.c
+1
+int main()
+2
+{
+3
+pid_t pid;
+4
+int x = 1;
+5
+6
+pid = Fork();
+7
+if (pid == 0) {
+/* Child */
+8
+printf("child : x=%d\n", ++x);
+9
+exit(0);
+10
+}
+11
+12
+/* Parent */
+13
+printf("parent: x=%d\n", --x);
+14
+exit(0);
+15
+}
+code/ecf/fork.c
+Figure 8.15
+Using fork to create a new process.
+Duplicate but separate address spaces. If we could halt both the parent and the
+child immediately after the fork function returned in each process, we
+would see that the address space of each process is identical. Each process
+has the same user stack, the same local variable values, the same heap,
+the same global variable values, and the same code. Thus, in our example
+program, local variable x has a value of 1 in both the parent and the child
+when the fork function returns in line 6. However, since the parent and
+the child are separate processes, they each have their own private address
+spaces. Any subsequent changes that a parent or child makes to x are
+private and are not reﬂected in the memory of the other process. This is
+why the variable x has different values in the parent and child when they
+call their respective printf statements.
+Shared ﬁles. When we run the example program, we notice that both parent and
+child print their output on the screen. The reason is that the child inherits
+all of the parent’s open ﬁles. When the parent calls fork, the stdout ﬁle
+is open and directed to the screen. The child inherits this ﬁle, and thus its
+output is also directed to the screen.
+When you are ﬁrst learning about the fork function, it is often helpful to
+sketch the process graph, which is a simple kind of precedence graph that captures
+the partial ordering of program statements. Each vertex a corresponds to the
+execution of a program statement. A directed edge a →b denotes that statement
+a “happens before” statement b. Edges can be labeled with information such as
+the current value of a variable. Vertices corresponding to printf statements can
+be labeled with the output of the printf. Each graph begins with a vertex that

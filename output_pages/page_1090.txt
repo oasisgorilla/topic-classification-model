@@ -1,0 +1,108 @@
+Index
+Page numbers of deﬁning references are italicized. Entries that belong to a hard-
+ware or software system are followed by a tag in brackets that identiﬁes the system,
+along with a brief description to jog your memory. Here is the list of tags and their
+meanings.
+[C]
+C language construct
+[C Stdlib]
+C standard library function
+[CS:APP]
+Program or function developed in this text
+[HCL]
+HCL language construct
+[Unix]
+Unix program, function, variable, or constant
+[x86-64]
+x86-64 machine-language instruction
+[Y86-64]
+Y86-64 machine-language instruction
+! [HCL] not operation, 409
+$ for immediate operands, 217
+& [C] address of operation
+local variables, 284
+logic gates, 409
+pointers, 84, 224, 293, 313
+* [C] dereference pointer operation,
+224
+-> [C] dereference and select ﬁeld
+operation, 302
+. (periods) in dotted-decimal notation,
+962
+|| [HCL] or operation, 409
+< operator for left hoinkies, 945
+<< “put to” operator (C++), 926
+> operator for right hoinkies, 945
+>> “get from” operator (C++), 926
++t
+w (two’s-complement addition), 96,
+126
+*t
+w (two’s-complement multiplica-
+tion), 96, 133
+-t
+w (two’s-complement negation), 96,
+131
++u
+w (unsigned addition), 96, 121, 125
+*u
+w (unsigned multiplication), 96, 132
+-u
+w (unsigned negation), 96, 125
+8086 microprocessor, 203
+8087 ﬂoating-point coprocessor, 145,
+173, 203
+80286 microprocessor, 203
+.a archive ﬁles, 722
+a.out object ﬁle, 709
+Abel, Niels Henrik, 125
+abelian group, 125
+ABI (application binary interface),
+346
+abort exception class, 762
+aborts, 764
+absolute addressing relocation type,
+727, 729–730
+absolute pathnames, 929
+absolute speedup of parallel programs,
+1055
+abstract operation model for Core i7,
+561–567
+abstractions, 63
+accept [Unix] wait for client
+connection request, 969, 972,
+972–973
+access
+disks, 633–636
+IA32 registers, 215–216
+main memory, 623–625
+x86-64 registers
+data movement, 218–225
+operand speciﬁers, 216–218
+access permission bits, 930
+access time for disks, 629, 629–631
+accumulator variable expansion, 606
+accumulators, multiple, 572–577
+Acorn RISC machine (ARM)
+ISAs, 388
+processor architecture, 399
+actions, signal, 798
+active sockets, 971
+actuator arms, 628
+acyclic networks, 410
+adapters, 45, 633
+add [instruction class] add, 228
+add_client function, 1017, 1019
+add every signal to signal set
+instruction, 801
+add instruction, 228
+add operation in execute stage, 444
+add signal to signal set instruction, 801
+adder [CS:APP] CGI adder, 991
+addition
+ﬂoating point, 158–160, 338
+two’s complement, 126, 126–131
+unsigned, 120–126, 121
+Y86-64, 392
+additive inverse, 88
+1089

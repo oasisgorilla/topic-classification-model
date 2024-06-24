@@ -1,0 +1,169 @@
+1092
+Index
+blocks (continued)
+referencing data in, 910–911
+splitting, 885–886
+bodies, response, 988
+bool [HCL] bit-level signal, 410
+Boole, George, 86
+Boolean algebra and functions, 86
+HCL, 410–411
+logic gates, 409
+properties, 88
+working with, 86–89
+Boolean rings, 88
+bottlenecks, 598
+proﬁlers, 601–604
+program proﬁling, 598–600
+bottom of stack, 226
+boundary tags, 887, 887–890, 895
+bounded buffers, 1040, 1041–
+1042
+bounds
+latency, 554, 560
+throughput, 554, 560
+%bp [x86-64] low order 16 bits of
+register %rbp, 216
+%bpl [x86-64] low order 8 of register
+%rbp, 216
+branch prediction, 555, 555
+misprediction handling, 479–480
+performance, 585–589
+Y86-64 pipelining, 464
+branch prediction logic, 251
+branches, conditional, 208, 245
+assembly form, 247
+condition codes, 237–238
+condition control, 245–249
+moves, 250–256, 586–589
+switch, 268–274
+break command
+in gdb, 316
+with switch, 269
+break multstore command in gdb,
+316
+breakpoints, 315–316
+bridged Ethernet, 956, 957
+bridges
+Ethernet, 956
+I/O, 623
+browsers, 984, 985
+.bss section, 710
+BTFNT (backward taken, forward
+not taken) branch prediction
+strategy, 464
+bubbles, pipeline, 470, 470–471,
+495–496
+buddies, 901
+buddy systems, 901, 901
+buffer overﬂow, 315
+execution code regions limits for,
+325–326
+memory-related bugs, 907
+overview, 315–320
+stack corruption detection for,
+322–325
+stack randomization for, 320–322
+vulnerabilities, 43
+buffered I/O functions, 934–938
+buffers
+bounded, 1040, 1041–1042
+read, 934, 936–937
+store, 593–594
+streams, 947
+bus transactions, 623
+buses, 44, 623
+designs, 624, 634
+I/O, 632
+memory, 623
+bypassing for data hazards, 472–475
+byte data connections in hardware
+diagrams, 434
+byte order, 78–85
+disassembled code, 245
+network, 961
+unions, 308
+bytes, 39, 70
+copying, 169
+range, 72
+register operations, 217
+Y86 encoding, 395–396
+%bx [x86-64] low order 16 bits of
+register %rbx, 216
+C language
+bit-level operations, 90–92
+ﬂoating-point representation,
+160–162
+history, 71
+logical operations, 92–93
+origins, 40
+shift operations, 93–95
+static libraries, 720–724
+C++ language, 713
+linker symbols, 716
+objects, 302–303
+software exceptions, 759–760, 822
+.c source ﬁles, 707
+C standard library, 40–41, 42
+C11 standard, 71
+C90 standard, 71
+C99 standard, 71
+ﬁxed data sizes, 77
+integral data types, 103
+cache block offset (CO), 859
+cache blocks, 651
+cache-friendly code, 669–675, 670
+cache lines
+cache sets, 651
+vs. sets and blocks, 670
+cache-oblivious algorithms, 685
+cache set index (CI), 859
+cache tags (CT), 859
+cached pages, 842
+caches and cache memory, 646, 651
+address translation, 859
+anatomy, 667
+associativity, 669
+cache-friendly code, 669–675, 670
+data, 556, 667, 667
+direct-mapped. See direct-mapped
+caches
+DRAM, 842
+fully associative, 663–664
+hits, 648
+importance, 47–50
+instruction, 554, 667, 667
+locality in, 641, 679–683, 846
+managing, 649
+memory mountains, 675–679
+misses, 506, 648, 648–649
+organization, 651–653
+overview, 646–648
+page allocation, 846
+page faults, 844, 844–845
+page hits, 844
+page tables, 842–844, 843
+performance, 569, 667–669, 675–683
+practice problems, 664–666
+proxy, 988
+purpose, 616
+set associative, 660, 660–662
+size, 668
+SRAM, 842
+symbols, 653
+virtual memory with, 841–847, 853
+write issues, 666–667
+write strategies, 669
+Y86-64 pipelining, 505–506
+call [x86-64] procedure call, 277–278,
+393
+call [Y86-64] instruction, 440, 464
+callee procedures, 287
+callee-save registers, 287, 287–288
+caller procedures, 287
+caller-save registers, 287, 287–288
+calling environments, 819
+calloc function [C Stdlib] memory
+allocation
+declaration, 170
+dynamic memory allocation, 877

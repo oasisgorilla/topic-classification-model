@@ -1,0 +1,169 @@
+1108
+Index
+objects
+C++ and Java, 302
+memory-mapped, 869–872
+private, 870, 870
+program, 70
+shared, 735, 869–872
+as struct, 302–303
+oct word, 233, 233–234
+OF [x86-64] overﬂow ﬂag condition
+code, 237, 391
+off-by-one errors, 908
+offsets
+GOTs, 741, 741–743
+memory references, 217
+PPOs, 850
+unions, 306
+VPOs, 850
+-Og optimization ﬂag, 206, 599
+one-operand multiply instructions,
+234
+ones’-complement representation, 104
+open [Unix] open ﬁle, 927, 929–931
+open_clientfd [CS:APP] establish
+connection with server, 978,
+978–980
+open_listenfd [CS:APP] establish a
+listening socket, 980, 980
+open operations for ﬁles, 927, 929–931
+open shared library function, 737
+open-source operating systems, 122–123
+opendir functions, 941
+operand speciﬁers, 216–218
+operate instruction, 46
+operating systems (OS), 51
+ﬁles, 55
+hardware management, 50–51
+kernels, 55
+Linux, 56, 81
+processes, 51–53
+threads, 53–54
+Unix, 71
+virtual memory, 54–55
+Windows, 81
+operations
+bit-level, 90–92
+logical, 92–93
+shift, 93–95
+optest script, 501
+optimization
+address translation, 866
+compiler, 206
+levels, 534
+program performance. See
+performance
+optimization blockers, 532–533, 536
+OPTIONS method, 987
+or [instruction class] or, 228
+or operation
+Boolean, 87–88
+C operators, 92–93
+HCL expressions, 410–411
+logic gates, 409
+order, bytes, 78–85
+disassembled code, 246
+network, 961
+unions, 308
+origin servers, 988
+OS. See operating systems (OS)
+Ossanna, Joe, 52
+out-of-bounds memory references.
+See buffer overﬂow
+out-of-order execution, 554
+ﬁve-stage pipelines, 507
+history, 558
+overﬂow
+arithmetic, 123, 123–125, 170
+buffer. See buffer overﬂow
+ﬂoating-point values, 163
+identifying, 128–129
+inﬁnity representation, 151
+multiplication, 138
+negative, 126, 126–127
+operations, 68
+positive, 126, 126–127
+overﬂow ﬂag condition code, 237, 391
+overloaded functions (C++ and Java),
+716
+P semaphore operation, 1037, 1037–
+1038
+P [CS:APP] wrapper function for
+Posix sem_wait, 1038
+P6 microarchitecture, 203
+PA (physical addresses), 839
+vs. virtual, 839–840
+Y86-64, 392
+packages, processor, 861
+packet headers, 958
+packets, 958
+padding
+alignment, 310–311
+blocks, 883
+page faults
+DRAM caches, 844, 844–845
+Linux/x86-64 systems, 765, 869–
+869
+memory caches, 506
+pipelining caches, 844
+page frames, 841
+page hits in caches, 844
+page table base registers (PTBRs),
+850
+page table entries (PTEs), 843,
+843–844
+Core i7, 862–864
+TLBs for, 853–857, 859
+page table entry addresses (PTEAs),
+853
+page tables, 772, 859
+caches, 842–844, 843
+multi-level, 855–857
+paged-in pages, 845
+paged-out pages, 845
+pages
+allocation, 846
+demand zero, 869
+dirty, 863
+physical, 841, 841–842
+SSDs, 637
+virtual, 325, 841, 841–842
+paging
+demand, 846
+description, 845
+parallel execution, 770
+parallel ﬂows, 770, 770
+parallel programs, 1049
+parallelism, 60, 572
+instruction-level, 62, 533, 554, 598
+multiple accumulators, 572–577
+reassociation transformations,
+577–582
+SIMD, 62, 582–583
+thread-level, 62
+threads for, 1049–1054
+parent directories, 928
+parent processes, 775, 775–776
+parity ﬂag condition code, 214, 342
+parse_uri [CS:APP] Tiny helper
+function, 996
+parseline [CS:APP] shell helper
+routine, 792
+partitioning
+addresses, 651–652
+nonuniform in pipelining, 452–454
+passing data
+machine-language procedures, 275
+pointers to structures, 302
+pathnames, 929
+Patterson, David, 397, 507
+pause [Unix] suspend until signal
+arrives, 786
+payloads
+aggregate, 881
+Ethernet, 956
+protocol, 958
+PC. See program counters (PCs)
+PC-relative addressing
+jumps, 243, 243–245

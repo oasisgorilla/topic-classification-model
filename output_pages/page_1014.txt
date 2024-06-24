@@ -1,0 +1,45 @@
+Section 12.2
+Concurrent Programming with I/O Multiplexing
+1013
+Aside
+Unix IPC
+You have already encountered several examples of IPC in this text. The waitpid function and signals
+from Chapter 8 are primitive IPC mechanisms that allow processes to send tiny messages to processes
+running on the same host. The sockets interface from Chapter 11 is an important form of IPC that
+allows processes on different hosts to exchange arbitrary byte streams. However, the term Unix IPC
+is typically reserved for a hodgepodge of techniques that allow processes to communicate with other
+processes that are running on the same host. Examples include pipes, FIFOs, System V shared memory,
+and System V semaphores. These mechanisms are beyond our scope. The book by Kerrisk [62] is an
+excellent reference.
+12.2
+Concurrent Programming with I/O Multiplexing
+Suppose you are asked to write an echo server that can also respond to interactive
+commands that the user types to standard input. In this case, the server must
+respond to two independent I/O events: (1) a network client making a connection
+request, and (2) a user typing a command line at the keyboard. Which event
+do we wait for ﬁrst? Neither option is ideal. If we are waiting for a connection
+request in accept, then we cannot respond to input commands. Similarly, if we are
+waiting for an input command in read, then we cannot respond to any connection
+requests.
+One solution to this dilemma is a technique called I/O multiplexing. The basic
+idea is to use the select function to ask the kernel to suspend the process, return-
+ing control to the application only after one or more I/O events have occurred, as
+in the following examples:
+. Return when any descriptor in the set {0, 4} is ready for reading.
+. Return when any descriptor in the set {1, 2, 7} is ready for writing.
+. Time out if 152.13 seconds have elapsed waiting for an I/O event to occur.
+Select is a complicated function with many different usage scenarios. We
+will only discuss the ﬁrst scenario: waiting for a set of descriptors to be ready for
+reading. See [62, 110] for a complete discussion.
+#include <sys/select.h>
+int select(int n, fd_set *fdset, NULL, NULL, NULL);
+Returns: nonzero count of ready descriptors, −1 on error
+FD_ZERO(fd_set *fdset);
+/* Clear all bits in fdset */
+FD_CLR(int fd, fd_set *fdset);
+/* Clear bit fd in fdset */
+FD_SET(int fd, fd_set *fdset);
+/* Turn on bit fd in fdset */
+FD_ISSET(int fd, fd_set *fdset);
+/* Is bit fd in fdset on? */
+Macros for manipulating descriptor sets

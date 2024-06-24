@@ -1,0 +1,69 @@
+Solutions to Practice Problems
+365
+long shift_left4_rightn(long x, long n)
+x in %rdi, n in %rsi
+shift_left4_rightn:
+movq
+%rdi, %rax
+Get x
+salq
+$4, %rax
+x <<= 4
+movl
+%esi, %ecx
+Get n (4 bytes)
+sarq
+%cl, %rax
+x >>= n
+Solution to Problem 3.10 (page 232)
+This problem is fairly straightforward, since the assembly code follows the struc-
+ture of the C code closely.
+short p1 = y | z;
+short p2 = p1 >> 9;
+short p3 = ~p2;
+short p4 = y - p3;
+Solution to Problem 3.11 (page 233)
+A. This instruction is used to set register %rcx to zero, exploiting the property
+that x ^ x = 0 for any x. It corresponds to the C statement x = 0.
+B. A more direct way of setting register %rcx to zero is with the instruction
+movq $0,%rcx.
+C. Assembling and disassembling this code, however, we ﬁnd that the version
+with xorq requires only 3 bytes, while the version with movq requires 7. Other
+ways to set %rcx to zero rely on the property that any instruction that updates
+the lower 4 bytes will cause the high-order bytes to be set to zero. Thus, we
+could use either xorl %ecx,%ecx (2 bytes) or movl $0,%ecx (5 bytes).
+Solution to Problem 3.12 (page 236)
+We can simply replace the cqto instruction with one that sets register %rdx to
+zero, and use divq rather than idivq as our division instruction, yielding the
+following code:
+void uremdiv(unsigned long x, unsigned long y,
+unsigned long *qp, unsigned long *rp)
+x in %rdi, y in %rsi, qp in %rdx, rp in %rcx
+1
+uremdiv:
+2
+movq
+%rdx, %r8
+Copy qp
+3
+movq
+%rdi, %rax
+Move x to lower 8 bytes of dividend
+4
+movl
+$0, %edx
+Set upper 8 bytes of dividend to 0
+5
+divq
+%rsi
+Divide by y
+6
+movq
+%rax, (%r8)
+Store quotient at qp
+7
+movq
+%rdx, (%rcx)
+Store remainder at rp
+8
+ret

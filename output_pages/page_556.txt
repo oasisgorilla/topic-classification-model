@@ -1,0 +1,58 @@
+Section 5.7
+Understanding Modern Processors
+555
+Instruction control unit
+Address
+Instructions
+Retirement
+unit
+Fetch
+control
+Instruction
+decode
+Operations
+Instruction
+cache
+Prediction
+OK?
+Register
+updates
+Operation results
+Addr.
+Addr.
+Data
+Data
+Data
+cache
+Execution unit
+Functional
+units
+Store
+Load
+Arithmetic
+operations
+Arithmetic
+operations
+Branch
+Register
+file
+Figure 5.11
+Block diagram of an out-of-order processor. The instruction control
+unit is responsible for reading instructions from memory and generating a sequence
+of primitive operations. The execution unit then performs the operations and indicates
+whether the branches were correctly predicted.
+instruction in the instruction sequence. Modern processors employ a technique
+known as branch prediction, in which they guess whether or not a branch will be
+taken and also predict the target address for the branch. Using a technique known
+as speculative execution, the processor begins fetching and decoding instructions
+at where it predicts the branch will go, and even begins executing these operations
+before it has been determined whether or not the branch prediction was correct.
+If it later determines that the branch was predicted incorrectly, it resets the state
+to that at the branch point and begins fetching and executing instructions in the
+other direction. The block labeled “Fetch control” incorporates branch prediction
+to perform the task of determining which instructions to fetch.
+The instruction decoding logic takes the actual program instructions and con-
+verts them into a set of primitive operations (sometimes referred to as micro-
+operations). Each of these operations performs some simple computational task
+such as adding two numbers, reading data from memory, or writing data to mem-
+ory. For machines with complex instructions, such as x86 processors, an instruction

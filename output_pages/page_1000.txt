@@ -1,0 +1,62 @@
+Section 11.6
+Putting It Together: The Tiny Web Server
+999
+ﬁrst filesize bytes of ﬁle srcfd to a private read-only area of virtual memory
+that starts at address srcp.
+Once we have mapped the ﬁle to memory, we no longer need its descriptor,
+so we close the ﬁle (line 20). Failing to do this would introduce a potentially fatal
+memory leak. Line 21 performs the actual transfer of the ﬁle to the client. The
+rio_writen function copies the filesize bytes starting at location srcp (which
+of course is mapped to the requested ﬁle) to the client’s connected descriptor.
+Finally, line 22 frees the mapped virtual memory area. This is important to avoid
+a potentially fatal memory leak.
+The serve_dynamic Function
+Tiny serves any type of dynamic content by forking a child process and then
+running a CGI program in the context of the child.
+The serve_dynamic function in Figure 11.35 begins by sending a response line
+indicating success to the client, along with an informational Server header. The
+CGI program is responsible for sending the rest of the response. Notice that this
+is not as robust as we might wish, since it doesn’t allow for the possibility that the
+CGI program might encounter some error.
+After sending the ﬁrst part of the response, we fork a new child process
+(line 11). The child initializes the QUERY_STRING environment variable with
+the CGI arguments from the request URI (line 13). Notice that a real server would
+code/netp/tiny/tiny.c
+1
+void serve_dynamic(int fd, char *filename, char *cgiargs)
+2
+{
+3
+char buf[MAXLINE], *emptylist[] = { NULL };
+4
+5
+/* Return first part of HTTP response */
+6
+sprintf(buf, "HTTP/1.0 200 OK\r\n");
+7
+Rio_writen(fd, buf, strlen(buf));
+8
+sprintf(buf, "Server: Tiny Web Server\r\n");
+9
+Rio_writen(fd, buf, strlen(buf));
+10
+11
+if (Fork() == 0) { /* Child */
+12
+/* Real server would set all CGI vars here */
+13
+setenv("QUERY_STRING", cgiargs, 1);
+14
+Dup2(fd, STDOUT_FILENO);
+/* Redirect stdout to client */
+15
+Execve(filename, emptylist, environ); /* Run CGI program */
+16
+}
+17
+Wait(NULL); /* Parent waits for and reaps child */
+18
+}
+code/netp/tiny/tiny.c
+Figure 11.35
+Tiny serve_dynamic serves dynamic content to a client.

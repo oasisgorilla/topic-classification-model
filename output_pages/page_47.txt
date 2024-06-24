@@ -1,0 +1,46 @@
+46
+Chapter 1
+A Tour of Computer Systems
+in strict sequence, and executing a single instruction involves performing a series
+of steps. The processor reads the instruction from memory pointed at by the
+program counter (PC), interprets the bits in the instruction, performs some simple
+operation dictated by the instruction, and then updates the PC to point to the next
+instruction, which may or may not be contiguous in memory to the instruction that
+was just executed.
+There are only a few of these simple operations, and they revolve around
+main memory, the register ﬁle, and the arithmetic/logic unit (ALU). The register
+ﬁle is a small storage device that consists of a collection of word-size registers, each
+with its own unique name. The ALU computes new data and address values. Here
+are some examples of the simple operations that the CPU might carry out at the
+request of an instruction:
+. Load: Copy a byte or a word from main memory into a register, overwriting
+the previous contents of the register.
+. Store: Copy a byte or a word from a register to a location in main memory,
+overwriting the previous contents of that location.
+. Operate: Copy the contents of two registers to the ALU, perform an arithmetic
+operation on the two words, and store the result in a register, overwriting the
+previous contents of that register.
+. Jump: Extract a word from the instruction itself and copy that word into the
+program counter (PC), overwriting the previous value of the PC.
+We say that a processor appears to be a simple implementation of its in-
+struction set architecture, but in fact modern processors use far more complex
+mechanisms to speed up program execution. Thus, we can distinguish the pro-
+cessor’s instruction set architecture, describing the effect of each machine-code
+instruction, from its microarchitecture, describing how the processor is actually
+implemented. When we study machine code in Chapter 3, we will consider the
+abstraction provided by the machine’s instruction set architecture. Chapter 4 has
+more to say about how processors are actually implemented. Chapter 5 describes
+a model of how modern processors work that enables predicting and optimizing
+the performance of machine-language programs.
+1.4.2
+Running the hello Program
+Given this simple view of a system’s hardware organization and operation, we can
+begin to understand what happens when we run our example program. We must
+omit a lot of details here that will be ﬁlled in later, but for now we will be content
+with the big picture.
+Initially, the shell program is executing its instructions, waiting for us to type a
+command. As we type the characters ./hello at the keyboard, the shell program
+reads each one into a register and then stores it in memory, as shown in Figure 1.5.
+When we hit the enter key on the keyboard, the shell knows that we have
+ﬁnished typing the command. The shell then loads the executable hello ﬁle by
+executing a sequence of instructions that copies the code and data in the hello

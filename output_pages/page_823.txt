@@ -1,0 +1,42 @@
+822
+Chapter 8
+Exceptional Control Flow
+Aside
+Software exceptions in C++ and Java
+The exception mechanisms provided by C++ and Java are higher-level, more structured versions of the
+C setjmp and longjmp functions. You can think of a catch clause inside a try statement as being akin
+to a setjmp function. Similarly, a throw statement is similar to a longjmp function.
+linux> ./restart
+starting
+processing...
+processing...
+Ctrl+C
+restarting
+processing...
+Ctrl+C
+restarting
+processing...
+There a couple of interesting things about this program. First, To avoid a race,
+we must install the handler after we call sigsetjmp. If not, we would run the
+risk of the handler running before the initial call to sigsetjmp sets up the calling
+environment for siglongjmp. Second, you might have noticed that the sigsetjmp
+and siglongjmp functions are not on the list of async-signal-safe functions in
+Figure 8.33. The reason is that in general siglongjmp can jump into arbitrary
+code, so we must be careful to call only safe functions in any code reachable from
+a siglongjmp. In our example, we call the safe sio_puts and sleep functions.
+The unsafe exit function is unreachable.
+8.7
+Tools for Manipulating Processes
+Linux systems provide a number of useful tools for monitoring and manipulating
+processes:
+strace. Prints a trace of each system call invoked by a running program and
+its children. It is a fascinating tool for the curious student. Compile your
+program with -static to get a cleaner trace without a lot of output related
+to shared libraries.
+ps. Lists processes (including zombies) currently in the system.
+top. Prints information about the resource usage of current processes.
+pmap. Displays the memory map of a process.
+/proc. A virtual ﬁlesystem that exports the contents of numerous kernel data
+structures in an ASCII text form that can be read by user programs. For
+example, type cat /proc/loadavg to see the current load average on
+your Linux system.

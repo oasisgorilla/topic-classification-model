@@ -1,0 +1,76 @@
+112
+Chapter 2
+Representing and Manipulating Information
+Expression
+Type
+Evaluation
+0
+==
+0U
+Unsigned
+1
+-1
+<
+0
+Signed
+1
+-1
+<
+0U
+Unsigned
+0 *
+2147483647
+>
+-2147483647-1
+Signed
+1
+2147483647U >
+-2147483647-1
+Unsigned
+0 *
+2147483647
+>
+(int) 2147483648U
+Signed
+1 *
+-1
+>
+-2
+Signed
+1
+(unsigned) -1
+>
+-2
+Unsigned
+1
+Figure 2.19
+Effects of C promotion rules. Nonintuitive cases are marked by ‘*’. When
+either operand of a comparison is unsigned, the other operand is implicitly cast to
+unsigned. See Web Aside data:tmin for why we write TMin32 as -2,147,483,647-1.
+assuming the numbers are nonnegative. As we will see, this convention makes
+little difference for standard arithmetic operations, but it leads to nonintuitive
+results for relational operators such as < and >. Figure 2.19 shows some sample
+relational expressions and their resulting evaluations, when data type int has a
+32-bit two’s-complement representation. Consider the comparison -1 < 0U. Since
+the second operand is unsigned, the ﬁrst one is implicitly cast to unsigned, and
+hence the expression is equivalent to the comparison 4294967295U < 0U (recall
+that T2Uw(−1) = UMaxw), which of course is false. The other cases can be under-
+stood by similar analyses.
+Practice Problem 2.21 (solution page 185)
+Assuming the expressions are evaluated when executing a 32-bit program on a ma-
+chine that uses two’s-complement arithmetic, ﬁll in the following table describing
+the effect of casting and relational operations, in the style of Figure 2.19:
+Expression
+Type
+Evaluation
+-2147483647-1 == 2147483648U
+-2147483647-1 < 2147483647
+-2147483647-1U < 2147483647
+-2147483647-1 < -2147483647
+-2147483647-1U < -2147483647
+2.2.6
+Expanding the Bit Representation of a Number
+One common operation is to convert between integers having different word sizes
+while retaining the same numeric value. Of course, this may not be possible when
+the destination data type is too small to represent the desired value. Converting
+from a smaller to a larger data type, however, should always be possible.

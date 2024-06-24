@@ -1,0 +1,39 @@
+500
+Chapter 4
+Processor Architecture
+not inject a bubble when there is a load/use hazard in combination with a ret
+instruction:
+bool D_bubble =
+# Mispredicted branch
+(E_icode == IJXX && !e_Cnd) ||
+# Stalling at fetch while ret passes through pipeline
+# but not condition for a load/use hazard
+!(E_icode in { IMRMOVQ, IPOPQ } && E_dstM in { d_srcA, d_srcB }) &&
+IRET in { D_icode, E_icode, M_icode };
+Practice Problem 4.40 (solution page 529)
+Write HCL code for the signal E_bubble in the PIPE implementation.
+Practice Problem 4.41 (solution page 529)
+Write HCL code for the signal set_cc in the PIPE implementation. This should
+only occur for OPq instructions, and should consider the effects of program excep-
+tions.
+Practice Problem 4.42 (solution page 529)
+Write HCL code for the signals M_bubble and W_stall in the PIPE implemen-
+tation. The latter signal requires modifying the exception condition listed in Fig-
+ure 4.64.
+This covers all of the special pipeline control signal values. In the complete
+HCL code for PIPE, all other pipeline control signals are set to zero.
+4.5.9
+Performance Analysis
+We can see that the conditions requiring special action by the pipeline control
+logic all cause our pipeline to fall short of the goal of issuing a new instruction on
+every clock cycle. We can measure this inefﬁciency by determining how often a
+bubble gets injected into the pipeline, since these cause unused pipeline cycles. A
+return instruction generates three bubbles, a load/use hazard generates one, and
+a mispredicted branch generates two. We can quantify the effect these penalties
+have on the overall performance by computing an estimate of the average number
+of clock cycles PIPE would require per instruction it executes, a measure known
+as the CPI (for “cycles per instruction”). This measure is the reciprocal of the
+average throughput of the pipeline, but with time measured in clock cycles rather
+than picoseconds. It is a useful measure of the architectural efﬁciency of a design.
+If we ignore the performance implications of exceptions (which, by deﬁnition,
+will only occur rarely), another way to think about CPI is to imagine we run the

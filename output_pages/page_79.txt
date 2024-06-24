@@ -1,0 +1,61 @@
+78
+Chapter 2
+Representing and Manipulating Information
+on the numeric ranges of the different data types, as will be covered later, but there
+are no upper bounds (except with the ﬁxed-size types). With 32-bit machines and
+32-bit programs being the dominant combination from around 1980 until around
+2010, many programs have been written assuming the allocations listed for 32-
+bit programs in Figure 2.3. With the transition to 64-bit machines, many hidden
+word size dependencies have arisen as bugs in migrating these programs to new
+machines. For example, many programmers historically assumed that an object
+declared as type int could be used to store a pointer. This works ﬁne for most
+32-bit programs, but it leads to problems for 64-bit programs.
+2.1.3
+Addressing and Byte Ordering
+For program objects that span multiple bytes, we must establish two conventions:
+what the address of the object will be, and how we will order the bytes in memory.
+In virtually all machines, a multi-byte object is stored as a contiguous sequence
+of bytes, with the address of the object given by the smallest address of the bytes
+used. For example, suppose a variable x of type int has address 0x100; that is, the
+value of the address expression &x is 0x100. Then (assuming data type int has a
+32-bit representation) the 4 bytes of x would be stored in memory locations 0x100,
+0x101, 0x102, and 0x103.
+For ordering the bytes representing an object, there are two common conven-
+tions. Consider a w-bit integer having a bit representation [xw−1, xw−2, . . . , x1, x0],
+where xw−1 is the most signiﬁcant bit and x0 is the least. Assuming w is a multiple
+of 8, these bits can be grouped as bytes, with the most signiﬁcant byte having bits
+[xw−1, xw−2, . . . , xw−8], the least signiﬁcant byte having bits [x7, x6, . . . , x0], and
+the other bytes having bits from the middle. Some machines choose to store the ob-
+ject in memory ordered from least signiﬁcant byte to most, while other machines
+store them from most to least. The former convention—where the least signiﬁcant
+byte comes ﬁrst—is referred to as little endian. The latter convention—where the
+most signiﬁcant byte comes ﬁrst—is referred to as big endian.
+Suppose the variable x of type int and at address 0x100 has a hexadecimal
+value of 0x01234567. The ordering of the bytes within the address range 0x100
+through 0x103 depends on the type of machine:
+01
+0x100
+23
+0x101
+45
+0x102
+67
+. . .
+. . .
+0x103
+Big endian
+67
+0x100
+45
+0x101
+23
+0x102
+01
+. . .
+. . .
+0x103
+Little endian
+Note that in the word 0x01234567 the high-order byte has hexadecimal value
+0x01, while the low-order byte has value 0x67.
+Most Intel-compatible machines operate exclusively in little-endian mode. On
+the other hand, most machines from IBM and Oracle (arising from their acquisi-

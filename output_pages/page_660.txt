@@ -1,0 +1,65 @@
+Section 6.4
+Cache Memories
+659
+Aside
+Why index with the middle bits?
+You may be wondering why caches use the middle bits for the set index instead of the high-order bits.
+There is a good reason why the middle bits are better. Figure 6.31 shows why. If the high-order bits are
+used as an index, then some contiguous memory blocks will map to the same cache set. For example, in
+the ﬁgure, the ﬁrst four blocks map to the ﬁrst cache set, the second four blocks map to the second set,
+and so on. If a program has good spatial locality and scans the elements of an array sequentially, then
+the cache can only hold a block-size chunk of the array at any point in time. This is an inefﬁcient use of
+the cache. Contrast this with middle-bit indexing, where adjacent blocks always map to different cache
+sets. In this case, the cache can hold an entire C-size chunk of the array, where C is the cache size.
+Set index bits
+Four-set cache
+High-order
+bit indexing
+Middle-order
+bit indexing
+00
+01
+10
+11
+0000
+1100
+1101
+1110
+1111
+0101
+0110
+0111
+1000
+1001
+1010
+1011
+0001
+0010
+0011
+0100
+0000
+1100
+1101
+1110
+1111
+0101
+0110
+0111
+1000
+1001
+1010
+1011
+0001
+0010
+0011
+0100
+Figure 6.31
+Why caches index with the middle bits.
+The bottom line is that even though the program has good spatial locality
+and we have room in the cache to hold the blocks for both x[i] and y[i], each
+reference results in a conﬂict miss because the blocks map to the same cache set. It
+is not unusual for this kind of thrashing to result in a slowdown by a factor of 2 or 3.
+Also, be aware that even though our example is extremely simple, the problem is
+real for larger and more realistic direct-mapped caches.
+Luckily, thrashing is easy for programmers to ﬁx once they recognize what is
+going on. One easy solution is to put B bytes of padding at the end of each array.

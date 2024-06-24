@@ -1,0 +1,58 @@
+304
+Chapter 3
+Machine-Level Representation of Programs
+Practice Problem 3.41 (solution page 379)
+Consider the following structure declaration:
+struct test {
+short *p;
+struct {
+short x;
+short y;
+} s;
+struct test *next;
+};
+This declaration illustrates that one structure can be embedded within another,
+just as arrays can be embedded within structures and arrays can be embedded
+within arrays.
+The following procedure (with some expressions omitted) operates on this
+structure:
+void st_init(struct test *st) {
+st->s.y
+=
+;
+st->p
+=
+;
+st->next =
+;
+}
+A. What are the offsets (in bytes) of the following ﬁelds?
+p:
+s.x:
+s.y:
+next:
+B. How many total bytes does the structure require?
+C. The compiler generates the following assembly code for st_init:
+void st_init(struct test *st)
+st in %rdi
+1
+st_init:
+2
+movl
+8(%rdi), %eax
+3
+movl
+%eax, 10(%rdi)
+4
+leaq
+10(%rdi), %rax
+5
+movq
+%rax, (%rdi)
+6
+movq
+%rdi, 12(%rdi)
+7
+ret
+On the basis of this information, ﬁll in the missing expressions in the code
+for st_init.

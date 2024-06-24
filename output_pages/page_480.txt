@@ -1,0 +1,110 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+479
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+0x000: irmovq Stack,%edx
+0x00a: call proc
+0x020: ret
+       
+       
+       
+0x013: irmovq $10,%edx # Return point
+bubble
+bubble
+bubble
+bubble
+bubble
+bubble
+# prog7
+# prog7
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+Figure 4.55
+Simpliﬁed view of ret instruction processing. The pipeline should stall while the ret passes
+through the decode, execute, and memory stages, injecting three bubbles in the process. The PC selection
+logic will choose the return address as the instruction fetch address once the ret reaches the write-back stage
+(cycle 7).
+time growing to the right. Unlike before, the instructions are not listed in the
+same order they occur in the program, since this program involves a control ﬂow
+where instructions are not executed in a linear sequence. It is useful to look at the
+instruction addresses to identify the different instructions in the program.
+As this diagram shows, the ret instruction is fetched during cycle 3 and
+proceeds down the pipeline, reaching the write-back stage in cycle 7. While it
+passes through the decode, execute, and memory stages, the pipeline cannot do
+any useful activity. Instead, we want to inject three bubbles into the pipeline. Once
+the ret instruction reaches the write-back stage, the PC selection logic will set the
+program counter to the return address, and therefore the fetch stage will fetch the
+irmovq instruction at the return point (address 0x013).
+To handle a mispredicted branch, consider the following program, shown in
+assembly code but with the instruction addresses shown on the left for reference:
+0x000:
+xorq %rax,%rax
+0x002:
+jne
+target
+# Not taken
+0x00b:
+irmovq $1, %rax
+# Fall through
+0x015:
+halt
+0x016: target:
+0x016:
+irmovq $2, %rdx
+# Target
+0x020:
+irmovq $3, %rbx
+# Target+1
+0x02a:
+halt
+Figure 4.56 shows how these instructions are processed. As before, the instruc-
+tions are listed in the order they enter the pipeline, rather than the order they occur
+in the program. Since the jump instruction is predicted as being taken, the instruc-
+tion at the jump target will be fetched in cycle 3, and the instruction following this
+one will be fetched in cycle 4. By the time the branch logic detects that the jump
+should not be taken during cycle 4, two instructions have been fetched that should
+not continue being executed. Fortunately, neither of these instructions has caused
+a change in the programmer-visible state. That can only occur when an instruction

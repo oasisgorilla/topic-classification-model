@@ -1,0 +1,105 @@
+476
+Chapter 4
+Processor Architecture
+valA
+Fwd
+B
+W
+icode
+valE
+valM
+dstE dstM
+ALU
+A
+ALU
+B
+ALU
+fun.
+M
+icode
+Cnd
+valE
+valA
+dstE dstM
+E
+icode ifun
+valC
+valA
+valB
+dstM srcA srcB
+dstE
+D
+icode ifun
+valC
+valP
+rB
+rA
+F
+predPC
+data out
+data in
+M_Cnd
+dmem_error
+m_stat
+M_valE
+m_valM
+e_Cnd
+Memory
+ALU
+Execute
+dstE
+dstE
+dstM srcA srcB
+Sel+Fwd
+A
+Predict
+PC
+Select
+PC
+d_srcA d_srcB
+W_valM
+e_dstE
+M_valA
+W_valM
+W_valE
+W_valE
+M_valA
+W_valM
+CC
+Decode
+Fetch
+read
+write
+Data
+memory
+Addr
+Mem.
+control
+Register
+file
+A
+B
+E
+M
+PC
+increment
+Instruction
+memory
+f_pc
+Stat
+stat
+imem_error
+instr_valid
+Stat
+Stat
+Stat
+Write
+back
+stat
+stat
+stat
+Figure 4.52
+Hardware structure of PIPE, our ﬁnal pipelined implementation. The
+additional bypassing paths enable forwarding the results from the three preceding
+instructions. This allows us to handle most forms of data hazards without stalling the
+pipeline.

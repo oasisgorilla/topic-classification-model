@@ -1,0 +1,44 @@
+402
+Chapter 4
+Processor Architecture
+. The Y86-64 code requires two instructions (lines 8–9) to read a value from
+memory and add it to a register, whereas the x86-64 code can do this with a
+single addq instruction (line 5).
+. Our hand-coded Y86-64 implementation takes advantage of the property that
+the subq instruction (line 11) also sets the condition codes, and so the testq
+instruction of the gcc-generated code (line 9) is not required. For this to work,
+though, the Y86-64 code must set the condition codes prior to entering the
+loop with an andq instruction (line 5).
+Figure 4.7 shows an example of a complete program ﬁle written in Y86-
+64 assembly code. The program contains both data and instructions. Directives
+indicate where to place code or data and how to align it. The program speciﬁes
+issues such as stack placement, data initialization, program initialization, and
+program termination.
+In this program, words beginning with ‘.’ are assembler directives telling the
+assembler to adjust the address at which it is generating code or to insert some
+words of data. The directive .pos 0 (line 2) indicates that the assembler should
+begin generating code starting at address 0. This is the starting address for all
+Y86-64 programs. The next instruction (line 3) initializes the stack pointer. We
+can see that the label stack is declared at the end of the program (line 40), to
+indicate address 0x200 using a .pos directive (line 39). Our stack will therefore
+start at this address and grow toward lower addresses. We must ensure that the
+stack does not grow so large that it overwrites the code or other program data.
+Lines 8 to 13 of the program declare an array of four words, having the values
+0x000d000d000d000d, 0x00c000c000c000c0,
+0x0b000b000b000b00, 0xa000a000a000a000
+Thelabel array denotesthestartofthisarray, andisalignedonan8-byteboundary
+(using the .align directive). Lines 16 to 19 show a “main” procedure that calls
+the function sum on the four-word array and then halts.
+As this example shows, since our only tool for creating Y86-64 code is an
+assembler, the programmer must perform tasks we ordinarily delegate to the
+compiler, linker, and run-time system. Fortunately, we only do this for small
+programs, for which simple mechanisms sufﬁce.
+Figure 4.8 shows the result of assembling the code shown in Figure 4.7 by an
+assembler we call yas. The assembler output is in ASCII format to make it more
+readable. On lines of the assembly ﬁle that contain instructions or data, the object
+code contains an address, followed by the values of between 1 and 10 bytes.
+We have implemented an instruction set simulator we call yis, the purpose
+of which is to model the execution of a Y86-64 machine-code program without
+attempting to model the behavior of any speciﬁc processor implementation. This
+form of simulation is useful for debugging programs before actual hardware is
+available, and for checking the result of either simulating the hardware or running

@@ -1,0 +1,44 @@
+1066
+Chapter 12
+Concurrent Programming
+C. If so, what simple change to the initial semaphore values will eliminate the
+potential for deadlock?
+D. Draw the progress graph for the resulting deadlock-free program.
+12.8
+Summary
+A concurrent program consists of a collection of logical ﬂows that overlap in time.
+In this chapter, we have studied three different mechanisms for building concur-
+rent programs: processes, I/O multiplexing, and threads. We used a concurrent
+network server as the motivating application throughout.
+Processes are scheduled automatically by the kernel, and because of their
+separate virtual address spaces, they require explicit IPC mechanisms in order
+to share data. Event-driven programs create their own concurrent logical ﬂows,
+which are modeled as state machines, and use I/O multiplexing to explicitly sched-
+ule the ﬂows. Because the program runs in a single process, sharing data between
+ﬂows is fast and easy. Threads are a hybrid of these approaches. Like ﬂows based
+on processes, threads are scheduled automatically by the kernel. Like ﬂows based
+on I/O multiplexing, threads run in the context of a single process, and thus can
+share data quickly and easily.
+Regardless of the concurrency mechanism, synchronizing concurrent accesses
+to shared data is a difﬁcult problem. The P and V operations on semaphores have
+been developed to help deal with this problem. Semaphore operations can be used
+to provide mutually exclusive access to shared data, as well as to schedule access to
+resources such as the bounded buffers in producer-consumer systems and shared
+objects in readers-writers systems. A concurrent prethreaded echo server provides
+a compelling example of these usage scenarios for semaphores.
+Concurrency introduces other difﬁcult issues as well. Functions that are called
+by threads must have a property known as thread safety. We have identiﬁed
+four classes of thread-unsafe functions, along with suggestions for making them
+thread-safe. Reentrant functions are the proper subset of thread-safe functions
+that do not access any shared data. Reentrant functions are often more efﬁcient
+than non-reentrant functions because they do not require any synchronization
+primitives. Some other difﬁcult issues that arise in concurrent programs are races
+and deadlocks. Races occur when programmers make incorrect assumptions about
+how logical ﬂows are scheduled. Deadlocks occur when a ﬂow is waiting for an
+event that will never happen.
+Bibliographic Notes
+Semaphore operations were introduced by Dijkstra [31]. The progress graph
+concept was introduced by Coffman [23] and later formalized by Carson and
+Reynolds [16]. The readers-writers problem was introduced by Courtois et al [25].
+Operating systems texts describe classical synchronization problems such as the
+dining philosophers, sleeping barber, and cigarette smokers problems in more de-

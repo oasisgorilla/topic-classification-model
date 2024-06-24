@@ -1,0 +1,102 @@
+Preface
+29
+Course
+Chapter
+Topic
+ORG
+ORG+
+ICS
+ICS+
+SP
+1
+Tour of systems
+•
+•
+•
+•
+•
+2
+Data representation
+•
+•
+•
+•
+⊙(d)
+3
+Machine language
+•
+•
+•
+•
+•
+4
+Processor architecture
+•
+•
+5
+Code optimization
+•
+•
+•
+6
+Memory hierarchy
+⊙(a)
+•
+•
+•
+⊙(a)
+7
+Linking
+⊙(c)
+⊙(c)
+•
+8
+Exceptional control ﬂow
+•
+•
+•
+9
+Virtual memory
+⊙(b)
+•
+•
+•
+•
+10
+System-level I/O
+•
+•
+11
+Network programming
+•
+•
+12
+Concurrent programming
+•
+•
+Figure 2
+Five systems courses based on the CS:APP book. ICS+ is the 15-213 course
+from Carnegie Mellon. Notes: The ⊙symbol denotes partial coverage of a chapter, as
+follows: (a) hardware only; (b) no dynamic storage allocation; (c) no dynamic linking;
+(d) no ﬂoating point.
+SP
+. A systems programming course. This course is similar to ICS+, but it drops
+ﬂoating point and performance optimization, and it places more empha-
+sis on systems programming, including process control, dynamic linking,
+system-level I/O, network programming, and concurrent programming. In-
+structors might want to supplement from other sources for advanced topics
+such as daemons, terminal control, and Unix IPC.
+The main message of Figure 2 is that the CS:APP book gives a lot of options
+to students and instructors. If you want your students to be exposed to lower-
+level processor architecture, then that option is available via the ORG and ORG+
+courses. On the other hand, if you want to switch from your current computer
+organization course to an ICS or ICS+ course, but are wary of making such a
+drastic change all at once, then you can move toward ICS incrementally. You
+can start with ORG, which teaches the traditional topics in a nontraditional way.
+Once you are comfortable with that material, then you can move to ORG+,
+and eventually to ICS. If students have no experience in C (e.g., they have only
+programmed in Java), you could spend several weeks on C and then cover the
+material of ORG or ICS.
+Finally, we note that the ORG+ and SP courses would make a nice two-term
+sequence (either quarters or semesters). Or you might consider offering ICS+ as
+one term of ICS and one term of SP.

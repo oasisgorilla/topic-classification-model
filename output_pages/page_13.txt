@@ -1,0 +1,107 @@
+12
+Contents
+5.10
+Summary of Results for Optimizing Combining Code
+583
+5.11
+Some Limiting Factors
+584
+5.11.1 Register Spilling
+584
+5.11.2 Branch Prediction and Misprediction Penalties
+585
+5.12
+Understanding Memory Performance
+589
+5.12.1 Load Performance
+590
+5.12.2 Store Performance
+591
+5.13
+Life in the Real World: Performance Improvement Techniques
+597
+5.14
+Identifying and Eliminating Performance Bottlenecks
+598
+5.14.1 Program Proﬁling
+598
+5.14.2 Using a Proﬁler to Guide Optimization
+601
+5.15
+Summary
+604
+Bibliographic Notes
+605
+Homework Problems
+606
+Solutions to Practice Problems
+609
+6
+The Memory Hierarchy
+615
+6.1
+Storage Technologies
+617
+6.1.1
+Random Access Memory
+617
+6.1.2
+Disk Storage
+625
+6.1.3
+Solid State Disks
+636
+6.1.4
+Storage Technology Trends
+638
+6.2
+Locality
+640
+6.2.1
+Locality of References to Program Data
+642
+6.2.2
+Locality of Instruction Fetches
+643
+6.2.3
+Summary of Locality
+644
+6.3
+The Memory Hierarchy
+645
+6.3.1
+Caching in the Memory Hierarchy
+646
+6.3.2
+Summary of Memory Hierarchy Concepts
+650
+6.4
+Cache Memories
+650
+6.4.1
+Generic Cache Memory Organization
+651
+6.4.2
+Direct-Mapped Caches
+653
+6.4.3
+Set Associative Caches
+660
+6.4.4
+Fully Associative Caches
+662
+6.4.5
+Issues with Writes
+666
+6.4.6
+Anatomy of a Real Cache Hierarchy
+667
+6.4.7
+Performance Impact of Cache Parameters
+667
+6.5
+Writing Cache-Friendly Code
+669
+6.6
+Putting It Together: The Impact of Caches on Program Performance
+675

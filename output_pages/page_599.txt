@@ -1,0 +1,46 @@
+598
+Chapter 5
+Optimizing Program Performance
+Eliminate unnecessary memory references. Introduce temporary vari-
+ables to hold intermediate results. Store a result in an array or global
+variable only when the ﬁnal value has been computed.
+Low-level optimizations. Structure code to take advantage of the hardware
+capabilities.
+Unroll loops to reduce overhead and to enable further optimizations.
+Find ways to increase instruction-level parallelism by techniques such
+as multiple accumulators and reassociation.
+Rewrite conditional operations in a functional style to enable compi-
+lation via conditional data transfers.
+A ﬁnal word of advice to the reader is to be vigilant to avoid introducing
+errors as you rewrite programs in the interest of efﬁciency. It is very easy to make
+mistakes when introducing new variables, changing loop bounds, and making the
+code more complex overall. One useful technique is to use checking code to test
+each version of a function as it is being optimized, to ensure no bugs are introduced
+during this process. Checking code applies a series of tests to the new versions of
+a function and makes sure they yield the same results as the original. The set of
+test cases must become more extensive with highly optimized code, since there
+are more cases to consider. For example, checking code that uses loop unrolling
+requires testing for many different loop bounds to make sure it handles all of the
+different possible numbers of single-step iterations required at the end.
+5.14
+Identifying and Eliminating Performance Bottlenecks
+Up to this point, we have only considered optimizing small programs, where there
+is some clear place in the program that limits its performance and therefore should
+be the focus of our optimization efforts. When working with large programs, even
+knowing where to focus our optimization efforts can be difﬁcult. In this section,
+we describe how to use code proﬁlers, analysis tools that collect performance
+data about a program as it executes. We also discuss some general principles
+of code optimization, including the implications of Amdahl’s law, introduced in
+Section 1.9.1.
+5.14.1
+Program Proﬁling
+Program proﬁling involves running a version of a program in which instrumenta-
+tion code has been incorporated to determine how much time the different parts
+of the program require. It can be very useful for identifying the parts of a program
+we should focus on in our optimization efforts. One strength of proﬁling is that it
+can be performed while running the actual program on realistic benchmark data.
+Unix systems provide the proﬁling program gprof. This program generates
+two forms of information. First, it determines how much CPU time was spent
+for each of the functions in the program. Second, it computes a count of how
+many times each function gets called, categorized by which function performs the
+call. Both forms of information can be quite useful. The timings give a sense of

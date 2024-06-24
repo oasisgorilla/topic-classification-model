@@ -1,0 +1,72 @@
+1048
+Chapter 12
+Concurrent Programming
+code/conc/echo-cnt.c
+1
+#include "csapp.h"
+2
+3
+static int byte_cnt;
+/* Byte counter */
+4
+static sem_t mutex;
+/* and the mutex that protects it */
+5
+6
+static void init_echo_cnt(void)
+7
+{
+8
+Sem_init(&mutex, 0, 1);
+9
+byte_cnt = 0;
+10
+}
+11
+12
+void echo_cnt(int connfd)
+13
+{
+14
+int n;
+15
+char buf[MAXLINE];
+16
+rio_t rio;
+17
+static pthread_once_t once = PTHREAD_ONCE_INIT;
+18
+19
+Pthread_once(&once, init_echo_cnt);
+20
+Rio_readinitb(&rio, connfd);
+21
+while((n = Rio_readlineb(&rio, buf, MAXLINE)) != 0) {
+22
+P(&mutex);
+23
+byte_cnt += n;
+24
+printf("server received %d (%d total) bytes on fd %d\n",
+25
+n, byte_cnt, connfd);
+26
+V(&mutex);
+27
+Rio_writen(connfd, buf, n);
+28
+}
+29
+}
+code/conc/echo-cnt.c
+Figure 12.29
+echo_cnt: A version of echo that counts all bytes received from
+clients.
+the initialization function the ﬁrst time some thread calls the echo_cnt function.
+The advantage of this approach is that it makes the package easier to use. The
+disadvantage is that every call to echo_cnt makes a call to pthread_once, which
+most times does nothing useful.
+Once the package is initialized, the echo_cnt function initializes the Rio
+buffered I/O package (line 20) and then echoes each text line that is received from
+the client. Notice that the accesses to the shared byte_cnt variable in lines 23–25
+are protected by P and V operations.

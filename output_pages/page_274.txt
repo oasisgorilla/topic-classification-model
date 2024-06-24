@@ -1,0 +1,78 @@
+Section 3.6
+Control
+273
+It generates the following code for the jump table:
+1
+.L4:
+2
+.quad
+.L9
+3
+.quad
+.L5
+4
+.quad
+.L6
+5
+.quad
+.L7
+6
+.quad
+.L2
+7
+.quad
+.L7
+8
+.quad
+.L8
+9
+.quad
+.L2
+10
+.quad
+.L5
+Based on this information, answer the following questions:
+A. What were the values of the case labels in the switch statement?
+B. What cases had multiple labels in the C code?
+Practice Problem 3.31 (solution page 374)
+For a C function switcher with the general structure
+void switcher(long a, long b, long c, long *dest)
+{
+long val;
+switch(a) {
+case
+:
+/* Case A */
+c =
+;
+/* Fall through */
+case
+:
+/* Case B */
+val =
+;
+break;
+case
+:
+/* Case C */
+case
+:
+/* Case D */
+val =
+;
+break;
+case
+:
+/* Case E */
+val =
+;
+break;
+default:
+val =
+;
+}
+*dest = val;
+}
+gcc generates the assembly code and jump table shown in Figure 3.24.
+Fill in the missing parts of the C code. Except for the ordering of case labels
+C and D, there is only one way to ﬁt the different cases into the template.

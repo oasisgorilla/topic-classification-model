@@ -1,0 +1,64 @@
+842
+Chapter 9
+Virtual Memory
+Figure 9.3
+How a VM system uses
+main memory as a cache.
+VP 0
+VP 1
+PP 0
+PP 1
+PP 2m–p – 1
+VP 2n–p – 1
+Unallocated
+Virtual memory
+Physical memory
+Virtual pages (VPs)
+stored on disk
+Physical pages (PPs)
+cached in DRAM
+Cached
+Uncached
+Unallocated
+Cached
+Uncached
+Empty
+Empty
+Empty
+N – 1
+M – 1
+0
+0
+Cached
+Uncached
+on disk. Virtual pages 1, 4, and 6 are cached in physical memory. Pages 2, 5, and 7
+are allocated but are not currently cached in physical memory.
+9.3.1
+DRAM Cache Organization
+To help us keep the different caches in the memory hierarchy straight, we will use
+the term SRAM cache to denote the L1, L2, and L3 cache memories between the
+CPU and main memory, and the term DRAM cache to denote the VM system’s
+cache that caches virtual pages in main memory.
+The position of the DRAM cache in the memory hierarchy has a big impact
+on the way that it is organized. Recall that a DRAM is at least 10 times slower
+than an SRAM and that disk is about 100,000 times slower than a DRAM. Thus,
+misses in DRAM caches are very expensive compared to misses in SRAM caches
+because DRAM cache misses are served from disk, while SRAM cache misses are
+usually served from DRAM-based main memory. Further, the cost of reading the
+ﬁrst byte from a disk sector is about 100,000 times slower than reading successive
+bytes in the sector. The bottom line is that the organization of the DRAM cache
+is driven entirely by the enormous cost of misses.
+Because of the large miss penalty and the expense of accessing the ﬁrst byte,
+virtual pages tend to be large—typically 4 KB to 2 MB. Due to the large miss
+penalty, DRAM caches are fully associative; that is, any virtual page can be placed
+in any physical page. The replacement policy on misses also assumes greater
+importance, because the penalty associated with replacing the wrong virtual page
+is so high. Thus, operating systems use much more sophisticated replacement
+algorithms for DRAM caches than the hardware does for SRAM caches. (These
+replacement algorithms are beyond our scope here.) Finally, because of the large
+access time of disk, DRAM caches always use write-back instead of write-through.
+9.3.2
+Page Tables
+As with any cache, the VM system must have some way to determine if a virtual
+page is cached somewhere in DRAM. If so, the system must determine which
+physical page it is cached in. If there is a miss, the system must determine

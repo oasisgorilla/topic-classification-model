@@ -1,0 +1,62 @@
+746
+Chapter 7
+Linking
+code/link/interpose/mymalloc.c
+1
+#ifdef LINKTIME
+2
+#include <stdio.h>
+3
+4
+void *__real_malloc(size_t size);
+5
+void __real_free(void *ptr);
+6
+7
+/* malloc wrapper function */
+8
+void *__wrap_malloc(size_t size)
+9
+{
+10
+void *ptr = __real_malloc(size); /* Call libc malloc */
+11
+printf("malloc(%d) = %p\n", (int)size, ptr);
+12
+return ptr;
+13
+}
+14
+15
+/* free wrapper function */
+16
+void __wrap_free(void *ptr)
+17
+{
+18
+__real_free(ptr); /* Call libc free */
+19
+printf("free(%p)\n", ptr);
+20
+}
+21
+#endif
+code/link/interpose/mymalloc.c
+Figure 7.21
+Link-time interpositioning with the --wrap ﬂag.
+And here is how to link the object ﬁles into an executable:
+linux> gcc -Wl,--wrap,malloc -Wl,--wrap,free -o intl int.o mymalloc.o
+The -Wl,option ﬂag passes option to the linker. Each comma in option is
+replaced with a space. So -Wl,--wrap,malloc passes --wrap malloc to the linker,
+and similarly for -Wl,--wrap,free.
+Running the program gives the following trace:
+linux> ./intl
+malloc(32) = 0x18cf010
+free(0x18cf010)
+7.13.3
+Run-Time Interpositioning
+Compile-time interpositioning requires access to a program’s source ﬁles. Link-
+time interpositioning requires access to its relocatable object ﬁles. However, there
+is a mechanism for interpositioning at run time that requires access only to the
+executable object ﬁle. This fascinating mechanism is based on the dynamic linker’s
+LD_PRELOAD environment variable.

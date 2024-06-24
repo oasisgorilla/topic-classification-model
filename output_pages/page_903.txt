@@ -1,0 +1,51 @@
+902
+Chapter 9
+Virtual Memory
+Failing to free allocated blocks is a common programming error. For example,
+consider the following C function that allocates a block of temporary storage as
+part of its processing:
+1
+void garbage()
+2
+{
+3
+int *p = (int *)Malloc(15213);
+4
+5
+return; /* Array p is garbage at this point */
+6
+}
+Since p is no longer needed by the program, it should have been freed before
+garbage returned. Unfortunately, the programmer has forgotten to free the block.
+It remains allocated for the lifetime of the program, needlessly occupying heap
+space that could be used to satisfy subsequent allocation requests.
+A garbage collector is a dynamic storage allocator that automatically frees al-
+located blocks that are no longer needed by the program. Such blocks are known
+as garbage (hence the term “garbage collector”). The process of automatically
+reclaiming heap storage is known as garbage collection. In a system that supports
+garbage collection, applications explicitly allocate heap blocks but never explic-
+itly free them. In the context of a C program, the application calls malloc but
+never calls free. Instead, the garbage collector periodically identiﬁes the garbage
+blocks and makes the appropriate calls to free to place those blocks back on the
+free list.
+Garbage collection dates back to Lisp systems developed by John McCarthy
+at MIT in the early 1960s. It is an important part of modern language systems such
+as Java, ML, Perl, and Mathematica, and it remains an active and important area of
+research. The literature describes an amazing number of approaches for garbage
+collection. We will limit our discussion to McCarthy’s original Mark&Sweep al-
+gorithm, which is interesting because it can be built on top of an existing malloc
+package to provide garbage collection for C and C++ programs.
+9.10.1
+Garbage Collector Basics
+A garbage collector views memory as a directed reachability graph of the form
+shown in Figure 9.49. The nodes of the graph are partitioned into a set of root
+nodes and a set of heap nodes. Each heap node corresponds to an allocated block
+in the heap. A directed edge p →q means that some location in block p points to
+some location in block q. Root nodes correspond to locations not in the heap that
+contain pointers into the heap. These locations can be registers, variables on the
+stack, or global variables in the read/write data area of virtual memory.
+We say that a node p is reachable if there exists a directed path from any root
+node to p. At any point in time, the unreachable nodes correspond to garbage that
+can never be used again by the application. The role of a garbage collector is to
+maintain some representation of the reachability graph and periodically reclaim
+the unreachable nodes by freeing them and returning them to the free list.

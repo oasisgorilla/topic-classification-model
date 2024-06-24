@@ -1,0 +1,41 @@
+Section 12.5
+Synchronizing Threads with Semaphores
+1035
+10
+2
+T2
+Does this ordering result in a correct value for cnt?
+12.5.1
+Progress Graphs
+A progress graph models the execution of n concurrent threads as a trajectory
+through an n-dimensional Cartesian space. Each axis k corresponds to the progress
+of thread k. Each point (I1, I2, . . . , In) represents the state where thread k (k =
+1, . . . , n) has completed instruction Ik. The origin of the graph corresponds to the
+initial state where none of the threads has yet completed an instruction.
+Figure 12.19 shows the two-dimensional progress graph for the ﬁrst loop
+iteration of the badcnt.c program. The horizontal axis corresponds to thread 1,
+the vertical axis to thread 2. Point (L1, S2) corresponds to the state where thread
+1 has completed L1 and thread 2 has completed S2.
+A progress graph models instruction execution as a transition from one state
+to another. A transition is represented as a directed edge from one point to an
+adjacent point. Legal transitions move to the right (an instruction in thread 1
+completes) or up (an instruction in thread 2 completes). Two instructions cannot
+complete at the same time—diagonal transitions are not allowed. Programs never
+run backward so transitions that move down or to the left are not legal either.
+Figure 12.19
+Progress graph for the
+ﬁrst loop iteration of
+badcnt.c.
+Thread 2
+Thread 1
+T2
+S2
+U2
+L2
+H2
+H1
+L1
+U1
+S1
+T1
+(L1, S2)

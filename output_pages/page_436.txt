@@ -1,0 +1,64 @@
+Section 4.3
+Sequential Y86-64 Implementations
+435
+Stat
+PC update
+Memory
+Execute
+Decode
+Fetch
+newPC
+New PC
+data out
+dmem_error
+read
+write
+Data
+memory
+Addr
+Data
+Mem.
+control
+Cnd
+valE
+valM
+Stat
+CC
+ALU
+ALU
+fun.
+ALU
+A
+ALU
+B
+valA
+valB
+dstE dstM
+srcA
+srcB
+dstE dstM
+srcA
+srcB
+Register
+file
+Write back
+A
+B
+E
+M
+icode
+instr_valid
+imem_error
+ifun
+rA
+rB
+valC
+valP
+PC
+increment
+Instruction
+memory
+PC
+Figure 4.23
+Hardware structure of SEQ, a sequential implementation. Some of the
+control signals, as well as the register and control word connections, are not shown.

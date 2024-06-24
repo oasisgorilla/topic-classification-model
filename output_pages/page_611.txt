@@ -1,0 +1,70 @@
+610
+Chapter 5
+Optimizing Program Performance
+Code
+min
+max
+incr
+square
+A.
+1
+91
+90
+90
+B.
+91
+1
+90
+90
+C.
+1
+1
+90
+90
+Solution to Problem 5.4 (page 552)
+This assembly code demonstrates a clever optimization opportunity detected by
+gcc. It is worth studying this code carefully to better understand the subtleties of
+code optimization.
+A. In the less optimized code, register %xmm0 is simply used as a temporary value,
+both set and used on each loop iteration. In the more optimized code, it is
+used more in the manner of variable acc in combine4, accumulating the
+product of the vector elements. The difference with combine4, however,
+is that location dest is updated on each iteration by the second vmovsd
+instruction.
+We can see that this optimized version operates much like the following
+C code:
+1
+/* Make sure dest updated on each iteration */
+2
+void combine3w(vec_ptr v, data_t *dest)
+3
+{
+4
+long i;
+5
+long length = vec_length(v);
+6
+data_t *data = get_vec_start(v);
+7
+data_t acc = IDENT;
+8
+9
+/* Initialize in event length <= 0 */
+10
+*dest = acc;
+11
+12
+for (i = 0; i < length; i++) {
+13
+acc = acc OP data[i];
+14
+*dest = acc;
+15
+}
+16
+}
+B. The two versions of combine3 will have identical functionality, even with
+memory aliasing.
+C. This transformation can be made without changing the program behavior,
+because, with the exception of the ﬁrst iteration, the value read from dest at
+the beginning of each iteration will be the same value written to this register

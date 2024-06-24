@@ -1,0 +1,6 @@
+Global 
+edition
+Computer Systems
+ A Programmer’s Perspective
+ Third edition
+Randal E. Bryant • David R. O’Hallaron

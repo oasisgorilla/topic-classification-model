@@ -1,0 +1,48 @@
+Preface
+31
+mands. This is the student’s ﬁrst introduction to concurrency, and it gives
+them a clear idea of Unix process control, signals, and signal handling.
+Malloc Lab. Students implement their own versions of malloc, free, and (op-
+tionally) realloc. This lab gives students a clear understanding of data
+layout and organization, and requires them to evaluate different trade-offs
+between space and time efﬁciency.
+Proxy Lab. Students implement a concurrent Web proxy that sits between their
+browsers and the rest of the World Wide Web. This lab exposes the students
+to such topics as Web clients and servers, and ties together many of the con-
+cepts from the course, such as byte ordering, ﬁle I/O, process control, signals,
+signal handling, memory mapping, sockets, and concurrency. Students like
+being able to see their programs in action with real Web browsers and Web
+servers.
+The CS:APP instructor’s manual has a detailed discussion of the labs, as well
+as directions for downloading the support software.
+Acknowledgments for the Third Edition
+It is a pleasure to acknowledge and thank those who have helped us produce this
+third edition of the CS:APP text.
+We would like to thank our Carnegie Mellon colleagues who have taught the
+ICS course over the years and who have provided so much insightful feedback
+and encouragement: Guy Blelloch, Roger Dannenberg, David Eckhardt, Franz
+Franchetti, Greg Ganger, Seth Goldstein, Khaled Harras, Greg Kesden, Bruce
+Maggs, Todd Mowry, Andreas Nowatzyk, Frank Pfenning, Markus Pueschel, and
+Anthony Rowe. David Winters was very helpful in installing and conﬁguring the
+reference Linux box.
+Jason Fritts (St. Louis University) and Cindy Norris (Appalachian State)
+provided us with detailed and thoughtful reviews of the second edition. Yili Gong
+(Wuhan University) wrote the Chinese translation, maintained the errata page for
+the Chinese version, and contributed many bug reports. Godmar Back (Virginia
+Tech) helped us improve the text signiﬁcantly by introducing us to the notions of
+async-signal safety and protocol-independent network programming.
+Many thanks to our eagle-eyed readers who reported bugs in the second edi-
+tion: Rami Ammari, Paul Anagnostopoulos, Lucas B¨
+arenf¨
+anger, Godmar Back,
+Ji Bin, Sharbel Bousemaan, Richard Callahan, Seth Chaiken, Cheng Chen, Libo
+Chen, Tao Du, Pascal Garcia, Yili Gong, Ronald Greenberg, Dorukhan G¨
+ul¨
+oz,
+Dong Han, Dominik Helm, Ronald Jones, Mustafa Kazdagli, Gordon Kindlmann,
+Sankar Krishnan, Kanak Kshetri, Junlin Lu, Qiangqiang Luo, Sebastian Luy,
+Lei Ma, Ashwin Nanjappa, Gregoire Paradis, Jonas Pfenninger, Karl Pichotta,
+David Ramsey, Kaustabh Roy, David Selvaraj, Sankar Shanmugam, Dominique
+Smulkowska, Dag Sørbø, Michael Spear, Yu Tanaka, Steven Tricanowicz, Scott
+Wright, Waiki Wright, Han Xu, Zhengshan Yan, Firo Yang, Shuang Yang, John
+Ye, Taketo Yoshida, Yan Zhu, and Michael Zink.

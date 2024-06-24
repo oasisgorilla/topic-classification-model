@@ -1,0 +1,46 @@
+Section 2.3
+Integer Arithmetic
+125
+derivation: Detecting overﬂow of unsigned addition
+Observe that x + y ≥x, and hence if s did not overﬂow, we will surely have s ≥x.
+On the other hand, if s did overﬂow, we have s = x + y −2w. Given that y < 2w,
+we have y −2w < 0, and hence s = x + (y −2w) < x.
+Practice Problem 2.27 (solution page 188)
+Write a function with the following prototype:
+/* Determine whether arguments can be added without overflow */
+int uadd_ok(unsigned x, unsigned y);
+This function should return 1 if arguments x and y can be added without
+causing overﬂow.
+Modular addition forms a mathematical structure known as an abelian group,
+named after the Norwegian mathematician Niels Henrik Abel (1802–1829). That
+is, it is commutative (that’s where the “abelian” part comes in) and associative;
+it has an identity element 0, and every element has an additive inverse. Let us
+consider the set of w-bit unsigned numbers with addition operation +u
+w. For every
+value x, there must be some value -u
+w x such that -u
+w x +u
+w x = 0. This additive
+inverse operation can be characterized as follows:
+principle: Unsigned negation
+For any number x such that 0 ≤x < 2w, its w-bit unsigned negation -u
+w x is given
+by the following:
+-u
+w x =
+ x,
+x = 0
+2w −x,
+x > 0
+(2.12)
+This result can readily be derived by case analysis:
+derivation: Unsigned negation
+When x = 0, the additive inverse is clearly 0. For x > 0, consider the value 2w −x.
+Observe that this number is in the range 0 < 2w −x < 2w. We can also see that
+(x + 2w −x) mod 2w = 2w mod 2w = 0. Hence it is the inverse of x under +u
+w.
+Practice Problem 2.28 (solution page 188)
+We can represent a bit pattern of length w = 4 with a single hex digit. For an
+unsigned interpretation of these digits, use Equation 2.12 to ﬁll in the following
+table giving the values and the bit representations (in hex) of the unsigned additive
+inverses of the digits shown.

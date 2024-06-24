@@ -1,0 +1,76 @@
+Section 6.6
+Putting It Together: The Impact of Caches on Program Performance
+677
+Core i7 Haswell
+2.1 GHz
+32 KB L1 d-cache
+256 KB L2 cache
+8 MB L3 cache
+64 B block size
+Ridges of 
+temporal
+locality
+128 M 
+32 M 
+8 M 
+2 M 
+512 K 
+128 K 
+32 K 
+0 
+2,000 
+4,000 
+6,000 
+8,000 
+10,000 
+12,000 
+14,000 
+16,000 
+s1 
+s3 
+s5 
+s7 
+s9 
+s11 
+Size (bytes) 
+Stride (x8 bytes) 
+8 M
+2 M
+512 K 
+128 K
+32 K
+0
+0 
+s1
+s3 
+s5 
+s7 
+Slopes
+of spatial
+locality
+Read throughput (MB/s) 
+Mem
+L1
+L2
+L3
+Figure 6.41
+A memory mountain. Shows read throughput as a function of temporal and spatial locality.
+The geography of the Core i7 mountain reveals a rich structure. Perpendicular
+to the size axis are four ridges that correspond to the regions of temporal locality
+where the working set ﬁts entirely in the L1 cache, L2 cache, L3 cache, and
+main memory, respectively. Notice that there is more than an order of magnitude
+difference between the highest peak of the L1 ridge, where the CPU reads at a
+rate of over 14 GB/s, and the lowest point of the main memory ridge, where the
+CPU reads at a rate of 900 MB/s.
+On each of the L2, L3, and main memory ridges, there is a slope of spatial
+locality that falls downhill as the stride increases and spatial locality decreases.
+Notice that even when the working set is too large to ﬁt in any of the caches, the
+highest point on the main memory ridge is a factor of 8 higher than its lowest point.
+So even when a program has poor temporal locality, spatial locality can still come
+to the rescue and make a signiﬁcant difference.
+There is a particularly interesting ﬂat ridge line that extends perpendicular
+to the stride axis for a stride of 1, where the read throughput is a relatively ﬂat
+12 GB/s, even though the working set exceeds the capacities of L1 and L2. This
+is apparently due to a hardware prefetching mechanism in the Core i7 memory
+system that automatically identiﬁes sequential stride-1 reference patterns and
+attempts to fetch those blocks into the cache before they are accessed. While the

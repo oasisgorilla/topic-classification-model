@@ -1,0 +1,41 @@
+Section 9.9
+Dynamic Memory Allocation
+881
+Working within these constraints, the author of an allocator attempts to meet
+the often conﬂicting performance goals of maximizing throughput and memory
+utilization.
+Goal 1: Maximizing throughput. Given some sequence of n allocate and free
+requests
+R0, R1, . . . , Rk, . . . , Rn−1
+we would like to maximize an allocator’s throughput, which is deﬁned as the
+number of requests that it completes per unit time. For example, if an alloca-
+tor completes 500 allocate requests and 500 free requests in 1 second, then its
+throughput is 1,000 operations per second. In general, we can maximize through-
+put by minimizing the average time to satisfy allocate and free requests. As we’ll
+see, it is not too difﬁcult to develop allocators with reasonably good performance
+where the worst-case running time of an allocate request is linear in the number
+of free blocks and the running time of a free request is constant.
+Goal 2: Maximizing memory utilization. Naive programmers often incorrectly
+assume that virtual memory is an unlimited resource. In fact, the total amount
+of virtual memory allocated by all of the processes in a system is limited by the
+amount of swap space on disk. Good programmers know that virtual memory is
+a ﬁnite resource that must be used efﬁciently. This is especially true for a dynamic
+memory allocator that might be asked to allocate and free large blocks of memory.
+There are a number of ways to characterize how efﬁciently an allocator uses
+the heap. In our experience, the most useful metric is peak utilization. As before,
+we are given some sequence of n allocate and free requests
+R0, R1, . . . , Rk, . . . , Rn−1
+If an application requests a block of p bytes, then the resulting allocated block has
+a payload of p bytes. After request Rk has completed, let the aggregate payload,
+denoted Pk, be the sum of the payloads of the currently allocated blocks, and let
+Hk denote the current (monotonically nondecreasing) size of the heap.
+Then the peak utilization over the ﬁrst k + 1 requests, denoted by Uk, is
+given by
+Uk = maxi≤k Pi
+Hk
+The objective of the allocator, then, is to maximize the peak utilization Un−1
+over the entire sequence. As we will see, there is a tension between maximizing
+throughput and utilization. In particular, it is easy to write an allocator that
+maximizes throughput at the expense of heap utilization. One of the interesting
+challenges in any allocator design is ﬁnding an appropriate balance between the
+two goals.

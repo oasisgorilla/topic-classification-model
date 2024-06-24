@@ -1,0 +1,95 @@
+1018
+Chapter 12
+Concurrent Programming
+code/conc/echoservers.c
+1
+#include "csapp.h"
+2
+3
+typedef struct { /* Represents a pool of connected descriptors */
+4
+int maxfd;
+/* Largest descriptor in read_set */
+5
+fd_set read_set;
+/* Set of all active descriptors */
+6
+fd_set ready_set; /* Subset of descriptors ready for reading
+*/
+7
+int nready;
+/* Number of ready descriptors from select */
+8
+int maxi;
+/* High water index into client array */
+9
+int clientfd[FD_SETSIZE];
+/* Set of active descriptors */
+10
+rio_t clientrio[FD_SETSIZE]; /* Set of active read buffers */
+11
+} pool;
+12
+13
+int byte_cnt = 0; /* Counts total bytes received by server */
+14
+15
+int main(int argc, char **argv)
+16
+{
+17
+int listenfd, connfd;
+18
+socklen_t clientlen;
+19
+struct sockaddr_storage clientaddr;
+20
+static pool pool;
+21
+22
+if (argc != 2) {
+23
+fprintf(stderr, "usage: %s <port>\n", argv[0]);
+24
+exit(0);
+25
+}
+26
+listenfd = Open_listenfd(argv[1]);
+27
+init_pool(listenfd, &pool);
+28
+29
+while (1) {
+30
+/* Wait for listening/connected descriptor(s) to become ready */
+31
+pool.ready_set = pool.read_set;
+32
+pool.nready = Select(pool.maxfd+1, &pool.ready_set, NULL, NULL, NULL);
+33
+34
+/* If listening descriptor ready, add new client to pool */
+35
+if (FD_ISSET(listenfd, &pool.ready_set)) {
+36
+clientlen = sizeof(struct sockaddr_storage);
+37
+connfd = Accept(listenfd, (SA *)&clientaddr, &clientlen);
+38
+add_client(connfd, &pool);
+39
+}
+40
+41
+/* Echo a text line from each ready connected descriptor */
+42
+check_clients(&pool);
+43
+}
+44
+}
+code/conc/echoservers.c
+Figure 12.8
+Concurrent echo server based on I/O multiplexing. Each server iteration echoes a text line
+from each ready descriptor.

@@ -1,0 +1,57 @@
+868
+Chapter 9
+Virtual Memory
+Figure 9.28
+Linux page fault handling.
+Process virtual memory
+Shared libraries
+Data
+Code
+Segmentation fault:
+Accessing a nonexistent page
+Normal page fault
+Protection exception
+(e.g., violating permission by
+writing to a read-only page)
+1
+3
+2
+vm_area_struct
+0
+vm_end
+vm_start
+r/o
+vm_next
+vm_end
+vm_start
+r/w
+vm_next
+vm_end
+vm_start
+r/o
+vm_next
+Linux Page Fault Exception Handling
+Suppose the MMU triggers a page fault while trying to translate some virtual
+address A. The exception results in a transfer of control to the kernel’s page fault
+handler, which then performs the following steps:
+1. Is virtual address A legal? In other words, does A lie within an area deﬁned by
+some area struct? To answer this question, the fault handler searches the list of
+area structs, comparing A with the vm_start and vm_end in each area struct.
+If the instruction is not legal, then the fault handler triggers a segmentation
+fault, which terminates the process. This situation is labeled “1” in Figure 9.28.
+Because a process can create an arbitrary number of new virtual memory
+areas (using the mmap function described in the next section), a sequential
+search of the list of area structs might be very costly. So in practice, Linux
+superimposes a tree on the list, using some ﬁelds that we have not shown, and
+performs the search on this tree.
+2. Is the attempted memory access legal? In other words, does the process have
+permission to read, write, or execute the pages in this area? For example,
+was the page fault the result of a store instruction trying to write to a read-
+only page in the code segment? Is the page fault the result of a process
+running in user mode that is attempting to read a word from kernel virtual
+memory? If the attempted access is not legal, then the fault handler triggers a
+protection exception, which terminates the process. This situation is labeled
+“2” in Figure 9.28.
+3. At this point, the kernel knows that the page fault resulted from a legal
+operation on a legal virtual address. It handles the fault by selecting a victim
+page, swapping out the victim page if it is dirty, swapping in the new page,

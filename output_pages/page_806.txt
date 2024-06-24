@@ -1,0 +1,51 @@
+Section 8.5
+Signals
+805
+code/ecf/sigintsafe.c
+1
+#include "csapp.h"
+2
+3
+void sigint_handler(int sig) /* Safe SIGINT handler */
+4
+{
+5
+Sio_puts("Caught SIGINT!\n"); /* Safe output */
+6
+_exit(0);
+/* Safe exit */
+7
+}
+code/ecf/sigintsafe.c
+Figure 8.35
+A safe version of the SIGINT handler from Figure 8.30.
+The workaround is to save errno to a local variable on entry to the handler
+and restore it before the handler returns. Note that this is only necessary
+if the handler returns. It is not necessary if the handler terminates the
+process by calling _exit.
+G3. Protect accesses to shared global data structures by blocking all signals. If
+a handler shares a global data structure with the main program or with
+other handlers, then your handlers and main program should temporarily
+block all signals while accessing (reading or writing) that data structure.
+The reason for this rule is that accessing a data structure d from the main
+program typically requires a sequence of instructions. If this instruction
+sequence is interrupted by a handler that accesses d, then the handler
+might ﬁnd d in an inconsistent state, with unpredictable results. Tempo-
+rarily blocking signals while you access d guarantees that a handler will
+not interrupt the instruction sequence.
+G4. Declare global variables with volatile. Consider a handler and main rou-
+tine that share a global variable g. The handler updates g, and main pe-
+riodically reads g. To an optimizing compiler, it would appear that the
+value of g never changes in main, and thus it would be safe to use a copy
+of g that is cached in a register to satisfy every reference to g. In this case,
+the main function would never see the updated values from the handler.
+You can tell the compiler not to cache a variable by declaring it with
+the volatile type qualiﬁer. For example:
+volatile int g;
+The volatile qualiﬁer forces the compiler to read the value of g from
+memory each time it is referenced in the code. In general, as with any
+shared data structure, each access to a global variable should be protected
+by temporarily blocking signals.
+G5. Declare ﬂags with sig_atomic_t. In one common handler design, the
+handler records the receipt of the signal by writing to a global ﬂag. The
+main program periodically reads the ﬂag, responds to the signal, and

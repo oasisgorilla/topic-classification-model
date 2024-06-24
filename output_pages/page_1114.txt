@@ -1,0 +1,169 @@
+Index
+1113
+routines, thread, 1023
+row access strobe (RAS) requests, 619
+row-major array order, 294, 642
+row-major sum function, 671, 671
+RPM (revolutions per minute), 626
+rrmovq [Y86-64] register to register
+move, 392, 440
+%rsi [x86-64] program register, 216
+%rsp [Y86-64] stack pointer program
+register215–216, 391
+run command, 316
+run concurrency, 769
+run time
+interpositioning, 746–748
+linking, 706
+shared libraries, 735
+stacks, 207, 275–277
+running
+in parallel, 770
+processes, 775
+programs, 46–48, 786–792
+.s assembly language ﬁles, 708
+SA [CS:APP] shorthand for struct
+sockaddr, 969
+SADR [Y86-64] status code for address
+exception, 440
+safe optimization, 534, 534–535
+safe signal handling, 802–806
+safe trajectories in progress graphs,
+1036
+safely emit error message and
+terminate instruction, 802,
+804
+safely emit long int instruction, 802,
+804
+safely emit string instruction, 802, 804
+sal [instruction class] shift left, 228
+salb [x86-64] shift left, 231
+salq [x86-64] shift left, 231
+salw [x86-64] shift left, 231
+Sandy Bridge microprocessor, 204
+SAOK [Y86-64] status code for normal
+operation, 440
+sar [instruction class] shift arithmetic
+right, 228, 231
+SATA interfaces, 633
+saturating arithmetic, 170
+sbrk [C Stdlib] extend the heap, 877,
+877
+emulator, 891
+heap memory, 886
+Sbuf [CS:APP] shared bounded
+buffer package, 1041, 1042
+sbuf_deinit [CS:APP] free bounded
+buffer, 1043
+sbuf_init [CS:APP] allocate and init
+bounded buffer, 1043
+sbuf_insert [CS:APP] insert item in
+a bounded buffer, 1043
+sbuf_remove [CS:APP] remove item
+from bounded buffer, 1043
+sbuf_t [CS:APP] bounded buffer
+used by Sbuf package, 1042
+scalar code performance summary,
+583–584
+scalar format data, 330
+scalar instructions, 332
+scale factor in memory references, 217
+scaling parallel programs, 1055,
+1055–1056
+scanf function, 906–907
+schedule alarm to self function, 798
+schedulers, 772
+scheduling, 772
+events, 799
+shared resources, 1040–1044
+SCSI interfaces, 633
+SDRAM (synchronous DRAM), 622
+second-level domain names, 964
+second readers-writers problem, 1044
+sectors, disk, 626, 626–628
+access time, 629–631
+gaps, 632
+reading, 633–635
+security monoculture, 321
+security vulnerabilities, 43
+getpeername function, 122–123
+XDR library, 136
+seeds for pseudorandom number
+generators, 1057
+seek operations, 629, 927
+seek time for disks, 629, 629
+segmentation faults, 765
+segmented addressing, 323–324
+segments
+code, 732, 733–734
+data, 732
+Ethernet, 956, 956
+loops, 562–563
+virtual memory, 866
+segregated ﬁts, 899, 900–901
+segregated free lists, 899–901
+segregated storage, 899
+select [Unix] wait for I/O events,
+1013
+self-loops, 1016
+self-modifying code, 471
+sem_init [Unix] initialize semaphore,
+1038
+sem_post [Unix] V operation, 1038
+sem_wait [Unix] P operation, 1038
+semaphores, 1037, 1037–1038
+concurrent server example, 1041–
+1049
+for mutual exclusion, 1038–1040
+for scheduling shared resources,
+1040–1044
+sending signals, 771, 795–798
+separate compilation, 706
+SEQ+ pipelined implementations,
+457, 457–458
+SEQ Y86-64 processor design.
+See sequential Y86-64
+implementation
+sequential circuits, 417
+sequential execution, 236–237
+sequential operations in SSDs, 636
+sequential reference patterns, 642
+sequential Y86-64 implementation,
+420, 457
+decode and write-back stage,
+442–444
+execute stage, 444–445
+fetch stage, 440–442
+hardware structure, 432–436
+instruction processing stages,
+420–431
+memory stage, 445–447
+PC update stage, 447
+performance, 448
+SEQ+ implementations, 457,
+457–458
+timing, 436–439
+serve_dynamic [CS:APP] Tiny
+helper function, 999–1000
+serve_static [CS:APP] Tiny helper
+function, 997–999
+servers, 57
+client-server model, 954
+concurrent. See concurrent servers
+network, 57
+Web. See Web servers
+service conversions in sockets
+interface, 973–978
+services in client-server model, 954
+serving
+dynamic content, 989–990
+Web content, 985
+set associative caches, 660
+line matching and word selection,
+661–662
+line replacement, 661
+set selection, 661, 661
+set bit in descriptor set macro, 1014
+set index bits, 651, 651–652
+set on equal instruction, 239
+set on greater instruction, 239

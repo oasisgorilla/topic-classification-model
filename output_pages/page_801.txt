@@ -1,0 +1,53 @@
+800
+Chapter 8
+Exceptional Control Flow
+(4) Control passes
+to handler T
+(1) Program
+catches signal s
+(3) Program
+catches signal t
+(7) Main program
+resumes
+(5) Handler T 
+returns to 
+handler S
+(2) Control passes
+to handler S
+Main program
+Handler S
+Handler T
+(6) Handler S returns
+to main program
+Icurr
+Inext
+Figure 8.31
+Handlers can be interrupted by other handlers.
+is to immediately terminate the process. In this example, we modify the default
+behavior to catch the signal, print a message, and then terminate the process.
+Signal handlers can be interrupted by other handlers, as shown in Figure 8.31.
+In this example, the main program catches signal s, which interrupts the main
+program and transfers control to handler S. While S is running, the program
+catches signal t ̸= s, which interrupts S and transfers control to handler T . When
+T returns, S resumes where it was interrupted. Eventually, S returns, transferring
+control back to the main program, which resumes where it left off.
+Practice Problem 8.7 (solution page 834)
+Write a program called snooze that takes a single command-line argument, calls
+the snooze function from Problem 8.5 with this argument, and then terminates.
+Write your program so that the user can interrupt the snooze function by typing
+Ctrl+C at the keyboard. For example:
+linux> ./snooze 5
+CTRL+C
+User hits Crtl+C after 3 seconds
+Slept for 3 of 5 secs.
+linux>
+8.5.4
+Blocking and Unblocking Signals
+Linux provides implicit and explicit mechanisms for blocking signals:
+Implicit blocking mechanism. By default, the kernel blocks any pending sig-
+nals of the type currently being processed by a handler. For example, in
+Figure 8.31, suppose the program has caught signal s and is currently run-
+ning handler S. If another signal s is sent to the process, then s will become
+pending but will not be received until after handler S returns.
+Explicit blocking mechanism. Applications can explicitly block and unblock
+selected signals using the sigprocmask function and its helpers.

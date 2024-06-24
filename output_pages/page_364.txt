@@ -1,0 +1,63 @@
+Solutions to Practice Problems
+363
+int
+char
+movl (%rdi), %eax
+Read 4 bytes
+movb %al, (%rsi)
+Store low-order byte
+unsigned
+unsigned
+movl (%rdi), %eax
+Read 4 bytes
+char
+movb %al, (%rsi)
+Store low-order byte
+char
+short
+movsbw (%rdi), %ax
+Read byte and sign-extend
+movw %ax, (%rsi)
+Store 2 bytes
+Solution to Problem 3.5 (page 225)
+Reverse engineering is a good way to understand systems. In this case, we want
+to reverse the effect of the C compiler to determine what C code gave rise to this
+assembly code. The best way is to run a “simulation,” starting with values x, y, and
+z at the locations designated by pointers xp, yp, and zp, respectively. We would
+then get the following behavior:
+void decode1(long *xp, long *yp, long *zp)
+xp in %rdi, yp in %rsi, zp in %rdx
+decode1:
+movq
+(%rdi), %r8
+Get x = *xp
+movq
+(%rsi), %rcx
+Get y = *yp
+movq
+(%rdx), %rax
+Get z = *zp
+movq
+%r8, (%rsi)
+Store x at yp
+movq
+%rcx, (%rdx)
+Store y at zp
+movq
+%rax, (%rdi)
+Store z at xp
+ret
+From this, we can generate the following C code:
+void decode1(long *xp, long *yp, long *zp)
+{
+long x = *xp;
+long y = *yp;
+long z = *zp;
+*yp = x;
+*zp = y;
+*xp = z;
+}
+Solution to Problem 3.6 (page 228)
+This exercise demonstrates the versatility of the leaq instruction and gives you
+more practice in deciphering the different operand forms. Although the operand
+forms are classiﬁed as type “Memory” in Figure 3.3, no memory access occurs.

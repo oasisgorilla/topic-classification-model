@@ -1,0 +1,57 @@
+Section 8.3
+System Call Error Handling
+773
+Figure 8.14
+Anatomy of a process
+context switch.
+Process A
+Process B
+User code
+Kernel code
+Kernel code
+User code
+User code
+Context
+switch
+Context
+switch
+Time
+read
+Disk interrupt
+Return
+from read
+processor after the disk controller has ﬁnished transferring the data from disk to
+memory.
+The disk will take a relatively long time to fetch the data (on the order of tens
+of milliseconds), so instead of waiting and doing nothing in the interim, the kernel
+performs a context switch from process A to B. Note that, before the switch, the
+kernel is executing instructions in user mode on behalf of process A (i.e., there
+is no separate kernel process). During the ﬁrst part of the switch, the kernel is
+executing instructions in kernel mode on behalf of process A. Then at some point
+it begins executing instructions (still in kernel mode) on behalf of process B. And
+after the switch, the kernel is executing instructions in user mode on behalf of
+process B.
+Process B then runs for a while in user mode until the disk sends an interrupt
+to signal that data have been transferred from disk to memory. The kernel decides
+that process B has run long enough and performs a context switch from process B
+to A, returning control in process A to the instruction immediately following the
+read system call. Process A continues to run until the next exception occurs, and
+so on.
+8.3
+System Call Error Handling
+When Unix system-level functions encounter an error, they typically return −1
+and set the global integer variable errno to indicate what went wrong. Program-
+mers should always check for errors, but unfortunately, many skip error checking
+because it bloats the code and makes it harder to read. For example, here is how
+we might check for errors when we call the Linux fork function:
+1
+if ((pid = fork()) < 0) {
+2
+fprintf(stderr, "fork error: %s\n", strerror(errno));
+3
+exit(0);
+4
+}
+The strerror function returns a text string that describes the error associated
+with a particular value of errno. We can simplify this code somewhat by deﬁning
+the following error-reporting function:

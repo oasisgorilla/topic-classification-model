@@ -1,0 +1,58 @@
+176
+Chapter 2
+Representing and Manipulating Information
+function u2f returns a ﬂoating-point value having an identical bit representation
+as its unsigned argument.
+float fpwr2(int x)
+{
+/* Result exponent and fraction */
+unsigned exp, frac;
+unsigned u;
+if (x <
+) {
+/* Too small.
+Return 0.0 */
+exp =
+;
+frac =
+;
+} else if (x <
+) {
+/* Denormalized result */
+exp =
+;
+frac =
+;
+} else if (x <
+) {
+/* Normalized result. */
+exp =
+;
+frac =
+;
+} else {
+/* Too big.
+Return +oo */
+exp =
+;
+frac =
+;
+}
+/* Pack exp and frac into 32 bits */
+u = exp << 23 | frac;
+/* Return as float */
+return u2f(u);
+}
+2.91 ◆
+Around 250 B.C., the Greek mathematician Archimedes proved that 223
+71 < π < 22
+7 .
+Hadhehadaccesstoa computerandthestandardlibrary <math.h>, hewouldhave
+been able to determine that the single-precision ﬂoating-point approximation of
+π has the hexadecimal representation 0x40490FDB. Of course, all of these are just
+approximations, since π is not rational.
+A. What is the fractional binary number denoted by this ﬂoating-point value?
+B. What is the fractional binary representation of 22
+7 ? Hint: See Problem 2.83.
+C. At what bit position (relative to the binary point) do these two approxima-
+tions to π diverge?

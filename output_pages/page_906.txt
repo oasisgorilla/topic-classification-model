@@ -1,0 +1,60 @@
+Section 9.10
+Garbage Collection
+905
+Figure 9.52
+Mark&Sweep example.
+Note that the arrows in this
+example denote memory
+references, not free list
+pointers.
+1
+2
+3
+4
+5
+6
+Before mark:
+Root
+After mark:
+Unmarked block
+header
+Marked block
+header
+After sweep:
+Free
+Free
+Figure 9.53
+Left and right pointers
+in a balanced tree of
+allocated blocks.
+Size
+Left
+Right
+Remainder of block
+Allocated block header
+
+
+Initially, the heap in Figure 9.52 consists of six allocated blocks, each of which
+is unmarked. Block 3 contains a pointer to block 1. Block 4 contains pointers to
+blocks 3 and 6. The root points to block 4. After the mark phase, blocks 1, 3, 4, and 6
+are marked because they are reachable from the root. Blocks 2 and 5 are unmarked
+because they are unreachable. After the sweep phase, the two unreachable blocks
+are reclaimed to the free list.
+9.10.3
+Conservative Mark&Sweep for C Programs
+Mark&Sweep is an appropriate approach for garbage collecting C programs be-
+cause it works in place without moving any blocks. However, the C language poses
+some interesting challenges for the implementation of the isPtr function.
+First, C does not tag memory locations with any type information. Thus, there
+is no obvious way for isPtr to determine if its input parameter p is a pointer or not.
+Second, even if we were to know that p was a pointer, there would be no obvious
+way for isPtr to determine whether p points to some location in the payload of
+an allocated block.
+One solution to the latter problem is to maintain the set of allocated blocks
+as a balanced binary tree that maintains the invariant that all blocks in the left
+subtree are located at smaller addresses and all blocks in the right subtree are
+located in larger addresses. As shown in Figure 9.53, this requires two additional
+ﬁelds (left and right) in the header of each allocated block. Each ﬁeld points to
+the header of some allocated block. The isPtr(ptr p) function uses the tree to
+perform a binary search of the allocated blocks. At each step, it relies on the size
+ﬁeld in the block header to determine if p falls within the extent of the block.

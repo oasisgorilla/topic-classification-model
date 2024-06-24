@@ -1,0 +1,71 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+469
+e_valE      0 + 3 = 3
+E_dstE = %rax
+M_valE = 10
+M_dstE = %rdx
+D
+valA      R[%rdx] = 0
+valB      R[%rax] = 0
+F
+0x000: irmovq $10,%rdx
+# prog4
+# prog4
+0x00a: irmovq  $3,%rax
+0x014: addq %rdx,%rax
+0x016: halt
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+Cycle 4
+1
+2
+3
+4
+5
+6
+7
+8
+M
+E
+Error
+Figure 4.46
+Pipelined execution of prog4 without special pipeline control. In cycle
+4, the addq instruction reads its source operands from the register ﬁle. The pending
+write to register %rdx is still in the memory stage, and the new value for register %rax
+is just being computed in the execute stage. Both operands valA and valB get incorrect
+values.
+Avoiding Data Hazards by Stalling
+One very general technique for avoiding hazards involves stalling, where the
+processor holds back one or more instructions in the pipeline until the hazard
+condition no longer holds. Our processor can avoid data hazards by holding back
+an instruction in the decode stage until the instructions generating its source op-
+erands have passed through the write-back stage. The details of this mechanism
+will be discussed in Section 4.5.8. It involves simple enhancements to the pipeline
+control logic. The effect of stalling is diagrammed in Figure 4.47 (prog2) and Fig-
+ure 4.48 (prog4). (We omit prog3 from this discussion, since it operates similarly
+to the other two examples.) When the addq instruction is in the decode stage,
+the pipeline control logic detects that at least one of the instructions in the exe-
+cute, memory, or write-back stage will update either register %rdx or register %rax.
+Rather than letting the addq instruction pass through the stage with the incorrect
+results, it stalls the instruction, holding it back in the decode stage for either one
+(for prog2) or three (for prog4) extra cycles. For all three programs, the addq in-
+struction ﬁnally gets correct values for its two source operands in cycle 7 and then
+proceeds down the pipeline.

@@ -1,0 +1,89 @@
+714
+Chapter 7
+Linking
+The reason for this seemingly arbitrary distinction stems from the way the linker
+performs symbol resolution, which we will explain in Section 7.6.
+The GNU readelf program is a handy tool for viewing the contents of object
+ﬁles. For example, here are the last three symbol table entries for the relocatable
+object ﬁle main.o, from the example program in Figure 7.1. The ﬁrst eight entries,
+which are not shown, are local symbols that the linker uses internally.
+Num:
+Value
+Size Type
+Bind
+Vis
+Ndx Name
+8: 0000000000000000
+24 FUNC
+GLOBAL DEFAULT
+1 main
+9: 0000000000000000
+8 OBJECT
+GLOBAL DEFAULT
+3 array
+10: 0000000000000000
+0 NOTYPE
+GLOBAL DEFAULT
+UND sum
+In this example, we see an entry for the deﬁnition of global symbol main, a 24-
+byte function located at an offset (i.e., value) of zero in the .text section. This
+is followed by the deﬁnition of the global symbol array, an 8-byte object located
+at an offset of zero in the .data section. The last entry comes from the reference
+to the external symbol sum. readelf identiﬁes each section by an integer index.
+Ndx=1 denotes the .text section, and Ndx=3 denotes the .data section.
+Practice Problem 7.1 (solution page 753)
+This problem concerns the m.o and swap.o modules from Figure 7.5. For each
+symbol that is deﬁned or referenced in swap.o, indicate whether or not it will
+have a symbol table entry in the .symtab section in module swap.o. If so, indicate
+the module that deﬁnes the symbol (swap.o or m.o), the symbol type (local, global,
+or extern), and the section (.text, .data, .bss, or COMMON) it is assigned to
+in the module.
+(a) m.c
+code/link/m.c
+1
+void swap();
+2
+3
+int buf[2] = {1, 2};
+4
+5
+int main()
+6
+{
+7
+swap();
+8
+return 0;
+9
+}
+code/link/m.c
+(b) swap.c
+code/link/swap.c
+1
+extern int buf[];
+2
+3
+int *bufp0 = &buf[0];
+4
+int *bufp1;
+5
+6
+void swap()
+7
+{
+8
+int temp;
+9
+10
+bufp1 = &buf[1];
+11
+temp = *bufp0;
+12
+*bufp0 = *bufp1;
+13
+*bufp1 = temp;
+14
+}
+code/link/swap.c
+Figure 7.5
+Example program for Practice Problem 7.1.

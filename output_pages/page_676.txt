@@ -1,0 +1,45 @@
+Section 6.6
+Putting It Together: The Impact of Caches on Program Performance
+675
+A. What is the total number of reads?
+B. What is the total number of reads that hit in the cache?
+C. What is the hit rate?
+D. What would the hit rate be if the cache were twice as big?
+6.6
+Putting It Together: The Impact of Caches
+on Program Performance
+This section wraps up our discussion of the memory hierarchy by studying the im-
+pact that caches have on the performance of programs running on real machines.
+6.6.1
+The Memory Mountain
+The rate that a program reads data from the memory system is called the read
+throughput, or sometimes the read bandwidth. If a program reads n bytes over a
+period of s seconds, then the read throughput over that period is n/s, typically
+expressed in units of megabytes per second (MB/s).
+If we were to write a program that issued a sequence of read requests from
+a tight program loop, then the measured read throughput would give us some
+insight into the performance of the memory system for that particular sequence
+of reads. Figure 6.40 shows a pair of functions that measure the read throughput
+for a particular read sequence.
+The test function generates the read sequence by scanning the ﬁrst elems
+elements of an array with a stride of stride. To increase the available parallelism
+in the inner loop, it uses 4 × 4 unrolling (Section 5.9). The run function is a wrapper
+that calls the test function and returns the measured read throughput. The call
+to the test function in line 37 warms the cache. The fcyc2 function in line 38 calls
+the test function with arguments elems and estimates the running time of the
+test function in CPU cycles. Notice that the size argument to the run function is
+in units of bytes, while the corresponding elems argument to the test function is
+in units of array elements. Also, notice that line 39 computes MB/s as 106 bytes/s,
+as opposed to 220 bytes/s.
+The size and stride arguments to the run function allow us to control the
+degree of temporal and spatial locality in the resulting read sequence. Smaller
+values of size result in a smaller working set size, and thus better temporal
+locality. Smaller values of stride result in better spatial locality. If we call the run
+function repeatedly with different values of size and stride, then we can recover
+a fascinating two-dimensional function of read throughput versus temporal and
+spatial locality. This function is called a memory mountain [112].
+Every computer has a unique memory mountain that characterizes the ca-
+pabilities of its memory system. For example, Figure 6.41 shows the memory
+mountain for an Intel Core i7 Haswell system. In this example, the size varies
+from 16 KB to 128 MB, and the stride varies from 1 to 12 elements, where each
+element is an 8-byte long int.

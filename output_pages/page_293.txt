@@ -1,0 +1,67 @@
+292
+Chapter 3
+Machine-Level Representation of Programs
+Let us denote the starting location as xA. The declaration has two effects. First,
+it allocates a contiguous region of L . N bytes in memory, where L is the size (in
+bytes) of data type T . Second, it introduces an identiﬁer A that can be used as
+a pointer to the beginning of the array. The value of this pointer will be xA. The
+array elements can be accessed using an integer index ranging between 0 and N−1.
+Array element i will be stored at address xA + L . i.
+As examples, consider the following declarations:
+char
+A[12];
+char
+*B[8];
+int
+C[6];
+double *D[5];
+These declarations will generate arrays with the following parameters:
+Array
+Element size
+Total size
+Start address
+Element i
+A
+1
+12
+xA
+xA + i
+B
+8
+64
+xB
+xB + 8i
+C
+4
+24
+xC
+xC + 4i
+D
+8
+40
+xD
+xD + 8i
+Array A consists of 12 single-byte (char) elements. Array C consists of 6 integers,
+each requiring 4 bytes. B and D are both arrays of pointers, and hence the array
+elements are 8 bytes each.
+The memory referencing instructions of x86-64 are designed to simplify array
+access. For example, suppose E is an array of values of type int and we wish to
+evaluate E[i], where the address of E is stored in register %rdx and i is stored in
+register %rcx. Then the instruction
+movl (%rdx,%rcx,4),%eax
+will perform the address computation xE + 4i, read that memory location, and
+copy the result to register %eax. The allowed scaling factors of 1, 2, 4, and 8 cover
+the sizes of the common primitive data types.
+Practice Problem 3.36 (solution page 377)
+Consider the following declarations:
+int
+P[5];
+short
+Q[2];
+int
+**R[9];
+double *S[10];
+short
+*T[2];
+Fill in the following table describing the element size, the total size, and the
+address of element i for each of these arrays.

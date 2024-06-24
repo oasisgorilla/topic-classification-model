@@ -1,0 +1,78 @@
+Section 7.13
+Library Interpositioning
+745
+(a) Example program int.c
+code/link/interpose/int.c
+1
+#include <stdio.h>
+2
+#include <malloc.h>
+3
+4
+int main()
+5
+{
+6
+int *p = malloc(32);
+7
+free(p);
+8
+return(0);
+9
+}
+code/link/interpose/int.c
+(b) Local malloc.h ﬁle
+code/link/interpose/malloc.h
+1
+#define malloc(size) mymalloc(size)
+2
+#define free(ptr) myfree(ptr)
+3
+4
+void *mymalloc(size_t size);
+5
+void myfree(void *ptr);
+code/link/interpose/malloc.h
+(c) Wrapper functions in mymalloc.c
+code/link/interpose/mymalloc.c
+1
+#ifdef COMPILETIME
+2
+#include <stdio.h>
+3
+#include <malloc.h>
+4
+5
+/* malloc wrapper function */
+6
+void *mymalloc(size_t size)
+7
+{
+8
+void *ptr = malloc(size);
+9
+printf("malloc(%d)=%p\n",
+10
+(int)size, ptr);
+11
+return ptr;
+12
+}
+13
+14
+/* free wrapper function */
+15
+void myfree(void *ptr)
+16
+{
+17
+free(ptr);
+18
+printf("free(%p)\n", ptr);
+19
+}
+20
+#endif
+code/link/interpose/mymalloc.c
+Figure 7.20
+Compile-time interpositioning with the C preprocessor.

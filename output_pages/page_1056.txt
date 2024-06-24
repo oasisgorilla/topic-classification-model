@@ -1,0 +1,71 @@
+Section 12.6
+Using Threads for Parallelism
+1055
+Threads (t)
+1
+2
+4
+8
+16
+Cores (p)
+1
+2
+4
+4
+4
+Running time (Tp)
+1.06
+0.54
+0.28
+0.29
+0.30
+Speedup (Sp)
+1
+1.9
+3.8
+3.7
+3.5
+Efﬁciency (Ep)
+100%
+98%
+95%
+91%
+88%
+Figure 12.36
+Speedup and parallel efﬁciency for the execution times in
+Figure 12.35.
+time of a sequential version of the program, then Sp is called the absolute speedup.
+When T1 is the execution time of the parallel version of the program running on
+one core, then Sp is called the relative speedup. Absolute speedup is a truer mea-
+sure of the beneﬁts of parallelism than relative speedup. Parallel programs often
+suffer from synchronization overheads, even when they run on one processor, and
+these overheads can artiﬁcially inﬂate the relative speedup numbers because they
+increase the size of the numerator. On the other hand, absolute speedup is more
+difﬁcult to measure than relative speedup because measuring absolute speedup
+requires two different versions of the program. For complex parallel codes, creat-
+ing a separate sequential version might not be feasible, either because the code is
+too complex or because the source code is not available.
+A related measure, known as efﬁciency, is deﬁned as
+Ep =
+Sp
+p = T1
+pTp
+and is typically reported as a percentage in the range (0, 100]. Efﬁciency is a mea-
+sure of the overhead due to parallelization. Programs with high efﬁciency are
+spending more time doing useful work and less time synchronizing and commu-
+nicating than programs with low efﬁciency.
+Figure 12.36 shows the different speedup and efﬁciency measures for our
+example parallel sum program. Efﬁciencies over 90 percent such as these are very
+good, but do not be fooled. We were able to achieve high efﬁciency because our
+problem was trivially easy to parallelize. In practice, this is not usually the case.
+Parallel programming has been an active area of research for decades. With the
+advent of commodity multi-core machines whose core count is doubling every few
+years, parallel programming continues to be a deep, difﬁcult, and active area of
+research.
+There is another view of speedup, known as weak scaling, which increases
+the problem size along with the number of processors, such that the amount of
+work performed on each processor is held constant as the number of processors
+increases. With this formulation, speedup and efﬁciency are expressed in terms
+of the total amount of work accomplished per unit time. For example, if we can
+double the number of processors and do twice the amount of work per hour, then
+we are enjoying linear speedup and 100 percent efﬁciency.

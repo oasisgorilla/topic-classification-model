@@ -1,0 +1,40 @@
+504
+Chapter 4
+Processor Architecture
+The sum of the three penalties is 0.27, giving a CPI of 1.27.
+Our goal was to design a pipeline that can issue one instruction per cycle,
+giving a CPI of 1.0. We did not quite meet this goal, but the overall performance
+is still quite good. We can also see that any effort to reduce the CPI further should
+focus on mispredicted branches. They account for 0.16 of our total penalty of 0.27,
+because conditional branches are common, our prediction strategy often fails, and
+we cancel two instructions for every misprediction.
+Practice Problem 4.43 (solution page 530)
+Suppose we use a branch prediction strategy that achieves a success rate of 65%,
+such as backward taken, forward not taken (BTFNT), as described in Section
+4.5.4. What would be the impact on CPI, assuming all of the other frequencies are
+not affected?
+Practice Problem 4.44 (solution page 530)
+Let us analyze the relative performance of using conditional data transfers versus
+conditional control transfers for the programs you wrote for Problems 4.5 and 4.6.
+Assume that we are using these programs to compute the sum of the absolute
+values of a very long array, and so the overall performance is determined largely by
+the number of cycles required by the inner loop. Assume that our jump instructions
+are predicted as being taken, and that around 50% of the array values are positive.
+A. On average, how many instructions are executed in the inner loops of the
+two programs?
+B. On average, how many bubbles would be injected into the inner loops of the
+two programs?
+C. What is the average number of clock cycles required per array element for
+the two programs?
+4.5.10
+Unﬁnished Business
+We have created a structure for the PIPE pipelined microprocessor, designed the
+control logic blocks, and implemented pipeline control logic to handle special
+cases where normal pipeline ﬂow does not sufﬁce. Still, PIPE lacks several key
+features that would be required in an actual microprocessor design. We highlight
+a few of these and discuss what would be required to add them.
+Multicycle Instructions
+All of the instructions in the Y86-64 instruction set involve simple operations such
+as adding numbers. These can be processed in a single clock cycle within the exe-
+cute stage. In a more complete instruction set, we would also need to implement
+instructions requiring more complex operations such as integer multiplication and

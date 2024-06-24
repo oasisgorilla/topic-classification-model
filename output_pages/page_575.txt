@@ -1,0 +1,69 @@
+574
+Chapter 5
+Optimizing Program Performance
+%rax
+%rbp
+%rdx
+%xmm0
+vmulsd (%rax,%rdx,8), %xmm0, %xmm0
+vmulsd 8(%rax,%rdx,8), %xmm1, %xmm1
+addq $2,%rdx
+cmpq %rdx,%rbp
+jg loop 
+%rax
+%rbp
+%rdx
+%xmm0
+%xmm1
+%xmm1
+load
+mul
+load
+mul
+add
+cmp
+jg
+Figure 5.22
+Graphical representation of inner-loop code for combine6. Each iteration has two vmulsd
+instructions, each of which is translated into a load and a mul operation.
+%rax
+%rbp
+%rdx
+%xmm0
+%xmm1
+%xmm1
+%rdx
+%xmm0
+data[i ]
+data[i +1]
+load
+load
+(a)
+(b)
+add
+cmp
+jg
+%rdx
+%xmm0
+%rdx
+%xmm0
+load
+mul
+%xmm1
+%xmm1
+load
+mul
+add
+mul
+mul
+Figure 5.23
+Abstracting combine6 operations as a data-ﬂow graph. We rearrange, simplify, and abstract
+the representation of Figure 5.22 to show the data dependencies between successive iterations (a). We see
+that there is no dependency between the two mul operations (b).
+data dependencies between iterations through the process shown in Figure 5.23.
+As with combine5, the inner loop contains two vmulsd operations, but these
+instructions translate into mul operations that read and write separate registers,
+with no data dependency between them (Figure 5.23(b)). We then replicate this
+template n/2 times (Figure 5.24), modeling the execution of the function on a
+vector of length n. We see that we now have two critical paths, one corresponding
+to computing the product of even-numbered elements (program value acc0) and

@@ -1,0 +1,41 @@
+876
+Chapter 9
+Virtual Memory
+Figure 9.33
+The heap.
+Memory-mapped region
+for shared libraries
+User stack
+0
+Heap
+Heap grows
+upward
+Uninitialized data (.bss)
+Initialized data (.data)
+Code (.text)
+Top of the heap
+(brk ptr
+brk ptr)
+function, and free a block by calling the free function. The new and delete
+calls in C++ are comparable.
+. Implicit allocators, on the other hand, require the allocator to detect when
+an allocated block is no longer being used by the program and then free
+the block. Implicit allocators are also known as garbage collectors, and the
+process of automatically freeing unused allocated blocks is known as garbage
+collection. For example, higher-level languages such as Lisp, ML, and Java rely
+on garbage collection to free allocated blocks.
+The remainder of this section discusses the design and implementation of
+explicit allocators. We will discuss implicit allocators in Section 9.10. For concrete-
+ness, our discussion focuses on allocators that manage heap memory. However,
+you should be aware that memory allocation is a general idea that arises in a vari-
+ety of contexts. For example, applications that do intensive manipulation of graphs
+will often use the standard allocator to acquire a large block of virtual memory
+and then use an application-speciﬁc allocator to manage the memory within that
+block as the nodes of the graph are created and destroyed.
+9.9.1
+The malloc and free Functions
+TheCstandardlibraryprovidesanexplicitallocatorknownasthe mallocpackage.
+Programs allocate blocks from the heap by calling the malloc function.
+#include <stdlib.h>
+void *malloc(size_t size);
+Returns: pointer to allocated block if OK, NULL on error

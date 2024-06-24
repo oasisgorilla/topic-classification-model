@@ -1,0 +1,43 @@
+458
+Chapter 4
+Processor Architecture
+Aside
+Where is the PC in SEQ+?
+One curious feature of SEQ+ is that there is no hardware register storing the program counter. Instead,
+the PC is computed dynamically based on some state information stored from the previous instruction.
+This is a small illustration of the fact that we can implement a processor in a way that differs from the
+conceptual model implied by the ISA, as long as the processor correctly executes arbitrary machine-
+language programs. We need not encode the state in the form indicated by the programmer-visible state,
+as long as the processor can generate correct values for any part of the programmer-visible state (such
+as the program counter). We will exploit this principle even more in creating a pipelined design. Out-
+of-order processing techniques, as described in Section 5.7, take this idea to an extreme by executing
+instructions in a completely different order than they occur in the machine-level program.
+“pCnd,” and so on, to indicate that on any given cycle, they hold the control signals
+generated during the previous cycle.
+Figure 4.40 shows a more detailed view of the SEQ+ hardware. We can see
+that it contains the exact same hardware units and control blocks that we had in
+SEQ (Figure 4.23), but with the PC logic shifted from the top, where it was active
+at the end of the clock cycle, to the bottom, where it is active at the beginning.
+The shift of state elements from SEQ to SEQ+ is an example of a general
+transformation known as circuit retiming [68]. Retiming changes the state repre-
+sentation for a system without changing its logical behavior. It is often used to
+balance the delays between the different stages of a pipelined system.
+4.5.2
+Inserting Pipeline Registers
+In our ﬁrst attempt at creating a pipelined Y86-64 processor, we insert pipeline
+registers between the stages of SEQ+ and rearrange signals somewhat, yielding
+the PIPE−processor, where the “−” in the name signiﬁes that this processor has
+somewhat less performance than our ultimate processor design. The structure of
+PIPE−is illustrated in Figure 4.41. The pipeline registers are shown in this ﬁgure
+as blue boxes, each containing different ﬁelds that are shown as white boxes. As
+indicated by the multiple ﬁelds, each pipeline register holds multiple bytes and
+words. Unlike the labels shown in rounded boxes in the hardware structure of the
+two sequential processors (Figures 4.23 and 4.40), these white boxes represent
+actual hardware components.
+Observe that PIPE−uses nearly the same set of hardware units as our sequen-
+tial design SEQ (Figure 4.40), but with the pipeline registers separating the stages.
+The differences between the signals in the two systems is discussed in Section 4.5.3.
+The pipeline registers are labeled as follows:
+F holds a predicted value of the program counter, as will be discussed shortly.
+D sits between the fetch and decode stages. It holds information about the most
+recently fetched instruction for processing by the decode stage.

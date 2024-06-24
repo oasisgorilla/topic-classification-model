@@ -1,0 +1,52 @@
+Section 12.5
+Synchronizing Threads with Semaphores
+1033
+linux>
+./badcnt 1000000
+BOOM! cnt=1445085
+linux>
+./badcnt 1000000
+BOOM! cnt=1915220
+linux>
+./badcnt 1000000
+BOOM! cnt=1404746
+So what went wrong? To understand the problem clearly, we need to study
+the assembly code for the counter loop (lines 40–41), as shown in Figure 12.17.
+We will ﬁnd it helpful to partition the loop code for thread i into ﬁve parts:
+Hi: The block of instructions at the head of the loop
+Li: The instruction that loads the shared variable cnt into the accumulator
+register %rdxi, where %rdxi denotes the value of register %rdx in thread i
+Ui: The instruction that updates (increments) %rdxi
+Si: The instruction that stores the updated value of %rdxi back to the shared
+variable cnt
+Ti: The block of instructions at the tail of the loop
+Notice that the head and tail manipulate only local stack variables, while Li, Ui,
+and Si manipulate the contents of the shared counter variable.
+When the two peer threads in badcnt.c run concurrently on a uniprocessor,
+the machine instructions are completed one after the other in some order. Thus,
+each concurrent execution deﬁnes some total ordering (or interleaving) of the in-
+structions in the two threads. Unfortunately, some of these orderings will produce
+correct results, but others will not.
+C code for thread i
+Asm code for thread i
+for (i = 0; i < niters; i++)
+     cnt++;
+    movq  (%rdi), %rcx
+    testq %rcx, %rcx
+    jle   .L2
+    movl  $0, %eax
+.L3:
+    movq  cnt(%rip),%rdx
+    addq  %eax
+    movq  %eax,cnt(%rip)
+    addq  $1, %rax
+    cmpq  %rcx, %rax
+    jne   .L3
+.L2:
+Hi : Head
+Ti : Tail
+Li : Load cnt
+Ui : Update cnt
+Si : Store cnt
+Figure 12.17
+Assembly code for the counter loop (lines 40–41) in badcnt.c.

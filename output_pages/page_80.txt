@@ -1,0 +1,45 @@
+Section 2.1
+Information Storage
+79
+Aside
+Origin of “endian”
+Here is how Jonathan Swift, writing in 1726, described the history of the controversy between big and
+little endians:
+. . . Lilliput and Blefuscu . . . have, as I was going to tell you, been engaged in a most obstinate war
+for six-and-thirty moons past. It began upon the following occasion. It is allowed on all hands, that
+the primitive way of breaking eggs, before we eat them, was upon the larger end; but his present
+majesty’s grandfather, while he was a boy, going to eat an egg, and breaking it according to the
+ancient practice, happened to cut one of his ﬁngers. Whereupon the emperor his father published
+an edict, commanding all his subjects, upon great penalties, to break the smaller end of their eggs.
+The people so highly resented this law, that our histories tell us, there have been six rebellions raised
+on that account; wherein one emperor lost his life, and another his crown. These civil commotions
+were constantly fomented by the monarchs of Blefuscu; and when they were quelled, the exiles
+always ﬂed for refuge to that empire. It is computed that eleven thousand persons have at several
+times suffered death, rather than submit to break their eggs at the smaller end. Many hundred
+large volumes have been published upon this controversy: but the books of the Big-endians have
+been long forbidden, and the whole party rendered incapable by law of holding employments.
+(Jonathan Swift. Gulliver’s Travels, Benjamin Motte, 1726.)
+In his day, Swift was satirizing the continued conﬂicts between England (Lilliput) and France (Blefuscu).
+Danny Cohen, an early pioneer in networking protocols, ﬁrst applied these terms to refer to byte
+ordering [24], and the terminology has been widely adopted.
+tion of Sun Microsystems in 2010) operate in big-endian mode. Note that we said
+“most.” The conventions do not split precisely along corporate boundaries. For
+example, both IBM and Oracle manufacture machines that use Intel-compatible
+processors and hence are little endian. Many recent microprocessor chips are
+bi-endian, meaning that they can be conﬁgured to operate as either little- or
+big-endian machines. In practice, however, byte ordering becomes ﬁxed once a
+particular operating system is chosen. For example, ARM microprocessors, used
+in many cell phones, have hardware that can operate in either little- or big-endian
+mode, but the two most common operating systems for these chips—Android
+(from Google) and IOS (from Apple)—operate only in little-endian mode.
+People get surprisingly emotional about which byte ordering is the proper one.
+In fact, the terms “little endian” and “big endian” come from the book Gulliver’s
+Travels by Jonathan Swift, where two warring factions could not agree as to how a
+soft-boiled egg should be opened—by the little end or by the big. Just like the egg
+issue, there is no technological reason to choose one byte ordering convention over
+the other, and hence the arguments degenerate into bickering about sociopolitical
+issues. As long as one of the conventions is selected and adhered to consistently,
+the choice is arbitrary.
+For most application programmers, the byte orderings used by their machines
+are totally invisible; programs compiled for either class of machine give identi-
+cal results. At times, however, byte ordering becomes an issue. The ﬁrst is when

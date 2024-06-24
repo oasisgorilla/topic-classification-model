@@ -1,0 +1,46 @@
+32
+Preface
+Thanks also to our readers who have contributed to the labs, including God-
+mar Back (Virginia Tech), Taymon Beal (Worcester Polytechnic Institute), Aran
+Clauson (Western Washington University), Cary Gray (Wheaton College), Paul
+Haiduk (West Texas A&M University), Len Hamey (Macquarie University), Ed-
+die Kohler (Harvard), Hugh Lauer (Worcester Polytechnic Institute), Robert
+Marmorstein (Longwood University), and James Riely (DePaul University).
+Once again, Paul Anagnostopoulos of Windfall Software did a masterful job
+of typesetting the book and leading the production process. Many thanks to Paul
+and his stellar team: Richard Camp (copyediting), Jennifer McClain (proofread-
+ing), Laurel Muller (art production), and Ted Laux (indexing). Paul even spotted
+a bug in our description of the origins of the acronym BSS that had persisted
+undetected since the ﬁrst edition!
+Finally, we would like to thank our friends at Prentice Hall. Marcia Horton
+and our editor, Matt Goldstein, have been unﬂagging in their support and encour-
+agement, and we are deeply grateful to them.
+Acknowledgments from the Second Edition
+We are deeply grateful to the many people who have helped us produce this second
+edition of the CS:APP text.
+First and foremost, we would like to recognize our colleagues who have taught
+the ICS course at Carnegie Mellon for their insightful feedback and encourage-
+ment: Guy Blelloch, Roger Dannenberg, David Eckhardt, Greg Ganger, Seth
+Goldstein, Greg Kesden, Bruce Maggs, Todd Mowry, Andreas Nowatzyk, Frank
+Pfenning, and Markus Pueschel.
+Thanks also to our sharp-eyed readers who contributed reports to the errata
+page for the ﬁrst edition: Daniel Amelang, Rui Baptista, Quarup Barreirinhas,
+Michael Bombyk, J¨
+org Brauer, Jordan Brough, Yixin Cao, James Caroll, Rui Car-
+valho, Hyoung-Kee Choi, Al Davis, Grant Davis, Christian Dufour, Mao Fan,
+Tim Freeman, Inge Frick, Max Gebhardt, Jeff Goldblat, Thomas Gross, Anita
+Gupta, John Hampton, Hiep Hong, Greg Israelsen, Ronald Jones, Haudy Kazemi,
+Brian Kell, Constantine Kousoulis, Sacha Krakowiak, Arun Krishnaswamy, Mar-
+tin Kulas, Michael Li, Zeyang Li, Ricky Liu, Mario Lo Conte, Dirk Maas, Devon
+Macey, Carl Marcinik, Will Marrero, Simone Martins, Tao Men, Mark Morris-
+sey, Venkata Naidu, Bhas Nalabothula, Thomas Niemann, Eric Peskin, David Po,
+Anne Rogers, John Ross, Michael Scott, Seiki, Ray Shih, Darren Shultz, Erik
+Silkensen, Suryanto, Emil Tarazi, Nawanan Theera-Ampornpunt, Joe Trdinich,
+Michael Trigoboff, James Troup, Martin Vopatek, Alan West, Betsy Wolff, Tim
+Wong, James Woodruff, Scott Wright, Jackie Xiao, Guanpeng Xu, Qing Xu, Caren
+Yang, Yin Yongsheng, Wang Yuanxuan, Steven Zhang, and Day Zhong. Special
+thanks to Inge Frick, who identiﬁed a subtle deep copy bug in our lock-and-copy
+example, and to Ricky Liu for his amazing proofreading skills.
+Our Intel Labs colleagues Andrew Chien and Limor Fix were exceptionally
+supportive throughout the writing of the text. Steve Schlosser graciously provided
+some disk drive characterizations. Casey Helfrich and Michael Ryan installed

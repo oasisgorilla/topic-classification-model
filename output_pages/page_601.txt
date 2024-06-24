@@ -1,0 +1,59 @@
+600
+Chapter 5
+Optimizing Program Performance
+The second part of the proﬁle report shows the calling history of the functions.
+The following is the history for a recursive function find_ele_rec:
+158655725
+find_ele_rec [5]
+4.85
+0.10
+965027/965027
+insert_string [4]
+[5]
+2.4
+4.85
+0.10
+965027+158655725 find_ele_rec [5]
+0.08
+0.01
+363039/363039
+save_string [8]
+0.00
+0.01
+363039/363039
+new_ele [12]
+158655725
+find_ele_rec [5]
+This history shows both the functions that called find_ele_rec, as well as
+the functions that it called. The ﬁrst two lines show the calls to the function:
+158,655,725 calls by itself recursively, and 965,027 calls by function insert_string
+(which is itself called 965,027 times). Function find_ele_rec, in turn, called two
+other functions, save_string and new_ele, each a total of 363,039 times.
+From these call data, we can often infer useful information about the program
+behavior. For example, the function find_ele_rec is a recursive procedure that
+scans the linked list for a hash bucket looking for a particular string. For this
+function, comparing the number of recursive calls with the number of top-level
+calls provides statistical information about the lengths of the traversals through
+these lists. Given that their ratio is 164.4:1, we can infer that the program scanned
+an average of around 164 elements each time.
+Some properties of gprof are worth noting:
+. The timing is not very precise. It is based on a simple interval counting scheme
+in which the compiled program maintains a counter for each function record-
+ing the time spent executing that function. The operating system causes the
+program to be interrupted at some regular time interval δ. Typical values of
+δ range between 1.0 and 10.0 milliseconds. It then determines what function
+the program was executing when the interrupt occurred and increments the
+counter for that function by δ. Of course, it may happen that this function just
+started executing and will shortly be completed, but it is assigned the full cost
+of the execution since the previous interrupt. Some other function may run
+between two interrupts and therefore not be charged any time at all.
+Over a long duration, this scheme works reasonably well. Statistically, ev-
+ery function should be charged according to the relative time spent executing
+it. For programs that run for less than around 1 second, however, the numbers
+should be viewed as only rough estimates.
+. The calling information is quite reliable, assuming no inline substitutions
+have been performed. The compiled program maintains a counter for each
+combination of caller and callee. The appropriate counter is incremented
+every time a procedure is called.
+. By default, the timings for library functions are not shown. Instead, these
+times are incorporated into the times for the calling functions.

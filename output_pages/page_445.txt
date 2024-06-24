@@ -1,0 +1,58 @@
+444
+Chapter 4
+Processor Architecture
+Practice Problem 4.21 (solution page 524)
+Register ID dstM indicates the destination register for write port M, where valM,
+the value read from memory, is stored. This is shown in Figures 4.18 to 4.21 as the
+second step in the write-back stage. Write HCL code for dstM.
+Practice Problem 4.22 (solution page 524)
+Only the popq instruction uses both register ﬁle write ports simultaneously. For
+the instruction popq %rsp, the same address will be used for both the E and M
+write ports, but with different data. To handle this conﬂict, we must establish a
+priority among the two write ports so that when both attempt to write the same
+register on the same cycle, only the write from the higher-priority port takes place.
+Which of the two ports should be given priority in order to implement the desired
+behavior, as determined in Practice Problem 4.8?
+Execute Stage
+The execute stage includes the arithmetic/logic unit (ALU). This unit performs
+the operation add, subtract, and, or exclusive-or on inputs aluA and aluB based
+on the setting of the alufun signal. These data and control signals are generated
+by three control blocks, as diagrammed in Figure 4.29. The ALU output becomes
+the signal valE.
+In Figures 4.18 to 4.21, the ALU computation for each instruction is shown as
+the ﬁrst step in the execute stage. The operands are listed with aluB ﬁrst, followed
+by aluA to make sure the subq instruction subtracts valA from valB. We can see
+that the value of aluA can be valA, valC, or either −8 or +8, depending on the
+instruction type. We can therefore express the behavior of the control block that
+generates aluA as follows:
+word aluA = [
+icode in { IRRMOVQ, IOPQ } : valA;
+icode in { IIRMOVQ, IRMMOVQ, IMRMOVQ } : valC;
+Figure 4.29
+SEQ execute stage. The
+ALU either performs the
+operation for an integer
+operation instruction or
+acts as an adder. The
+condition code registers
+are set according to the
+ALU value. The condition
+code values are tested
+to determine whether a
+branch should be taken.
+Cnd
+valE
+cond
+CC
+Set
+CC
+ALU
+ALU
+fun.
+ALU
+B
+ALU
+A
+valC valA
+valB
+icode ifun

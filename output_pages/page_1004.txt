@@ -1,0 +1,82 @@
+Solutions to Practice Problems
+1003
+Dotted-decimal address
+Hex address
+[255.255].[255.0]
+0xFFFFFF00
+[10.1].[1.64]
+0x0A010140
+Solution to Problem 11.2 (page 963)
+code/netp/global-hex2dd.c
+1
+#include "csapp.h"
+2
+3
+int main(int argc, char **argv)
+4
+{
+5
+struct in_addr inaddr;
+/* Address in network byte order */
+6
+uint16_t addr;
+/* Address in host byte order */
+7
+char buf[MAXBUF];
+/* Buffer for dotted-decimal string */
+8
+9
+if (argc != 2) {
+10
+fprintf(stderr, "usage: %s <hex number>\n", argv[0]);
+11
+exit(0);
+12
+}
+13
+sscanf(argv[1], "%x", &addr);
+14
+inaddr.s_addr = htons(addr);
+15
+16
+if (!inet_ntop(AF_INET, &inaddr, buf, MAXBUF))
+17
+unix_error("inet_ntop");
+18
+printf("%s\n", buf);
+19
+20
+exit(0);
+21
+}
+code/net/global-hex2dd.c
+Solution to Problem 11.3 (page 963)
+code/netp/global-dd2hex.c
+1
+#include "csapp.h"
+2
+3
+int main(int argc, char **argv)
+4
+{
+5
+struct in_addr inaddr;
+/* Address in network byte order */
+6
+int rc;
+7
+8
+if (argc != 2) {
+9
+fprintf(stderr, "usage: %s <network byte order>\n", argv[0]);
+10
+exit(0);
+11
+}
+12
+13
+rc = inet_pton(AF_INET, argv[1], &inaddr);
+14
+if (rc == 0)
+15
+app_error("inet_pton error: invalid network byte order");

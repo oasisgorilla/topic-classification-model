@@ -1,0 +1,50 @@
+430
+Chapter 4
+Processor Architecture
+Aside
+Tracing the execution of a je instruction
+Let us trace the processing of the je instruction on line 8 of the object code shown in Figure 4.17. The
+condition codes were all set to zero by the subq instruction (line 3), and so the branch will not be taken.
+The instruction is located at address 0x02e and consists of 9 bytes. The ﬁrst has value 0x73, while the
+remaining 8 bytes are a byte-reversed version of the number 0x0000000000000040, the jump target.
+The stages would proceed as follows:
+Generic
+Speciﬁc
+Stage
+jXX Dest
+je 0x040
+Fetch
+icode:ifun ←M1[PC]
+icode:ifun ←M1[0x02e] = 7:3
+valC ←M8[PC + 1]
+valC ←M8[0x02f] = 0x040
+valP ←PC + 9
+valP ←0x02e + 9 = 0x037
+Decode
+Execute
+Cnd ←Cond(CC, ifun)
+Cnd ←Cond(⟨0, 0, 0⟩, 3) = 0
+Memory
+Write back
+PC update
+PC ←Cnd ? valC : valP
+PC ←0 ? 0x040 : 0x037 = 0x037
+As this trace shows, the instruction has the effect of incrementing the PC by 9.
+Instructions call and ret bear some similarity to instructions pushq and popq,
+except that we push and pop program counter values. With instruction call, we
+push valP, the address of the instruction that follows the call instruction. During
+the PC update stage, we set the PC to valC, the call destination. With instruction
+ret, we assign valM, the value popped from the stack, to the PC in the PC update
+stage.
+Practice Problem 4.18 (solution page 523)
+Fill in the right-hand column of the following table to describe the processing of
+the call instruction on line 9 of the object code in Figure 4.17:
+Generic
+Speciﬁc
+Stage
+call Dest
+call 0x041
+Fetch
+icode:ifun ←M1[PC]
+valC ←M8[PC + 1]
+valP ←PC + 9

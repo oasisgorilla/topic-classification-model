@@ -1,0 +1,97 @@
+Section 5.9
+Enhancing Parallelism
+573
+1
+/* 2 x 2 loop unrolling */
+2
+void combine6(vec_ptr v, data_t *dest)
+3
+{
+4
+long i;
+5
+long length = vec_length(v);
+6
+long limit = length-1;
+7
+data_t *data = get_vec_start(v);
+8
+data_t acc0 = IDENT;
+9
+data_t acc1 = IDENT;
+10
+11
+/* Combine 2 elements at a time */
+12
+for (i = 0; i < limit; i+=2) {
+13
+acc0 = acc0 OP data[i];
+14
+acc1 = acc1 OP data[i+1];
+15
+}
+16
+17
+/* Finish any remaining elements */
+18
+for (; i < length; i++) {
+19
+acc0 = acc0 OP data[i];
+20
+}
+21
+*dest = acc0 OP acc1;
+22
+}
+Figure 5.21
+Applying 2 × 2 loop unrolling. By maintaining multiple accumulators,
+this approach can make better use of the multiple functional units and their pipelining
+capabilities.
+Integer
+Floating point
+Function
+Page
+Method
++
+*
++
+*
+combine4
+551
+Accumulate in temporary
+1.27
+3.01
+3.01
+5.01
+combine5
+568
+2 × 1 unrolling
+1.01
+3.01
+3.01
+5.01
+combine6
+573
+2 × 2 unrolling
+0.81
+1.51
+1.51
+2.51
+Latency bound
+1.00
+3.00
+3.00
+5.00
+Throughput bound
+0.50
+1.00
+1.00
+0.50
+We see that we have improved the performance for all cases, with integer
+product, ﬂoating-point addition, and ﬂoating-point multiplication improving by
+a factor of around 2, and integer addition improving somewhat as well. Most
+signiﬁcantly, we have broken through the barrier imposed by the latency bound.
+The processor no longer needs to delay the start of one sum or product operation
+until the previous one has completed.
+To understand the performance of combine6, we start with the code and
+operation sequence shown in Figure 5.22. We can derive a template showing the

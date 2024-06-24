@@ -1,0 +1,40 @@
+Section 1.9
+Important Themes
+59
+Aside
+Expressing relative performance
+The best way to express a performance improvement is as a ratio of the form Told/Tnew, where Told is
+the time required for the original version and Tnew is the time required by the modiﬁed version. This
+will be a number greater than 1.0 if any real improvement occurred. We use the sufﬁx ‘×’ to indicate
+such a ratio, where the factor “2.2×” is expressed verbally as “2.2 times.”
+The more traditional way of expressing relative change as a percentage works well when the
+change is small, but its deﬁnition is ambiguous. Should it be 100 . (Told −Tnew)/Tnew, or possibly
+100 . (Told −Tnew)/Told, or something else? In addition, it is less instructive for large changes. Saying
+that “performance improved by 120%” is more difﬁcult to comprehend than simply saying that the
+performance improved by 2.2×.
+A. You hear on the news that Montana has just abolished its speed limit, which
+constitutes 1,500 km of the trip. Your truck can travel at 150 km/hr. What
+will be your speedup for the trip?
+B. You can buy a new turbocharger for your truck at www.fasttrucks.com. They
+stock a variety of models, but the faster you want to go, the more it will cost.
+How fast must you travel through Montana to get an overall speedup for
+your trip of 1.67×?
+Practice Problem 1.2 (solution page 64)
+A car manufacturing company has promised their customers that the next release
+of a new engine will show a 4× performance improvement. You have been as-
+signed the task of delivering on that promise. You have determined that only 90%
+of the engine can be improved. How much (i.e., what value of k) would you need
+to improve this part to meet the overall performance target of the engine?
+One interesting special case of Amdahl’s law is to consider the effect of setting
+k to ∞. That is, we are able to take some part of the system and speed it up to the
+point at which it takes a negligible amount of time. We then get
+S∞=
+1
+(1 −α)
+(1.2)
+So, for example, if we can speed up 60% of the system to the point where it requires
+close to no time, our net speedup will still only be 1/0.4 = 2.5×.
+Amdahl’s law describes a general principle for improving any process. In
+addition to its application to speeding up computer systems, it can guide a company
+trying to reduce the cost of manufacturing razor blades, or a student trying to
+improve his or her grade point average. Perhaps it is most meaningful in the world

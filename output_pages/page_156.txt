@@ -1,0 +1,55 @@
+Section 2.4
+Floating Point
+155
+signiﬁcand value M = 1 and an exponent value E = −2k−1 + 2. The numeric
+value is therefore V = 2−2k−1+2.
+. The value 1.0 has a bit representation with all but the most signiﬁcant bit of
+the exponent ﬁeld equal to 1 and all other bits equal to 0. Its signiﬁcand value
+is M = 1 and its exponent value is E = 0.
+. The largest normalized value has a bit representation with a sign bit of 0, the
+least signiﬁcant bit of the exponent equal to 0, and all other bits equal to 1. It
+has a fraction value of f = 1 −2−n, giving a signiﬁcand M = 2 −2−n (which we
+have written 2 −ϵ.) It has an exponent value E = 2k−1 −1, giving a numeric
+value V = (2 −2−n) × 22k−1−1 = (1 −2−n−1) × 22k−1.
+One useful exercise for understanding ﬂoating-point representations is to con-
+vert sample integer values into ﬂoating-point form. For example, we saw in Figure
+2.15 that 12,345 has binary representation [11000000111001]. We create a normal-
+ized representation of this by shifting 13 positions to the right of a binary point,
+giving 12,345 = 1.10000001110012 × 213. To encode this in IEEE single-precision
+format, we construct the fraction ﬁeld by dropping the leading 1 and adding 10
+zeros to the end, giving binary representation [10000001110010000000000]. To
+construct the exponent ﬁeld, we add bias 127 to 13, giving 140, which has bi-
+nary representation [10001100]. We combine this with a sign bit of 0 to get the
+ﬂoating-point representation in binary of [01000110010000001110010000000000].
+Recall from Section 2.1.3 that we observed the following correlation in the bit-
+level representations of the integer value 12345 (0x3039) and the single-precision
+ﬂoating-point value 12345.0 (0x4640E400):
+0
+0
+0
+0
+3
+0
+3
+9
+00000000000000000011000000111001
+*************
+4
+6
+4
+0
+E
+4
+0
+0
+01000110010000001110010000000000
+We can now see that the region of correlation corresponds to the low-order
+bits of the integer, stopping just before the most signiﬁcant bit equal to 1 (this bit
+forms the implied leading 1), matching the high-order bits in the fraction part of
+the ﬂoating-point representation.
+Practice Problem 2.48 (solution page 195)
+As mentioned in Problem 2.6, the integer 3,510,593 has hexadecimal represen-
+tation 0x00359141, while the single-precision ﬂoating-point number 3,510,593.0
+has hexadecimal representation 0x4A564504. Derive this ﬂoating-point represen-
+tation and explain the correlation between the bits of the integer and ﬂoating-point
+representations.

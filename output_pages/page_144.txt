@@ -1,0 +1,43 @@
+Section 2.3
+Integer Arithmetic
+143
+Practice Problem 2.42 (solution page 192)
+Write a function div16 that returns the value x/16 for integer argument x. Your
+function should not use division, modulus, multiplication, any conditionals (if or
+?:), any comparison operators (e.g., <, >, or ==), or any loops. You may assume
+that data type int is 32 bits long and uses a two’s-complement representation, and
+that right shifts are performed arithmetically.
+We now see that division by a power of 2 can be implemented using logical or
+arithmetic right shifts. This is precisely the reason the two types of right shifts are
+available on most machines. Unfortunately, this approach does not generalize to
+division by arbitrary constants. Unlike multiplication, we cannot express division
+by arbitrary constants K in terms of division by powers of 2.
+Practice Problem 2.43 (solution page 193)
+In the following code, we have omitted the deﬁnitions of constants M and N:
+#define M
+/* Mystery number 1 */
+#define N
+/* Mystery number 2 */
+int arith(int x, int y) {
+int result = 0;
+result = x*M + y/N; /* M and N are mystery numbers. */
+return result;
+}
+We compiled this code for particular values of M and N. The compiler opti-
+mized the multiplication and division using the methods we have discussed. The
+following is a translation of the generated machine code back into C:
+/* Translation of assembly code for arith */
+int optarith(int x, int y) {
+int t = x;
+x <<= 5;
+x -= t;
+if (y < 0) y += 7;
+y >>= 3;
+/* Arithmetic shift */
+return x+y;
+}
+What are the values of M and N?
+2.3.8
+Final Thoughts on Integer Arithmetic
+As we have seen, the “integer” arithmetic performed by computers is really
+a form of modular arithmetic. The ﬁnite word size used to represent numbers

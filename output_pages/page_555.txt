@@ -1,0 +1,46 @@
+554
+Chapter 5
+Optimizing Program Performance
+are evaluated simultaneously, a phenomenon referred to as instruction-level paral-
+lelism. In some designs, there can be 100 or more instructions “in ﬂight.” Elaborate
+mechanisms are employed to make sure the behavior of this parallel execution
+exactly captures the sequential semantic model required by the machine-level
+program. This is one of the remarkable feats of modern microprocessors: they
+employ complex and exotic microarchitectures, in which multiple instructions can
+be executed in parallel, while presenting an operational view of simple sequential
+instruction execution.
+Although the detailed design of a modern microprocessor is well beyond
+the scope of this book, having a general idea of the principles by which they
+operate sufﬁces to understand how they achieve instruction-level parallelism. We
+will ﬁnd that two different lower bounds characterize the maximum performance
+of a program. The latency bound is encountered when a series of operations
+must be performed in strict sequence, because the result of one operation is
+requiredbeforethenextonecanbegin.Thisboundcanlimitprogramperformance
+when the data dependencies in the code limit the ability of the processor to
+exploit instruction-level parallelism. The throughput bound characterizes the raw
+computing capacity of the processor’s functional units. This bound becomes the
+ultimate limit on program performance.
+5.7.1
+Overall Operation
+Figure 5.11 shows a very simpliﬁed view of a modern microprocessor. Our hy-
+pothetical processor design is based loosely on the structure of recent Intel pro-
+cessors. These processors are described in the industry as being superscalar, which
+means they can perform multiple operations on every clock cycle and out of order,
+meaning that the order in which instructions execute need not correspond to their
+ordering in the machine-level program. The overall design has two main parts:
+the instruction control unit (ICU), which is responsible for reading a sequence of
+instructions from memory and generating from these a set of primitive operations
+to perform on program data, and the execution unit (EU), which then executes
+these operations. Compared to the simple in-order pipeline we studied in Chap-
+ter 4, out-of-order processors require far greater and more complex hardware, but
+they are better at achieving higher degrees of instruction-level parallelism.
+The ICU reads the instructions from an instruction cache—a special high-
+speed memory containing the most recently accessed instructions. In general,
+the ICU fetches well ahead of the currently executing instructions, so that it has
+enough time to decode these and send operations down to the EU. One problem,
+however, is that when a program hits a branch,1 there are two possible directions
+the program might go. The branch can be taken, with control passing to the branch
+target. Alternatively, the branch can be not taken, with control passing to the next
+1. We use the term “branch” speciﬁcally to refer to conditional jump instructions. Other instructions
+that can transfer control to multiple destinations, such as procedure return and indirect jumps, provide
+similar challenges for the processor.

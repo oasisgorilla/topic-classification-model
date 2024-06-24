@@ -1,0 +1,62 @@
+262
+Chapter 3
+Machine-Level Representation of Programs
+loop:
+body-statement
+t = test-expr;
+if (t)
+goto loop;
+done:
+Using this implementation strategy, the compiler can often optimize the initial
+test, for example, determining that the test condition will always hold.
+As an example, Figure 3.21 shows the same C code for a factorial function
+as in Figure 3.20, but demonstrates the compilation that occurs when gcc is
+given command-line option -O1. Figure 3.21(c) shows the actual assembly code
+generated, while Figure 3.21(b) renders this assembly code in a more readable C
+representation. Referring to this goto code, we see that the loop will be skipped
+if n ≤1, for the initial value of n. The loop itself has the same general structure
+as that generated for the do-while version of the function (Figure 3.19). One
+interesting feature, however, is that the loop test (line 9 of the assembly code)
+has been changed from n > 1 in the original C code to n ̸= 1. The compiler has
+determined that the loop can only be entered when n > 1, and that decrementing
+n will result in either n > 1 or n = 1. Therefore, the test n ̸= 1 will be equivalent to
+the test n ≤1.
+Practice Problem 3.25 (solution page 371)
+For C code having the general form
+long loop_while2(long a, long b)
+{
+long result =
+;
+while (
+) {
+result =
+;
+b =
+;
+}
+return result;
+}
+gcc, run with command-line option -O1, produces the following code:
+a in %rdi, b in %rsi
+1
+loop_while2:
+2
+testq
+%rsi, %rsi
+3
+jle
+.L8
+4
+movq
+%rsi, %rax
+5
+.L7:
+6
+imulq
+%rdi, %rax
+7
+subq
+%rdi, %rsi
+8
+testq
+%rsi, %rsi

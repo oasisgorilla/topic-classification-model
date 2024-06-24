@@ -1,0 +1,59 @@
+Section 4.3
+Sequential Y86-64 Implementations
+429
+Stage
+jXX Dest
+call Dest
+ret
+Fetch
+icode:ifun ←M1[PC]
+icode:ifun ←M1[PC]
+icode:ifun ←M1[PC]
+valC ←M8[PC + 1]
+valC ←M8[PC + 1]
+valP ←PC + 9
+valP ←PC + 9
+valP ←PC + 1
+Decode
+valA ←R[%rsp]
+valB ←R[%rsp]
+valB ←R[%rsp]
+Execute
+valE ←valB + (−8)
+valE ←valB + 8
+Cnd ←Cond(CC, ifun)
+Memory
+M8[valE] ←valP
+valM ←M8[valA]
+Write back
+R[%rsp] ←valE
+R[%rsp] ←valE
+PC update
+PC ←Cnd ? valC : valP
+PC ←valC
+PC ←valM
+Figure 4.21
+Computations in sequential implementation of Y86-64 instructions jXX, call, and ret.
+These instructions cause control transfers.
+Practice Problem 4.17 (solution page 522)
+We can see by the instruction encodings (Figures 4.2 and 4.3) that the rrmovq
+instruction is the unconditional version of a more general class of instructions
+that include the conditional moves. Show how you would modify the steps for the
+rrmovq instruction below to also handle the six conditional move instructions.
+You may ﬁnd it useful to see how the implementation of the jXX instructions
+(Figure 4.21) handles conditional behavior.
+Stage
+cmovXX rA, rB
+Fetch
+icode:ifun ←M1[PC]
+rA :rB ←M1[PC + 1]
+valP ←PC + 2
+Decode
+valA ←R[rA]
+Execute
+valE ←0 + valA
+Memory
+Write back
+R[rB] ←valE
+PC update
+PC ←valP

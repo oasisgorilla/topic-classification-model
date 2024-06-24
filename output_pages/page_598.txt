@@ -1,0 +1,61 @@
+Section 5.13
+Life in the Real World: Performance Improvement Techniques
+597
+Practice Problem 5.11 (solution page 613)
+We saw that our measurements of the preﬁx-sum function psum1 (Figure 5.1) yield
+a CPE of 9.00 on a machine where the basic operation to be performed, ﬂoating-
+point addition, has a latency of just 3 clock cycles. Let us try to understand why
+our function performs so poorly.
+The following is the assembly code for the inner loop of the function:
+Inner loop of psum1
+a in %rdi, i in %rax, cnt in %rdx
+1
+.L5:
+loop:
+2
+vmovss
+-4(%rsi,%rax,4), %xmm0
+Get p[i-1]
+3
+vaddss
+(%rdi,%rax,4), %xmm0, %xmm0
+Add a[i]
+4
+vmovss
+%xmm0, (%rsi,%rax,4)
+Store at p[i]
+5
+addq
+$1, %rax
+Increment i
+6
+cmpq
+%rdx, %rax
+Compare i:cnt
+7
+jne
+.L5
+If !=, goto loop
+Perform an analysis similar to those shown for combine3 (Figure 5.14) and for
+write_read (Figure 5.36) to diagram the data dependencies created by this loop,
+and hence the critical path that forms as the computation proceeds. Explain why
+the CPE is so high.
+Practice Problem 5.12 (solution page 613)
+Rewrite the code for psum1 (Figure 5.1) so that it does not need to repeatedly
+retrieve the value of p[i] from memory. You do not need to use loop unrolling.
+We measured the resulting code to have a CPE of 3.00, limited by the latency of
+ﬂoating-point addition.
+5.13
+Life in the Real World: Performance Improvement
+Techniques
+Although we have only considered a limited set of applications, we can draw
+important lessons on how to write efﬁcient code. We have described a number
+of basic strategies for optimizing program performance:
+High-level design. Choose appropriate algorithms and data structures for the
+problem at hand. Be especially vigilant to avoid algorithms or coding
+techniques that yield asymptotically poor performance.
+Basic coding principles. Avoid optimization blockers so that a compiler can
+generate efﬁcient code.
+Eliminate excessive function calls. Move computations out of loops
+when possible. Consider selective compromises of program modularity
+to gain greater efﬁciency.

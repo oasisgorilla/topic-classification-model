@@ -1,0 +1,70 @@
+830
+Chapter 8
+Exceptional Control Flow
+code/ecf/counterprob.c
+1
+#include "csapp.h"
+2
+3
+int counter = 0;
+4
+5
+void handler(int sig)
+6
+{
+7
+counter++;
+8
+sleep(1); /* Do some work in the handler */
+9
+return;
+10
+}
+11
+12
+int main()
+13
+{
+14
+int i;
+15
+16
+Signal(SIGUSR2, handler);
+17
+18
+if (Fork() == 0) {
+/* Child */
+19
+for (i = 0; i < 5; i++) {
+20
+Kill(getppid(), SIGUSR2);
+21
+printf("sent SIGUSR2 to parent\n");
+22
+}
+23
+exit(0);
+24
+}
+25
+26
+Wait(NULL);
+27
+printf("counter=%d\n", counter);
+28
+exit(0);
+29
+}
+code/ecf/counterprob.c
+Figure 8.45
+Counter program referenced in Problem 8.23.
+8.25 ◆◆◆
+Write a version of the fgets function, called tfgets, that times out after 5 seconds.
+The tfgets function accepts the same inputs as fgets. If the user doesn’t type an
+input line within 5 seconds, tfgets returns NULL. Otherwise, it returns a pointer
+to the input line.
+8.26 ◆◆◆◆
+Using the example in Figure 8.23 as a starting point, write a shell program that
+supports job control. Your shell should have the following features:
+. The command line typed by the user consists of a name and zero or more argu-
+ments, all separated by one or more spaces. If name is a built-in command, the

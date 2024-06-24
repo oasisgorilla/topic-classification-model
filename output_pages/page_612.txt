@@ -1,0 +1,47 @@
+Solutions to Practice Problems
+611
+at the end of the previous iteration. Therefore, the combining instruction
+can simply use the value already in %xmm0 at the beginning of the loop.
+Solution to Problem 5.5 (page 566)
+Polynomialevaluationisacoretechniqueforsolvingmanyproblems.Forexample,
+polynomial functions are commonly used to approximate trigonometric functions
+in math libraries.
+A. The function performs 2n multiplications and n additions.
+B. We can see that the performance-limiting computation here is the repeated
+computation of the expression xpwr = x * xpwr. This requires a ﬂoating-
+point multiplication (5 clock cycles), and the computation for one iteration
+cannot begin until the one for the previous iteration has completed. The
+updating of result only requires a ﬂoating-point addition (3 clock cycles)
+between successive iterations.
+Solution to Problem 5.6 (page 566)
+This problem demonstrates that minimizing the number of operations in a com-
+putation may not improve its performance.
+A. The function performs n multiplications and n additions, half the number of
+multiplications as the original function poly.
+B. We can see that the performance-limiting computation here is the repeated
+computation of the expression result = a[i] + x*result. Starting from the
+value of result from the previous iteration, we must ﬁrst multiply it by x (5
+clock cycles) and then add it to a[i] (3 cycles) before we have the value for
+this iteration. Thus, each iteration imposes a minimum latency of 8 cycles,
+exactly our measured CPE.
+C. Although each iteration in function poly requires two multiplications rather
+than one, only a single multiplication occurs along the critical path per
+iteration.
+Solution to Problem 5.7 (page 568)
+The following code directly follows the rules we have stated for unrolling a loop
+by some factor k:
+1
+void unroll5(vec_ptr v, data_t *dest)
+2
+{
+3
+long i;
+4
+long length = vec_length(v);
+5
+long limit = length-4;
+6
+data_t *data = get_vec_start(v);
+7
+data_t acc = IDENT;
+8

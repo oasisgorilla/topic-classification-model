@@ -1,0 +1,55 @@
+446
+Chapter 4
+Processor Architecture
+Figure 4.30
+SEQ memory stage. The
+data memory can either
+write or read memory
+values. The value read from
+memory forms the signal
+valM.
+Stat
+Stat
+valM
+data out
+Mem.
+read
+Mem.
+write
+write
+read
+dmem_error
+imem_error
+instr_valid
+Mem.
+addr
+Mem.
+data
+icode
+valE
+valA valP
+data in
+Data
+memory
+address and the memory input data (for write operations). Two other blocks
+generate the control signals indicating whether to perform a read or a write
+operation. When a read operation is performed, the data memory generates the
+value valM.
+The desired memory operation for each instruction type is shown in the
+memory stage of Figures 4.18 to 4.21. Observe that the address for memory reads
+and writes is always valE or valA. We can describe this block in HCL as follows:
+word mem_addr = [
+icode in { IRMMOVQ, IPUSHQ, ICALL, IMRMOVQ } : valE;
+icode in { IPOPQ, IRET } : valA;
+# Other instructions don’t need address
+];
+Practice Problem 4.25 (solution page 524)
+Looking at the memory operations for the different instructions shown in Fig-
+ures 4.18 to 4.21, we can see that the data for memory writes are always either
+valA or valP. Write HCL code for the signal mem_data in SEQ.
+We want to set the control signal mem_read only for instructions that read
+data from memory, as expressed by the following HCL code:
+bool mem_read = icode in { IMRMOVQ, IPOPQ, IRET };
+Practice Problem 4.26 (solution page 525)
+We want to set the control signal mem_write only for instructions that write data
+to memory. Write HCL code for the signal mem_write in SEQ.

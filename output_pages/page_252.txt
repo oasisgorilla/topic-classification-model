@@ -1,0 +1,49 @@
+Section 3.6
+Control
+251
+For this function, gcc generates the assembly code shown in Figure 3.17(c),
+having an approximate form shown by the C function cmovdiff shown in Figure
+3.17(b). Studying the C version, we can see that it computes both y-x and x-y,
+naming these rval and eval, respectively. It then tests whether x is greater than
+or equal to y, and if so, copies eval to rval before returning rval. The assembly
+code in Figure 3.17(c) follows the same logic. The key is that the single cmovge
+instruction (line 7) of the assembly code implements the conditional assignment
+(line 8) of cmovdiff. It will transfer the data from the source register to the
+destination, only if the cmpq instruction of line 6 indicates that one value is greater
+than or equal to the other (as indicated by the sufﬁx ge).
+To understand why code based on conditional data transfers can outperform
+code based on conditional control transfers (as in Figure 3.16), we must understand
+something about how modern processors operate. As we will see in Chapters 4
+and 5, processors achieve high performance through pipelining, where an instruc-
+tion is processed via a sequence of stages, each performing one small portion of
+the required operations (e.g., fetching the instruction from memory, determining
+the instruction type, reading from memory, performing an arithmetic operation,
+writing to memory, and updating the program counter). This approach achieves
+high performance by overlapping the steps of the successive instructions, such
+as fetching one instruction while performing the arithmetic operations for a pre-
+vious instruction. To do this requires being able to determine the sequence of
+instructions to be executed well ahead of time in order to keep the pipeline full of
+instructions to be executed. When the machine encounters a conditional jump (re-
+ferred to as a “branch”), it cannot determine which way the branch will go until it
+has evaluated the branch condition. Processors employ sophisticated branch pre-
+diction logic to try to guess whether or not each jump instruction will be followed.
+As long as it can guess reliably (modern microprocessor designs try to achieve
+success rates on the order of 90%), the instruction pipeline will be kept full of
+instructions. Mispredicting a jump, on the other hand, requires that the processor
+discard much of the work it has already done on future instructions and then begin
+ﬁlling the pipeline with instructions starting at the correct location. As we will see,
+such a misprediction can incur a serious penalty, say, 15–30 clock cycles of wasted
+effort, causing a serious degradation of program performance.
+As an example, we ran timings of the absdiff function on an Intel Haswell
+processor using both methods of implementing the conditional operation. In a
+typical application, the outcome of the test x < y is highly unpredictable, and
+so even the most sophisticated branch prediction hardware will guess correctly
+only around 50% of the time. In addition, the computations performed in each
+of the two code sequences require only a single clock cycle. As a consequence,
+the branch misprediction penalty dominates the performance of this function. For
+x86-64 code with conditional jumps, we found that the function requires around 8
+clock cycles per call when the branching pattern is easily predictable, and around
+17.50 clock cycles per call when the branching pattern is random. From this, we can
+infer that the branch misprediction penalty is around 19 clock cycles. That means
+time required by the function ranges between around 8 and 27 cycles, depending
+on whether or not the branch is predicted correctly.

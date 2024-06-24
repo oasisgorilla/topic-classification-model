@@ -1,0 +1,74 @@
+Section 11.5
+Web Servers
+987
+1
+linux> telnet www.aol.com 80
+Client: open connection to server
+2
+Trying 205.188.146.23...
+Telnet prints 3 lines to the terminal
+3
+Connected to aol.com.
+4
+Escape character is ’^]’.
+5
+GET / HTTP/1.1
+Client: request line
+6
+Host: www.aol.com
+Client: required HTTP/1.1 header
+7
+Client: empty line terminates headers
+8
+HTTP/1.0 200 OK
+Server: response line
+9
+MIME-Version: 1.0
+Server: followed by five response headers
+10
+Date: Mon, 8 Jan 2010 4:59:42 GMT
+11
+Server:
+Apache-Coyote/1.1
+12
+Content-Type: text/html
+Server: expect HTML in the response body
+13
+Content-Length: 42092
+Server: expect 42,092 bytes in the response body
+14
+Server: empty line terminates response headers
+15
+<html>
+Server: first HTML line in response body
+16
+...
+Server: 766 lines of HTML not shown
+17
+</html>
+Server: last HTML line in response body
+18
+Connection closed by foreign host. Server: closes connection
+19
+linux>
+Client: closes connection and terminates
+Figure 11.24
+Example of an HTTP transaction that serves static content.
+In line 1, we run telnet from a Linux shell and ask it to open a connection to
+the AOL Web server. Telnet prints three lines of output to the terminal, opens
+the connection, and then waits for us to enter text (line 5). Each time we enter
+a text line and hit the enter key, telnet reads the line, appends carriage return
+and line feed characters (‘\r\n’ in C notation), and sends the line to the server.
+This is consistent with the HTTP standard, which requires every text line to be
+terminated by a carriage return and line feed pair. To initiate the transaction, we
+enter an HTTP request (lines 5–7). The server replies with an HTTP response
+(lines 8–17) and then closes the connection (line 18).
+HTTP Requests
+An HTTP request consists of a request line (line 5), followed by zero or more
+request headers (line 6), followed by an empty text line that terminates the list of
+headers (line 7). A request line has the form
+method URI version
+HTTP supports a number of different methods, including GET, POST, OPTIONS,
+HEAD, PUT, DELETE, and TRACE. We will only discuss the workhorse GET
+method, which accounts for a majority of HTTP requests. The GET method
+instructs the server to generate and return the content identiﬁed by the URI

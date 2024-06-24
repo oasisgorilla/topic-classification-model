@@ -1,0 +1,44 @@
+Section 5.8
+Loop Unrolling
+571
+Figure 5.20
+Data-ﬂow representation
+of combine5 operating
+on a vector of length
+n. Even though the loop
+has been unrolled by a
+factor of 2, there are still n
+mul operations along the
+critical path.
+data[0]
+load
+mul
+data[1]
+load
+mul
+add
+data[2]
+load
+mul
+data[3]
+load
+mul
+add
+data[n-2]
+load
+mul
+data[n-1]
+load
+mul
+add
+Critical path
+shown in Figure 5.20. We see here that there is still a critical path of n mul
+operations in this graph—there are half as many iterations, but each iteration has
+two multiplication operations in sequence. Since the critical path was the limiting
+factor for the performance of the code without loop unrolling, it remains so with
+k × 1 loop unrolling.
+Aside
+Getting the compiler to unroll loops
+Loop unrolling can easily be performed by a compiler. Many compilers do this as part of their collection
+of optimizations. gcc will perform some forms of loop unrolling when invoked with optimization level 3
+or higher.

@@ -1,0 +1,54 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+457
+When we introduce pipelining into a Y86-64 processor, we must deal with
+feedback effects properly. Clearly, it would be unacceptable to alter the system
+behavior as occurred in the example of Figure 4.38. Somehow we must deal
+with the data and control dependencies between instructions so that the resulting
+behavior matches the model deﬁned by the ISA.
+4.5
+Pipelined Y86-64 Implementations
+We are ﬁnally ready for the major task of this chapter—designing a pipelined Y86-
+64 processor. We start by making a small adaptation of the sequential processor
+SEQ to shift the computation of the PC into the fetch stage. We then add pipeline
+registers between the stages. Our ﬁrst attempt at this does not handle the different
+data and control dependencies properly. By making some modiﬁcations, however,
+we achieve our goal of an efﬁcient pipelined processor that implements the Y86-
+64 ISA.
+4.5.1
+SEQ+: Rearranging the Computation Stages
+As a transitional step toward a pipelined design, we must slightly rearrange the
+order of the ﬁve stages in SEQ so that the PC update stage comes at the beginning
+of the clock cycle, rather than at the end. This transformation requires only
+minimal change to the overall hardware structure, and it will work better with
+the sequencing of activities within the pipeline stages. We refer to this modiﬁed
+design as SEQ+.
+We can move the PC update stage so that its logic is active at the beginning of
+the clock cycle by making it compute the PC value for the current instruction.
+Figure 4.39 shows how SEQ and SEQ+ differ in their PC computation. With
+SEQ (Figure 4.39(a)), the PC computation takes place at the end of the clock
+cycle, computing the new value for the PC register based on the values of signals
+computed during the current clock cycle. With SEQ+ (Figure 4.39(b)), we create
+state registers to hold the signals computed during an instruction. Then, as a
+new clock cycle begins, the values propagate through the exact same logic to
+compute the PC for the now-current instruction. We label the registers “pIcode,”
+PC
+New
+PC
+icode Cnd
+valC
+(a) SEQ new PC computation
+(b) SEQ+ PC selection
+valM
+valP
+PC
+PC
+plcode
+pValC
+pValM
+pCnd
+pValP
+Figure 4.39
+Shifting the timing of the PC computation. With SEQ+, we compute
+the value of the program counter for the current state as the ﬁrst step in instruction
+execution.

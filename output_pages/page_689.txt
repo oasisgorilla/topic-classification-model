@@ -1,0 +1,159 @@
+688
+Chapter 6
+The Memory Hierarchy
+6.30 ◆
+Suppose we have a system with the following properties:
+. The memory is byte addressable.
+. Memory accesses are to 1-byte words (not to 4-byte words).
+. Addresses are 13 bits wide.
+. The cache is 4-way set associative (E = 4), with a 4-byte block size (B = 4)
+and eight sets (S = 8).
+Consider the following cache state. All addresses, tags, and values are given in
+hexadecimal format. The Index column contains the set index for each set of four
+lines. The Tag columns contain the tag value for each line. The V columns contain
+the valid bit for each line. The Bytes 0–3 columns contain the data for each line,
+numbered left to right starting with byte 0 on the left.
+4-way set associative cache
+Index
+Tag
+V
+Bytes 0–3
+Tag
+V
+Bytes 0–3
+Tag
+V
+Bytes 0–3
+Tag
+V
+Bytes 0–3
+0
+F0
+1
+ED 32 0A A2
+8A
+1
+BF 80 1D FC
+14
+1
+EF 09 86 2A
+BC
+0
+25 44 6F 1A
+1
+BC
+0
+03 3E CD 38
+A0
+0
+16 7B ED 5A
+BC
+1
+8E 4C DF 18
+E4
+1
+FB B7 12 02
+2
+BC
+1
+54 9E 1E FA
+B6
+1
+DC 81 B2 14
+00
+0
+B6 1F 7B 44
+74
+0
+10 F5 B8 2E
+3
+BE
+0
+2F 7E 3D A8
+C0
+1
+27 95 A4 74
+C4
+0
+07 11 6B D8
+BC
+0
+C7 B7 AF C2
+4
+7E
+1
+32 21 1C 2C
+8A
+1
+22 C2 DC 34
+BC
+1
+BA DD 37 D8
+DC
+0
+E7 A2 39 BA
+5
+98
+0
+A9 76 2B EE
+54
+0
+BC 91 D5 92
+98
+1
+80 BA 9B F6
+BC
+1
+48 16 81 0A
+6
+38
+0
+5D 4D F7 DA
+BC
+1
+69 C2 8C 74
+8A
+1
+A8 CE 7F DA
+38
+1
+FA 93 EB 48
+7
+8A
+1
+04 2A 32 6A
+9E
+0
+B1 86 56 0E
+CC
+1
+96 30 47 F2
+BC
+1
+F8 1D 42 30
+A. What is the size (C) of this cache in bytes?
+B. The box that follows shows the format of an address (1 bit per box). Indicate
+(by labeling the diagram) the ﬁelds that would be used to determine the
+following:
+CO. The cache block offset
+CI. The cache set index
+CT. The cache tag
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+6.31 ◆◆
+Suppose that a program using the cache in Problem 6.30 references the 1-byte
+word at address 0x071A. Indicate the cache entry accessed and the cache byte
+value returned in hex. Indicate whether a cache miss occurs. If there is a cache
+miss, enter “—” for “Cache byte returned.” Hint: Pay attention to those valid
+bits!

@@ -1,0 +1,43 @@
+802
+Chapter 8
+Exceptional Control Flow
+8.5.5
+Writing Signal Handlers
+Signal handling is one of the thornier aspects of Linux system-level programming.
+Handlers have several attributes that make them difﬁcult to reason about: (1) Han-
+dlers run concurrently with the main program and share the same global variables,
+and thus can interfere with the main program and with other handlers. (2) The
+rules for how and when signals are received is often counterintuitive. (3) Different
+systems can have different signal-handling semantics.
+In this section, we address these issues and give you some basic guidelines for
+writing safe, correct, and portable signal handlers.
+Safe Signal Handling
+Signal handlers are tricky because they can run concurrently with the main pro-
+gram and with each other, as we saw in Figure 8.31. If a handler and the main
+program access the same global data structure concurrently, then the results can
+be unpredictable and often fatal.
+We will explore concurrent programming in detail in Chapter 12. Our aim
+here is to give you some conservative guidelines for writing handlers that are
+safe to run concurrently. If you ignore these guidelines, you run the risk of in-
+troducing subtle concurrency errors. With such errors, your program works cor-
+rectly most of the time. However, when it fails, it fails in unpredictable and
+unrepeatable ways that are horrendously difﬁcult to debug. Forewarned is fore-
+armed!
+G0. Keep handlers as simple as possible. The best way to avoid trouble is to keep
+your handlers as small and simple as possible. For example, the handler
+might simply set a global ﬂag and return immediately; all processing
+associated with the receipt of the signal is performed by the main program,
+which periodically checks (and resets) the ﬂag.
+G1. Call only async-signal-safe functions in your handlers. A function that is
+async-signal-safe, or simply safe, has the property that it can be safely
+called from a signal handler, either because it is reentrant (e.g., ac-
+cesses only local variables; see Section 12.7.2), or because it cannot
+be interrupted by a signal handler. Figure 8.33 lists the system-level
+functions that Linux guarantees to be safe. Notice that many popu-
+lar functions, such as printf, sprintf, malloc, and exit, are not on
+this list.
+The only safe way to generate output from a signal handler is to use
+the write function (see Section 10.1). In particular, calling printf or
+sprintf is unsafe. To work around this unfortunate restriction, we have
+developed some safe functions, called the Sio (Safe I/O) package, that
+you can use to print simple messages from signal handlers.

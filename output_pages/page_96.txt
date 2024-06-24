@@ -1,0 +1,47 @@
+Section 2.2
+Integer Representations
+95
+Aside
+Shifting by k, for large values of k
+For a data type consisting of w bits, what should be the effect of shifting by some value k ≥w? For
+example, what should be the effect of computing the following expressions, assuming data type int has
+w = 32:
+int
+lval = 0xFEDCBA98
+<< 32;
+int
+aval = 0xFEDCBA98
+>> 36;
+unsigned uval = 0xFEDCBA98u >> 40;
+The C standards carefully avoid stating what should be done in such a case. On many machines, the
+shift instructions consider only the lower log2 w bits of the shift amount when shifting a w-bit value, and
+so the shift amount is computed as k mod w. For example, with w = 32, the above three shifts would
+be computed as if they were by amounts 0, 4, and 8, respectively, giving results
+lval
+0xFEDCBA98
+aval
+0xFFEDCBA9
+uval
+0x00FEDCBA
+This behavior is not guaranteed for C programs, however, and so shift amounts should be kept less than
+the word size.
+Java, on the other hand, speciﬁcally requires that shift amounts should be computed in the modular
+fashion we have shown.
+Aside
+Operator precedence issues with shift operations
+It might be tempting to write the expression 1<<2 + 3<<4, intending it to mean (1<<2) + (3<<4). How-
+ever, in C the former expression is equivalent to 1 << (2+3) << 4, since addition (and subtraction) have
+higher precedence than shifts. The left-to-right associativity rule then causes this to be parenthesized
+as (1 << (2+3)) << 4, giving value 512, rather than the intended 52.
+Getting the precedence wrong in C expressions is a common source of program errors, and often
+these are difﬁcult to spot by inspection. When in doubt, put in parentheses!
+2.2
+Integer Representations
+In thissection, wedescribetwodifferentwaysbitscanbeusedtoencodeintegers—
+one that can only represent nonnegative numbers, and one that can represent
+negative, zero, and positive numbers. We will see later that they are strongly
+related both in their mathematical properties and their machine-level implemen-
+tations. We also investigate the effect of expanding or shrinking an encoded integer
+to ﬁt a representation with a different length.
+Figure 2.8 lists the mathematical terminology we introduce to precisely de-
+ﬁne and characterize how computers encode and operate on integer data. This

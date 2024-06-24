@@ -1,0 +1,38 @@
+34
+Preface
+and answered our questions on modern disks. Tom Stricker showed us the mem-
+ory mountain. James Hoe provided useful ideas and feedback on how to present
+processor architecture.
+A special group of students—Khalil Amiri, Angela Demke Brown, Chris
+Colohan, Jason Crawford, Peter Dinda, Julio Lopez, Bruce Lowekamp, Jeff
+Pierce, Sanjay Rao, Balaji Sarpeshkar, Blake Scholl, Sanjit Seshia, Greg Stef-
+fan, Tiankai Tu, Kip Walker, and Yinglian Xie—were instrumental in helping
+us develop the content of the course. In particular, Chris Colohan established a
+fun (and funny) tone that persists to this day, and invented the legendary “binary
+bomb” that has proven to be a great tool for teaching machine code and debugging
+concepts.
+Chris Bauer, Alan Cox, Peter Dinda, Sandhya Dwarkadas, John Greiner,
+Don Heller, Bruce Jacob, Barry Johnson, Bruce Lowekamp, Greg Morrisett,
+Brian Noble, Bobbie Othmer, Bill Pugh, Michael Scott, Mark Smotherman, Greg
+Steffan, and Bob Wier took time that they did not have to read and advise us
+on early drafts of the book. A very special thanks to Al Davis (University of
+Utah), Peter Dinda (Northwestern University), John Greiner (Rice University),
+Wei Hsu (University of Minnesota), Bruce Lowekamp (College of William &
+Mary), Bobbie Othmer (University of Minnesota), Michael Scott (University of
+Rochester), and Bob Wier (Rocky Mountain College) for class testing the beta
+version. A special thanks to their students as well!
+We would also like to thank our colleagues at Prentice Hall. Marcia Horton,
+Eric Frank, and Harold Stone have been unﬂagging in their support and vision.
+Harold also helped us present an accurate historical perspective on RISC and
+CISC processor architectures. Jerry Ralya provided sharp insights and taught us
+a lot about good writing.
+Finally, we would like to acknowledge the great technical writers Brian
+Kernighan and the late W. Richard Stevens, for showing us that technical books
+can be beautiful.
+Thank you all.
+Randy Bryant
+Dave O’Hallaron
+Pittsburgh, Pennsylvania
+Pearson would like to thank and acknowledge Chetan Venkatesh, MS Ramaiah
+Institute of Technology, Desny Antony, Don Bosco College, and Chitra Dhawale,
+SP College, for reviewing the Global Edition.

@@ -1,0 +1,169 @@
+Index
+1105
+lowercase conversions, 545–547
+LRU (least-recently-used) replace-
+ment policies, 648, 662
+ls command, 928
+lseek [Unix] function, 932–933
+lvalue (C) assignable value for
+pointers, 313
+Mac OS X (Apple Macintosh)
+operating system, 63
+machine checks, 765
+machine code, 200
+machine-level programming
+arithmetic. See arithmetic
+arrays. See arrays
+buffer overﬂow. See buffer overﬂow
+control. See control structures
+data-ﬂow graphs from, 561–565
+data formats, 213–215
+data movement instructions, 218–
+225
+encodings, 205–213
+ﬂoating point. See ﬂoating-point
+code
+gdb debugger, 315–316
+heterogeneous data structures. See
+heterogeneous data structures
+historical perspective, 202–205
+information access, 215–216
+instructions, 40
+operand speciﬁers, 216–218
+overview, 200–202
+pointer principles, 314
+procedures. See procedures
+x86-64. See x86-64 microprocessors
+macros for storage allocators, 892–
+893
+main memory, 45
+accessing, 623–625
+memory modules, 620
+main threads, 1022
+malloc [C Stdlib] allocate heap
+storage, 71, 360, 733, 875–876,
+876
+alignment with, 312
+declaration, 170–171
+dynamic memory allocation, 876–
+879
+interpositioning libraries, 744
+wrappers for, 747
+man ascii command, 84
+mandatory alignment, 312
+mangling process (C++ and Java), 716
+many-core processors, 507
+map disk object into memory function,
+873
+mapping
+memory. See memory mapping
+variables, 1030–1031
+mark phase in Mark&Sweep, 903
+Mark&Sweep algorithm, 902
+Mark&Sweep garbage collectors, 903,
+903–906
+masking operations, 91
+matrices
+adjacency, 696
+multiplying, 679–683
+maximum ﬂoating-point instructions,
+338
+maximum two’s complement number,
+102
+maximum unsigned number function,
+99
+maximum values, constants for, 104
+McCarthy, John, 902
+McIlroy, Doug, 52
+media instructions, 330
+mem_init [CS:APP] heap model, 891
+mem_sbrk [CS:APP] sbrk emulator,
+891
+membership, set, 416–417
+memcpy [Unix] copy bytes from one
+region of memory to another,
+169
+memory, 616
+accessing, 623–625
+aliasing, 535, 536
+associative, 661
+caches. See caches and cache
+memory
+copying bytes in, 169
+data alignment in, 309–312
+data hazards, 471
+design, 420
+dynamic. See dynamic memory
+allocation
+hazards, 471
+hierarchy, 50, 50, 645–650
+leaks, 911, 1028
+load performance, 590–591
+in logic design, 397–400
+machine-language procedures, 275
+machine-level programming, 206
+main, 45, 620, 623–625
+mapping. See memory mapping
+nonvolatile, 623
+performance, 589–597
+pipelining, 505–506
+protecting, 325, 848–849
+RAM. See random access memory
+(RAM)
+ROM, 623
+threads, 1029–1030
+trends, 638–640
+virtual. See virtual memory (VM)
+Y86, 392
+memory buses, 623
+memory controllers, 619, 620
+memory management units (MMUs),
+840, 843
+memory-mapped I/O, 634
+memory mapping, 848
+areas, 869, 869
+execve function, 872–873
+fork function, 872
+in loading, 735
+objects, 869–872
+user-level, 873–875
+memory mountains, 675
+Core i7 microprocessors, 677
+overview, 675–679
+memory references
+operands, 217
+out of bounds. See buffer overﬂow
+in performance, 550–553
+memory stage
+instruction processing, 421, 423–433
+PIPE processor, 490–491
+sequential processing, 436
+sequential Y86-64 implementation,
+445–447
+Y86-64 pipelining, 459
+memory system, 616
+memory utilization, 881, 881
+memset function, declaration, 170–171
+metadata, 939, 939–940
+metastable states, 617
+methods
+hypertext transfer protocol, 987–
+988
+objects, 303
+micro-operations, 555
+microarchitecture, 46, 553
+microprocessors. See central
+processing units (CPUs)
+Microsoft Windows operating system,
+81
+MIME (multipurpose internet mail
+extensions) types, 985
+minimum block size, 884
+minimum ﬂoating-point instructions,
+338
+minimum two’s complement number,
+102
+minimum values
+constants, 104
+two’s complement representation,
+102

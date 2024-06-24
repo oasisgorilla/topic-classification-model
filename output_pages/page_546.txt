@@ -1,0 +1,57 @@
+Section 5.4
+Eliminating Loop Inefﬁciencies
+545
+1
+/* Move call to vec_length out of loop */
+2
+void combine2(vec_ptr v, data_t *dest)
+3
+{
+4
+long i;
+5
+long length = vec_length(v);
+6
+7
+*dest = IDENT;
+8
+for (i = 0; i < length; i++) {
+9
+data_t val;
+10
+get_vec_element(v, i, &val);
+11
+*dest = *dest OP val;
+12
+}
+13
+}
+Figure 5.6
+Improving the efﬁciency of the loop test. By moving the call to vec_
+length out of the loop test, we eliminate the need to execute it on every iteration.
+times, (e.g., within a loop), but such that the result of the computation will not
+change. We can therefore move the computation to an earlier section of the code
+that does not get evaluated as often. In this case, we moved the call to vec_length
+from within the loop to just before the loop.
+Optimizing compilers attempt to perform code motion. Unfortunately, as dis-
+cussed previously, they are typically very cautious about making transformations
+that change where or how many times a procedure is called. They cannot reliably
+detect whether or not a function will have side effects, and so they assume that
+it might. For example, if vec_length had some side effect, then combine1 and
+combine2 could have different behaviors. To improve the code, the programmer
+must often help the compiler by explicitly performing code motion.
+As an extreme example of the loop inefﬁciency seen in combine1, consider the
+procedure lower1 shown in Figure 5.7. This procedure is styled after routines sub-
+mitted by several students as part of a network programming project. Its purpose
+is to convert all of the uppercase letters in a string to lowercase. The procedure
+steps through the string, converting each uppercase character to lowercase. The
+case conversion involves shifting characters in the range ‘A’ to ‘Z’ to the range ‘a’
+to ‘z’.
+The library function strlen is called as part of the loop test of lower1. Al-
+though strlen is typically implemented with special x86 string-processing instruc-
+tions, its overall execution is similar to the simple version that is also shown in
+Figure 5.7. Since strings in C are null-terminated character sequences, strlen can
+only determine the length of a string by stepping through the sequence until it
+hits a null character. For a string of length n, strlen takes time proportional to n.
+Since strlen is called in each of the n iterations of lower1, the overall run time
+of lower1 is quadratic in the string length, proportional to n2.

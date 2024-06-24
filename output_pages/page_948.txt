@@ -1,0 +1,68 @@
+Section 10.11
+Putting It Together: Which I/O Functions Should I Use?
+947
+10.10
+Standard I/O
+The C language deﬁnes a set of higher-level input and output functions, called the
+standard I/O library, that provides programmers with a higher-level alternative
+to Unix I/O. The library (libc) provides functions for opening and closing ﬁles
+(fopen and fclose), reading and writing bytes (fread and fwrite), reading and
+writing strings (fgets and fputs), and sophisticated formatted I/O (scanf and
+printf).
+The standard I/O library models an open ﬁle as a stream. To the programmer, a
+stream is a pointer to a structure of type FILE. Every ANSI C program begins with
+three open streams, stdin, stdout, and stderr, which correspond to standard
+input, standard output, and standard error, respectively:
+#include <stdio.h>
+extern FILE *stdin;
+/* Standard input (descriptor 0) */
+extern FILE *stdout;
+/* Standard output (descriptor 1) */
+extern FILE *stderr;
+/* Standard error (descriptor 2) */
+A stream of type FILE is an abstraction for a ﬁle descriptor and a stream
+buffer. The purpose of the stream buffer is the same as the Rio read buffer: to
+minimize the number of expensive Linux I/O system calls. For example, suppose
+we have a program that makes repeated calls to the standard I/O getc function,
+where each invocation returns the next character from a ﬁle. When getc is called
+the ﬁrsttime, thelibraryﬁllsthestreambufferwithasinglecalltothe read function
+and then returns the ﬁrst byte in the buffer to the application. As long as there are
+unread bytes in the buffer, subsequent calls to getc can be served directly from
+the stream buffer.
+10.11
+Putting It Together: Which I/O Functions Should I Use?
+Figure 10.16 summarizes the various I/O packages that we have discussed in this
+chapter.
+C application program
+Standard I/O
+functions
+Rio
+functions
+Unix I/O functions
+(accessed via system calls)
+fopen
+fread
+fscanf
+sscanf
+fgets
+fflush
+fclose
+fdopen
+fwrite
+fprintf
+sprintf
+fputs
+fseek
+rio_readn
+rio_writen
+rio_readinitb
+rio_readlineb
+rio_readnb
+open
+write
+stat
+read
+lseek
+close
+Figure 10.16
+Relationship between Unix I/O, standard I/O, and Rio.

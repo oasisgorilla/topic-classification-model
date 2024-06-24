@@ -1,0 +1,82 @@
+Section 11.6
+Putting It Together: The Tiny Web Server
+993
+code/netp/tiny/tiny.c
+1
+/*
+2
+* tiny.c - A simple, iterative HTTP/1.0 Web server that uses the
+3
+*
+GET method to serve static and dynamic content
+4
+*/
+5
+#include "csapp.h"
+6
+7
+void doit(int fd);
+8
+void read_requesthdrs(rio_t *rp);
+9
+int parse_uri(char *uri, char *filename, char *cgiargs);
+10
+void serve_static(int fd, char *filename, int filesize);
+11
+void get_filetype(char *filename, char *filetype);
+12
+void serve_dynamic(int fd, char *filename, char *cgiargs);
+13
+void clienterror(int fd, char *cause, char *errnum,
+14
+char *shortmsg, char *longmsg);
+15
+16
+int main(int argc, char **argv)
+17
+{
+18
+int listenfd, connfd;
+19
+char hostname[MAXLINE], port[MAXLINE];
+20
+socklen_t clientlen;
+21
+struct sockaddr_storage clientaddr;
+22
+23
+/* Check command-line args */
+24
+if (argc != 2) {
+25
+fprintf(stderr, "usage: %s <port>\n", argv[0]);
+26
+exit(1);
+27
+}
+28
+29
+listenfd = Open_listenfd(argv[1]);
+30
+while (1) {
+31
+clientlen = sizeof(clientaddr);
+32
+connfd = Accept(listenfd, (SA *)&clientaddr, &clientlen);
+33
+Getnameinfo((SA *) &clientaddr, clientlen, hostname, MAXLINE,
+34
+port, MAXLINE, 0);
+35
+printf("Accepted connection from (%s, %s)\n", hostname, port);
+36
+doit(connfd);
+37
+Close(connfd);
+38
+}
+39
+}
+code/netp/tiny/tiny.c
+Figure 11.29
+The Tiny Web server.

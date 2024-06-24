@@ -1,0 +1,55 @@
+CHAPTER 5
+Optimizing Program
+Performance
+5.1
+Capabilities and Limitations of Optimizing Compilers
+534
+5.2
+Expressing Program Performance
+538
+5.3
+Program Example
+540
+5.4
+Eliminating Loop Inefﬁciencies
+544
+5.5
+Reducing Procedure Calls
+548
+5.6
+Eliminating Unneeded Memory References
+550
+5.7
+Understanding Modern Processors
+553
+5.8
+Loop Unrolling
+567
+5.9
+Enhancing Parallelism
+572
+5.10
+Summary of Results for Optimizing Combining Code
+583
+5.11
+Some Limiting Factors
+584
+5.12
+Understanding Memory Performance
+589
+5.13
+Life in the Real World: Performance Improvement Techniques
+597
+5.14
+Identifying and Eliminating Performance Bottlenecks
+598
+5.15
+Summary
+604
+Bibliographic Notes
+605
+Homework Problems
+606
+Solutions to Practice Problems
+609
+531

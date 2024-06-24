@@ -1,0 +1,51 @@
+Section 8.2
+Processes
+769
+Figure 8.12
+Logical control ﬂows.
+Processes provide each
+program with the illusion
+that it has exclusive use of
+the processor. Each vertical
+bar represents a portion of
+the logical control ﬂow for
+a process.
+Process A
+Process B
+Process C
+Time
+a process. In the example, the execution of the three logical ﬂows is interleaved.
+Process A runs for a while, followed by B, which runs to completion. Process C
+then runs for a while, followed by A, which runs to completion. Finally, C is able
+to run to completion.
+The key point in Figure 8.12 is that processes take turns using the processor.
+Each process executes a portion of its ﬂow and then is preempted (temporarily
+suspended) while other processes take their turns. To a program running in the
+context of one of these processes, it appears to have exclusive use of the proces-
+sor. The only evidence to the contrary is that if we were to precisely measure the
+elapsed time of each instruction, we would notice that the CPU appears to peri-
+odically stall between the execution of some of the instructions in our program.
+However, each time the processor stalls, it subsequently resumes execution of our
+program without any change to the contents of the program’s memory locations
+or registers.
+8.2.2
+Concurrent Flows
+Logical ﬂows take many different forms in computer systems. Exception handlers,
+processes, signal handlers, threads, and Java processes are all examples of logical
+ﬂows.
+A logical ﬂow whose execution overlaps in time with another ﬂow is called
+a concurrent ﬂow, and the two ﬂows are said to run concurrently. More precisely,
+ﬂows X and Y are concurrent with respect to each other if and only if X begins
+after Y begins and before Y ﬁnishes, or Y begins after X begins and before X
+ﬁnishes. For example, in Figure 8.12, processes A and B run concurrently, as do
+A and C. On the other hand, B and C do not run concurrently, because the last
+instruction of B executes before the ﬁrst instruction of C.
+The general phenomenon of multiple ﬂows executing concurrently is known
+as concurrency. The notion of a process taking turns with other processes is also
+known as multitasking. Each time period that a process executes a portion of its
+ﬂow is called a time slice. Thus, multitasking is also referred to as time slicing. For
+example, in Figure 8.12, the ﬂow for process A consists of two time slices.
+Notice that the idea of concurrent ﬂows is independent of the number of
+processor cores or computers that the ﬂows are running on. If two ﬂows overlap
+in time, then they are concurrent, even if they are running on the same processor.
+However, we will sometimes ﬁnd it useful to identify a proper subset of concurrent

@@ -1,0 +1,56 @@
+626
+Chapter 6
+The Memory Hierarchy
+(a) CPU places address A on the memory bus. Main memory reads it and waits for the data word.
+Register file
+Main
+memory
+Bus interface
+I/O
+bridge
+ALU
+A
+y
+0
+A
+%rax
+(b) CPU places data word y on the bus. 
+Register file
+Main
+memory
+Bus interface
+I/O
+bridge
+ALU
+y
+y
+0
+A
+%rax
+(c) Main memory reads data word y from the bus and stores it at address A.
+Register file
+Main
+memory
+Bus interface
+I/O
+bridge
+ALU
+y
+0
+A
+y
+%rax
+Figure 6.8
+Memory write transaction for a store operation: movq %rax,A.
+Disk Geometry
+Disks are constructed from platters. Each platter consists of two sides, or surfaces,
+that are coated with magnetic recording material. A rotating spindle in the center
+of the platter spins the platter at a ﬁxed rotational rate, typically between 5,400 and
+15,000 revolutions per minute (RPM). A disk will typically contain one or more of
+these platters encased in a sealed container.
+Figure 6.9(a) shows the geometry of a typical disk surface. Each surface
+consists of a collection of concentric rings called tracks. Each track is partitioned
+into a collection of sectors. Each sector contains an equal number of data bits
+(typically 512 bytes) encoded in the magnetic material on the sector. Sectors are
+separated by gaps where no data bits are stored. Gaps store formatting bits that
+identify sectors.

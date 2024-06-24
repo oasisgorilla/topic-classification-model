@@ -1,0 +1,100 @@
+Section 12.5
+Synchronizing Threads with Semaphores
+1043
+code/conc/sbuf.c
+1
+#include "csapp.h"
+2
+#include "sbuf.h"
+3
+4
+/* Create an empty, bounded, shared FIFO buffer with n slots */
+5
+void sbuf_init(sbuf_t *sp, int n)
+6
+{
+7
+sp->buf = Calloc(n, sizeof(int));
+8
+sp->n = n;
+/* Buffer holds max of n items */
+9
+sp->front = sp->rear = 0;
+/* Empty buffer iff front == rear */
+10
+Sem_init(&sp->mutex, 0, 1);
+/* Binary semaphore for locking */
+11
+Sem_init(&sp->slots, 0, n);
+/* Initially, buf has n empty slots */
+12
+Sem_init(&sp->items, 0, 0);
+/* Initially, buf has zero data items */
+13
+}
+14
+15
+/* Clean up buffer sp */
+16
+void sbuf_deinit(sbuf_t *sp)
+17
+{
+18
+Free(sp->buf);
+19
+}
+20
+21
+/* Insert item onto the rear of shared buffer sp */
+22
+void sbuf_insert(sbuf_t *sp, int item)
+23
+{
+24
+P(&sp->slots);
+/* Wait for available slot */
+25
+P(&sp->mutex);
+/* Lock the buffer */
+26
+sp->buf[(++sp->rear)%(sp->n)] = item;
+/* Insert the item */
+27
+V(&sp->mutex);
+/* Unlock the buffer */
+28
+V(&sp->items);
+/* Announce available item */
+29
+}
+30
+31
+/* Remove and return the first item from buffer sp */
+32
+int sbuf_remove(sbuf_t *sp)
+33
+{
+34
+int item;
+35
+P(&sp->items);
+/* Wait for available item */
+36
+P(&sp->mutex);
+/* Lock the buffer */
+37
+item = sp->buf[(++sp->front)%(sp->n)];
+/* Remove the item */
+38
+V(&sp->mutex);
+/* Unlock the buffer */
+39
+V(&sp->slots);
+/* Announce available slot */
+40
+return item;
+41
+}
+code/conc/sbuf.c
+Figure 12.25
+Sbuf: A package for synchronizing concurrent access to bounded buffers.

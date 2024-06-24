@@ -1,0 +1,73 @@
+Section 12.4
+Shared Variables in Threaded Programs
+1029
+code/conc/sharing.c
+1
+#include "csapp.h"
+2
+#define N 2
+3
+void *thread(void *vargp);
+4
+5
+char **ptr;
+/* Global variable */
+6
+7
+int main()
+8
+{
+9
+int i;
+10
+pthread_t tid;
+11
+char *msgs[N] = {
+12
+"Hello from foo",
+13
+"Hello from bar"
+14
+};
+15
+16
+ptr = msgs;
+17
+for (i = 0; i < N; i++)
+18
+Pthread_create(&tid, NULL, thread, (void *)i);
+19
+Pthread_exit(NULL);
+20
+}
+21
+22
+void *thread(void *vargp)
+23
+{
+24
+int myid = (int)vargp;
+25
+static int cnt = 0;
+26
+printf("[%d]: %s (cnt=%d)\n", myid, ptr[myid], ++cnt);
+27
+return NULL;
+28
+}
+code/conc/sharing.c
+Figure 12.15
+Example program that illustrates different aspects of sharing.
+instances? The variable is shared if and only if multiple threads reference some
+instance of the variable.
+To keep our discussion of sharing concrete, we will use the program in Fig-
+ure 12.15 as a running example. Although somewhat contrived, it is nonetheless
+useful to study because it illustrates a number of subtle points about sharing. The
+example program consists of a main thread that creates two peer threads. The
+main thread passes a unique ID to each peer thread, which uses the ID to print
+a personalized message along with a count of the total number of times that the
+thread routine has been invoked.
+12.4.1
+Threads Memory Model
+A pool of concurrent threads runs in the context of a process. Each thread has
+its own separate thread context, which includes a thread ID, stack, stack pointer,

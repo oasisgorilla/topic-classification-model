@@ -1,0 +1,70 @@
+1080
+Appendix A
+Error Handling
+code/src/csapp.c
+1
+void unix_error(char *msg) /* Unix-style error */
+2
+{
+3
+fprintf(stderr, "%s: %s\n", msg, strerror(errno));
+4
+exit(0);
+5
+}
+6
+7
+void posix_error(int code, char *msg) /* Posix-style error */
+8
+{
+9
+fprintf(stderr, "%s: %s\n", msg, strerror(code));
+10
+exit(0);
+11
+}
+12
+13
+void gai_error(int code, char *msg) /* Getaddrinfo-style error */
+14
+{
+15
+fprintf(stderr, "%s: %s\n", msg, gai_strerror(code));
+16
+exit(0);
+17
+}
+18
+19
+void app_error(char *msg) /* Application error */
+20
+{
+21
+fprintf(stderr, "%s\n", msg);
+22
+exit(0);
+23
+}
+code/src/csapp.c
+Figure A.1
+Error-reporting functions.
+code/src/csapp.c
+1
+pid_t Wait(int *status)
+2
+{
+3
+pid_t pid;
+4
+5
+if ((pid
+= wait(status)) < 0)
+6
+unix_error("Wait error");
+7
+return pid;
+8
+}
+code/src/csapp.c
+Figure A.2
+Wrapper for Unix-style wait function.

@@ -1,0 +1,108 @@
+Section 6.5
+Writing Cache-Friendly Code
+671
+stride-k reference pattern (where k is expressed in words) results in an average of
+min (1, (word size × k)/B) misses per loop iteration. This is minimized for k = 1,
+so the stride-1 references to v are indeed cache friendly. For example, suppose
+that v is block aligned, words are 4 bytes, cache blocks are 4 words, and the cache
+is initially empty (a cold cache). Then, regardless of the cache organization, the
+references to v will result in the following pattern of hits and misses:
+v[i]
+i = 0
+i = 1
+i = 2
+i = 3
+i = 4
+i = 5
+i = 6
+i = 7
+Access order, [h]it or [m]iss
+1 [m]
+2 [h]
+3 [h]
+4 [h]
+5 [m]
+6 [h]
+7 [h]
+8 [h]
+In this example, the reference to v[0] misses and the corresponding block,
+which contains v[0]–v[3], is loaded into the cache from memory. Thus, the next
+three references are all hits. The reference to v[4] causes another miss as a new
+block is loaded into the cache, the next three references are hits, and so on. In
+general, three out of four references will hit, which is the best we can do in this
+case with a cold cache.
+To summarize, our simple sumvec example illustrates two important points
+about writing cache-friendly code:
+. Repeated references to local variables are good because the compiler can
+cache them in the register ﬁle (temporal locality).
+. Stride-1 reference patterns are good because caches at all levels of the memory
+hierarchy store data as contiguous blocks (spatial locality).
+Spatial locality is especially important in programs that operate on multi-
+dimensional arrays. For example, consider the sumarrayrows function from Sec-
+tion 6.2, which sums the elements of a two-dimensional array in row-major order:
+1
+int sumarrayrows(int a[M][N])
+2
+{
+3
+int i, j, sum = 0;
+4
+5
+for (i = 0; i < M; i++)
+6
+for (j = 0; j < N; j++)
+7
+sum += a[i][j];
+8
+return sum;
+9
+}
+Since C stores arrays in row-major order, the inner loop of this function has
+the same desirable stride-1 access pattern as sumvec. For example, suppose we
+make the same assumptions about the cache as for sumvec. Then the references
+to the array a will result in the following pattern of hits and misses:
+a[i][j]
+j = 0
+j = 1
+j = 2
+j = 3
+j = 4
+j = 5
+j = 6
+j = 7
+i = 0
+1 [m]
+2 [h]
+3 [h]
+4 [h]
+5 [m]
+6 [h]
+7 [h]
+8 [h]
+i = 1
+9 [m]
+10 [h]
+11 [h]
+12 [h]
+13 [m]
+14 [h]
+15 [h]
+16 [h]
+i = 2
+17 [m]
+18 [h]
+19 [h]
+20 [h]
+21 [m]
+22 [h]
+23 [h]
+24 [h]
+i = 3
+25 [m]
+26 [h]
+27 [h]
+28 [h]
+29 [m]
+30 [h]
+31 [h]
+32 [h]

@@ -1,0 +1,94 @@
+Section 4.1
+The Y86-64 Instruction Set Architecture
+393
+halt
+nop
+rrmovq rA, rB
+irmovq V, rB
+rmmovq rA, D(rB)
+mrmovq D(rB), rA
+OPq rA, rB
+jXX Dest
+cmovXX rA, rB
+call Dest
+ret
+pushq rA
+popq rA
+0
+1
+2
+3
+4
+5
+6
+7
+2
+8
+9
+A
+B
+rB
+rB
+rB
+rB
+rB
+rB
+V
+D
+D
+Dest
+Dest
+0
+Byte
+1
+2
+3
+4
+5
+6
+7
+8
+9
+rA
+rA
+0
+0
+0
+0
+0
+0
+fn
+fn
+fn
+0
+0
+0
+0
+F
+F
+rA
+F
+rA
+rA
+rA
+rA
+Figure 4.2
+Y86-64 instruction set. Instruction encodings range between 1 and 10
+bytes. An instruction consists of a 1-byte instruction speciﬁer, possibly a 1-byte register
+speciﬁer, and possibly an 8-byte constant word. Field fn speciﬁes a particular integer
+operation (OPq), data movement condition (cmovXX), or branch condition (jXX). All
+numeric values are shown in hexadecimal.
+. The seven jump instructions (shown in Figure 4.2 as jXX) are jmp, jle, jl, je,
+jne, jge, and jg. Branches are taken according to the type of branch and the
+settings of the condition codes. The branch conditions are the same as with
+x86-64 (Figure 3.15).
+. There are six conditional move instructions (shown in Figure 4.2 as cmovXX):
+cmovle, cmovl, cmove, cmovne, cmovge, and cmovg. These have the same
+format as the register–register move instruction rrmovq, but the destination
+register is updated only if the condition codes satisfy the required constraints.
+. The call instruction pushes the return address on the stack and jumps to the
+destination address. The ret instruction returns from such a call.
+. The pushq and popq instructions implement push and pop, just as they do in
+x86-64.
+. The halt instruction stops instruction execution. x86-64 has a comparable
+instruction, called hlt. x86-64 application programs are not permitted to use

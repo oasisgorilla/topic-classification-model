@@ -1,0 +1,59 @@
+Section 4.3
+Sequential Y86-64 Implementations
+431
+Aside
+Tracing the execution of a ret instruction
+Let us trace the processing of the ret instruction on line 13 of the object code shown in Figure 4.17.
+The instruction address is 0x041 and is encoded by a single byte 0x90. The previous call instruction
+set %rsp to 120 and stored the return address 0x040 at memory address 120. The stages would proceed
+as follows:
+Generic
+Speciﬁc
+Stage
+ret
+ret
+Fetch
+icode:ifun ←M1[PC]
+icode:ifun ←M1[0x041] = 9:0
+valP ←PC + 1
+valP ←0x041 + 1 = 0x042
+Decode
+valA ←R[%rsp]
+valA ←R[%rsp] = 120
+valB ←R[%rsp]
+valB ←R[%rsp] = 120
+Execute
+valE ←valB + 8
+valE ←120 + 8 = 128
+Memory
+valM ←M8[valA]
+valM ←M8[120] = 0x040
+Write back
+R[%rsp] ←valE
+R[%rsp] ←128
+PC update
+PC ←valM
+PC ←0x040
+As this trace shows, the instruction has the effect of setting the PC to 0x040, the address of the
+halt instruction. It also sets %rsp to 128.
+Generic
+Speciﬁc
+Stage
+call Dest
+call 0x041
+Decode
+valB ←R[%rsp]
+Execute
+valE ←valB + (−8)
+Memory
+M8[valE] ←valP
+Write back
+R[%rsp] ←valE
+PC update
+PC ←valC
+What effect would this instruction execution have on the registers, the PC,
+and the memory?
+We have created a uniform framework that handles all of the different types of
+Y86-64 instructions. Even though the instructions have widely varying behavior,
+we can organize the processing into six stages. Our task now is to create a hardware
+design that implements the stages and connects them together.

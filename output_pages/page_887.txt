@@ -1,0 +1,53 @@
+886
+Chapter 9
+Virtual Memory
+Unused
+Start
+of
+heap
+8/0
+16/1
+16/1
+16/1
+16/0
+0/1
+Double-
+word
+aligned
+Figure 9.37
+Splitting a free block to satisfy a three-word allocation request. Allocated blocks are shaded.
+Free blocks are unshaded. Headers are labeled with (size (bytes)/allocated bit).
+introduces internal fragmentation. If the placement policy tends to produce good
+ﬁts, then some additional internal fragmentation might be acceptable.
+However, if the ﬁt is not good, then the allocator will usually opt to split
+the free block into two parts. The ﬁrst part becomes the allocated block, and the
+remainder becomes a new free block. Figure 9.37 shows how the allocator might
+split the eight-word free block in Figure 9.36 to satisfy an application’s request for
+three words of heap memory.
+9.9.9
+Getting Additional Heap Memory
+What happens if the allocator is unable to ﬁnd a ﬁt for the requested block? One
+option is to try to create some larger free blocks by merging (coalescing) free
+blocks that are physically adjacent in memory (next section). However, if this
+does not yield a sufﬁciently large block, or if the free blocks are already maximally
+coalesced, then the allocator asks the kernel for additional heap memory by calling
+the sbrk function. The allocator transforms the additional memory into one large
+free block, inserts the block into the free list, and then places the requested block
+in this new free block.
+9.9.10
+Coalescing Free Blocks
+When the allocator frees an allocated block, there might be other free blocks
+that are adjacent to the newly freed block. Such adjacent free blocks can cause
+a phenomenon known as false fragmentation, where there is a lot of available free
+memory chopped up into small, unusable free blocks. For example, Figure 9.38
+shows the result of freeing the block that was allocated in Figure 9.37. The result
+is two adjacent free blocks with payloads of three words each. As a result, a
+subsequent request for a payload of four words would fail, even though the
+aggregate size of the two free blocks is large enough to satisfy the request.
+To combat false fragmentation, any practical allocator must merge adjacent
+free blocks in a process known as coalescing. This raises an important policy
+decision about when to perform coalescing. The allocator can opt for immediate
+coalescing by merging any adjacent blocks each time a block is freed. Or it can opt
+for deferred coalescing by waiting to coalesce free blocks at some later time. For
+example, the allocator might defer coalescing until some allocation request fails,
+and then scan the entire heap, coalescing all free blocks.

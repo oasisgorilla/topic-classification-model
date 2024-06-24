@@ -1,0 +1,115 @@
+Contents
+11
+4.3.2
+SEQ Hardware Structure
+432
+4.3.3
+SEQ Timing
+436
+4.3.4
+SEQ Stage Implementations
+440
+4.4
+General Principles of Pipelining
+448
+4.4.1
+Computational Pipelines
+448
+4.4.2
+A Detailed Look at Pipeline Operation
+450
+4.4.3
+Limitations of Pipelining
+452
+4.4.4
+Pipelining a System with Feedback
+455
+4.5
+Pipelined Y86-64 Implementations
+457
+4.5.1
+SEQ+: Rearranging the Computation Stages
+457
+4.5.2
+Inserting Pipeline Registers
+458
+4.5.3
+Rearranging and Relabeling Signals
+462
+4.5.4
+Next PC Prediction
+463
+4.5.5
+Pipeline Hazards
+465
+4.5.6
+Exception Handling
+480
+4.5.7
+PIPE Stage Implementations
+483
+4.5.8
+Pipeline Control Logic
+491
+4.5.9
+Performance Analysis
+500
+4.5.10 Unﬁnished Business
+504
+4.6
+Summary
+506
+4.6.1
+Y86-64 Simulators
+508
+Bibliographic Notes
+509
+Homework Problems
+509
+Solutions to Practice Problems
+516
+5
+Optimizing Program Performance
+531
+5.1
+Capabilities and Limitations of Optimizing Compilers
+534
+5.2
+Expressing Program Performance
+538
+5.3
+Program Example
+540
+5.4
+Eliminating Loop Inefﬁciencies
+544
+5.5
+Reducing Procedure Calls
+548
+5.6
+Eliminating Unneeded Memory References
+550
+5.7
+Understanding Modern Processors
+553
+5.7.1
+Overall Operation
+554
+5.7.2
+Functional Unit Performance
+559
+5.7.3
+An Abstract Model of Processor Operation
+561
+5.8
+Loop Unrolling
+567
+5.9
+Enhancing Parallelism
+572
+5.9.1
+Multiple Accumulators
+572
+5.9.2
+Reassociation Transformation
+577

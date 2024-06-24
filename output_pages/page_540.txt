@@ -1,0 +1,77 @@
+Section 5.2
+Expressing Program Performance
+539
+1
+/* Compute prefix sum of vector a */
+2
+void psum1(float a[], float p[], long n)
+3
+{
+4
+long i;
+5
+p[0] = a[0];
+6
+for (i = 1; i < n; i++)
+7
+p[i] = p[i-1] + a[i];
+8
+}
+9
+10
+void psum2(float a[], float p[], long n)
+11
+{
+12
+long i;
+13
+p[0] = a[0];
+14
+for (i = 1; i < n-1; i+=2) {
+15
+float mid_val = p[i-1] + a[i];
+16
+p[i]
+= mid_val;
+17
+p[i+1]
+= mid_val + a[i+1];
+18
+}
+19
+/* For even n, finish remaining element */
+20
+if (i < n)
+21
+p[i] = p[i-1] + a[i];
+22
+}
+Figure 5.1
+Preﬁx-sum functions. These functions provide examples for how we express
+program performance.
+2500
+2000
+1500
+1000
+500
+0
+0
+60
+20
+40
+psum1
+Slope = 9.0
+psum2
+Slope = 6.0
+100
+80
+140
+160
+180
+120
+200
+Elements
+Cycles
+Figure 5.2
+Performance of preﬁx-sum functions. The slope of the lines indicates the
+number of clock cycles per element (CPE).

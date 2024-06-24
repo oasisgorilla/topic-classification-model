@@ -1,0 +1,35 @@
+Section 11.4
+The Sockets Interface
+971
+where x is the client’s IP address and y is the ephemeral port that uniquely
+identiﬁes the client process on the client host. As with socket, the best practice is
+to use getaddrinfo to supply the arguments to connect (see Section 11.4.8).
+11.4.4
+The bind Function
+The remaining sockets functions—bind, listen, and accept—are used by servers
+to establish connections with clients.
+#include <sys/socket.h>
+int bind(int sockfd, const struct sockaddr *addr,
+socklen_t addrlen);
+Returns: 0 if OK, −1 on error
+The bind function asks the kernel to associate the server’s socket address in addr
+with the socket descriptor sockfd. The addrlen argument is sizeof(sockaddr_
+in). As with socket and connect, the best practice is to use getaddrinfo to
+supply the arguments to bind (see Section 11.4.8).
+11.4.5
+The listen Function
+Clients are active entities that initiate connection requests. Servers are passive
+entities that wait for connection requests from clients. By default, the kernel
+assumes that a descriptor created by the socket function corresponds to an active
+socket that will live on the client end of a connection. A server calls the listen
+function to tell the kernel that the descriptor will be used by a server instead of a
+client.
+#include <sys/socket.h>
+int listen(int sockfd, int backlog);
+Returns: 0 if OK, −1 on error
+The listen function converts sockfd from an active socket to a listening socket
+that can accept connection requests from clients. The backlog argument is a hint
+about the number of outstanding connection requests that the kernel should queue
+up before it starts to refuse requests. The exact meaning of the backlog argument
+requires an understanding of TCP/IP that is beyond our scope. We will typically
+set it to a large value, such as 1,024.

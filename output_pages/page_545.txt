@@ -1,0 +1,82 @@
+544
+Chapter 5
+Optimizing Program Performance
+Integer
+Floating point
+Function
+Page
+Method
++
+*
++
+*
+combine1
+543
+Abstract unoptimized
+22.68
+20.02
+19.98
+20.18
+combine1
+543
+Abstract -O1
+10.12
+10.12
+10.17
+11.14
+We can see that our measurements are somewhat imprecise. The more likely
+CPE number for integer sum is 23.00, rather than 22.68, while the number for
+integer product is likely 20.0 instead of 20.02. Rather than “fudging” our numbers
+to make them look good, we will present the measurements we actually obtained.
+There are many factors that complicate the task of reliably measuring the precise
+number of clock cycles required by some code sequence. It helps when examining
+these numbers to mentally round the results up or down by a few hundredths of
+a clock cycle.
+The unoptimized code provides a direct translation of the C code into machine
+code, often with obvious inefﬁciencies. By simply giving the command-line option
+-O1, we enable a basic set of optimizations. As can be seen, this signiﬁcantly
+improves the program performance—more than a factor of 2—with no effort
+on behalf of the programmer. In general, it is good to get into the habit of
+enabling some level of optimization. (Similar performance results were obtained
+with optimization level -Og.) For the remainder of our measurements, we use
+optimization levels -O1 and -O2 when generating and measuring our programs.
+5.4
+Eliminating Loop Inefﬁciencies
+Observe that procedure combine1, as shown in Figure 5.5, calls function vec_
+length as the test condition of the for loop. Recall from our discussion of how
+to translate code containing loops into machine-level programs (Section 3.6.7)
+that the test condition must be evaluated on every iteration of the loop. On the
+other hand, the length of the vector does not change as the loop proceeds. We
+could therefore compute the vector length only once and use this value in our test
+condition.
+Figure 5.6 shows a modiﬁed version called combine2. It calls vec_length at
+the beginning and assigns the result to a local variable length. This transformation
+has noticeable effect on the overall performance for some data types and oper-
+ations, and minimal or even none for others. In any case, this transformation is
+required to eliminate inefﬁciencies that would become bottlenecks as we attempt
+further optimizations.
+Integer
+Floating point
+Function
+Page
+Method
++
+*
++
+*
+combine1
+543
+Abstract -O1
+10.12
+10.12
+10.17
+11.14
+combine2
+545
+Move vec_length
+7.02
+9.03
+9.02
+11.03
+This optimization is an instance of a general class of optimizations known as
+code motion. They involve identifying a computation that is performed multiple

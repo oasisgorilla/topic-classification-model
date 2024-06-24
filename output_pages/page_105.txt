@@ -1,0 +1,56 @@
+104
+Chapter 2
+Representing and Manipulating Information
+Aside
+Alternative representations of signed numbers
+There are two other standard representations for signed numbers:
+Ones’ complement. This is the same as two’s complement, except that the most signiﬁcant bit has
+weight −(2w−1 −1) rather than −2w−1:
+B2Ow(⃗
+x) .
+= −xw−1(2w−1 −1) +
+w−2
+
+i=0
+xi2i
+Sign magnitude. The most signiﬁcant bit is a sign bit that determines whether the remaining bits
+should be given negative or positive weight:
+B2Sw(⃗
+x) .
+= (−1)xw−1 .
+w−2
+
+i=0
+xi2i
+
+Both of these representations have the curious property that there are two different encodings of the
+number 0. For both representations, [00 . . . 0] is interpreted as +0. The value −0 can be represented
+in sign-magnitude form as [10 . . . 0] and in ones’ complement as [11 . . . 1]. Although machines based
+on ones’-complement representations were built in the past, almost all modern machines use two’s
+complement. We will see that sign-magnitude encoding is used with ﬂoating-point numbers.
+Note the different position of apostrophes: two’s complement versus ones’ complement. The term
+“two’s complement” arises from the fact that for nonnegative x we compute a w-bit representation
+of −x as 2w −x (a single two.) The term “ones’ complement” comes from the property that we can
+compute −x in this notation as [111 . . . 1] −x (multiple ones).
+delimiting the ranges of the different integer data types for the particular machine
+on which the compiler is running. For example, it deﬁnes constants INT_MAX, INT_
+MIN, and UINT_MAX describing the ranges of signed and unsigned integers. For a
+two’s-complement machine in which data type int has w bits, these constants
+correspond to the values of TMaxw, TMinw, and UMaxw.
+The Java standard is quite speciﬁc about integer data type ranges and repre-
+sentations. It requires a two’s-complement representation with the exact ranges
+shown for the 64-bit case (Figure 2.10). In Java, the single-byte data type is called
+byte instead of char. These detailed requirements are intended to enable Java
+programs to behave identically regardless of the machines or operating systems
+running them.
+To get a better understanding of the two’s-complement representation, con-
+sider the following code example:
+1
+short x = 12345;
+2
+short mx = -x;
+3
+4
+show_bytes((byte_pointer) &x, sizeof(short));
+5
+show_bytes((byte_pointer) &mx, sizeof(short));

@@ -1,0 +1,94 @@
+766
+Chapter 8
+Exceptional Control Flow
+Number
+Name
+Description
+Number
+Name
+Description
+0
+read
+Read ﬁle
+33
+pause
+Suspend process until signal arrives
+1
+write
+Write ﬁle
+37
+alarm
+Schedule delivery of alarm signal
+2
+open
+Open ﬁle
+39
+getpid
+Get process ID
+3
+close
+Close ﬁle
+57
+fork
+Create process
+4
+stat
+Get info about ﬁle
+59
+execve
+Execute a program
+9
+mmap
+Map memory page to ﬁle
+60
+_exit
+Terminate process
+12
+brk
+Reset the top of the heap
+61
+wait4
+Wait for a process to terminate
+32
+dup2
+Copy ﬁle descriptor
+62
+kill
+Send signal to a process
+Figure 8.10
+Examples of popular system calls in Linux x86-64 systems.
+creating a new process. Figure 8.10 lists some popular Linux system calls. Each
+system call has a unique integer number that corresponds to an offset in a jump
+table in the kernel. (Notice that this jump table is not the same as the exception
+table.)
+C programs can invoke any system call directly by using the syscall function.
+However, this is rarely necessary in practice. The C standard library provides a
+set of convenient wrapper functions for most system calls. The wrapper functions
+package up the arguments, trap to the kernel with the appropriate system call
+instruction, and then pass the return status of the system call back to the calling
+program. Throughout this text, we will refer to system calls and their associated
+wrapper functions interchangeably as system-level functions.
+System calls are provided on x86-64 systems via a trapping instruction called
+syscall. It is quite interesting to study how programs can use this instruction
+to invoke Linux system calls directly. All arguments to Linux system calls are
+passed through general-purpose registers rather than the stack. By convention,
+register %rax contains the syscall number, with up to six arguments in %rdi, %rsi,
+%rdx, %r10, %r8, and %r9. The ﬁrst argument is in %rdi, the second in %rsi, and
+so on. On return from the system call, registers %rcx and %r11 are destroyed, and
+%rax contains the return value. A negative return value between −4,095 and −1
+indicates an error corresponding to negative errno.
+For example, consider the following version of the familiar hello program,
+written using the write system-level function (Section 10.4) instead of printf:
+1
+int main()
+2
+{
+3
+write(1, "hello, world\n", 13);
+4
+_exit(0);
+5
+}
+The ﬁrst argument to write sends the output to stdout. The second argument
+is the sequence of bytes to write, and the third argument gives the number of bytes
+to write.

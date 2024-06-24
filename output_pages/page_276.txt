@@ -1,0 +1,46 @@
+Section 3.7
+Procedures
+275
+in different programming languages—functions, methods, subroutines, handlers,
+and so on—but they all share a general set of features.
+There are many different attributes that must be handled when providing
+machine-level support for procedures. For discussion purposes, suppose proce-
+dure P calls procedure Q, and Q then executes and returns back to P. These actions
+involve one or more of the following mechanisms:
+Passing control. The program counter must be set to the starting address of the
+code for Q upon entry and then set to the instruction in P following the
+call to Q upon return.
+Passing data. P must be able to provide one or more parameters to Q, and Q must
+be able to return a value back to P.
+Allocating and deallocating memory. Q may need to allocate space for local
+variables when it begins and then free that storage before it returns.
+The x86-64 implementation of procedures involves a combination of special
+instructions and a set of conventions on how to use the machine resources, such as
+the registers and the program memory. Great effort has been made to minimize
+the overhead involved in invoking a procedure. As a consequence, it follows what
+can be seen as a minimalist strategy, implementing only as much of the above set
+of mechanisms as is required for each particular procedure. In our presentation,
+we build up the different mechanisms step by step, ﬁrst describing control, then
+data passing, and, ﬁnally, memory management.
+3.7.1
+The Run-Time Stack
+A key feature of the procedure-calling mechanism of C, and of most other lan-
+guages, is that it can make use of the last-in, ﬁrst-out memory management disci-
+pline provided by a stack data structure. Using our example of procedure P calling
+procedure Q, we can see that while Q is executing, P, along with any of the proce-
+dures in the chain of calls up to P, is temporarily suspended. While Q is running,
+only it will need the ability to allocate new storage for its local variables or to set up
+a call to another procedure. On the other hand, when Q returns, any local storage it
+has allocated can be freed. Therefore, a program can manage the storage required
+by its procedures using a stack, where the stack and the program registers store
+the information required for passing control and data, and for allocating memory.
+As P calls Q, control and data information are added to the end of the stack. This
+information gets deallocated when P returns.
+As described in Section 3.4.4, the x86-64 stack grows toward lower addresses
+and the stack pointer %rsp points to the top element of the stack. Data can be
+stored on and retrieved from the stack using the pushq and popq instructions.
+Space for data with no speciﬁed initial value can be allocated on the stack by simply
+decrementing the stack pointer by an appropriate amount. Similarly, space can be
+deallocated by incrementing the stack pointer.
+When an x86-64 procedure requires storage beyond what it can hold in reg-
+isters, it allocates space on the stack. This region is referred to as the procedure’s

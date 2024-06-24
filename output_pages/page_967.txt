@@ -1,0 +1,39 @@
+966
+Chapter 11
+Network Programming
+Aside
+How many Internet hosts are there?
+Twice a year since 1987, the Internet Systems Consortium conducts the Internet Domain Survey. The
+survey, which estimates the number of Internet hosts by counting the number of IP addresses that
+have been assigned a domain name, reveals an amazing trend. Since 1987, when there were about
+20,000 Internet hosts, the number of hosts has been increasing exponentially. By 2015, there were over
+1,000,000,000 Internet hosts!
+at the same time. And it is reliable in the sense that—barring some catastrophic
+failure such as a cable cut by the proverbial careless backhoe operator—the stream
+of bytes sent by the source process is eventually received by the destination process
+in the same order it was sent.
+A socket is an end point of a connection. Each socket has a corresponding
+socket address that consists of an Internet address and a 16-bit integer port2 and
+is denoted by the notation address:port.
+The port in the client’s socket address is assigned automatically by the kernel
+when the client makes a connection request and is known as an ephemeral port.
+However, the port in the server’s socket address is typically some well-known
+port that is permanently associated with the service. For example, Web servers
+typically use port 80, and email servers use port 25. Associated with each service
+with a well-known port is a corresponding well-known service name. For example,
+the well-known name for the Web service is http, and the well-known name for
+email is smtp. The mapping between well-known names and well-known ports is
+contained in a ﬁle called /etc/services.
+A connection is uniquely identiﬁed by the socket addresses of its two end
+points. This pair of socket addresses is known as a socket pair and is denoted by
+the tuple
+(cliaddr:cliport, servaddr:servport)
+where cliaddr is the client’s IP address, cliport is the client’s port, servaddr is the
+server’s IP address, and servport is the server’s port. For example, Figure 11.11
+shows a connection between a Web client and a Web server.
+In this example, the Web client’s socket address is
+128.2.194.242:51213
+where port 51213 is an ephemeral port assigned by the kernel. The Web server’s
+socket address is
+208.216.181.15:80
+2. These software ports have no relation to the hardware ports in network switches and routers.

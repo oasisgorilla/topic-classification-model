@@ -1,0 +1,47 @@
+Section 3.10
+Combining Control and Data in Machine-Level Programs
+315
+3.10.2
+Life in the Real World: Using the gdb Debugger
+The GNU debugger gdb provides a number of useful features to support the
+run-time evaluation and analysis of machine-level programs. With the examples
+and exercises in this book, we attempt to infer the behavior of a program by
+just looking at the code. Using gdb, it becomes possible to study the behavior
+by watching the program in action while having considerable control over its
+execution.
+Figure 3.39 shows examples of some gdb commands that help when working
+with machine-level x86-64 programs. It is very helpful to ﬁrst run objdump to get
+a disassembled version of the program. Our examples are based on running gdb
+on the ﬁle prog, described and disassembled on page 211. We start gdb with the
+following command line:
+linux> gdb prog
+The general scheme is to set breakpoints near points of interest in the pro-
+gram. These can be set to just after the entry of a function or at a program address.
+When one of the breakpoints is hit during program execution, the program will
+halt and return control to the user. From a breakpoint, we can examine different
+registers and memory locations in various formats. We can also single-step the
+program, running just a few instructions at a time, or we can proceed to the next
+breakpoint.
+As our examples suggest, gdb has an obscure command syntax, but the online
+help information (invoked within gdb with the help command) overcomes this
+shortcoming. Rather than using the command-line interface to gdb, many pro-
+grammers prefer using ddd, an extension to gdb that provides a graphical user
+interface.
+3.10.3
+Out-of-Bounds Memory References and Buffer Overﬂow
+We have seen that C does not perform any bounds checking for array references,
+and that local variables are stored on the stack along with state information such
+as saved register values and return addresses. This combination can lead to serious
+program errors, where the state stored on the stack gets corrupted by a write to an
+out-of-bounds array element. When the program then tries to reload the register
+or execute a ret instruction with this corrupted state, things can go seriously
+wrong.
+A particularly common source of state corruption is known as buffer overﬂow.
+Typically, some character array is allocated on the stack to hold a string, but the
+size of the string exceeds the space allocated for the array. This is demonstrated
+by the following program example:
+/* Implementation of library function gets() */
+char *gets(char *s)
+{
+int c;
+char *dest = s;

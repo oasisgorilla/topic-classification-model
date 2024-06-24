@@ -1,0 +1,62 @@
+486
+Chapter 4
+Processor Architecture
+D
+icode
+ifun
+valC
+valP
+rB
+rA
+A
+B
+srcA
+srcB
+dstM
+M
+dstE
+E
+Register
+file
+e_dstE
+e_valE
+d_rvalA
+d_rvalB
+E
+icode
+stat
+stat
+ifun
+valC
+valA
+valB
+Sel+Fwd
+A
+Fwd
+B
+dstE dstM srcA srcB
+dstE dstM
+srcA srcB
+M_dstE
+M_valE
+M_dstM
+m_valM
+W_dstM
+W_valM
+W_dstE
+W_valE
+d_srcA
+d_srcB
+Figure 4.58
+PIPE decode and write-back stage logic. No instruction requires both valP and the value read
+from register port A, and so these two can be merged to form the signal valA for later stages. The block labeled
+“Sel+Fwd A” performs this task and also implements the forwarding logic for source operand valA. The block
+labeled “Fwd B” implements the forwarding logic for source operand valB. The register write locations are
+speciﬁed by the dstE and dstM signals from the write-back stage rather than from the decode stage, since it
+is writing the results of the instruction currently in the write-back stage.
+do not need the value read from the A port of the register ﬁle. This selection is
+controlled by the icode signal for this stage. When signal D_icode matches the
+instruction code for either call or jXX, this block should select D_valP as its
+output.
+As mentioned in Section 4.5.5, there are ﬁve different forwarding sources,
+each with a data word and a destination register ID:

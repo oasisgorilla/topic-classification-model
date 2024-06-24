@@ -1,0 +1,55 @@
+Section 3.6
+Control
+255
+Practice Problem 3.20 (solution page 369)
+In the following C function, we have left the deﬁnition of operation OP incomplete:
+#define OP
+/* Unknown operator */
+short arith(short x) {
+return x OP 16;
+}
+When compiled, gcc generates the following assembly code:
+short arith(short x)
+x in %rdi
+arith:
+leaq
+15(%rdi), %rbx
+testq
+%rdi, %rdi
+cmovns
+%rdi, %rbx
+sarq
+$4, %rbx
+ret
+A. What operation is OP?
+B. Annotate the code to explain how it works.
+Practice Problem 3.21 (solution page 369)
+Starting with C code of the form
+short test(short x, short y) {
+short val =
+;
+if (
+) {
+if (
+)
+val =
+;
+else
+val =
+;
+} else if (
+)
+val =
+;
+return val;
+}
+gcc generates the following assembly code:
+short test(short x, short y)
+x in %rdi, y in %rsi
+test:
+leaq
+12(%rsi), %rbx
+testq
+%rdi, %rdi
+jge
+.L2

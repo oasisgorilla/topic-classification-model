@@ -1,0 +1,58 @@
+Section 5.12
+Understanding Memory Performance
+589
+of experimentation, writing different versions of the function and then examining
+the generated assembly code and measuring performance.
+Practice Problem 5.9 (solution page 612)
+The traditional implementation of the merge step of mergesort requires three
+loops [98]:
+1
+void merge(long src1[], long src2[], long dest[], long n) {
+2
+long i1 = 0;
+3
+long i2 = 0;
+4
+long id = 0;
+5
+while (i1 < n && i2 < n) {
+6
+if (src1[i1] < src2[i2])
+7
+dest[id++] = src1[i1++];
+8
+else
+9
+dest[id++] = src2[i2++];
+10
+}
+11
+while (i1 < n)
+12
+dest[id++] = src1[i1++];
+13
+while (i2 < n)
+14
+dest[id++] = src2[i2++];
+15
+}
+The branches caused by comparing variables i1 and i2 to n have good prediction
+performance—the only mispredictions occur when they ﬁrst become false. The
+comparison between values src1[i1] and src2[i2] (line 6), on the other hand,
+is highly unpredictable for typical data. This comparison controls a conditional
+branch, yielding a CPE (where the number of elements is 2n) of around 15.0 when
+run on random data.
+Rewrite the code so that the effect of the conditional statement in the ﬁrst
+loop (lines 6–9) can be implemented with a conditional move.
+5.12
+Understanding Memory Performance
+All of the code we have written thus far, and all the tests we have run, access
+relatively small amounts of memory. For example, the combining routines were
+measured over vectors of length less than 1,000 elements, requiring no more than
+8,000 bytes of data. All modern processors contain one or more cache memories
+to provide fast access to such small amounts of memory. In this section, we will
+further investigate the performance of programs that involve load (reading from
+memory into registers) and store (writing from registers to memory) operations,
+considering only the cases where all data are held in cache. In Chapter 6, we go
+into much more detail about how caches work, their performance characteristics,
+and how to write code that makes best use of caches.

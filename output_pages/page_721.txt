@@ -1,0 +1,67 @@
+720
+Chapter 7
+Linking
+Practice Problem 7.2 (solution page 754)
+In this problem, let REF(x.i) →DEF(x.k) denote that the linker will associate an
+arbitrary reference to symbol x in module i to the deﬁnition of x in module k.
+For each example that follows, use this notation to indicate how the linker would
+resolve references to the multiply-deﬁned symbol in each module. If there is a
+link-time error (rule 1), write “error”. If the linker arbitrarily chooses one of the
+deﬁnitions (rule 3), write “unknown”.
+A. /* Module 1 */
+/* Module 2 */
+int main()
+int main;
+{
+int p2()
+}
+{
+}
+(a) REF(main.1) →DEF(
+.
+)
+(b) REF(main.2) →DEF(
+.
+)
+B. /* Module 1 */
+/* Module 2 */
+void main()
+int main = 1;
+{
+int p2()
+}
+{
+}
+(a) REF(main.1) →DEF(
+.
+)
+(b) REF(main.2) →DEF(
+.
+)
+C. /* Module 1 */
+/* Module 2 */
+int x;
+double x = 1.0;
+void main()
+int p2()
+{
+{
+}
+}
+(a) REF(x.1) →DEF(
+.
+)
+(b) REF(x.2) →DEF(
+.
+)
+7.6.2
+Linking with Static Libraries
+So far, we have assumed that the linker reads a collection of relocatable object ﬁles
+and links them together into an output executable ﬁle. In practice, all compilation
+systems provide a mechanism for packaging related object modules into a single
+ﬁle called a static library, which can then be supplied as input to the linker. When
+it builds the output executable, the linker copies only the object modules in the
+library that are referenced by the application program.
+Why do systems support the notion of libraries? Consider ISO C99, which
+deﬁnes an extensive collection of standard I/O, string manipulation, and integer
+math functions such as atoi, printf, scanf, strcpy, and rand. They are available

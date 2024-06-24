@@ -1,0 +1,101 @@
+Homework Problems
+355
+6
+typedef struct {
+7
+long u[2];
+8
+long q;
+9
+} strB;
+10
+11
+strB process(strA s) {
+12
+strB r;
+13
+r.u[0] = s.a[1];
+14
+r.u[1] = s.a[0];
+15
+r.q =
+*s.p;
+16
+return r;
+17
+}
+18
+19
+long eval(long x, long y, long z) {
+20
+strA s;
+21
+s.a[0] = x;
+22
+s.a[1] = y;
+23
+s.p = &z;
+24
+strB r = process(s);
+25
+return r.u[0] + r.u[1] + r.q;
+26
+}
+Gcc generates the following code for these two functions:
+strB process(strA s)
+1
+process:
+2
+movq
+%rdi, %rax
+3
+movq
+24(%rsp), %rdx
+4
+movq
+(%rdx), %rdx
+5
+movq
+16(%rsp), %rcx
+6
+movq
+%rcx, (%rdi)
+7
+movq
+8(%rsp), %rcx
+8
+movq
+%rcx, 8(%rdi)
+9
+movq
+%rdx, 16(%rdi)
+10
+ret
+long eval(long x, long y, long z)
+x in %rdi, y in %rsi, z in %rdx
+1
+eval:
+2
+subq
+$104, %rsp
+3
+movq
+%rdx, 24(%rsp)
+4
+leaq
+24(%rsp), %rax
+5
+movq
+%rdi, (%rsp)
+6
+movq
+%rsi, 8(%rsp)
+7
+movq
+%rax, 16(%rsp)
+8
+leaq
+64(%rsp), %rdi
+9
+call
+process

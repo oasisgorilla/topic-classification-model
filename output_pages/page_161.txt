@@ -1,0 +1,47 @@
+160
+Chapter 2
+Representing and Manipulating Information
+On the other hand, ﬂoating-point addition satisﬁes the following monotonicity
+property: if a ≥b, then x +f a ≥x +f b for any values of a, b, and x other than NaN.
+This property of real (and integer) addition is not obeyed by unsigned or two’s-
+complement addition.
+Floating-point multiplication also obeys many of the properties one normally
+associates with multiplication. Let us deﬁne x *f y to be Round(x × y). This oper-
+ation is closed under multiplication (although possibly yielding inﬁnity or NaN),
+it is commutative, and it has 1.0 as a multiplicative identity. On the other hand,
+it is not associative, due to the possibility of overﬂow or the loss of precision
+due to rounding. For example, with single-precision ﬂoating point, the expression
+(1e20*1e20)*1e-20 evaluates to +∞, while 1e20*(1e20*1e-20) evaluates to
+1e20. In addition, ﬂoating-point multiplication does not distribute over addition.
+For example, with single-precision ﬂoating point, the expression 1e20*(1e20-
+1e20) evaluates to 0.0, while 1e20*1e20-1e20*1e20 evaluates to NaN.
+On the other hand, ﬂoating-point multiplication satisﬁes the following mono-
+tonicity properties for any values of a, b, and c other than NaN:
+a ≥b
+and
+c ≥0 ⇒a *f c ≥b *f c
+a ≥b
+and
+c ≤0 ⇒a *f c ≤b *f c
+In addition, we are also guaranteed that a *f a ≥0, as long as a ̸= NaN. As we
+saw earlier, none of these monotonicity properties hold for unsigned or two’s-
+complement multiplication.
+This lack of associativity and distributivity is of serious concern to scientiﬁc
+programmers and to compiler writers. Even such a seemingly simple task as writing
+code to determine whether two lines intersect in three-dimensional space can be
+a major challenge.
+2.4.6
+Floating Point in C
+All versions of C provide two different ﬂoating-point data types: float and dou-
+ble. On machines that support IEEE ﬂoating point, these data types correspond
+to single- and double-precision ﬂoating point. In addition, the machines use the
+round-to-even rounding mode. Unfortunately, since the C standards do not re-
+quire the machine to use IEEE ﬂoating point, there are no standard methods to
+change the rounding mode or to get special values such as −0, +∞, −∞, or NaN.
+Most systems provide a combination of include (.h) ﬁles and procedure libraries
+to provide access to these features, but the details vary from one system to an-
+other. For example, the GNU compiler gcc deﬁnes program constants INFINITY
+(for +∞) and NAN (for NaN) when the following sequence occurs in the program
+ﬁle:
+#define _GNU_SOURCE 1
+#include <math.h>

@@ -1,0 +1,98 @@
+658
+Chapter 6
+The Memory Hierarchy
+Conﬂict Misses in Direct-Mapped Caches
+Conﬂict misses are common in real programs and can cause bafﬂing performance
+problems. Conﬂict misses in direct-mapped caches typically occur when programs
+access arrays whose sizes are a power of 2. For example, consider a function that
+computes the dot product of two vectors:
+1
+float dotprod(float x[8], float y[8])
+2
+{
+3
+float sum = 0.0;
+4
+int i;
+5
+6
+for (i = 0; i < 8; i++)
+7
+sum += x[i] * y[i];
+8
+return sum;
+9
+}
+This function has good spatial locality with respect to x and y, and so we might ex-
+pect it to enjoy a good number of cache hits. Unfortunately, this is not always true.
+Suppose that ﬂoats are 4 bytes, that x is loaded into the 32 bytes of contiguous
+memory starting at address 0, and that y starts immediately after x at address 32.
+For simplicity, suppose that a block is 16 bytes (big enough to hold four ﬂoats)
+and that the cache consists of two sets, for a total cache size of 32 bytes. We will
+assume that the variable sum is actually stored in a CPU register and thus does not
+require a memory reference. Given these assumptions, each x[i] and y[i] will
+map to the identical cache set:
+Element
+Address
+Set index
+Element
+Address
+Set index
+x[0]
+0
+0
+y[0]
+32
+0
+x[1]
+4
+0
+y[1]
+36
+0
+x[2]
+8
+0
+y[2]
+40
+0
+x[3]
+12
+0
+y[3]
+44
+0
+x[4]
+16
+1
+y[4]
+48
+1
+x[5]
+20
+1
+y[5]
+52
+1
+x[6]
+24
+1
+y[6]
+56
+1
+x[7]
+28
+1
+y[7]
+60
+1
+At run time, the ﬁrst iteration of the loop references x[0], a miss that causes
+the block containing x[0]–x[3] to be loaded into set 0. The next reference is to
+y[0], another miss that causes the block containing y[0]–y[3] to be copied into
+set 0, overwriting the values of x that were copied in by the previous reference.
+During the next iteration, the reference to x[1] misses, which causes the x[0]–
+x[3] block to be loaded back into set 0, overwriting the y[0]–y[3] block. So now
+we have a conﬂict miss, and in fact each subsequent reference to x and y will result
+in a conﬂict miss as we thrash back and forth between blocks of x and y. The term
+thrashing describes any situation where a cache is repeatedly loading and evicting
+the same sets of cache blocks.

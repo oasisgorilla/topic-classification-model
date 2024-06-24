@@ -1,0 +1,66 @@
+Section 3.6
+Control
+261
+short result =
+;
+while (
+) {
+result =
+;
+a =
+;
+}
+return result;
+}
+gcc, run with command-line option -Og, produces the following code:
+short loop_while(short a, short b)
+a in %rdi, b in %rsi
+1
+loop_while:
+2
+movl
+$0, %eax
+3
+jmp
+.L2
+4
+.L3:
+5
+leaq
+(,%rsi,%rdi), %rdx
+6
+addq
+%rdx, %rax
+7
+subq
+$1, %rdi
+8
+.L2:
+9
+cmpq
+%rsi, %rdi
+10
+jg
+.L3
+11
+rep; ret
+We can see that the compiler used a jump-to-middle translation, using the jmp
+instruction on line 3 to jump to the test starting with label .L2. Fill in the missing
+parts of the C code.
+The second translation method, which we refer to as guarded do, ﬁrst trans-
+forms the code into a do-while loop by using a conditional branch to skip over the
+loop if the initial test fails. Gcc follows this strategy when compiling with higher
+levels of optimization, for example, with command-line option -O1. This method
+can be expressed by the following template for translating from the general while
+loop form to a do-while loop:
+t = test-expr;
+if (!t)
+goto done;
+do
+body-statement
+while (test-expr);
+done:
+This, in turn, can be transformed into goto code as
+t = test-expr;
+if (!t)
+goto done;

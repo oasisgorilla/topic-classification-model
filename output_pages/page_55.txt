@@ -1,0 +1,48 @@
+54
+Chapter 1
+A Tour of Computer Systems
+Figure 1.13
+Process virtual address
+space. (The regions are not
+drawn to scale.)
+0
+Memory
+invisible to
+user code
+printf function
+Loaded from the
+hello executable file
+Program
+start
+User stack
+(created at run time)
+Memory-mapped region for
+shared libraries
+Run-time heap
+(created by malloc)
+Read/write data
+Read-only code and data
+Kernel virtual memory
+Section 1.9.2. You will learn the basic concepts of concurrency, including how to
+write threaded programs, in Chapter 12.
+1.7.3
+Virtual Memory
+Virtual memory is an abstraction that provides each process with the illusion that it
+has exclusive use of the main memory. Each process has the same uniform view of
+memory, which is known as its virtual address space. The virtual address space for
+Linux processes is shown in Figure 1.13. (Other Unix systems use a similar layout.)
+In Linux, the topmost region of the address space is reserved for code and data
+in the operating system that is common to all processes. The lower region of the
+address space holds the code and data deﬁned by the user’s process. Note that
+addresses in the ﬁgure increase from the bottom to the top.
+The virtual address space seen by each process consists of a number of well-
+deﬁned areas, each with a speciﬁc purpose. You will learn more about these areas
+later in the book, but it will be helpful to look brieﬂy at each, starting with the
+lowest addresses and working our way up:
+. Program code and data.Code begins at the same ﬁxed address for all processes,
+followed by data locations that correspond to global C variables. The code and
+data areas are initialized directly from the contents of an executable object
+ﬁle—in our case, the hello executable. You will learn more about this part of
+the address space when we study linking and loading in Chapter 7.
+. Heap.The code and data areas are followed immediately by the run-time heap.
+Unlike the code and data areas, which are ﬁxed in size once the process begins

@@ -1,0 +1,41 @@
+276
+Chapter 3
+Machine-Level Representation of Programs
+Figure 3.25
+General stack frame
+structure. The stack
+can be used for passing
+arguments, for storing
+return information, for
+saving registers, and for
+local storage. Portions
+may be omitted when not
+needed.
+. . .
+. . .
+Stack “bottom”
+Stack “top”
+Argument n
+Argument 7
+Argument
+build area
+Return address
+Local variables
+Saved registers
+Stack pointer
+%rsp
+Earlier frames
+Increasing
+address
+Frame for calling
+function P
+Frame for executing
+function Q
+stack frame. Figure 3.25 shows the overall structure of the run-time stack, includ-
+ing its partitioning into stack frames, in its most general form. The frame for the
+currently executing procedure is always at the top of the stack. When procedure P
+calls procedure Q, it will push the return address onto the stack, indicating where
+within P the program should resume execution once Q returns. We consider the
+return address to be part of P’s stack frame, since it holds state relevant to P. The
+code for Q allocates the space required for its stack frame by extending the cur-
+rent stack boundary. Within that space, it can save the values of registers, allocate

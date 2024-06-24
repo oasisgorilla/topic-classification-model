@@ -1,0 +1,59 @@
+234
+Chapter 3
+Machine-Level Representation of Programs
+Instruction
+Effect
+Description
+imulq
+S
+R[%rdx]:R[%rax] ←S × R[%rax]
+Signed full multiply
+mulq
+S
+R[%rdx]:R[%rax] ←S × R[%rax]
+Unsigned full multiply
+cqto
+R[%rdx]:R[%rax] ←SignExtend(R[%rax])
+Convert to oct word
+idivq
+S
+R[%rdx] ←R[%rdx]:R[%rax] mod S;
+Signed divide
+R[%rax] ←R[%rdx]:R[%rax] ÷ S
+divq
+S
+R[%rdx] ←R[%rdx]:R[%rax] mod S;
+Unsigned divide
+R[%rax] ←R[%rdx]:R[%rax] ÷ S
+Figure 3.12
+Special arithmetic operations. These operations provide full 128-bit
+multiplication and division, for both signed and unsigned numbers. The pair of registers
+%rdx and %rax are viewed as forming a single 128-bit oct word.
+describes instructions that support generating the full 128-bit product of two 64-bit
+numbers, as well as integer division.
+The imulq instruction has two different forms One form, shown in Figure 3.10,
+is as a member of the imul instruction class. In this form, it serves as a “two-
+operand” multiply instruction, generating a 64-bit product from two 64-bit oper-
+ands. It implements the operations *u
+64 and *t
+64 described in Sections 2.3.4 and 2.3.5.
+(Recall that when truncating the product to 64 bits, both unsigned multiply and
+two’s-complement multiply have the same bit-level behavior.)
+Additionally, the x86-64 instruction set includes two different “one-operand”
+multiply instructions to compute the full 128-bit product of two 64-bit values—
+one for unsigned (mulq) and one for two’s-complement (imulq) multiplication.
+For both of these instructions, one argument must be in register %rax, and the
+other is given as the instruction source operand. The product is then stored in
+registers %rdx (high-order 64 bits) and %rax (low-order 64 bits). Although the
+name imulq is used for two distinct multiplication operations, the assembler can
+tell which one is intended by counting the number of operands.
+As an example, the following C code demonstrates the generation of a 128-bit
+product of two unsigned 64-bit numbers x and y:
+#include <inttypes.h>
+typedef unsigned __int128 uint128_t;
+void store_uprod(uint128_t *dest, uint64_t x, uint64_t y) {
+*dest = x * (uint128_t) y;
+}
+In this program, we explicitly declare x and y to be 64-bit numbers, using deﬁ-
+nitions declared in the ﬁle inttypes.h , as part of an extension of the C standard.
+Unfortunately, this standard does not make provisions for 128-bit values. Instead,

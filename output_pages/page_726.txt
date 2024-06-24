@@ -1,0 +1,40 @@
+Section 7.7
+Relocation
+725
+The general rule for libraries is to place them at the end of the command
+line. If the members of the different libraries are independent, in that no member
+references a symbol deﬁned by another member, then the libraries can be placed
+at the end of the command line in any order. If, on the other hand, the libraries
+are not independent, then they must be ordered so that for each symbol s that
+is referenced externally by a member of an archive, at least one deﬁnition of s
+follows a reference to s on the command line. For example, suppose foo.c calls
+functions in libx.a and libz.a that call functions in liby.a. Then libx.a and
+libz.a must precede liby.a on the command line:
+linux> gcc foo.c libx.a libz.a liby.a
+Libraries can be repeated on the command line if necessary to satisfy the
+dependence requirements. For example, suppose foo.c calls a function in libx.a
+that calls a function in liby.a that calls a function in libx.a. Then libx.a must
+be repeated on the command line:
+linux> gcc foo.c libx.a liby.a libx.a
+Alternatively, we could combine libx.a and liby.a into a single archive.
+Practice Problem 7.3 (solution page 754)
+Let a and b denote object modules or static libraries in the current directory, and
+let a→b denote that a depends on b, in the sense that b deﬁnes a symbol that is
+referenced by a. For each of the following scenarios, show the minimal command
+line (i.e., one with the least number of object ﬁle and library arguments) that will
+allow the static linker to resolve all symbol references.
+A. p.o →libx.a
+B. p.o →libx.a →liby.a
+C. p.o →libx.a →liby.a and liby.a →libx.a →p.o
+7.7
+Relocation
+Once the linker has completed the symbol resolution step, it has associated each
+symbol reference in the code with exactly one symbol deﬁnition (i.e., a symbol
+table entry in one of its input object modules). At this point, the linker knows
+the exact sizes of the code and data sections in its input object modules. It is now
+ready to begin the relocation step, where it merges the input modules and assigns
+run-time addresses to each symbol. Relocation consists of two steps:
+1. Relocating sections and symbol deﬁnitions. In this step, the linker merges all
+sections of the same type into a new aggregate section of the same type. For
+example, the .data sections from the input modules are all merged into one
+section that will become the .data section for the output executable object

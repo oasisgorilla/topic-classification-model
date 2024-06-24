@@ -1,0 +1,63 @@
+456
+Chapter 4
+Processor Architecture
+Time
+Clock
+Time
+(a) Hardware: Unpipelined with feedback
+(b) Pipeline diagram
+(d) Pipeline diagram
+(c) Hardware: Three-stage pipeline with feedback
+Combinational
+logic
+R
+e
+g
+Clock
+Comb.
+logic
+A
+R
+e
+g
+Comb.
+logic
+B
+R
+e
+g
+Comb.
+logic
+C
+R
+e
+g
+I1
+I2
+I3
+I1
+I2
+I3
+A
+B
+C
+A
+B
+C
+A
+B
+C
+I4
+A
+B
+C
+Figure 4.38
+Limitations of pipelining due to logical dependencies. In going from an
+unpipelined system with feedback (a) to a pipelined one (c), we change its computational
+behavior, as can be seen by the two pipeline diagrams (b and d).
+instruction is fed back around to the next instruction. This is illustrated by the
+pipeline diagram (Figure 4.38(b)), where the result of I1 becomes an input to
+I2, and so on. If we attempt to convert this to a three-stage pipeline in the most
+straightforward manner (Figure 4.38(c)), we change the behavior of the system.
+As Figure 4.38(c) shows, the result of I1 becomes an input to I4. In attempting to
+speed up the system via pipelining, we have changed the system behavior.

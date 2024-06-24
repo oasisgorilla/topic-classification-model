@@ -1,0 +1,71 @@
+Section 10.5
+Robust Reading and Writing with the Rio Package
+937
+code/src/csapp.c
+1
+static ssize_t rio_read(rio_t *rp, char *usrbuf, size_t n)
+2
+{
+3
+int cnt;
+4
+5
+while (rp->rio_cnt <= 0) {
+/* Refill if buf is empty */
+6
+rp->rio_cnt = read(rp->rio_fd, rp->rio_buf,
+7
+sizeof(rp->rio_buf));
+8
+if (rp->rio_cnt < 0) {
+9
+if (errno != EINTR) /* Interrupted by sig handler return */
+10
+return -1;
+11
+}
+12
+else if (rp->rio_cnt == 0)
+/* EOF */
+13
+return 0;
+14
+else
+15
+rp->rio_bufptr = rp->rio_buf; /* Reset buffer ptr */
+16
+}
+17
+18
+/* Copy min(n, rp->rio_cnt) bytes from internal buf to user buf */
+19
+cnt = n;
+20
+if (rp->rio_cnt < n)
+21
+cnt = rp->rio_cnt;
+22
+memcpy(usrbuf, rp->rio_bufptr, cnt);
+23
+rp->rio_bufptr += cnt;
+24
+rp->rio_cnt -= cnt;
+25
+return cnt;
+26
+}
+code/src/csapp.c
+Figure 10.7
+The internal rio_read function.
+nonempty, rio_read copies the minimum of n and rp->rio_cnt bytes from the
+read buffer to the user buffer and returns the number of bytes copied.
+To an application program, the rio_read function has the same semantics as
+the Linux read function. On error, it returns −1 and sets errno appropriately. On
+EOF, it returns 0. It returns a short count if the number of requested bytes exceeds
+the number of unread bytes in the read buffer. The similarity of the two functions
+makes it easy to build different kinds of buffered read functions by substituting
+rio_read for read. For example, the rio_readnb function in Figure 10.8 has the
+same structure as rio_readn, with rio_read substituted for read. Similarly, the
+rio_readlineb routine in Figure 10.8 calls rio_read at most maxlen-1 times.
+Each call returns 1 byte from the read buffer, which is then checked for being the
+terminating newline.

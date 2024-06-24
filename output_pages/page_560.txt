@@ -1,0 +1,71 @@
+Section 5.7
+Understanding Modern Processors
+559
+Integer
+Floating point
+Operation
+Latency
+Issue
+Capacity
+Latency
+Issue
+Capacity
+Addition
+1
+1
+4
+3
+1
+1
+Multiplication
+3
+1
+1
+5
+1
+2
+Division
+3–30
+3–30
+1
+3–15
+3–15
+1
+Figure 5.12
+Latency, issue time, and capacity characteristics of reference machine
+operations. Latency indicates the total number of clock cycles required to perform the
+actual operations, while issue time indicates the minimum number of cycles between
+two independent operations. The capacity indicates how many of these operations can
+be issued simultaneously. The times for division depend on the data values.
+5.7.2
+Functional Unit Performance
+Figure 5.12 documents the performance of some of the arithmetic operations for
+our Intel Core i7 Haswell reference machine, determined by both measurements
+and by reference to Intel literature [49]. These timings are typical for other proces-
+sors as well. Each operation is characterized by its latency, meaning the total time
+required to perform the operation, the issue time, meaning the minimum num-
+ber of clock cycles between two independent operations of the same type, and
+the capacity, indicating the number of functional units capable of performing that
+operation.
+We see that the latencies increase in going from integer to ﬂoating-point
+operations. We see also that the addition and multiplication operations all have
+issue times of 1, meaning that on each clock cycle, the processor can start a
+new one of these operations. This short issue time is achieved through the use
+of pipelining. A pipelined function unit is implemented as a series of stages,
+each of which performs part of the operation. For example, a typical ﬂoating-
+point adder contains three stages (and hence the three-cycle latency): one to
+process the exponent values, one to add the fractions, and one to round the result.
+The arithmetic operations can proceed through the stages in close succession
+rather than waiting for one operation to complete before the next begins. This
+capability can be exploited only if there are successive, logically independent
+operations to be performed. Functional units with issue times of 1 cycle are said
+to be fully pipelined: they can start a new operation every clock cycle. Operations
+with capacity greater than 1 arise due to the capabilities of the multiple functional
+units, as was described earlier for the reference machine.
+We see also that the divider (used for integer and ﬂoating-point division, as
+well as ﬂoating-point square root) is not pipelined—its issue time equals its latency.
+What this means is that the divider must perform a complete division before it can
+begin a new one. We also see that the latencies and issue times for division are given
+as ranges, because some combinations of dividend and divisor require more steps
+than others. The long latency and issue times of division make it a comparatively
+costly operation.

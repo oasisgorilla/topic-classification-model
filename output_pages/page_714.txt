@@ -1,0 +1,64 @@
+Section 7.5
+Symbols and Symbol Tables
+713
+New to C?
+Hiding variable and function names with static
+C programmers use the static attribute to hide variable and function declarations inside modules,
+much as you would use public and private declarations in Java and C++. In C, source ﬁles play the
+role of modules. Any global variable or function declared with the static attribute is private to that
+module. Similarly, any global variable or function declared without the static attribute is public and
+can be accessed by any other module. It is good programming practice to protect your variables and
+functions with the static attribute wherever possible.
+code/link/elfstructs.c
+1
+typedef struct {
+2
+int
+name;
+/* String table offset */
+3
+char
+type:4,
+/* Function or data (4 bits) */
+4
+binding:4; /* Local or global (4 bits) */
+5
+char
+reserved;
+/* Unused */
+6
+short section;
+/* Section header index */
+7
+long
+value;
+/* Section offset or absolute address */
+8
+long
+size;
+/* Object size in bytes */
+9
+} Elf64_Symbol;
+code/link/elfstructs.c
+Figure 7.4
+ELF symbol table entry. The type and binding ﬁelds are 4 bits each.
+and for the path name of the original source ﬁle. So there are distinct types for
+these objects as well. The binding ﬁeld indicates whether the symbol is local or
+global.
+Each symbol is assigned to some section of the object ﬁle, denoted by the sec-
+tion ﬁeld, which is an index into the section header table. There are three special
+pseudosections that don’t have entries in the section header table: ABS is for sym-
+bols that should not be relocated. UNDEF is for undeﬁned symbols—that is, sym-
+bols that are referenced in this object module but deﬁned elsewhere. COMMON
+is for uninitialized data objects that are not yet allocated. For COMMON symbols,
+the value ﬁeld gives the alignment requirement, and size gives the minimum size.
+Note that these pseudosections exist only in relocatable object ﬁles; they do not
+exist in executable object ﬁles.
+The distinction between COMMON and .bss is subtle. Modern versions of
+gcc assign symbols in relocatable object ﬁles to COMMON and .bss using the
+following convention:
+COMMON
+Uninitialized global variables
+.bss
+Uninitialized static variables, and global or static variables that are
+initialized to zero

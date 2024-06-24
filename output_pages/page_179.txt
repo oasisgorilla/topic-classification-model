@@ -1,0 +1,44 @@
+178
+Chapter 2
+Representing and Manipulating Information
+2.93 ◆◆
+Following the bit-level ﬂoating-point coding rules, implement the function with
+the following prototype:
+/* Compute |f|.
+If f is NaN, then return f. */
+float_bits float_absval(float_bits f);
+For ﬂoating-point number f , this function computes |f |. If f is NaN, your
+function should simply return f .
+Test your function by evaluating it for all 232 values of argument f and com-
+paring the result to what would be obtained using your machine’s ﬂoating-point
+operations.
+2.94 ◆◆◆
+Following the bit-level ﬂoating-point coding rules, implement the function with
+the following prototype:
+/* Compute 2*f.
+If f is NaN, then return f. */
+float_bits float_twice(float_bits f);
+For ﬂoating-point number f , this function computes 2.0 . f . If f is NaN, your
+function should simply return f .
+Test your function by evaluating it for all 232 values of argument f and com-
+paring the result to what would be obtained using your machine’s ﬂoating-point
+operations.
+2.95 ◆◆◆
+Following the bit-level ﬂoating-point coding rules, implement the function with
+the following prototype:
+/* Compute 0.5*f.
+If f is NaN, then return f. */
+float_bits float_half(float_bits f);
+For ﬂoating-point number f , this function computes 0.5 . f . If f is NaN, your
+function should simply return f .
+Test your function by evaluating it for all 232 values of argument f and com-
+paring the result to what would be obtained using your machine’s ﬂoating-point
+operations.
+2.96 ◆◆◆◆
+Following the bit-level ﬂoating-point coding rules, implement the function with
+the following prototype:
+/*
+* Compute (int) f.
+* If conversion causes overflow or f is NaN, return 0x80000000
+*/
+int float_f2i(float_bits f);

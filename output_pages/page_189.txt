@@ -1,0 +1,98 @@
+188
+Chapter 2
+Representing and Manipulating Information
+Solution to Problem 2.27 (page 125)
+This function is a direct implementation of the rules given to determine whether
+or not an unsigned addition overﬂows.
+/* Determine whether arguments can be added without overflow */
+int uadd_ok(unsigned x, unsigned y) {
+unsigned sum = x+y;
+return sum >= x;
+}
+Solution to Problem 2.28 (page 125)
+This problem is a simple demonstration of arithmetic modulo 16. The easiest way
+to solve it is to convert the hex pattern into its unsigned decimal value. For nonzero
+values of x, we must have (-u
+4 x) + x = 16. Then we convert the complemented
+value back to hex.
+x
+-u
+4 x
+Hex
+Decimal
+Decimal
+Hex
+1
+1
+15
+F
+4
+4
+12
+C
+7
+7
+9
+9
+A
+10
+6
+6
+E
+14
+2
+2
+Solution to Problem 2.29 (page 129)
+This problem is an exercise to make sure you understand two’s-complement
+addition.
+x
+y
+x + y
+x +t
+5 y
+Case
+−12
+−15
+−27
+5
+1
+[10100]
+[10001]
+[100101]
+[00101]
+−8
+−8
+−16
+−16
+2
+[11000]
+[11000]
+[110000]
+[10000]
+−9
+8
+−1
+−1
+2
+[10111]
+[01000]
+[111111]
+[11111]
+2
+5
+7
+7
+3
+[00010]
+[00101]
+[000111]
+[00111]
+12
+4
+16
+−16
+4
+[01100]
+[00100]
+[010000]
+[10000]

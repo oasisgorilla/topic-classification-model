@@ -1,0 +1,92 @@
+Homework Problems
+351
+p1 in %rdi, p2 in %rsi, action in %edx
+1
+.L8:
+MODE_E
+2
+movl
+$27, %eax
+3
+ret
+4
+.L3:
+MODE_A
+5
+movq
+(%rsi), %rax
+6
+movq
+(%rdi), %rdx
+7
+movq
+%rdx, (%rsi)
+8
+ret
+9
+.L5:
+MODE_B
+10
+movq
+(%rdi), %rax
+11
+addq
+(%rsi), %rax
+12
+movq
+%rax, (%rdi)
+13
+ret
+14
+.L6:
+MODE_C
+15
+movq
+$59, (%rdi)
+16
+movq
+(%rsi), %rax
+17
+ret
+18
+.L7:
+MODE_D
+19
+movq
+(%rsi), %rax
+20
+movq
+%rax, (%rdi)
+21
+movl
+$27, %eax
+22
+ret
+23
+.L9:
+default
+24
+movl
+$12, %eax
+25
+ret
+Figure 3.52
+Assembly code for Problem 3.62. This code implements the different
+branches of a switch statement.
+Figure 3.53 shows the disassembled machine code for the procedure.
+The jump table resides in a different area of memory. We can see from
+the indirect jump on line 5 that the jump table begins at address 0x4006f8.
+Using the gdb debugger, we can examine the six 8-byte words of memory compris-
+ing the jump table with the command x/6gx 0x4006f8. Gdb prints the following:
+(gdb) x/6gx 0x4006f8
+0x4006f8:
+0x00000000004005a1
+0x00000000004005c3
+0x400708:
+0x00000000004005a1
+0x00000000004005aa
+0x400718:
+0x00000000004005b2
+0x00000000004005bf
+Fill in the body of the switch statement with C code that will have the same
+behavior as the machine code.

@@ -1,0 +1,263 @@
+152
+Chapter 2
+Representing and Manipulating Information
+Exponent
+Fraction
+Value
+Description
+Bit representation
+e
+E
+2E
+f
+M
+2E × M
+V
+Decimal
+Zero
+0 0000 000
+0
+−6
+1
+64
+0
+8
+0
+8
+0
+512
+0
+0.0
+Smallest positive
+0 0000 001
+0
+−6
+1
+64
+1
+8
+1
+8
+1
+512
+1
+512
+0.001953
+0 0000 010
+0
+−6
+1
+64
+2
+8
+2
+8
+2
+512
+1
+256
+0.003906
+0 0000 011
+0
+−6
+1
+64
+3
+8
+3
+8
+3
+512
+3
+512
+0.005859
+.
+.
+.
+Largest denormalized
+0 0000 111
+0
+−6
+1
+64
+7
+8
+7
+8
+7
+512
+7
+512
+0.013672
+Smallest normalized
+0 0001 000
+1
+−6
+1
+64
+0
+8
+8
+8
+8
+512
+1
+64
+0.015625
+0 0001 001
+1
+−6
+1
+64
+1
+8
+9
+8
+9
+512
+9
+512
+0.017578
+.
+.
+.
+0 0110 110
+6
+−1
+1
+2
+6
+8
+14
+8
+14
+16
+7
+8
+0.875
+0 0110 111
+6
+−1
+1
+2
+7
+8
+15
+8
+15
+16
+15
+16
+0.9375
+One
+0 0111 000
+7
+0
+1
+0
+8
+8
+8
+8
+8
+1
+1.0
+0 0111 001
+7
+0
+1
+1
+8
+9
+8
+9
+8
+9
+8
+1.125
+0 0111 010
+7
+0
+1
+2
+8
+10
+8
+10
+8
+5
+4
+1.25
+.
+.
+.
+0 1110 110
+14
+7
+128
+6
+8
+14
+8
+1792
+8
+224
+224.0
+Largest normalized
+0 1110 111
+14
+7
+128
+7
+8
+15
+8
+1920
+8
+240
+240.0
+Inﬁnity
+0 1111 000
+—
+—
+—
+—
+—
+—
+∞
+—
+Figure 2.35
+Example nonnegative values for 8-bit ﬂoating-point format. There are k = 4 exponent bits
+and n = 3 fraction bits. The bias is 7.
+represented value V = 2E × M. Closest to 0 are the denormalized numbers, start-
+ing with 0 itself. Denormalized numbers in this format have E = 1 −7 = −6, giv-
+ing a weight 2E = 1
+64. The fractions f and signiﬁcands M range over the values
+0, 1
+8, . . . , 7
+8, giving numbers V in the range 0 to 1
+64 × 7
+8 =
+7
+512.
+The smallest normalized numbers in this format also have E = 1 −7 = −6,
+and the fractions also range over the values 0, 1
+8, . . . 7
+8. However, the signiﬁcands
+then range from 1 + 0 = 1 to 1 + 7
+8 = 15
+8 , giving numbers V in the range
+8
+512 = 1
+64
+to 15
+512.
+Observe the smooth transition between the largest denormalized number
+7
+512
+and the smallest normalized number
+8
+512. This smoothness is due to our deﬁnition
+of E for denormalized values. By making it 1 −Bias rather than −Bias, we com-
+pensate for the fact that the signiﬁcand of a denormalized number does not have
+an implied leading 1.

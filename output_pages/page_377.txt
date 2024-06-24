@@ -1,0 +1,57 @@
+376
+Chapter 3
+Machine-Level Representation of Programs
+6, computed as the sum of the sizes of a and b. Since we know a is 4 bytes long,
+we can deduce that b must be 2.
+An annotated version of this function explains these details:
+int procprobl(int a, short b, long *u, char *v)
+a in %edi, b in %si, u in %rdx, v in %rcx
+1
+procprob:
+2
+movslq
+%edi, %rdi
+Convert a to long
+3
+addq
+%rdi, (%rdx)
+Add to *u (long)
+4
+addb
+%sil, (%rcx)
+Add low-order byte of b to *v
+5
+movl
+$6, %eax
+Return 4+2
+6
+ret
+Alternatively, we can see that the same assembly code would be valid if the
+two sums were computed in the assembly code in the opposite ordering as they are
+in the C code. This would result in interchanging arguments a and b and arguments
+u and v, yielding the following prototype:
+int procprob(int b, short a, long *v, char *u);
+Solution to Problem 3.34 (page 288)
+This example demonstrates the use of callee-saved registers as well as the stack
+for holding local data.
+A. We can see that lines 9–14 save local values a0–a5 into callee-saved registers
+%rbx, %r15, %r14, %r13, %r12, and %rbp, respectively.
+B. Local values a6 and a7 are stored on the stack at offsets 0 and 8 relative to
+the stack pointer (lines 16 and 18).
+C. After storing six local variables, the program has used up the supply of callee-
+saved registers. It stores the remaining two local values on the stack.
+Solution to Problem 3.35 (page 290)
+This problem provides a chance to examine the code for a recursive function. An
+important lesson to learn is that recursive code has the exact same structure as the
+other functions we have seen. The stack and register-saving disciplines sufﬁce to
+make recursive functions operate correctly.
+A. Register %rbx holds the value of parameter x, so that it can be used to
+compute the result expression.
+B. The assembly code was generated from the following C code:
+long rfun(unsigned long x) {
+if (x == 0)
+return 0;
+unsigned long nx = x>>2;
+long rv = rfun(nx);
+return x + rv;
+}

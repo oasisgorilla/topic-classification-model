@@ -1,0 +1,45 @@
+Section 2.3
+Integer Arithmetic
+135
+Mode
+x
+y
+x . y
+Truncated x . y
+Unsigned
+[110]
+[110]
+Two’s complement
+[110]
+[110]
+Practice Problem 2.35 (solution page 190)
+You are given the assignment to develop code for a function tmult_ok that will
+determine whether two arguments can be multiplied without causing overﬂow.
+Here is your solution:
+/* Determine whether arguments can be multiplied without overflow */
+int tmult_ok(int x, int y) {
+int p = x*y;
+/* Either x is zero, or dividing p by x gives y */
+return !x || p/x == y;
+}
+You test this code for a number of values of x and y, and it seems to work
+properly. Your coworker challenges you, saying, “If I can’t use subtraction to
+test whether addition has overﬂowed (see Problem 2.31), then how can you use
+division to test whether multiplication has overﬂowed?”
+Devise a mathematical justiﬁcation of your approach, along the following
+lines. First, argue that the case x = 0 is handled correctly. Otherwise, consider
+w-bit numbers x (x ̸= 0), y, p, and q, where p is the result of performing two’s-
+complement multiplication on x and y, and q is the result of dividing p by x.
+1. Show that x . y, the integer product of x and y, can be written in the form
+x . y = p + t2w, where t ̸= 0 if and only if the computation of p overﬂows.
+2. Show that p can be written in the form p = x . q + r, where |r| < |x|.
+3. Show that q = y if and only if r = t = 0.
+Practice Problem 2.36 (solution page 190)
+For the case where data type int has 32 bits, devise a version of tmult_ok (Prob-
+lem 2.35) that uses the 64-bit precision of data type int64_t, without using
+division.
+Practice Problem 2.37 (solution page 191)
+You are given the task of patching the vulnerability in the XDR code shown in
+the aside on page 136 for the case where both data types int and size_t are 32
+bits. You decide to eliminate the possibility of the multiplication overﬂowing by
+computing the number of bytes to allocate using data type uint64_t. You replace

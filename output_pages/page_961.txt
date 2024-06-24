@@ -1,0 +1,55 @@
+960
+Chapter 11
+Network Programming
+Figure 11.8
+Hardware and software
+organization of an
+Internet application.
+Client
+Internet client host
+User code
+Sockets interface
+(system calls)
+Hardware interface
+(interrupts)
+TCP/IP
+Kernel code
+Network
+adapter
+Server
+Internet server host
+TCP/IP
+Network
+adapter
+Hardware
+Global IP Internet
+11.3
+The Global IP Internet
+The global IP Internet is the most famous and successful implementation of an
+internet. It has existed in one form or another since 1969. While the internal
+architecture of the Internet is complex and constantly changing, the organization
+of client-server applications has remained remarkably stable since the early 1980s.
+Figure 11.8 shows the basic hardware and software organization of an Internet
+client-server application.
+Each Internet host runs software that implements the TCP/IP protocol
+(Transmission Control Protocol/Internet Protocol), which is supported by almost
+every modern computer system. Internet clients and servers communicate using
+a mix of sockets interface functions and Unix I/O functions. (We will describe the
+sockets interface in Section 11.4.) The sockets functions are typically implemented
+as system calls that trap into the kernel and call various kernel-mode functions in
+TCP/IP.
+TCP/IP is actually a family of protocols, each of which contributes different
+capabilities. For example, IP provides the basic naming scheme and a delivery
+mechanism that can send packets, known as datagrams, from one Internet host to
+any other host. The IP mechanism is unreliable in the sense that it makes no effort
+to recover if datagrams are lost or duplicated in the network. UDP (Unreliable
+Datagram Protocol) extends IP slightly, so that datagrams can be transferred
+from process to process, rather than host to host. TCP is a complex protocol that
+builds on IP to provide reliable full duplex (bidirectional) connections between
+processes. To simplify our discussion, we will treat TCP/IP as a single monolithic
+protocol. We will not discuss its inner workings, and we will only discuss some of
+the basic capabilities that TCP and IP provide to application programs. We will
+not discuss UDP.
+From a programmer’s perspective, we can think of the Internet as a worldwide
+collection of hosts with the following properties:
+. The set of hosts is mapped to a set of 32-bit IP addresses.

@@ -1,0 +1,42 @@
+Preface
+27
+Chapter 7: Linking. We have rewritten this chapter for x86-64, expanded the
+discussion of using the GOT and PLT to create position-independent code,
+and added a new section on a powerful linking technique known as library
+interpositioning.
+Chapter 8: Exceptional Control Flow. We have added a more rigorous treatment
+of signal handlers, including async-signal-safe functions, speciﬁc guidelines
+for writing signal handlers, and using sigsuspend to wait for handlers.
+Chapter 9: Virtual Memory. This chapter has changed only slightly.
+Chapter 10: System-Level I/O. We have added a new section on ﬁles and the ﬁle
+hierarchy, but otherwise, this chapter has changed only slightly.
+Chapter 11: Network Programming. We have introduced techniques for protocol-
+independent and thread-safe network programming using the modern
+getaddrinfo and getnameinfo functions, which replace the obsolete and
+non-reentrant gethostbyname and gethostbyaddr functions.
+Chapter 12: Concurrent Programming. We have increased our coverage of using
+thread-level parallelism to make programs run faster on multi-core ma-
+chines.
+In addition, we have added and revised a number of practice and homework
+problems throughout the text.
+Origins of the Book
+This book stems from an introductory course that we developed at Carnegie Mel-
+lon University in the fall of 1998, called 15-213: Introduction to Computer Systems
+(ICS) [14]. The ICS course has been taught every semester since then. Over 400
+students take the course each semester. The students range from sophomores to
+graduate students in a wide variety of majors. It is a required core course for all
+undergraduates in the CS and ECE departments at Carnegie Mellon, and it has
+become a prerequisite for most upper-level systems courses in CS and ECE.
+The idea with ICS was to introduce students to computers in a different way.
+Few of our students would have the opportunity to build a computer system. On
+the other hand, most students, including all computer scientists and computer
+engineers, would be required to use and program computers on a daily basis. So we
+decided to teach about systems from the point of view of the programmer, using
+the following ﬁlter: we would cover a topic only if it affected the performance,
+correctness, or utility of user-level C programs.
+For example, topics such as hardware adder and bus designs were out. Top-
+ics such as machine language were in; but instead of focusing on how to write
+assembly language by hand, we would look at how a C compiler translates C con-
+structs into machine code, including pointers, loops, procedure calls, and switch
+statements. Further, we would take a broader and more holistic view of the system
+as both hardware and systems software, covering such topics as linking, loading,

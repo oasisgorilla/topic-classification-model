@@ -1,0 +1,79 @@
+Solutions to Practice Problems
+917
+Number of
+Number of
+address bits (n)
+virtual addresses (N)
+Largest possible virtual address
+4
+24 = 16
+24 −1 = 15
+14
+214 = 16 K
+214 −1 = 16 K −1
+24
+224 = 16 M
+224 −1 = 16 M −1
+46
+246 = 64 T
+246 −1 = 64 T −1
+54
+254 = 16 P
+254 −1 = 16 P −1
+Solution to Problem 9.2 (page 843)
+Since each virtual page is P = 2p bytes, there are a total of 2n/2p = 2n−p possible
+pages in the system, each of which needs a page table entry (PTE).
+n
+P = 2p
+Number of PTEs
+12
+1 K
+4
+16
+16 K
+4
+24
+2 M
+8
+36
+1 G
+64
+Solution to Problem 9.3 (page 852)
+You need to understand this kind of problem well in order to fully grasp address
+translation. Here is how to solve the ﬁrst subproblem: We are given n = 64 virtual
+address bits and m = 32 physical address bits. A page size of P = 1 KB means we
+need log2(1 K) = 10 bits for both the VPO and PPO. (Recall that the VPO and PPO
+are identical.) The remaining address bits are the VPN and PPN, respectively.
+Number of
+P
+VPN bits
+VPO bits
+PPN bits
+PPO bits
+1 KB
+54
+10
+22
+10
+2 KB
+53
+11
+21
+11
+4 KB
+52
+12
+20
+12
+16 KB
+50
+14
+18
+14
+Solution to Problem 9.4 (page 860)
+Doing a few of these manual simulations is a great way to ﬁrm up your understand-
+ing of address translation. You might ﬁnd it helpful to write out all the bits in the
+addresses and then draw boxes around the different bit ﬁelds, such as VPN, TLBI,
+and so on. In this particular problem, there are no misses of any kind: the TLB
+has a copy of the PTE and the cache has a copy of the requested data words. See
+Problems 9.11, 9.12, and 9.13 for some different combinations of hits and misses.

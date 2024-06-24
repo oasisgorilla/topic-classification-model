@@ -1,0 +1,81 @@
+Section 4.4
+General Principles of Pipelining
+453
+I1
+I2
+I3
+A
+B
+C
+A
+B
+C
+A
+B
+C
+Time
+Clock
+Comb.
+logic
+A
+R
+e
+g
+(a) Hardware: Three-stage pipeline, nonuniform stage delays
+50 ps
+20 ps
+Comb.
+logic
+B
+R
+e
+g
+150 ps
+20 ps
+Comb.
+logic
+C
+R
+e
+g
+100 ps
+20 ps
+(b) Pipeline diagram
+Delay  510 ps
+Throughput  5.88 GIPS
+Figure 4.36
+Limitations of pipelining due to nonuniform stage delays. The system
+throughput is limited by the speed of the slowest stage.
+some of the hardware units in a processor, such as the ALU and the memories,
+cannot be subdivided into multiple units with shorter delay. This makes it difﬁcult
+to create a set of balanced stages. We will not concern ourselves with this level of
+detail in designing our pipelined Y86-64 processor, but it is important to appreciate
+the importance of timing optimization in actual system design.
+Practice Problem 4.28 (solution page 525)
+Suppose we analyze the combinational logic of Figure 4.32 and determine that it
+can be separated into a sequence of six blocks, named A to F, having delays of 80,
+30, 60, 50, 70, and 10 ps, respectively, illustrated as follows:
+80 ps
+30 ps
+60 ps
+50 ps
+70 ps
+10 ps
+A
+E
+F
+C
+B
+D
+20 ps
+Clock
+R
+e
+g
+We can create pipelined versions of this design by inserting pipeline registers
+between pairs of these blocks. Different combinations of pipeline depth (how
+many stages) and maximum throughput arise, depending on where we insert the
+pipeline registers. Assume that a pipeline register has a delay of 20 ps.
+A. Inserting a single register gives a two-stage pipeline. Where should the
+register be inserted to maximize throughput? What would be the throughput
+and latency?

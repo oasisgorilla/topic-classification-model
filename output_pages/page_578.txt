@@ -1,0 +1,85 @@
+Section 5.9
+Enhancing Parallelism
+577
+ceeds normally. In most real-life applications, however, such patterns are unlikely.
+Since most physical phenomena are continuous, numerical data tend to be reason-
+ably smooth and well behaved. Even when there are discontinuities, they do not
+generally cause periodic patterns that lead to a condition such as that sketched ear-
+lier. It is unlikely that multiplying the elements in strict order gives fundamentally
+better accuracy than does multiplying two groups independently and then mul-
+tiplying those products together. For most applications, achieving a performance
+gain of 2× outweighs the risk of generating different results for strange data pat-
+terns. Nevertheless, a program developer should check with potential users to see
+if there are particular conditions that may cause the revised algorithm to be unac-
+ceptable. Most compilers do not attempt such transformations with ﬂoating-point
+code, since they have no way to judge the risks of introducing transformations that
+can change the program behavior, no matter how small.
+5.9.2
+Reassociation Transformation
+We now explore another way to break the sequential dependencies and thereby
+improve performance beyond the latency bound. We saw that the k × 1 loop un-
+rolling of combine5 did not change the set of operations performed in combining
+the vector elements to form their sum or product. By a very small change in the
+code, however, we can fundamentally change the way the combining is performed,
+and also greatly increase the program performance.
+Figure 5.26 shows a function combine7 that differs from the unrolled code of
+combine5 (Figure 5.16) only in the way the elements are combined in the inner
+loop. In combine5, the combining is performed by the statement
+12
+acc = (acc OP data[i]) OP data[i+1];
+while in combine7 it is performed by the statement
+12
+acc = acc OP (data[i] OP data[i+1]);
+differing only in how two parentheses are placed. We call this a reassociation trans-
+formation, because the parentheses shift the order in which the vector elements
+are combined with the accumulated value acc, yielding a form of loop unrolling
+we refer to as “2 × 1a.”
+To an untrained eye, the two statements may seem essentially the same, but
+when we measure the CPE, we get a surprising result:
+Integer
+Floating point
+Function
+Page
+Method
++
+*
++
+*
+combine4
+551
+Accumulate in temporary
+1.27
+3.01
+3.01
+5.01
+combine5
+568
+2 × 1 unrolling
+1.01
+3.01
+3.01
+5.01
+combine6
+573
+2 × 2 unrolling
+0.81
+1.51
+1.51
+2.51
+combine7
+578
+2 × 1a unrolling
+1.01
+1.51
+1.51
+2.51
+Latency bound
+1.00
+3.00
+3.00
+5.00
+Throughput bound
+0.50
+1.00
+1.00
+0.50

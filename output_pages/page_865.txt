@@ -1,0 +1,81 @@
+864
+Chapter 9
+Virtual Memory
+R/W
+U/S
+WT
+CD
+A
+0
+D
+G
+Page physical base addr
+Unused
+Unused
+P=1
+Available for OS (page table location on disk)
+P=0
+0
+1
+2
+3
+XD
+63
+4
+5
+6
+7
+8
+9
+11
+12
+51
+52
+62
+Field
+Description
+P
+Child page present in physical memory (1) or not (0).
+R/W
+Read-only or read/write access permission for child page.
+U/S
+User or supervisor mode (kernel mode) access permission for child page.
+WT
+Write-through or write-back cache policy for the child page.
+CD
+Cache disabled or enabled.
+A
+Reference bit (set by MMU on reads and writes, cleared by software).
+D
+Dirty bit (set by MMU on writes, cleared by software).
+G
+Global page (don’t evict from TLB on task switch).
+Base addr
+40 most signiﬁcant bits of physical base address of child page.
+XD
+Disable or enable instruction fetches from the child page.
+Figure 9.24
+Format of level 4 page table entries. Each entry references a 4 KB child
+page.
+write back a victim page before it copies in a replacement page. The kernel can
+call a special kernel-mode instruction to clear the reference or dirty bits.
+Figure 9.25 shows how the Core i7 MMU uses the four levels of page tables
+to translate a virtual address to a physical address. The 36-bit VPN is partitioned
+into four 9-bit chunks, each of which is used as an offset into a page table. The
+CR3 register contains the physical address of the L1 page table. VPN 1 provides
+an offset to an L1 PTE, which contains the base address of the L2 page table. VPN
+2 provides an offset to an L2 PTE, and so on.
+9.7.2
+Linux Virtual Memory System
+A virtual memory system requires close cooperation between the hardware and
+the kernel. Details vary from version to version, and a complete description is
+beyond our scope. Nonetheless, our aim in this section is to describe enough of
+the Linux virtual memory system to give you a sense of how a real operating system
+organizes virtual memory and how it handles page faults.
+Linux maintains a separate virtual address space for each process of the form
+shown in Figure 9.26. We have seen this picture a number of times already, with
+its familiar code, data, heap, shared library, and stack segments. Now that we
+understand address translation, we can ﬁll in some more details about the kernel
+virtual memory that lies above the user stack.
+The kernel virtual memory contains the code and data structures in the kernel.
+Some regions of the kernel virtual memory are mapped to physical pages that

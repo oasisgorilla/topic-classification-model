@@ -1,0 +1,86 @@
+944
+Chapter 10
+System-Level I/O
+Figure 10.14
+How a child process
+inherits the parent’s open
+ﬁles. The initial situation is
+in Figure 10.12.
+Descriptor tables
+Open file table
+(shared by
+all processes)
+v-node table
+(shared by
+all processes)
+   fd 0
+fd 1
+   fd 2
+ fd 3
+fd 4
+File size
+File access
+File type
+File B
+File pos
+refcnt2
+…
+File A
+Parent’s table
+   fd 0
+fd 1
+   fd 2
+ fd 3
+fd 4
+Child’s table
+File pos
+refcnt2
+…
+…
+File size
+File access
+File type
+…
+Practice Problem 10.2 (solution page 951)
+Suppose the disk ﬁle foobar.txt consists of the six ASCII characters foobar.
+Then what is the output of the following program?
+1
+#include "csapp.h"
+2
+3
+int main()
+4
+{
+5
+int fd1, fd2;
+6
+char c;
+7
+8
+fd1 = Open("foobar.txt", O_RDONLY, 0);
+9
+fd2 = Open("foobar.txt", O_RDONLY, 0);
+10
+Read(fd1, &c, 1);
+11
+Read(fd2, &c, 1);
+12
+printf("c = %c\n", c);
+13
+exit(0);
+14
+}
+Practice Problem 10.3 (solution page 951)
+As before, suppose the disk ﬁle foobar.txt consists of the six ASCII characters
+foobar. Then what is the output of the following program?
+1
+#include "csapp.h"
+2
+3
+int main()
+4
+{
+5
+int fd;
+6
+char c;

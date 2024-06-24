@@ -1,0 +1,61 @@
+Section 5.1
+Capabilities and Limitations of Optimizing Compilers
+537
+Aside
+Optimizing function calls by inline substitution
+Code involving function calls can be optimized by a process known as inline substitution (or simply
+“inlining”), where the function call is replaced by the code for the body of the function. For example,
+we can expand the code for func1 by substituting four instantiations of function f:
+1
+/* Result of inlining f in func1 */
+2
+long func1in() {
+3
+long t = counter++; /* +0 */
+4
+t += counter++;
+/* +1 */
+5
+t += counter++;
+/* +2 */
+6
+t += counter++;
+/* +3 */
+7
+return t;
+8
+}
+This transformation both reduces the overhead of the function calls and allows further optimization of
+the expanded code. For example, the compiler can consolidate the updates of global variable counter
+in func1in to generate an optimized version of the function:
+1
+/* Optimization of inlined code */
+2
+long func1opt() {
+3
+long t = 4 * counter + 6;
+4
+counter += 4;
+5
+return t;
+6
+}
+This code faithfully reproduces the behavior of func1 for this particular deﬁnition of function f.
+Recent versions of gcc attempt this form of optimization, either when directed to with the
+command-line option -finline or for optimization level -O1 and higher. Unfortunately, gcc only
+attempts inlining for functions deﬁned within a single ﬁle. That means it will not be applied in the
+common case where a set of library functions is deﬁned in one ﬁle but invoked by functions in other
+ﬁles.
+There are times when it is best to prevent a compiler from performing inline substitution. One
+is when the code will be evaluated using a symbolic debugger, such as gdb, as described in Section
+3.10.2. If a function call has been optimized away via inline substitution, then any attempt to trace or
+set a breakpoint for that call will fail. The second is when evaluating the performance of a program
+by proﬁling, as is discussed in Section 5.14.1. Calls to functions that have been eliminated by inline
+substitution will not be proﬁled correctly.
+particular, a call to func1 would return 0 + 1 + 2 + 3 = 6, whereas a call to func2
+would return 4 . 0 = 0, assuming both started with global variable counter set to
+zero.
+Most compilers do not try to determine whether a function is free of side
+effects and hence is a candidate for optimizations such as those attempted in
+func2. Instead, the compiler assumes the worst case and leaves function calls
+intact.

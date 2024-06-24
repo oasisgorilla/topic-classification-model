@@ -1,0 +1,56 @@
+Section 4.3
+Sequential Y86-64 Implementations
+427
+Stage
+pushq rA
+popq rA
+Fetch
+icode:ifun ←M1[PC]
+icode:ifun ←M1[PC]
+rA :rB ←M1[PC + 1]
+rA :rB ←M1[PC + 1]
+valP ←PC + 2
+valP ←PC + 2
+Decode
+valA ←R[rA]
+valA ←R[%rsp]
+valB ←R[%rsp]
+valB ←R[%rsp]
+Execute
+valE ←valB + (−8)
+valE ←valB + 8
+Memory
+M8[valE] ←valA
+valM ←M8[valA]
+Write back
+R[%rsp] ←valE
+R[%rsp] ←valE
+R[rA] ←valM
+PC update
+PC ←valP
+PC ←valP
+Figure 4.20
+Computations in sequential implementation of Y86-64 instructions
+pushq and popq. These instructions push and pop the stack.
+Generic
+Speciﬁc
+Stage
+popq rA
+popq %rax
+Decode
+valA ←R[%rsp]
+valB ←R[%rsp]
+Execute
+valE ←valB + 8
+Memory
+valM ←M8[valA]
+Write back
+R[%rsp] ←valE
+R[rA] ←valM
+PC update
+PC ←valP
+What effect does this instruction execution have on the registers and the PC?
+Practice Problem 4.15 (solution page 522)
+What would be the effect of the instruction pushq %rsp according to the steps
+listed in Figure 4.20? Does this conform to the desired behavior for Y86-64, as
+determined in Problem 4.7?

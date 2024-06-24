@@ -1,0 +1,47 @@
+Section 2.3
+Integer Arithmetic
+121
+32
+28
+24
+20
+16
+12
+8
+4
+0
+2
+0
+4
+6
+8
+10
+12
+14
+0
+2
+4
+6
+8
+10
+12
+14
+Figure 2.21
+Integer addition. With a 4-bit word size, the sum could require 5 bits.
+inﬂation” means we cannot place any bound on the word size required to fully rep-
+resent the results of arithmetic operations. Some programming languages, such
+as Lisp, actually support arbitrary size arithmetic to allow integers of any size
+(within the memory limits of the computer, of course.) More commonly, pro-
+gramming languages support ﬁxed-size arithmetic, and hence operations such
+as “addition” and “multiplication” differ from their counterpart operations over
+integers.
+Let us deﬁne the operation +u
+w for arguments x and y, where 0 ≤x, y < 2w,
+as the result of truncating the integer sum x + y to be w bits long and then
+viewing the result as an unsigned number. This can be characterized as a form
+of modular arithmetic, computing the sum modulo 2w by simply discarding any
+bits with weight greater than 2w−1 in the bit-level representation of x + y. For
+example, consider a 4-bit number representation with x = 9 and y = 12, having
+bit representations [1001] and [1100], respectively. Their sum is 21, having a 5-bit
+representation [10101]. But if we discard the high-order bit, we get [0101], that is,
+decimal value 5. This matches the value 21 mod 16 = 5.

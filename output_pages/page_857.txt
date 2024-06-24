@@ -1,0 +1,83 @@
+856
+Chapter 9
+Virtual Memory
+. . .
+VP 1,023
+VP 1,024
+VP 2,047
+Gap
+PTE 0
+PTE 1
+PTE 2 (null)
+VP 0
+1,023
+unallocated
+pages
+PTE 3 (null)
+PTE 4 (null)
+PTE 5 (null)
+PTE 6 (null)
+PTE 0
+PTE 1,023
+PTE 0
+PTE 1,023
+1,023 null
+PTEs
+PTE 7 (null)
+PTE 8
+(1 K– 9)
+null PTEs
+PTE 1,023
+. . .
+. . .
+VP 9,215
+2 K allocated VM pages
+for code and data
+6 K unallocated VM pages
+1,023 unallocated pages
+1 allocated VM page
+for the stack
+Virtual
+memory
+Level 2
+page tables
+Level 1
+page table
+0
+. . .
+. . .
+Figure 9.17
+A two-level page table hierarchy. Notice that addresses increase from
+top to bottom.
+PPN
+PPO
+. . .
+. . .
+. . .
+m–1
+n–1
+p–1
+0
+p–1
+0
+Virtual address
+Physical address
+VPN 1
+VPN 2
+VPN k
+VPO
+Level 1
+page table
+Level 2
+page table
+Level k
+page table
+PPN
+Figure 9.18
+Address translation with a k-level page table.
+Figure 9.18 summarizes address translation with a k-level page table hierarchy.
+The virtual address is partitioned into k VPNs and a VPO. Each VPN i, 1 ≤i ≤k,
+is an index into a page table at level i. Each PTE in a level j table, 1 ≤j ≤k −1,
+points to the base of some page table at level j + 1. Each PTE in a level k table
+contains either the PPN of some physical page or the address of a disk block.
+To construct the physical address, the MMU must access k PTEs before it can

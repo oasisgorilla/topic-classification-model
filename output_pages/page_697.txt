@@ -1,0 +1,82 @@
+696
+Chapter 6
+The Memory Hierarchy
+5
+for (i = 0; i < dim; i++)
+6
+for (j = 0; j < dim; j++)
+7
+dst[j*dim + i] = src[i*dim + j];
+8
+}
+where the arguments to the procedure are pointers to the destination (dst) and
+source (src) matrices, as well as the matrix size N (dim). Your job is to devise a
+transpose routine that runs as fast as possible.
+6.46 ◆◆◆◆
+This assignment is an intriguing variation of Problem 6.45. Consider the problem
+of converting a directed graph g into its undirected counterpart g′. The graph
+g′ has an edge from vertex u to vertex v if and only if there is an edge from u
+to v or from v to u in the original graph g. The graph g is represented by its
+adjacency matrix G as follows. If N is the number of vertices in g, then G is an
+N × N matrix and its entries are all either 0 or 1. Suppose the vertices of g are
+named v0, v1, v2, . . . , vN−1. Then G[i][j] is 1 if there is an edge from vi to vj and
+is 0 otherwise. Observe that the elements on the diagonal of an adjacency matrix
+are always 1 and that the adjacency matrix of an undirected graph is symmetric.
+This code can be written with a simple loop:
+1
+void col_convert(int *G, int dim) {
+2
+int i, j;
+3
+4
+for (i = 0; i < dim; i++)
+5
+for (j = 0; j < dim; j++)
+6
+G[j*dim + i] = G[j*dim + i] || G[i*dim + j];
+7
+}
+Your job is to devise a conversion routine that runs as fast as possible. As
+before, you will need to apply concepts you learned in Chapters 5 and 6 to come
+up with a good solution.
+Solutions to Practice Problems
+Solution to Problem 6.1 (page 620)
+The idea here is to minimize the number of address bits by minimizing the aspect
+ratio max(r, c)/ min(r, c). In other words, the squarer the array, the fewer the
+address bits.
+Organization
+r
+c
+br
+bc
+max(br, bc)
+16 × 1
+4
+4
+2
+2
+2
+16 × 4
+4
+4
+2
+2
+2
+128 × 8
+16
+8
+4
+3
+4
+512 × 4
+32
+16
+5
+4
+5
+1,024 × 4
+32
+32
+5
+5
+5

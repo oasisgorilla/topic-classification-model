@@ -1,0 +1,34 @@
+614
+Chapter 5
+Optimizing Program Performance
+We introduce a local variable last_val. At the start of iteration i, it holds the
+value of p[i-1]. We then compute val to be the value of p[i] and to be the new
+value for last_val.
+This version compiles to the following assembly code:
+Inner loop of psum1a
+a in %rdi, i in %rax, cnt in %rdx, last_val in %xmm0
+1
+.L16:
+loop:
+2
+vaddss
+(%rdi,%rax,4), %xmm0, %xmm0
+last_val = val = last_val + a[i]
+3
+vmovss
+%xmm0, (%rsi,%rax,4)
+Store val in p[i]
+4
+addq
+$1, %rax
+Increment i
+5
+cmpq
+%rdx, %rax
+Compare i:cnt
+6
+jne
+.L16
+If !=, goto loop
+This code holds last_val in %xmm0, avoiding the need to read p[i-1] from
+memory and thus eliminating the write/read dependency seen in psum1.

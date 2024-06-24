@@ -1,0 +1,70 @@
+Solutions to Practice Problems
+371
+short dw_loop(short x)
+x initially in %rdi
+1
+dw_loop:
+2
+movq
+%rdi, %rbx
+Copy x to %rbx
+3
+movq
+%rdi, %rcx
+4
+idivq
+$9, %rcx
+Compute y = x/9
+5
+leaq
+(,%rdi,4), %rdx
+Compute n = 4*x
+6
+.L2:
+loop:
+7
+leaq
+5(%rbx,%rcx), %rcx
+Compute y += x + 5
+8
+subq
+$2, %rdx
+Decrement n by 2
+9
+testq
+%rdx, %rdx
+Test n
+10
+jg
+.L2
+If > 0, goto loop
+11
+rep; ret
+Return
+Solution to Problem 3.24 (page 260)
+This assembly code is a fairly straightforward translation of the loop using the
+jump-to-middle method. The full C code is as follows:
+short loop_while(short a, short b)
+{
+short result = 0;
+while (a > b) {
+result = result + (a*b);
+a = a-1;
+}
+return result;
+}
+Solution to Problem 3.25 (page 262)
+While the generated code does not follow the exact pattern of the guarded-do
+translation, we can see that it is equivalent to the following C code:
+long loop_while2(long a, long b)
+{
+long result = b;
+while (b > 0) {
+result = result * a;
+b = b-a;
+}
+return result;
+}
+We will often see cases, especially when compiling with higher levels of opti-
+mization, where gcc takes some liberties in the exact form of the code it generates,
+while preserving the required functionality.

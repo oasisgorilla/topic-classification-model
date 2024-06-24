@@ -1,0 +1,67 @@
+436
+Chapter 4
+Processor Architecture
+Stage
+Computation
+OPq rA, rB
+mrmovq D(rB), rA
+Fetch
+icode, ifun
+icode:ifun ←M1[PC]
+icode:ifun ←M1[PC]
+rA, rB
+rA :rB ←M1[PC + 1]
+rA :rB ←M1[PC + 1]
+valC
+valC ←M8[PC + 2]
+valP
+valP ←PC + 2
+valP ←PC + 10
+Decode
+valA, srcA
+valA ←R[rA]
+valB, srcB
+valB ←R[rB]
+valB ←R[rB]
+Execute
+valE
+valE ←valB OP valA
+valE ←valB + valC
+Cond. codes
+Set CC
+Memory
+Read/write
+valM ←M8[valE]
+Write back
+E port, dstE
+R[rB] ←valE
+M port, dstM
+R[rA] ←valM
+PC update
+PC
+PC ←valP
+PC ←valP
+Figure 4.24
+Identifying the different computation steps in the sequential imple-
+mentation. The second column identiﬁes the value being computed or the operation
+being performed in the stages of SEQ. The computations for instructions OPq and mrmovq
+are shown as examples of the computations.
+in Figure 4.23. Our task is to proceed through the individual stages and create
+detailed designs for these blocks.
+4.3.3
+SEQ Timing
+In introducing the tables of Figures 4.18 through 4.21, we stated that they should
+be read as if they were written in a programming notation, with the assignments
+performed in sequence from top to bottom. On the other hand, the hardware
+structure of Figure 4.23 operates in a fundamentally different way, with a single
+clock transition triggering a ﬂow through combinational logic to execute an entire
+instruction. Let us see how the hardware can implement the behavior listed in
+these tables.
+Our implementation of SEQ consists of combinational logic and two forms
+of memory devices: clocked registers (the program counter and condition code
+register) and random access memories (the register ﬁle, the instruction memory,
+and the data memory). Combinational logic does not require any sequencing
+or control—values propagate through a network of logic gates whenever the
+inputs change. As we have described, we also assume that reading from a random
+access memory operates much like combinational logic, with the output word
+generated based on the address input. This is a reasonable assumption for smaller

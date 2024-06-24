@@ -1,0 +1,76 @@
+300
+Chapter 3
+Machine-Level Representation of Programs
+(a) Original C code
+1
+/* Compute i,k of variable matrix product */
+2
+int var_prod_ele(long n, int A[n][n], int B[n][n], long i, long k) {
+3
+long j;
+4
+int result = 0;
+5
+6
+for (j = 0; j < n; j++)
+7
+result += A[i][j] * B[j][k];
+8
+9
+return result;
+10
+}
+(b) Optimized C code
+/* Compute i,k of variable matrix product */
+int var_prod_ele_opt(long n, int A[n][n], int B[n][n], long i, long k) {
+int *Arow = A[i];
+int *Bptr = &B[0][k];
+int result = 0;
+long j;
+for (j = 0; j < n; j++) {
+result += Arow[j] * *Bptr;
+Bptr += n;
+}
+return result;
+}
+Figure 3.38
+Original and optimized code to compute element i, k of matrix product for variable-size
+arrays. The compiler performs these optimizations automatically.
+the loop has terminated and to index into an array consisting of the elements of
+row i of A.
+The following is the assembly code for the loop of var_prod_ele:
+Registers: n in %rdi, Arow in %rsi, Bptr in %rcx
+4n in %r9, result in %eax, j in %edx
+1
+.L24:
+loop:
+2
+movl
+(%rsi,%rdx,4), %r8d
+Read Arow[j]
+3
+imull
+(%rcx), %r8d
+Multiply by *Bptr
+4
+addl
+%r8d, %eax
+Add to result
+5
+addq
+$1, %rdx
+j++
+6
+addq
+%r9, %rcx
+Bptr += n
+7
+cmpq
+%rdi, %rdx
+Compare j:n
+8
+jne
+.L24
+If !=, goto loop
+We see that the program makes use of both a scaled value 4n (register %r9) for
+incrementing Bptr as well as the value of n (register %rdi) to check the loop

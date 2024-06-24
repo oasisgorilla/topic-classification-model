@@ -1,0 +1,53 @@
+Section 5.7
+Understanding Modern Processors
+553
+5
+addq
+$8, %rdx
+Increment data+i
+6
+cmpq
+%rax, %rdx
+Compare to data+length
+7
+jne
+.L17
+If !=, goto loop
+We see that, besides some reordering of instructions, the only difference is that
+the more optimized version does not contain the vmovsd implementing the read
+from the location designated by dest (line 2).
+A. How does the role of register %xmm0 differ in these two loops?
+B. Will the more optimized version faithfully implement the C code of com-
+bine3, including when there is memory aliasing between dest and the vec-
+tor data?
+C. Either explain why this optimization preserves the desired behavior, or give
+an example where it would produce different results than the less optimized
+code.
+With this ﬁnal transformation, we reached a point where we require just 1.25–5
+clock cycles for each element to be computed. This is a considerable improvement
+over the original 9–11 cycles when we ﬁrst enabled optimization. We would now
+like to see just what factors are constraining the performance of our code and how
+we can improve things even further.
+5.7
+Understanding Modern Processors
+Up to this point, we have applied optimizations that did not rely on any features
+of the target machine. They simply reduced the overhead of procedure calls and
+eliminated some of the critical “optimization blockers” that cause difﬁculties
+for optimizing compilers. As we seek to push the performance further, we must
+consider optimizations that exploit the microarchitecture of the processor—that is,
+the underlying system design by which a processor executes instructions. Getting
+every last bit of performance requires a detailed analysis of the program as well as
+code generation tuned for the target processor. Nonetheless, we can apply some
+basic optimizations that will yield an overall performance improvement on a large
+class of processors. The detailed performance results we report here may not hold
+for other machines, but the general principles of operation and optimization apply
+to a wide variety of machines.
+To understand ways to improve performance, we require a basic understand-
+ing of the microarchitectures of modern processors. Due to the large number of
+transistors that can be integrated onto a single chip, modern microprocessors em-
+ploy complex hardware that attempts to maximize program performance. One
+result is that their actual operation is far different from the view that is perceived
+by looking at machine-level programs. At the code level, it appears as if instruc-
+tions are executed one at a time, where each instruction involves fetching values
+from registers or memory, performing an operation, and storing results back to
+a register or memory location. In the actual processor, a number of instructions

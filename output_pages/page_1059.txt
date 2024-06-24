@@ -1,0 +1,53 @@
+1058
+Chapter 12
+Concurrent Programming
+code/conc/ctime-ts.c
+1
+char *ctime_ts(const time_t *timep, char *privatep)
+2
+{
+3
+char *sharedp;
+4
+5
+P(&mutex);
+6
+sharedp = ctime(timep);
+7
+strcpy(privatep, sharedp); /* Copy string from shared to private */
+8
+V(&mutex);
+9
+return privatep;
+10
+}
+code/conc/ctime-ts.c
+Figure 12.38
+Thread-safe wrapper function for the C standard library ctime function. This example
+uses the lock-and-copy technique to call a class 3 thread-unsafe function.
+concurrent threads, then disaster is likely, as results being used by one
+thread are silently overwritten by another thread.
+There are two ways to deal with this class of thread-unsafe func-
+tions. One option is to rewrite the function so that the caller passes the
+address of the variable in which to store the results. This eliminates all
+shared data, but it requires the programmer to have access to the function
+source code.
+If the thread-unsafe function is difﬁcult or impossible to modify (e.g.,
+the code is very complex or there is no source code available), then an-
+other option is to use the lock-and-copy technique. The basic idea is to
+associate a mutex with the thread-unsafe function. At each call site, lock
+the mutex, call the thread-unsafe function, copy the result returned by
+the function to a private memory location, and then unlock the mutex.
+To minimize changes to the caller, you should deﬁne a thread-safe wrap-
+per function that performs the lock-and-copy and then replace all calls
+to the thread-unsafe function with calls to the wrapper. For example,
+Figure 12.38 shows a thread-safe wrapper for ctime that uses the lock-
+and-copy technique.
+Class 4: Functions that call thread-unsafe functions.If a function f calls a thread-
+unsafe function g, is f thread-unsafe? It depends. If g is a class 2 function
+that relies on state across multiple invocations, then f is also thread-
+unsafe and there is no recourse short of rewriting g. However, if g is a
+class 1 or class 3 function, then f can still be thread-safe if you protect
+the call site and any resulting shared data with a mutex. We see a good
+example of this in Figure 12.38, where we use lock-and-copy to write a
+thread-safe function that calls a thread-unsafe function.

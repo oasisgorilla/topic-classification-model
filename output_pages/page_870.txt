@@ -1,0 +1,45 @@
+Section 9.8
+Memory Mapping
+869
+and updating the page table. When the page fault handler returns, the CPU
+restarts the faulting instruction, which sends A to the MMU again. This time,
+the MMU translates A normally, without generating a page fault.
+9.8
+Memory Mapping
+Linux initializes the contents of a virtual memory area by associating it with an
+object on disk, a process known as memory mapping. Areas can be mapped to one
+of two types of objects:
+1. Regular ﬁle in the Linux ﬁle system: An area can be mapped to a contiguous
+section of a regular disk ﬁle, such as an executable object ﬁle. The ﬁle section
+is divided into page-size pieces, with each piece containing the initial contents
+of a virtual page. Because of demand paging, none of these virtual pages is
+actually swapped into physical memory until the CPU ﬁrst touches the page
+(i.e., issues a virtual address that falls within that page’s region of the address
+space). If the area is larger than the ﬁle section, then the area is padded with
+zeros.
+2. Anonymous ﬁle: An area can also be mapped to an anonymous ﬁle, created
+by the kernel, that contains all binary zeros. The ﬁrst time the CPU touches
+a virtual page in such an area, the kernel ﬁnds an appropriate victim page
+in physical memory, swaps out the victim page if it is dirty, overwrites the
+victim page with binary zeros, and updates the page table to mark the page
+as resident. Notice that no data are actually transferred between disk and
+memory. For this reason, pages in areas that are mapped to anonymous ﬁles
+are sometimes called demand-zero pages.
+In either case, once a virtual page is initialized, it is swapped back and forth
+between a special swap ﬁle maintained by the kernel. The swap ﬁle is also known
+as the swap space or the swap area. An important point to realize is that at any
+point in time, the swap space bounds the total amount of virtual pages that can be
+allocated by the currently running processes.
+9.8.1
+Shared Objects Revisited
+The idea of memory mapping resulted from a clever insight that if the virtual
+memory system could be integrated into the conventional ﬁle system, then it could
+provide a simple and efﬁcient way to load programs and data into memory.
+As we have seen, the process abstraction promises to provide each process
+with its own private virtual address space that is protected from errant writes
+or reads by other processes. However, many processes have identical read-only
+code areas. For example, each process that runs the Linux shell program bash has
+the same code area. Further, many programs need to access identical copies of
+read-only run-time library code. For example, every C program requires functions
+from the standard C library such as printf. It would be extremely wasteful for
+each process to keep duplicate copies of these commonly used codes in physical

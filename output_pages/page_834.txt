@@ -1,0 +1,107 @@
+Solutions to Practice Problems
+833
+Figure 8.48
+Process graph for Practice
+Problem 8.3.
+fork
+fork
+main
+main
+printf
+printf
+waitpid
+waitpid
+9
+3
+0
+3
+printf
+printf
+6
+printf
+printf
+exit
+exit
+printf
+printf
+printf
+printf
+6
+printf
+printf
+exit
+exit
+Figure 8.49
+Process graph for Practice
+Problem 8.4.
+fork
+fork
+main
+main
+printf
+printf
+printf
+printf
+waitpid
+waitpid
+0
+Stop
+1
+Start
+2
+printf
+printf
+Stop
+printf
+printf
+exit
+exit
+printf
+printf
+printf
+printf
+Child
+printf
+printf
+exit(2)
+exit(2)
+Solution to Problem 8.3 (page 781)
+We know that the sequences 936036, 903636, and 093636 are possible because
+they correspond to topological sorts of the process graph (Figure 8.48). However,
+sequences such as 036936 and 360369 do not correspond to any topological sort
+and thus are not feasible.
+Solution to Problem 8.4 (page 784)
+A. We can determine the number of lines of output by simply counting the
+number of printf vertices in the process graph (Figure 8.49). In this case,
+there are seven such vertices, and thus the program will print seven lines of
+output.
+B. Any output sequence corresponding to a topological sort of the graph is
+possible. For example: Start, 0, 1, Child, Stop, 2, Stop is possible.
+Solution to Problem 8.5 (page 786)
+code/ecf/global-snooze.c
+1
+unsigned int wakeup(unsigned int secs) {
+2
+unsigned int rc = sleep(secs);
+3
+4
+printf("Woke up at %d secs.\n", secs-rc+1);
+5
+return rc;
+6
+}
+code/ecf/global-snooze.c
+Solution to Problem 8.6 (page 788)
+code/ecf/myecho.c
+1
+#include "csapp.h"
+2
+3
+int main(int argc, char *argv[], char *envp[])
+4
+{
+5
+int i;
+6
+7
+printf("Command-line arguments:\n");

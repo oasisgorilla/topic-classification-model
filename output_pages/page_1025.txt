@@ -1,0 +1,40 @@
+1024
+Chapter 12
+Concurrent Programming
+want the thread routine to return multiple arguments, you can return a pointer to
+a structure.
+Line 4 marks the beginning of the code for the main thread. The main thread
+declares a single local variable tid, which will be used to store the thread ID of
+the peer thread (line 6). The main thread creates a new peer thread by calling the
+pthread_create function (line 7). When the call to pthread_create returns, the
+main thread and the newly created peer thread are running concurrently, and tid
+contains the ID of the new thread. The main thread waits for the peer thread to
+terminate with the call to pthread_join in line 8. Finally, the main thread calls
+exit (line 9), which terminates all threads (in this case, just the main thread)
+currently running in the process.
+Lines 12–16 deﬁne the thread routine for the peer thread. It simply prints a
+string and then terminates the peer thread by executing the return statement in
+line 15.
+12.3.3
+Creating Threads
+Threads create other threads by calling the pthread_create function.
+#include <pthread.h>
+typedef void *(func)(void *);
+int pthread_create(pthread_t *tid, pthread_attr_t *attr,
+func *f, void *arg);
+Returns: 0 if OK, nonzero on error
+The pthread_create function creates a new thread and runs the thread routine f
+in the context of the new thread and with an input argument of arg. The attr
+argument can be used to change the default attributes of the newly created thread.
+Changing these attributes is beyond our scope, and in our examples, we will always
+call pthread_create with a NULL attr argument.
+When pthread_create returns, argument tid contains the ID of the newly
+created thread. The new thread can determine its own thread ID by calling the
+pthread_self function.
+#include <pthread.h>
+pthread_t pthread_self(void);
+Returns: thread ID of caller
+12.3.4
+Terminating Threads
+A thread terminates in one of the following ways:
+. The thread terminates implicitly when its top-level thread routine returns.

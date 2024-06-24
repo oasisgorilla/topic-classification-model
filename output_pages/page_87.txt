@@ -1,0 +1,45 @@
+86
+Chapter 2
+Representing and Manipulating Information
+Aside
+The Unicode standard for text encoding
+The ASCII character set is suitable for encoding English-language documents, but it does not have
+much in the way of special characters, such as the French ‘¸
+c’. It is wholly unsuited for encoding
+documents in languages such as Greek, Russian, and Chinese. Over the years, a variety of methods
+have been developed to encode text for different languages. The Unicode Consortium has devised the
+most comprehensive and widely accepted standard for encoding text. The current Unicode standard
+(version 7.0) has a repertoire of over 100,000 characters supporting a wide range of languages, including
+the ancient languages of Egypt and Babylon. To their credit, the Unicode Technical Committee rejected
+a proposal to include a standard writing for Klingon, a ﬁctional civilization from the television series
+Star Trek.
+The base encoding, known as the “Universal Character Set” of Unicode, uses a 32-bit representa-
+tion of characters. This would seem to require every string of text to consist of 4 bytes per character.
+However, alternative codings are possible where common characters require just 1 or 2 bytes, while
+less common ones require more. In particular, the UTF-8 representation encodes each character as a
+sequence of bytes, such that the standard ASCII characters use the same single-byte encodings as they
+have in ASCII, implying that all ASCII byte sequences have the same meaning in UTF-8 as they do in
+ASCII.
+The Java programming language uses Unicode in its representations of strings. Program libraries
+are also available for C to support Unicode.
+Here we ﬁnd that the instruction codings are different. Different machine types
+use different and incompatible instructions and encodings. Even identical proces-
+sors running different operating systems have differences in their coding conven-
+tions and hence are not binary compatible. Binary code is seldom portable across
+different combinations of machine and operating system.
+A fundamental concept of computer systems is that a program, from the
+perspective of the machine, is simply a sequence of bytes. The machine has no
+information about the original source program, except perhaps some auxiliary
+tables maintained to aid in debugging. We will see this more clearly when we study
+machine-level programming in Chapter 3.
+2.1.6
+Introduction to Boolean Algebra
+Since binary values are at the core of how computers encode, store, and manipu-
+late information, a rich body of mathematical knowledge has evolved around the
+study of the values 0 and 1. This started with the work of George Boole (1815–
+1864) around 1850 and thus is known as Boolean algebra. Boole observed that by
+encoding logic values true and false as binary values 1 and 0, he could formulate
+an algebra that captures the basic principles of logical reasoning.
+The simplest Boolean algebra is deﬁned over the two-element set {0, 1}.
+Figure 2.7 deﬁnes several operations in this algebra. Our symbols for representing
+these operations are chosen to match those used by the C bit-level operations,

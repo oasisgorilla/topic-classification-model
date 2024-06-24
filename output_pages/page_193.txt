@@ -1,0 +1,55 @@
+192
+Chapter 2
+Representing and Manipulating Information
+Solution to Problem 2.39 (page 139)
+The expression simply becomes -(x<<m). To see this, let the word size be w so that
+n = w −1. Form B states that we should compute (x<<w) - (x<<m), but shifting
+x to the left by w will yield the value 0.
+Solution to Problem 2.40 (page 139)
+This problem requires you to try out the optimizations already described and also
+to supply a bit of your own ingenuity.
+K
+Shifts
+Add/Subs
+Expression
+7
+1
+1
+(x<<3) - x
+30
+4
+3
+(x<<4) + (x<<3) + (x<<2) + (x<<1)
+28
+2
+1
+(x<<5) - (x<<2)
+55
+2
+2
+(x<<6) - (x<<3) - x
+Observe that the fourth case uses a modiﬁed version of form B. We can view
+the bit pattern [11011] as having a run of 6 ones with a zero in the middle, and so
+we apply the rule for form B, but then we subtract the term corresponding to the
+middle zero bit.
+Solution to Problem 2.41 (page 139)
+Assuming that addition and subtraction have the same performance, the rule is
+to choose form A when n = m, either form when n = m + 1, and form B when
+n > m + 1.
+The justiﬁcation for this rule is as follows. Assume ﬁrst that m > 0. When
+n = m, form A requires only a single shift, while form B requires two shifts
+and a subtraction. When n = m + 1, both forms require two shifts and either an
+addition or a subtraction. When n > m + 1, form B requires only two shifts and one
+subtraction, while form A requires n −m + 1 > 2 shifts and n −m > 1 additions.
+For the case of m = 0, we get one fewer shift for both forms A and B, and so the
+same rules apply for choosing between the two.
+Solution to Problem 2.42 (page 143)
+The only challenge here is to compute the bias without any testing or conditional
+operations. We use the trick that the expression x >> 31 generates a word with all
+ones if x is negative, and all zeros otherwise. By masking off the appropriate bits,
+we get the desired bias value.
+int div16(int x) {
+/* Compute bias to be either 0 (x >= 0) or 15 (x < 0) */
+int bias = (x >> 31) & 0xF;
+return (x + bias) >> 4;
+}

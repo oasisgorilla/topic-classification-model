@@ -1,0 +1,50 @@
+532
+Chapter 5
+Optimizing Program Performance
+T
+he primary objective in writing a program must be to make it work correctly
+under all possible conditions. A program that runs fast but gives incorrect
+results serves no useful purpose. Programmers must write clear and concise code,
+not only so that they can make sense of it, but also so that others can read and
+understand the code during code reviews and when modiﬁcations are required
+later.
+On the other hand, there are many occasions when making a program run
+fast is also an important consideration. If a program must process video frames or
+network packets in real time, then a slow-running program will not provide the
+needed functionality. When a computational task is so demanding that it requires
+days or weeks to execute, then making it run just 20% faster can have signiﬁcant
+impact. In this chapter, we will explore how to make programs run faster via
+several different types of program optimization.
+Writing an efﬁcient program requires several types of activities. First, we
+must select an appropriate set of algorithms and data structures. Second, we
+must write source code that the compiler can effectively optimize to turn into
+efﬁcient executable code. For this second part, it is important to understand the
+capabilities and limitations of optimizing compilers. Seemingly minor changes in
+how a program is written can make large differences in how well a compiler can
+optimize it. Some programming languages are more easily optimized than others.
+Some features of C, such as the ability to perform pointer arithmetic and casting,
+make it challenging for a compiler to optimize. Programmers can often write their
+programs in ways that make it easier for compilers to generate efﬁcient code. A
+third technique for dealing with especially demanding computations is to divide
+a task into portions that can be computed in parallel, on some combination of
+multiple cores and multiple processors. We will defer this aspect of performance
+enhancement to Chapter 12. Even when exploiting parallelism, it is important that
+each parallel thread execute with maximum performance, and so the material of
+this chapter remains relevant in any case.
+In approaching program development and optimization, we must consider
+how the code will be used and what critical factors affect it. In general, program-
+mers must make a trade-off between how easy a program is to implement and
+maintain, and how fast it runs. At an algorithmic level, a simple insertion sort can
+be programmed in a matter of minutes, whereas a highly efﬁcient sort routine
+may take a day or more to implement and optimize. At the coding level, many
+low-level optimizations tend to reduce code readability and modularity, making
+the programs more susceptible to bugs and more difﬁcult to modify or extend.
+For code that will be executed repeatedly in a performance-critical environment,
+extensive optimization may be appropriate. One challenge is to maintain some
+degree of elegance and readability in the code despite extensive transformations.
+We describe a number of techniques for improving code performance. Ideally,
+a compiler would be able to take whatever code we write and generate the most
+efﬁcient possible machine-level program having the speciﬁed behavior. Modern
+compilers employ sophisticated forms of analysis and optimization, and they keep
+getting better. Even the best compilers, however, can be thwarted by optimization
+blockers—aspects of the program’s behavior that depend strongly on the execu-

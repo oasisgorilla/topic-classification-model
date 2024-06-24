@@ -1,0 +1,73 @@
+Solutions to Practice Problems
+699
+Solution to Problem 6.8 (page 645)
+The key to solving this problem is to visualize how the array is laid out in memory
+and then analyze the reference patterns. Function clear1 accesses the array using
+a stride-1 reference pattern and thus clearly has the best spatial locality. Function
+clear2 scans each of the N structs in order, which is good, but within each struct it
+hops around in a non-stride-1 pattern at the following offsets from the beginning
+of the struct: 0, 12, 4, 16, 8, 20. So clear2 has worse spatial locality than clear1.
+Function clear3 not only hops around within each struct, but also hops from struct
+to struct. So clear3 exhibits worse spatial locality than clear2 and clear1.
+Solution to Problem 6.9 (page 652)
+The solution is a straightforward application of the deﬁnitions of the various cache
+parameters in Figure 6.26. Not very exciting, but you need to understand how
+the cache organization induces these partitions in the address bits before you can
+really understand how caches work.
+Cache
+m
+C
+B
+E
+S
+t
+s
+b
+1.
+32
+1,024
+4
+1
+256
+22
+8
+2
+2.
+32
+1,024
+8
+4
+32
+24
+5
+3
+3.
+32
+1,024
+32
+32
+1
+27
+0
+5
+Solution to Problem 6.10 (page 660)
+The padding eliminates the conﬂict misses. Thus, three-fourths of the references
+are hits.
+Solution to Problem 6.11 (page 660)
+Sometimes, understanding why something is a bad idea helps you understand why
+the alternative is a good idea. Here, the bad idea we are looking at is indexing the
+cache with the high-order bits instead of the middle bits.
+A. With high-order bit indexing, each contiguous array chunk consists of 2t
+blocks, where t is the number of tag bits. Thus, the ﬁrst 2t contiguous blocks
+of the array would map to set 0, the next 2t blocks would map to set 1, and
+so on.
+B. For a direct-mapped cache where (S, E, B, m) = (512, 1, 32, 32), the cache
+capacity is 512 32-byte blocks with t = 18 tag bits in each cache line. Thus, the
+ﬁrst 218 blocks in the array would map to set 0, the next 218 blocks to set 1.
+Since our array consists of only (4,096 × 4)/32 = 512 blocks, all of the blocks
+in the array map to set 0. Thus, the cache will hold at most 1 array block at
+any point in time, even though the array is small enough to ﬁt entirely in the
+cache. Clearly, using high-order bit indexing makes poor use of the cache.
+Solution to Problem 6.12 (page 664)
+The 2 low-order bits are the block offset (CO), followed by 3 bits of set index (CI),
+with the remaining bits serving as the tag (CT):

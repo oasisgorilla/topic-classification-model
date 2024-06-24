@@ -1,0 +1,71 @@
+518
+Chapter 4
+Processor Architecture
+Solution to Problem 4.3 (page 405)
+Using the iaddq instruction, we can rewrite the sum function as
+# long sum(long *start, long count)
+# start in %rdi, count in %rsi
+sum:
+xorq %rax,%rax
+# sum = 0
+andq %rsi,%rsi
+# Set condition codes
+jmp
+test
+loop:
+mrmovq (%rdi),%r10
+# Get *start
+addq %r10,%rax
+# Add to sum
+iaddq $8,%rdi
+# start++
+iaddq $-1,%rsi
+# count--
+test:
+jne
+loop
+# Stop when 0
+ret
+Solution to Problem 4.4 (page 406)
+Gcc, running on an x86-64 machine, produces the following code for rproduct:
+long rproduct(long *start, long count)
+start in %rdi, count in %rsi
+rproduct:
+movl
+$1, %eax
+testq
+%rsi, %rsi
+jle
+.L9
+pushq
+%rbx
+movq
+(%rdi), %rbx
+subq
+$1, %rsi
+addq
+$8, %rdi
+call
+rproduct
+imulq
+%rbx, %rax
+popq
+%rbx
+.L9:
+rep; ret
+This can easily be adapted to produce Y86-64 code:
+# long rproduct(long *start, long count)
+# start in %rdi, count in %rsi
+rproduct:
+xorq
+%rax,%rax
+# Set return value to 1
+andq
+%rsi,%rsi
+# Set condition codes
+je
+return
+# If count <= 0, return 1
+pushq
+%rbx
+# Save callee-saved register

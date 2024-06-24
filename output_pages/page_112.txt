@@ -1,0 +1,56 @@
+Section 2.2
+Integer Representations
+111
+C allows conversion between unsigned and signed. Although the C standard
+does not specify precisely how this conversion should be made, most systems
+followtherulethattheunderlyingbitrepresentationdoesnotchange.Thisrulehas
+the effect of applying the function U2Tw when converting from unsigned to signed,
+and T2Uw when converting from signed to unsigned, where w is the number of
+bits for the data type.
+Conversions can happen due to explicit casting, such as in the following code:
+1
+int tx, ty;
+2
+unsigned ux, uy;
+3
+4
+tx = (int) ux;
+5
+uy = (unsigned) ty;
+Alternatively, they can happen implicitly when an expression of one type is as-
+signed to a variable of another, as in the following code:
+1
+int tx, ty;
+2
+unsigned ux, uy;
+3
+4
+tx = ux; /* Cast to signed */
+5
+uy = ty; /* Cast to unsigned */
+When printing numeric values with printf, the directives %d, %u, and %x
+are used to print a number as a signed decimal, an unsigned decimal, and in
+hexadecimal format, respectively. Note that printf does not make use of any
+type information, and so it is possible to print a value of type int with directive
+%u and a value of type unsigned with directive %d. For example, consider the
+following code:
+1
+int x = -1;
+2
+unsigned u = 2147483648; /* 2 to the 31st */
+3
+4
+printf("x = %u = %d\n", x, x);
+5
+printf("u = %u = %d\n", u, u);
+When compiled as a 32-bit program, it prints the following:
+x = 4294967295 = -1
+u = 2147483648 = -2147483648
+In both cases, printf prints the word ﬁrst as if it represented an unsigned number
+and second as if it represented a signed number. We can see the conversion
+routines in action: T2U32(−1) = UMax32 = 232 −1 and U2T32(231) = 231 −232 =
+−231 = TMin32.
+Some possibly nonintuitive behavior arises due to C’s handling of expres-
+sions containing combinations of signed and unsigned quantities. When an op-
+eration is performed where one operand is signed and the other is unsigned, C
+implicitly casts the signed argument to unsigned and performs the operations

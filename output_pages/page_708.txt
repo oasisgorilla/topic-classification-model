@@ -1,0 +1,71 @@
+Section 7.1
+Compiler Drivers
+707
+(a) main.c
+code/link/main.c
+1
+int sum(int *a, int n);
+2
+3
+int array[2] = {1, 2};
+4
+5
+int main()
+6
+{
+7
+int val = sum(array, 2);
+8
+return val;
+9
+}
+code/link/main.c
+(b) sum.c
+code/link/sum.c
+1
+int sum(int *a, int n)
+2
+{
+3
+int i, s = 0;
+4
+5
+for (i = 0; i < n; i++) {
+6
+s += a[i];
+7
+}
+8
+return s;
+9
+}
+code/link/sum.c
+Figure 7.1
+Example program 1. The example program consists of two source ﬁles, main.c and sum.c. The
+main function initializes an array of ints, and then calls the sum function to sum the array elements.
+This chapter provides a thorough discussion of all aspects of linking, from
+traditional static linking, to dynamic linking of shared libraries at load time,
+to dynamic linking of shared libraries at run time. We will describe the basic
+mechanisms using real examples, and we will identify situations in which linking
+issues can affect the performance and correctness of your programs. To keep things
+concrete and understandable, we will couch our discussion in the context of an x86-
+64 system running Linux and using the standard ELF-64 (hereafter referred to as
+ELF) object ﬁle format. However, it is important to realize that the basic concepts
+of linking are universal, regardless of the operating system, the ISA, or the object
+ﬁle format. Details may vary, but the concepts are the same.
+7.1
+Compiler Drivers
+Consider the C program in Figure 7.1. It will serve as a simple running example
+throughout this chapter that will allow us to make some important points about
+how linkers work.
+Most compilation systems provide a compiler driver that invokes the language
+preprocessor, compiler, assembler, and linker, as needed on behalf of the user. For
+example, to build the example program using the GNU compilation system, we
+might invoke the gcc driver by typing the following command to the shell:
+linux> gcc -Og -o prog main.c sum.c
+Figure 7.2 summarizes the activities of the driver as it translates the example
+program from an ASCII source ﬁle into an executable object ﬁle. (If you want
+to see these steps for yourself, run gcc with the -v option.) The driver ﬁrst runs
+the C preprocessor (cpp),1 which translates the C source ﬁle main.c into an ASCII
+intermediate ﬁle main.i:
+1. In some versions of gcc, the preprocessor is integrated into the compiler driver.

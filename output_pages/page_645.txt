@@ -1,0 +1,57 @@
+644
+Chapter 6
+The Memory Hierarchy
+for loop are executed in sequential memory order, and thus the loop enjoys good
+spatial locality. Since the loop body is executed multiple times, it also enjoys good
+temporal locality.
+An important property of code that distinguishes it from program data is
+that it is rarely modiﬁed at run time. While a program is executing, the CPU
+reads its instructions from memory. The CPU rarely overwrites or modiﬁes these
+instructions.
+6.2.3
+Summary of Locality
+In this section, we have introduced the fundamental idea of locality and have
+identiﬁed some simple rules for qualitatively evaluating the locality in a program:
+. Programs that repeatedly reference the same variables enjoy good temporal
+locality.
+. For programs with stride-k reference patterns, the smaller the stride, the
+better the spatial locality. Programs with stride-1 reference patterns have good
+spatial locality. Programs that hop around memory with large strides have
+poor spatial locality.
+. Loops have good temporal and spatial locality with respect to instruction
+fetches. The smaller the loop body and the greater the number of loop it-
+erations, the better the locality.
+Later in this chapter, after we have learned about cache memories and how
+they work, we will show you how to quantify the idea of locality in terms of cache
+hits and misses. It will also become clear to you why programs with good locality
+typically run faster than programs with poor locality. Nonetheless, knowing how to
+glance at a source code and getting a high-level feel for the locality in the program
+is a useful and important skill for a programmer to master.
+Practice Problem 6.7 (solution page 698)
+Permute the loops in the following function so that it scans the three-dimensional
+array a with a stride-1 reference pattern.
+1
+int productarray3d(int a[N][N][N])
+2
+{
+3
+int i, j, k, product = 1;
+4
+5
+for (i = N-1; i >= 0; i--) {
+6
+for (j = N-1; j >= 0; j--) {
+7
+for (k = N-1; k >= 0; k--) {
+8
+product *= a[j][k][i];
+9
+}
+10
+}
+11
+}
+12
+return product;
+13
+}

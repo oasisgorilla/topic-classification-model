@@ -1,0 +1,62 @@
+Section 8.5
+Signals
+809
+code/ecf/signal2.c
+1
+void handler2(int sig)
+2
+{
+3
+int olderrno = errno;
+4
+5
+while (waitpid(-1, NULL, 0) > 0) {
+6
+Sio_puts("Handler reaped child\n");
+7
+}
+8
+if (errno != ECHILD)
+9
+Sio_error("waitpid error");
+10
+Sleep(1);
+11
+errno = olderrno;
+12
+}
+code/ecf/signal2.c
+Figure 8.37
+signal2. An improved version of Figure 8.36 that correctly accounts for
+the fact that signals are not queued.
+as many zombie children as possible each time it is invoked. Figure 8.37 shows the
+modiﬁed SIGCHLD handler.
+When we run signal2 on our Linux system, it now correctly reaps all of the
+zombie children:
+linux> ./signal2
+Hello from child 15237
+Hello from child 15238
+Hello from child 15239
+Handler reaped child
+Handler reaped child
+Handler reaped child
+CR
+Parent processing input
+Practice Problem 8.8 (solution page 835)
+What is the output of the following program?
+code/ecf/signalprob0.c
+1
+volatile long counter = 2;
+2
+3
+void handler1(int sig)
+4
+{
+5
+sigset_t mask, prev_mask;
+6
+7
+Sigfillset(&mask);
+8
+Sigprocmask(SIG_BLOCK, &mask, &prev_mask);
+/* Block sigs */

@@ -1,0 +1,43 @@
+Section 11.3
+The Global IP Internet
+961
+Aside
+IPv4 and IPv6
+The original Internet protocol, with its 32-bit addresses, is known as Internet Protocol Version 4 (IPv4).
+In 1996, the Internet Engineering Task Force (IETF) proposed a new version of IP
+, called Internet
+Protocol Version 6 (IPv6), that uses 128-bit addresses and that was intended as the successor to IPv4.
+However, as of 2015, almost 20 years later, the vast majority of Internet trafﬁc is still carried by IPv4
+networks. For example, only 4 percent of users access Google services using IPv6 [42].
+Because of its low adoption rate, we will not discuss IPv6 in any detail in this book and will focus
+exclusively on the concepts behind IPv4. When we talk about the Internet, what we mean is the Internet
+based on IPv4. Nonetheless, the techniques for writing clients and servers that we will teach you later
+in this chapter are based on modern interfaces that are independent of any particular protocol.
+. The set of IP addresses is mapped to a set of identiﬁers called Internet domain
+names.
+. A process on one Internet host can communicate with a process on any other
+Internet host over a connection.
+The following sections discuss these fundamental Internet ideas in more detail.
+11.3.1
+IP Addresses
+An IP address is an unsigned 32-bit integer. Network programs store IP addresses
+in the IP address structure shown in Figure 11.9.
+Storing a scalar address in a structure is an unfortunate artifact from the early
+implementations of the sockets interface. It would make more sense to deﬁne
+a scalar type for IP addresses, but it is too late to change now because of the
+enormous installed base of applications.
+Because Internet hosts can have different host byte orders, TCP/IP deﬁnes a
+uniform network byte order (big-endian byte order) for any integer data item, such
+as an IP address, that is carried across the network in a packet header. Addresses in
+IP address structures are always stored in (big-endian) network byte order, even
+if the host byte order is little-endian. Unix provides the following functions for
+converting between network and host byte order.
+code/netp/netpfragments.c
+/* IP address structure */
+struct in_addr {
+uint32_t
+s_addr; /* Address in network byte order (big-endian) */
+};
+code/netp/netpfragments.c
+Figure 11.9
+IP address structure.

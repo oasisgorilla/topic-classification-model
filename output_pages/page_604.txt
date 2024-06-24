@@ -1,0 +1,48 @@
+Section 5.14
+Identifying and Eliminating Performance Bottlenecks
+603
+With improved sorting, we now ﬁnd that list scanning becomes the bottleneck.
+Thinking that the inefﬁciency is due to the recursive structure of the function,
+we replaced it by an iterative one, shown as “Iter ﬁrst.” Surprisingly, the run
+time increases to around 7.5 seconds. On closer study, we ﬁnd a subtle difference
+between the two list functions. The recursive version inserted new elements at the
+end of the list, while the iterative one inserted them at the front. To maximize
+performance, we want the most frequent n-grams to occur near the beginning of
+the lists. That way, the function will quickly locate the common cases. Assuming
+that n-grams are spread uniformly throughout the document, we would expect
+the ﬁrst occurrence of a frequent one to come before that of a less frequent
+one. By inserting new n-grams at the end, the ﬁrst function tended to order n-
+grams in descending order of frequency, while the second function tended to do
+just the opposite. We therefore created a third list-scanning function that uses
+iteration but inserts new elements at the end of this list. With this version, shown
+as “Iter last,” the time dropped to around 5.3 seconds, slightly better than with the
+recursive version. These measurements demonstrate the importance of running
+experiments on a program as part of an optimization effort. We initially assumed
+that converting recursive code to iterative code would improve its performance
+and did not consider the distinction between adding to the end or to the beginning
+of a list.
+Next, we consider the hash table structure. The initial version had only 1,021
+buckets (typically, the number of buckets is chosen to be a prime number to
+enhance the ability of the hash function to distribute keys uniformly among the
+buckets). For a table with 363,039 entries, this would imply an average load of
+363,039/1,021 = 355.6. That explains why so much of the time is spent performing
+list operations—the searches involve testing a signiﬁcant number of candidate n-
+grams. It also explains why the performance is so sensitive to the list ordering.
+We then increased the number of buckets to 199,999, reducing the average load
+to 1.8. Oddly enough, however, our overall run time only drops to 5.1 seconds, a
+difference of only 0.2 seconds.
+On further inspection, we can see that the minimal performance gain with
+a larger table was due to a poor choice of hash function. Simply summing the
+character codes for a string does not produce a very wide range of values. In
+particular, the maximum code value for a letter is 122, and so a string of n char-
+acters will generate a sum of at most 122n. The longest bigram in our document,
+“honoriﬁcabilitudinitatibus thou” sums to just 3,371, and so most of the buck-
+ets in our hash table will go unused. In addition, a commutative hash function,
+such as addition, does not differentiate among the different possible orderings of
+characters with a string. For example, the words “rat” and “tar” will generate the
+same sums.
+We switched to a hash function that uses shift and exclusive-or operations.
+With this version, shown as “Better hash,” the time drops to 0.6 seconds. A more
+systematic approach would be to study the distribution of keys among the buckets
+more carefully, making sure that it comes close to what one would expect if the
+hash function had a uniform output distribution.

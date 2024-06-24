@@ -1,0 +1,78 @@
+722
+Chapter 7
+Linking
+(a) addvec.o
+code/link/addvec.c
+1
+int addcnt = 0;
+2
+3
+void addvec(int *x, int *y,
+4
+int *z, int n)
+5
+{
+6
+int i;
+7
+8
+addcnt++;
+9
+10
+for (i = 0; i < n; i++)
+11
+z[i] = x[i] + y[i];
+12
+}
+code/link/addvec.c
+(b) multvec.o
+code/link/multvec.c
+1
+int multcnt = 0;
+2
+3
+void multvec(int *x, int *y,
+4
+int *z, int n)
+5
+{
+6
+int i;
+7
+8
+multcnt++;
+9
+10
+for (i = 0; i < n; i++)
+11
+z[i] = x[i] * y[i];
+12
+}
+code/link/multvec.c
+Figure 7.6
+Member object ﬁles in the libvector library.
+At link time, the linker will only copy the object modules that are referenced
+by the program, which reduces the size of the executable on disk and in memory.
+On the other hand, the application programmer only needs to include the names
+of a few library ﬁles. (In fact, C compiler drivers always pass libc.a to the linker,
+so the reference to libc.a mentioned previously is unnecessary.)
+On Linux systems, static libraries are stored on disk in a particular ﬁle format
+known as an archive. An archive is a collection of concatenated relocatable object
+ﬁles, with a header that describes the size and location of each member object ﬁle.
+Archive ﬁlenames are denoted with the .a sufﬁx.
+To make our discussion of libraries concrete, consider the pair of vector
+routines in Figure 7.6. Each routine, deﬁned in its own object module, performs a
+vector operation on a pair of input vectors and stores the result in an output vector.
+As a side effect, each routine records the number of times it has been called by
+incrementing a global variable. (This will be useful when we explain the idea of
+position-independent code in Section 7.12.)
+To create a static library of these functions, we would use the ar tool as follows:
+linux> gcc -c addvec.c multvec.c
+linux> ar rcs libvector.a addvec.o multvec.o
+To use the library, we might write an application such as main2.c in Figure 7.7,
+which invokes the addvec library routine. The include (or header) ﬁle vector.h
+deﬁnes the function prototypes for the routines in libvector.a,
+To build the executable, we would compile and link the input ﬁles main2.o
+and libvector.a:
+linux> gcc -c main2.c
+linux> gcc -static -o prog2c main2.o ./libvector.a

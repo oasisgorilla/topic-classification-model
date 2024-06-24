@@ -1,0 +1,40 @@
+1068
+Chapter 12
+Concurrent Programming
+12.18 ◆
+Using the progress graph in Figure 12.21, classify the following trajectories as
+either safe or unsafe.
+A. H2, L2, U2, H1, L1, S2, U1, S1, T1, T2
+B. H2, H1, L1, U1, S1, L2, T1, U2, S2, T2
+C. H1, L1, H2, L2, U2, S2, U1, S1, T1, T2
+12.19 ◆◆
+The solution to the ﬁrst readers-writers problem in Figure 12.26 gives a somewhat
+weak priority to readers because a writer leaving its critical section might restart
+a waiting writer instead of a waiting reader. Derive a solution that gives stronger
+priority to readers, where a writer leaving its critical section will always restart a
+waiting reader if one exists.
+12.20 ◆◆◆
+Consider a simpler variant of the readers-writers problem where there are at most
+N readers. Derive a solution that gives equal priority to readers and writers, in the
+sense that pending readers and writers have an equal chance of being granted
+access to the resource. Hint: You can solve this problem using a single counting
+semaphore and a single mutex.
+12.21 ◆◆◆◆
+Derive a solution to the second readers-writers problem, which favors writers
+instead of readers.
+12.22 ◆◆
+Test your understanding of the select function by modifying the server in Fig-
+ure 12.6 so that it echoes at most one text line per iteration of the main server
+loop.
+12.23 ◆◆
+The event-driven concurrent echo server in Figure 12.8 is ﬂawed because a mali-
+cious client can deny service to other clients by sending a partial text line. Write
+an improved version of the server that can handle these partial text lines without
+blocking.
+12.24 ◆
+The functions in the Rio I/O package (Section 10.5) are thread-safe. Are they
+reentrant as well?
+12.25 ◆
+In the prethreaded concurrent echo server in Figure 12.28, each thread calls the
+echo_cnt function (Figure 12.29). Is echo_cnt thread-safe? Is it reentrant? Why
+or why not?

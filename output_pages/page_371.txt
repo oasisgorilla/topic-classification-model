@@ -1,0 +1,72 @@
+370
+Chapter 3
+Machine-Level Representation of Programs
+(assuming that we have already ensured that the computation of (n −1)!
+did not overﬂow). In this case we get 1,278,945,280/14 = 91353234.286. As
+a second test, we can see that any factorial beyond 10! must be a multiple of
+100 and therefore have zeros for the last two digits. The correct value of 14!
+is 87,178,291,200.
+Further, we can build up a table of factorials computed through 14!with
+data type int, as shown below:
+n
+n!
+OK?
+1
+1
+Y
+2
+2
+Y
+3
+6
+Y
+4
+24
+Y
+5
+120
+Y
+6
+720
+Y
+7
+5,040
+Y
+8
+40,320
+Y
+9
+362,880
+Y
+10
+3,628,800
+Y
+11
+39,916,800
+Y
+12
+479,001,600
+Y
+13
+1,932,053,504
+N
+14
+1,278,945,280
+N
+B. Doing the computation with data type long lets us go up to 20!, thus the 14!
+computation does not overﬂow.
+Solution to Problem 3.23 (page 258)
+The code generated when compiling loops can be tricky to analyze, because the
+compiler can perform many different optimizations on loop code, and because it
+can be difﬁcult to match program variables with registers. This particular example
+demonstrates several places where the assembly code is not just a direct translation
+of the C code.
+A. Although parameter x is passed to the function in register %rdi, we can see
+that the register is never referenced once the loop is entered. Instead, we
+can see that registers %rbx, %rcx, and %rdx are initialized in lines 2–5 to x,
+x/9, and 4*x. We can conclude, therefore, that these registers contain the
+program variables.
+B. The compiler determines that pointer p always points to x, and hence the
+expression (*p)+=5 simply increments x. It combines this incrementing by
+5 with the increment of y, via the leaq instruction of line 7.
+C. The annotated code is as follows:

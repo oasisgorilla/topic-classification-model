@@ -1,0 +1,43 @@
+Section 9.9
+Dynamic Memory Allocation
+895
+multiple of 2 words (8 bytes) and then requests the additional heap space from
+the memory system (lines 7–9).
+The remainder of the extend_heap function (lines 12–17) is somewhat subtle.
+The heap begins on a double-word aligned boundary, and every call to extend_
+heap returns a block whose size is an integral number of double words. Thus, every
+call to mem_sbrk returns a double-word aligned chunk of memory immediately
+following the header of the epilogue block. This header becomes the header of
+the new free block (line 12), and the last word of the chunk becomes the new
+epilogue block header (line 14). Finally, in the likely case that the previous heap
+was terminated by a free block, we call the coalesce function to merge the two
+free blocks and return the block pointer of the merged blocks (line 17).
+Freeing and Coalescing Blocks
+An application frees a previously allocated block by calling the mm_free function
+(Figure 9.46), which frees the requested block (bp) and then merges adjacent
+free blocks using the boundary-tags coalescing technique described in Section
+9.9.11.
+The code in the coalesce helper function is a straightforward implementation
+of the four cases outlined in Figure 9.40. There is one somewhat subtle aspect. The
+free list format we have chosen—with its prologue and epilogue blocks that are
+always marked as allocated—allows us to ignore the potentially troublesome edge
+conditions where the requested block bp is at the beginning or end of the heap.
+Without these special blocks, the code would be messier, more error prone, and
+slower because we would have to check for these rare edge conditions on each
+and every free request.
+Allocating Blocks
+An application requests a block of size bytes of memory by calling the mm_malloc
+function (Figure 9.47). After checking for spurious requests, the allocator must
+adjust the requested block size to allow room for the header and the footer, and to
+satisfy the double-word alignment requirement. Lines 12–13 enforce the minimum
+block size of 16 bytes: 8 bytes to satisfy the alignment requirement and 8 more
+bytes for the overhead of the header and footer. For requests over 8 bytes (line 15),
+the general rule is to add in the overhead bytes and then round up to the nearest
+multiple of 8.
+Once the allocator has adjusted the requested size, it searches the free list for a
+suitable free block (line 18). If there is a ﬁt, then the allocator places the requested
+block and optionally splits the excess (line 19) and then returns the address of the
+newly allocated block.
+If the allocator cannot ﬁnd a ﬁt, it extends the heap with a new free block
+(lines 24–26), places the requested block in the new free block, optionally splitting
+the block (line 27), and then returns a pointer to the newly allocated block.

@@ -1,0 +1,87 @@
+466
+Chapter 4
+Processor Architecture
+F
+0x000: irmovq $10,%rdx
+# progl
+# progl
+0x00a: irmovq  $3,%rax
+0x014: nop
+0x015: nop
+0x016: nop
+0x017: addq %rdx,%rax
+0x019: halt
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+F
+D
+E
+M
+W
+Cycle 6
+Cycle 7
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+W
+D
+R[%rax]      3
+valA      R[%rdx] = 10
+valB      R[%rax] = 3
+Figure 4.43
+Pipelined execution of prog1 without special pipeline control. In cycle
+6, the second irmovq writes its result to program register %rax. The addq instruction
+reads its source operands in cycle 7, so it gets correct values for both %rdx and %rax.
+Figure 4.43 illustrates the processing of a sequence of instructions we refer to
+as prog1 by the PIPE−processor. Let us assume in this example and successive
+ones that the program registers initially all have value 0. The code loads values
+10 and 3 into program registers %rdx and %rax, executes three nop instructions,
+and then adds register %rdx to %rax. We focus our attention on the potential data
+hazards resulting from the data dependencies between the two irmovq instructions
+and the addq instruction. On the right-hand side of the ﬁgure, we show a pipeline
+diagram for the instruction sequence. The pipeline stages for cycles 6 and 7 are
+shown highlighted in the pipeline diagram. Below this, we show an expanded view
+of the write-back activity in cycle 6 and the decode activity during cycle 7. After
+the start of cycle 7, both of the irmovq instructions have passed through the write-
+back stage, and so the register ﬁle holds the updated values of %rdx and %rax.
+As the addq instruction passes through the decode stage during cycle 7, it will
+therefore read the correct values for its source operands. The data dependencies
+between the two irmovq instructions and the addq instruction have not created
+data hazards in this example.
+We saw that prog1 will ﬂow through our pipeline and get the correct results,
+because the three nop instructions create a delay between instructions with data

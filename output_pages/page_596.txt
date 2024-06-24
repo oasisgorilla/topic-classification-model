@@ -1,0 +1,71 @@
+Section 5.12
+Understanding Memory Performance
+595
+Figure 5.36
+Abstracting the
+operations for write_
+read. We ﬁrst rearrange the
+operators of Figure 5.35(a)
+and then show only those
+operations that use values
+from one iteration to
+produce new values for the
+next (b).
+%rax
+%rdi
+%rsi
+%rdx
+%rax
+%rdx
+s_addr
+1
+2
+3
+s_data
+load
+(a)
+(b)
+add
+sub
+jne
+%rax
+%rdx
+%rax
+%rdx
+s_data
+load
+add
+sub
+We can now understand the performance characteristics of function write_
+read. Figure 5.37 illustrates the data dependencies formed by multiple iterations of
+its inner loop. For the case of Example A in Figure 5.33, with differing source and
+destination addresses, the load and store operations can proceed independently,
+and hence the only critical path is formed by the decrementing of variable cnt,
+resulting in a CPE bound of 1.0. For the case of Example B with matching source
+and destination addresses, the data dependency between the s_data and load
+instructions causes a critical path to form involving data being stored, loaded, and
+incremented. We found that these three operations in sequence require a total of
+around 7 clock cycles.
+As these two examples show, the implementation of memory operations in-
+volves many subtleties. With operations on registers, the processor can determine
+which instructions will affect which others as they are being decoded into opera-
+tions. With memory operations, on the other hand, the processor cannot predict
+which will affect which others until the load and store addresses have been com-
+puted. Efﬁcient handling of memory operations is critical to the performance of
+many programs. The memory subsystem makes use of many optimizations, such
+as the potential parallelism when operations can proceed independently.
+Practice Problem 5.10 (solution page 613)
+As another example of code with potential load-store interactions, consider the
+following function to copy the contents of one array to another:
+1
+void copy_array(long *src, long *dest, long n)
+2
+{
+3
+long i;
+4
+for (i = 0; i < n; i++)
+5
+dest[i] = src[i];
+6
+}

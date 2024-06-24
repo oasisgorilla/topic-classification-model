@@ -1,0 +1,45 @@
+Section 5.7
+Understanding Modern Processors
+565
+dependencies, corresponding to the updating of program values acc and data+i
+with operations mul and add, respectively. Given that ﬂoating-point multiplication
+has a latency of 5 cycles, while integer addition has a latency of 1 cycle, we can see
+that the chain on the left will form a critical path, requiring 5n cycles to execute.
+The chain on the right would require only n cycles to execute, and so it does not
+limit the program performance.
+Figure 5.15 demonstrates why we achieved a CPE equal to the latency bound
+of 5 cycles for combine4, when performing ﬂoating-point multiplication. When ex-
+ecuting the function, the ﬂoating-point multiplier becomes the limiting resource.
+The other operations required during the loop—manipulating and testing pointer
+value data+i and reading data from memory—proceed in parallel with the mul-
+tiplication. As each successive value of acc is computed, it is fed back around to
+compute the next value, but this will not occur until 5 cycles later.
+The ﬂow for other combinations of data type and operation are identical to
+those shown in Figure 5.15, but with a different data operation forming the chain of
+data dependencies shown on the left. For all of the cases where the operation has
+a latency L greater than 1, we see that the measured CPE is simply L, indicating
+that this chain forms the performance-limiting critical path.
+Other Performance Factors
+For the case of integer addition, on the other hand, our measurements of combine4
+show a CPE of 1.27, slower than the CPE of 1.00 we would predict based on the
+chains of dependencies formed along either the left- or the right-hand side of the
+graph of Figure 5.15. This illustrates the principle that the critical paths in a data-
+ﬂow representation provide only a lower bound on how many cycles a program
+will require. Other factors can also limit performance, including the total number
+of functional units available and the number of data values that can be passed
+among the functional units on any given step. For the case of integer addition as
+the combining operation, the data operation is sufﬁciently fast that the rest of the
+operations cannot supply data fast enough. Determining exactly why the program
+requires 1.27 cycles per element would require a much more detailed knowledge
+of the hardware design than is publicly available.
+To summarize our performance analysis of combine4: our abstract data-ﬂow
+representation of program operation showed that combine4 has a critical path of
+length L . n caused by the successive updating of program value acc, and this path
+limits the CPE to at least L. This is indeed the CPE we measure for all cases except
+integer addition, which has a measured CPE of 1.27 rather than the CPE of 1.00
+we would expect from the critical path length.
+It may seem that the latency bound forms a fundamental limit on how fast
+our combining operations can be performed. Our next task will be to restructure
+the operations to enhance instruction-level parallelism. We want to transform the
+program in such a way that our only limitation becomes the throughput bound,
+yielding CPEs below or close to 1.00.

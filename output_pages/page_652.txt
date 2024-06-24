@@ -1,0 +1,51 @@
+Section 6.4
+Cache Memories
+651
+Figure 6.24
+Typical bus structure for
+cache memories.
+I/O
+bridge
+CPU chip
+Cache
+memories
+Register file
+System bus
+Memory bus
+Bus interface
+Main
+memory
+ALU
+a small SRAM cache memory, called an L1 cache (level 1 cache) between the
+CPU register ﬁle and main memory, as shown in Figure 6.24. The L1 cache can be
+accessed nearly as fast as the registers, typically in about 4 clock cycles.
+As the performance gap between the CPU and main memory continued
+to increase, system designers responded by inserting an additional larger cache,
+called an L2 cache, between the L1 cache and main memory, that can be accessed
+in about 10 clock cycles. Many modern systems include an even larger cache, called
+an L3 cache, which sits between the L2 cache and main memory in the memory
+hierarchy and can be accessed in about 50 cycles. While there is considerable
+variety in the arrangements, the general principles are the same. For our discussion
+in the next section, we will assume a simple memory hierarchy with a single L1
+cache between the CPU and main memory.
+6.4.1
+Generic Cache Memory Organization
+Consider a computer system where each memory address has m bits that form
+M = 2m unique addresses. As illustrated in Figure 6.25(a), a cache for such a
+machine is organized as an array of S = 2s cache sets. Each set consists of E cache
+lines. Each line consists of a data block of B = 2b bytes, a valid bit that indicates
+whether or not the line contains meaningful information, and t = m −(b + s) tag
+bits (a subset of the bits from the current block’s memory address) that uniquely
+identify the block stored in the cache line.
+In general, a cache’s organization can be characterized by the tuple (S, E,
+B, m). The size (or capacity) of a cache, C, is stated in terms of the aggregate size
+of all the blocks. The tag bits and valid bit are not included. Thus, C = S × E × B.
+When the CPU is instructed by a load instruction to read a word from address
+A of main memory, it sends address A to the cache. If the cache is holding a copy
+of the word at address A, it sends the word immediately back to the CPU. So how
+does the cache know whether it contains a copy of the word at address A? The
+cache is organized so that it can ﬁnd the requested word by simply inspecting the
+bits of the address, similar to a hash table with an extremely simple hash function.
+Here is how it works:
+The parameters S and B induce a partitioning of the m address bits into the
+three ﬁelds shown in Figure 6.25(b). The s set index bits in A form an index into

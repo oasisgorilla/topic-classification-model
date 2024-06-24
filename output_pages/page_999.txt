@@ -1,0 +1,84 @@
+998
+Chapter 11
+Network Programming
+code/netp/tiny/tiny.c
+1
+void serve_static(int fd, char *filename, int filesize)
+2
+{
+3
+int srcfd;
+4
+char *srcp, filetype[MAXLINE], buf[MAXBUF];
+5
+6
+/* Send response headers to client */
+7
+get_filetype(filename, filetype);
+8
+sprintf(buf, "HTTP/1.0 200 OK\r\n");
+9
+sprintf(buf, "%sServer: Tiny Web Server\r\n", buf);
+10
+sprintf(buf, "%sConnection: close\r\n", buf);
+11
+sprintf(buf, "%sContent-length: %d\r\n", buf, filesize);
+12
+sprintf(buf, "%sContent-type: %s\r\n\r\n", buf, filetype);
+13
+Rio_writen(fd, buf, strlen(buf));
+14
+printf("Response headers:\n");
+15
+printf("%s", buf);
+16
+17
+/* Send response body to client */
+18
+srcfd = Open(filename, O_RDONLY, 0);
+19
+srcp = Mmap(0, filesize, PROT_READ, MAP_PRIVATE, srcfd, 0);
+20
+Close(srcfd);
+21
+Rio_writen(fd, srcp, filesize);
+22
+Munmap(srcp, filesize);
+23
+}
+24
+25
+/*
+26
+* get_filetype - Derive file type from filename
+27
+*/
+28
+void get_filetype(char *filename, char *filetype)
+29
+{
+30
+if (strstr(filename, ".html"))
+31
+strcpy(filetype, "text/html");
+32
+else if (strstr(filename, ".gif"))
+33
+strcpy(filetype, "image/gif");
+34
+else if (strstr(filename, ".png"))
+35
+strcpy(filetype, "image/png");
+36
+else if (strstr(filename, ".jpg"))
+37
+strcpy(filetype, "image/jpeg");
+38
+else
+39
+strcpy(filetype, "text/plain");
+40
+}
+code/netp/tiny/tiny.c
+Figure 11.34
+Tiny serve_static serves static content to a client.

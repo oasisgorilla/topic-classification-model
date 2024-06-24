@@ -1,0 +1,41 @@
+Section 7.11
+Loading and Linking Shared Libraries from Applications
+737
+Finally, the dynamic linker passes control to the application. From this point on,
+the locations of the shared libraries are ﬁxed and do not change during execution
+of the program.
+7.11
+Loading and Linking Shared Libraries from Applications
+Up to this point, we have discussed the scenario in which the dynamic linker loads
+and links shared libraries when an application is loaded, just before it executes.
+However, it is also possible for an application to request the dynamic linker to
+load and link arbitrary shared libraries while the application is running, without
+having to link in the applications against those libraries at compile time.
+Dynamic linking is a powerful and useful technique. Here are some examples
+in the real world:
+. Distributing software. Developers of Microsoft Windows applications fre-
+quently use shared libraries to distribute software updates. They generate
+a new copy of a shared library, which users can then download and use as a
+replacement for the current version. The next time they run their application,
+it will automatically link and load the new shared library.
+. Building high-performance Web servers.Many Web servers generate dynamic
+content, such as personalized Web pages, account balances, and banner ads.
+Early Web servers generated dynamic content by using fork and execve
+to create a child process and run a “CGI program” in the context of the
+child. However, modern high-performance Web servers can generate dynamic
+content using a more efﬁcient and sophisticated approach based on dynamic
+linking.
+The idea is to package each function that generates dynamic content in
+a shared library. When a request arrives from a Web browser, the server
+dynamically loads and links the appropriate function and then calls it directly,
+as opposed to using fork and execve to run the function in the context of a
+child process. The function remains cached in the server’s address space, so
+subsequent requests can be handled at the cost of a simple function call. This
+can have a signiﬁcant impact on the throughput of a busy site. Further, existing
+functions can be updated and new functions can be added at run time, without
+stopping the server.
+Linux systems provide a simple interface to the dynamic linker that allows
+application programs to load and link shared libraries at run time.
+#include <dlfcn.h>
+void *dlopen(const char *filename, int flag);
+Returns: pointer to handle if OK, NULL on error

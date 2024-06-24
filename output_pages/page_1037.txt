@@ -1,0 +1,42 @@
+1036
+Chapter 12
+Concurrent Programming
+Figure 12.20
+An example trajectory.
+Thread 2
+Thread 1
+T2
+S2
+U2
+L2
+H2
+H1
+L1
+U1
+S1
+T1
+The execution history of a program is modeled as a trajectory through the
+state space. Figure 12.20 shows the trajectory that corresponds to the following
+instruction ordering:
+H1, L1, U1, H2, L2, S1, T1, U2, S2, T2
+For thread i, the instructions (Li, Ui, Si) that manipulate the contents of the
+shared variable cnt constitute a critical section (with respect to shared variable
+cnt) that should not be interleaved with the critical section of the other thread. In
+other words, we want to ensure that each thread has mutually exclusive access to
+the shared variable while it is executing the instructions in its critical section. The
+phenomenon in general is known as mutual exclusion.
+On the progress graph, the intersection of the two critical sections deﬁnes
+a region of the state space known as an unsafe region. Figure 12.21 shows the
+unsafe region for the variable cnt. Notice that the unsafe region abuts, but does
+not include, the states along its perimeter. For example, states (H1, H2) and (S1, U2)
+abut the unsafe region, but they are not part of it. A trajectory that skirts the unsafe
+region is known as a safe trajectory. Conversely, a trajectory that touches any part
+of the unsafe region is an unsafe trajectory. Figure 12.21 shows examples of safe
+and unsafe trajectories through the state space of our example badcnt.c program.
+The upper trajectory skirts the unsafe region along its left and top sides, and thus
+is safe. The lower trajectory crosses the unsafe region, and thus is unsafe.
+Any safe trajectory will correctly update the shared counter. In order to
+guarantee correct execution of our example threaded program—and indeed any
+concurrent program that shares global data structures—we must somehow syn-
+chronize the threads so that they always have a safe trajectory. A classic approach
+is based on the idea of a semaphore, which we introduce next.

@@ -1,0 +1,45 @@
+Section 12.5
+Synchronizing Threads with Semaphores
+1031
+variable declared in a program. For example, even though each peer
+thread in our example program declares cnt in line 25, at run time there is
+only one instance of cnt residing in the read/write area of virtual memory.
+Each peer thread reads and writes this instance.
+12.4.3
+Shared Variables
+We say that a variable v is shared if and only if one of its instances is referenced
+by more than one thread. For example, variable cnt in our example program is
+shared because it has only one run-time instance and this instance is referenced by
+both peer threads. On the other hand, myid is not shared, because each of its two
+instances is referenced by exactly one thread. However, it is important to realize
+that local automatic variables such as msgs can also be shared.
+Practice Problem 12.6 (solution page 1072)
+A. Using the analysis from Section 12.4, ﬁll each entry in the following table
+with “Yes” or “No” for the example program in Figure 12.15. In the ﬁrst
+column, the notation v.t denotes an instance of variable v residing on the
+local stack for thread t, where t is either m (main thread), p0 (peer thread 0),
+or p1 (peer thread 1).
+Referenced by
+Variable
+instance
+main thread?
+peer thread 0?
+peer thread 1?
+ptr
+cnt
+i.m
+msgs.m
+myid.p0
+myid.p1
+B. Given the analysis in part A, which of the variables ptr, cnt, i, msgs, and
+myid are shared?
+12.5
+Synchronizing Threads with Semaphores
+Shared variables can be convenient, but they introduce the possibility of nasty
+synchronization errors. Consider the badcnt.c program in Figure 12.16, which
+creates two threads, each of which increments a global shared counter variable
+called cnt.
+Since each thread increments the counter niters times, we expect its ﬁnal
+value to be 2 × niters. This seems quite simple and straightforward. However,
+when we run badcnt.c on our Linux system, we not only get wrong answers, we
+get different answers each time!

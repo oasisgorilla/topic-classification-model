@@ -1,0 +1,62 @@
+516
+Chapter 4
+Processor Architecture
+iaddq
+$8, %rsp
+mrmovq -8(%rsp), rA
+(See Practice Problem 4.3 for a description of the iaddq instruction.) Note the
+ordering of the two instructions to make sure popq %rsp works properly. You can
+do this by having the logic in the decode stage treat popq the same as it would the
+iaddq listed above, except that it predicts the next PC to be equal to the current
+PC. On the next cycle, the popq instruction is refetched, but the instruction code
+is converted to a special value IPOP2. This is treated as a special instruction that
+has the same behavior as the mrmovq instruction listed above.
+The ﬁle pipe-1w.hcl contains the modiﬁed write port logic described above.
+It contains a declaration of the constant IPOP2 having hexadecimal value E. It
+also contains the deﬁnition of a signal f_icode that generates the icode ﬁeld for
+pipeline register D. This deﬁnition can be modiﬁed to insert the instruction code
+IPOP2 the second time the popq instruction is fetched. The HCL ﬁle also contains
+a declaration of the signal f_pc, the value of the program counter generated in the
+fetch stage by the block labeled “Select PC” (Figure 4.57).
+Modify the control logic in this ﬁle to process popq instructions in the manner
+we have described. See the lab material for directions on how to generate a
+simulator for your solution and how to test it.
+4.59 ◆◆
+Compare the performance of the three versions of bubblesort (Problems 4.47,
+4.48, and 4.49). Explain why one version performs better than the other.
+Solutions to Practice Problems
+Solution to Problem 4.1 (page 396)
+Encoding instructions by hand is rather tedious, but it will solidify your under-
+standing of the idea that assembly code gets turned into byte sequences by the
+assembler. In the following output from our Y86-64 assembler, each line shows
+an address and a byte sequence that starts at that address:
+1
+0x100:
+| .pos 0x100
+# Start code at address
+0x100
+2
+0x100: 30f30f00000000000000 |
+irmovq $15,%rbx
+3
+0x10a: 2031
+|
+rrmovq %rbx,%rcx
+4
+0x10c:
+| loop:
+5
+0x10c: 4013fdffffffffffffff |
+rmmovq %rcx,-3(%rbx)
+6
+0x116: 6031
+|
+addq
+%rbx,%rcx
+7
+0x118: 700c01000000000000
+|
+jmp loop
+Several features of this encoding are worth noting:
+. Decimal 15 (line 2) has hex representation 0x000000000000000f. Writing the
+bytes in reverse order gives 0f 00 00 00 00 00 00 00.

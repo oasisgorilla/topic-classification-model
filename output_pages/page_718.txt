@@ -1,0 +1,71 @@
+Section 7.6
+Symbol Resolution
+717
+In this case, the linker will generate an error message because the strong symbol
+main is deﬁned multiple times (rule 1):
+linux> gcc foo1.c bar1.c
+/tmp/ccq2Uxnd.o: In function ‘main’:
+bar1.c:(.text+0x0): multiple definition of ‘main’
+Similarly, the linker will generate an error message for the following modules
+because the strong symbol x is deﬁned twice (rule 1):
+1
+/* foo2.c */
+2
+int x = 15213;
+3
+4
+int main()
+5
+{
+6
+return 0;
+7
+}
+1
+/* bar2.c */
+2
+int x = 15213;
+3
+4
+void f()
+5
+{
+6
+}
+However, if x is uninitialized in one module, then the linker will quietly choose
+the strong symbol deﬁned in the other (rule 2):
+1
+/* foo3.c */
+2
+#include <stdio.h>
+3
+void f(void);
+4
+5
+int x = 15213;
+6
+7
+int main()
+8
+{
+9
+f();
+10
+printf("x = %d\n", x);
+11
+return 0;
+12
+}
+1
+/* bar3.c */
+2
+int x;
+3
+4
+void f()
+5
+{
+6
+x = 15212;
+7
+}

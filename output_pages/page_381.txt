@@ -1,0 +1,71 @@
+380
+Chapter 3
+Machine-Level Representation of Programs
+4
+.L3:
+loop:
+5
+imulq
+(%rdi), %rax
+result *= ptr->v
+6
+movq
+2(%rdi), %rdi
+ptr = ptr->p
+7
+.L2:
+middle:
+8
+testq
+%rdi, %rdi
+Test ptr
+9
+jne
+.L3
+If != NULL, goto loop
+10
+rep; ret
+A. Based on the annotated code, we can generate a C version:
+short test(struct ACE *ptr) {
+short val = 1;
+while (ptr) {
+val *= ptr->v;
+ptr
+= ptr->p;
+}
+return val;
+}
+B. We can see that each structure is an element in a singly linked list, with ﬁeld
+v being the value of the element and p being a pointer to the next element.
+Function fun computes the sum of the element values in the list.
+Solution to Problem 3.43 (page 308)
+Structures and unions involve a simple set of concepts, but it takes practice to be
+comfortable with the different referencing patterns and their implementations.
+EXPR
+TYPE
+Code
+up->t1.u
+long
+movq (%rdi), %rax
+movq %rax, (%rsi)
+up->t1.v
+short
+movw 8(%rdi), %ax
+movw %ax, (%rsi)
+&up->t1.w
+char *
+addq $10, %rdi
+movq %rdi, (%rsi)
+up->t2.a
+int *
+movq %rdi, (%rsi)
+up->t2.a[up->t1.u]
+int
+movq (%rdi), %rax
+movl (%rdi,%rax,4), %eax
+movl %eax, (%rsi)
+*up->t2.p
+char
+movq 8(%rdi), %rax
+movb (%rax), %al
+movb %al, (%rsi)

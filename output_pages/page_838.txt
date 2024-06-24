@@ -1,0 +1,45 @@
+CHAPTER 9
+Virtual Memory
+9.1
+Physical and Virtual Addressing
+839
+9.2
+Address Spaces
+840
+9.3
+VM as a Tool for Caching
+841
+9.4
+VM as a Tool for Memory Management
+847
+9.5
+VM as a Tool for Memory Protection
+848
+9.6
+Address Translation
+849
+9.7
+Case Study: The Intel Core i7/Linux Memory System
+861
+9.8
+Memory Mapping
+869
+9.9
+Dynamic Memory Allocation
+875
+9.10
+Garbage Collection
+901
+9.11
+Common Memory-Related Bugs in C Programs
+906
+9.12
+Summary
+911
+Bibliographic Notes
+912
+Homework Problems
+912
+Solutions to Practice Problems
+916
+837

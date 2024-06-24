@@ -1,0 +1,47 @@
+266
+Chapter 3
+Machine-Level Representation of Programs
+for (i = 2; i <= n; i++)
+result *= i;
+return result;
+}
+As shown, the natural way of writing a factorial function with a for loop is
+to multiply factors from 2 up to n, and so this function is quite different from the
+code we showed using either a while or a do-while loop.
+We can identify the different components of the for loop in this code as
+follows:
+init-expr
+i = 2
+test-expr
+i <= n
+update-expr
+i++
+body-statement
+result *= i;
+Substituting these components into the template we have shown to transform a
+for loop into a while loop yields the following:
+long fact_for_while(long n)
+{
+long i = 2;
+long result = 1;
+while (i <= n) {
+result *= i;
+i++;
+}
+return result;
+}
+Applying the jump-to-middle transformation to the while loop then yields the
+following version in goto code:
+long fact_for_jm_goto(long n)
+{
+long i = 2;
+long result = 1;
+goto test;
+loop:
+result *= i;
+i++;
+test:
+if (i <= n)
+goto loop;
+return result;
+}

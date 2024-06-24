@@ -1,0 +1,82 @@
+Section 1.2
+Programs Are Translated by Other Programs into Different Forms
+41
+Pre-
+processor
+(cpp)
+Compiler
+(cc1)
+Assembler
+(as)
+Linker
+(ld)
+hello.c
+hello.i
+hello.s
+hello.o
+printf.o
+hello
+Source
+program
+(text)
+Modified
+source
+program
+(text)
+Assembly
+program
+(text)
+Relocatable
+object
+programs
+(binary)
+Executable
+object
+program
+(binary)
+Figure 1.3
+The compilation system.
+linux> gcc -o hello hello.c
+Here, the gcc compiler driver reads the source ﬁle hello.c and translates it into
+an executable object ﬁle hello. The translation is performed in the sequence
+of four phases shown in Figure 1.3. The programs that perform the four phases
+(preprocessor, compiler, assembler, and linker) are known collectively as the
+compilation system.
+. Preprocessing phase.The preprocessor (cpp) modiﬁes the original C program
+according to directives that begin with the ‘#’ character. For example, the
+#include <stdio.h> command in line 1 of hello.c tells the preprocessor
+to read the contents of the system header ﬁle stdio.h and insert it directly
+into the program text. The result is another C program, typically with the .i
+sufﬁx.
+. Compilation phase. The compiler (cc1) translates the text ﬁle hello.i into
+the text ﬁle hello.s, which contains an assembly-language program. This
+program includes the following deﬁnition of function main:
+1
+main:
+2
+subq
+$8, %rsp
+3
+movl
+$.LC0, %edi
+4
+call
+puts
+5
+movl
+$0, %eax
+6
+addq
+$8, %rsp
+7
+ret
+Each of lines 2–7 in this deﬁnition describes one low-level machine-
+language instruction in a textual form. Assembly language is useful because
+it provides a common output language for different compilers for different
+high-level languages. For example, C compilers and Fortran compilers both
+generate output ﬁles in the same assembly language.
+. Assembly phase. Next, the assembler (as) translates hello.s into machine-
+language instructions, packages them in a form known as a relocatable object
+program, and stores the result in the object ﬁle hello.o. This ﬁle is a binary
+ﬁle containing 17 bytes to encode the instructions for function main. If we
+were to view hello.o with a text editor, it would appear to be gibberish.

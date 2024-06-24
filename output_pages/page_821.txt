@@ -1,0 +1,83 @@
+820
+Chapter 8
+Exceptional Control Flow
+code/ecf/setjmp.c
+1
+#include "csapp.h"
+2
+3
+jmp_buf buf;
+4
+5
+int error1 = 0;
+6
+int error2 = 1;
+7
+8
+void foo(void), bar(void);
+9
+10
+int main()
+11
+{
+12
+switch(setjmp(buf)) {
+13
+case 0:
+14
+foo();
+15
+break;
+16
+case 1:
+17
+printf("Detected an error1 condition in foo\n");
+18
+break;
+19
+case 2:
+20
+printf("Detected an error2 condition in foo\n");
+21
+break;
+22
+default:
+23
+printf("Unknown error condition in foo\n");
+24
+}
+25
+exit(0);
+26
+}
+27
+28
+/* Deeply nested function foo */
+29
+void foo(void)
+30
+{
+31
+if (error1)
+32
+longjmp(buf, 1);
+33
+bar();
+34
+}
+35
+36
+void bar(void)
+37
+{
+38
+if (error2)
+39
+longjmp(buf, 2);
+40
+}
+code/ecf/setjmp.c
+Figure 8.43
+Nonlocal jump example. This example shows the framework for using
+nonlocal jumps to recover from error conditions in deeply nested functions without
+having to unwind the entire stack.

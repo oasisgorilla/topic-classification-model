@@ -1,0 +1,90 @@
+676
+Chapter 6
+The Memory Hierarchy
+code/mem/mountain/mountain.c
+1
+long data[MAXELEMS];
+/* The global array we’ll be traversing */
+2
+3
+/* test - Iterate over first "elems" elements of array "data" with
+4
+*
+stride of "stride", using 4 x 4 loop unrolling.
+5
+*/
+6
+int test(int elems, int stride)
+7
+{
+8
+long i, sx2 = stride*2, sx3 = stride*3, sx4 = stride*4;
+9
+long acc0 = 0, acc1 = 0, acc2 = 0, acc3 = 0;
+10
+long length = elems;
+11
+long limit = length - sx4;
+12
+13
+/* Combine 4 elements at a time */
+14
+for (i = 0; i < limit; i += sx4) {
+15
+acc0 = acc0 + data[i];
+16
+acc1 = acc1 + data[i+stride];
+17
+acc2 = acc2 + data[i+sx2];
+18
+acc3 = acc3 + data[i+sx3];
+19
+}
+20
+21
+/* Finish any remaining elements */
+22
+for (; i < length; i++) {
+23
+acc0 = acc0 + data[i];
+24
+}
+25
+return ((acc0 + acc1) + (acc2 + acc3));
+26
+}
+27
+28
+/* run - Run test(elems, stride) and return read throughput (MB/s).
+29
+*
+"size" is in bytes, "stride" is in array elements, and Mhz is
+30
+*
+CPU clock frequency in Mhz.
+31
+*/
+32
+double run(int size, int stride, double Mhz)
+33
+{
+34
+double cycles;
+35
+int elems = size / sizeof(double);
+36
+37
+test(elems, stride);
+/* Warm up the cache */
+38
+cycles = fcyc2(test, elems, stride, 0);
+/* Call test(elems,stride) */
+39
+return (size / stride) / (cycles / Mhz); /* Convert cycles to MB/s */
+40
+}
+code/mem/mountain/mountain.c
+Figure 6.40
+Functions that measure and compute read throughput. We can generate a memory mountain
+for a particular computer by calling the run function with different values of size (which corresponds to
+temporal locality) and stride (which corresponds to spatial locality).

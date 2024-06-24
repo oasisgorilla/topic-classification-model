@@ -1,0 +1,38 @@
+406
+Chapter 4
+Processor Architecture
+Practice Problem 4.4 (solution page 518)
+Write Y86-64 code to implement a recursive product function rproduct, based
+on the following C code:
+long rproduct(long *start, long count)
+{
+if (count <= 1)
+return 1;
+return *start * rproduct(start+1, count-1);
+}
+Use the same argument passing and register saving conventions as x86-64 code
+does. You might ﬁnd it helpful to compile the C code on an x86-64 machine and
+then translate the instructions to Y86-64.
+Practice Problem 4.5 (solution page 519)
+Modify the Y86-64 code for the sum function (Figure 4.6) to implement a function
+absSum that computes the sum of absolute values of an array. Use a conditional
+jump instruction within your inner loop.
+Practice Problem 4.6 (solution page 519)
+Modify the Y86-64 code for the sum function (Figure 4.6) to implement a function
+absSum that computes the sum of absolute values of an array. Use a conditional
+move instruction within your inner loop.
+4.1.6
+Some Y86-64 Instruction Details
+Most Y86-64 instructions transform the program state in a straightforward man-
+ner, and so deﬁning the intended effect of each instruction is not difﬁcult. Two
+unusual instruction combinations, however, require special attention.
+The pushq instruction both decrements the stack pointer by 8 and writes a
+register value to memory. It is therefore not totally clear what the processor should
+do when executing the instruction pushq %rsp, since the register being pushed is
+being changed by the same instruction. Two different conventions are possible:
+(1) push the original value of %rsp, or (2) push the decremented value of %rsp.
+For the Y86-64 processor, let us adopt the same convention as is used with
+x86-64, as determined in the following problem.
+Practice Problem 4.7 (solution page 520)
+Let us determine the behavior of the instruction pushq %rsp for an x86-64 pro-
+cessor. We could try reading the Intel documentation on this instruction, but a

@@ -1,0 +1,94 @@
+Section 2.2
+Integer Representations
+99
+Figure 2.12
+Unsigned number
+examples for w = 4.
+When bit i in the binary
+representation has value 1,
+it contributes 2i to the
+value.
+16
+15
+14
+13
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+20 = 1
+21 = 2
+22 = 4
+23 = 8
+[0001]
+[0101]
+[1011]
+[1111]
+principle: Deﬁnition of unsigned encoding
+For vector ⃗
+x = [xw−1, xw−2, . . . , x0]:
+B2Uw(⃗
+x) .
+=
+w−1
+
+i=0
+xi2i
+(2.1)
+In this equation, the notation .
+= means that the left-hand side is deﬁned to be
+equal to the right-hand side. The function B2Uw maps strings of zeros and ones
+of length w to nonnegative integers. As examples, Figure 2.12 shows the mapping,
+given by B2U, from bit vectors to integers for the following cases:
+B2U4([0001])
+=
+0 . 23 + 0 . 22 + 0 . 21 + 1 . 20
+=
+0 + 0 + 0 + 1
+=
+1
+B2U4([0101])
+=
+0 . 23 + 1 . 22 + 0 . 21 + 1 . 20
+=
+0 + 4 + 0 + 1
+=
+5
+B2U4([1011])
+=
+1 . 23 + 0 . 22 + 1 . 21 + 1 . 20
+=
+8 + 0 + 2 + 1
+=
+11
+B2U4([1111])
+=
+1 . 23 + 1 . 22 + 1 . 21 + 1 . 20
+=
+8 + 4 + 2 + 1
+=
+15
+(2.2)
+In the ﬁgure, we represent each bit position i by a rightward-pointing blue bar of
+length 2i. The numeric value associated with a bit vector then equals the sum of
+the lengths of the bars for which the corresponding bit values are 1.
+Let us consider the range of values that can be represented using w bits. The
+least value is given by bit vector [00 . . . 0] having integer value 0, and the greatest
+value is given by bit vector [11 . . . 1] having integer value UMaxw .
+=
+w−1
+i=0 2i =
+2w −1. Using the 4-bit case as an example, we have UMax4 = B2U4([1111]) =
+24 −1= 15. Thus, the function B2Uw can be deﬁned as a mapping B2Uw: {0, 1}w →
+{0, . . . , UMaxw}.
+The unsigned binary representation has the important property that every
+number between 0 and 2w −1has a unique encoding as a w-bit value. For example,

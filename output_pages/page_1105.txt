@@ -1,0 +1,170 @@
+1104
+Index
+less than signs <
+left hoinkies, 945
+“put to” operator, 926
+levels
+optimization, 534
+storage, 645–646
+LF (line feed) characters, 928
+LFU (least-frequently-used)
+replacement policies, 662
+libc library, 947
+__libc_start_main, 734
+libraries
+in concurrent programming, 1060–
+1061
+header ﬁles, 119
+interpositioning, 743, 743–748
+shared, 55, 735, 735–737
+standard I/O, 947
+static, 720, 720–724
+LIFO (last-in ﬁrst-out) free list order,
+899
+<limits.h> ﬁle for numeric limit
+declarations, 103–104, 113
+line feed (LF) characters, 928
+line matching
+direct-mapped caches, 654
+fully associative caches, 662
+set associative caches, 661–662
+line replacement
+direct-mapped caches, 655
+set associative caches, 662
+.line section, 711
+linear address spaces, 840
+link-time errors, 43
+link-time interpositioning, 744, 746
+linkers and linking, 41, 200, 206
+compiler drivers, 707–708
+dynamic, 735, 735–737
+library interpositioning, 743, 743–
+748
+object ﬁles, 709, 709–710
+executable, 731–734
+loading, 733–734
+relocatable, 710–711
+tools for, 749
+overview, 706–707
+position-independent code, 740–
+743
+relocation, 725–731
+shared libraries from applications,
+737–739
+static, 708
+summary, 749–750
+symbol resolution, 715–725
+symbol tables, 711–715
+virtual memory for, 847–848
+linking phase, 42
+links in directories, 927
+Linux operating system, 56, 81
+code segments, 733–734
+dynamic linker interfaces, 738
+and ELF, 709
+exceptions, 765–767
+ﬁles, 927–929
+signals, 792
+static libraries, 721–722
+virtual memory, 866–869
+Lisp language, 121
+listen [Unix] convert active socket
+to listening socket, 971
+listening descriptors, 972–973
+listening sockets, 971
+little-endian ordering convention, 78,
+78–80
+load effective address instruction,
+227–229, 313
+load forwarding in PIPE, 513
+load instructions, 46
+load interlocks, 477
+load operations
+example, 624
+process, 555–556
+load penalty in CPI, 503
+load performance of memory, 590–591
+load program function, 786
+load-store architecture in CISC vs.
+RISC, 398
+load time for code, 706
+load/use data hazards, 475, 475–477
+loaders, 708, 733
+loading
+concepts, 735
+executable object ﬁles, 733–734
+process, 733
+programs, 786–788
+shared libraries from applications,
+737–739
+virtual memory for, 848
+local area networks (LANs), 956,
+956–958
+local automatic variables, 1030
+local registers, 563
+local static variables, 1030, 1030–1031
+local storage
+registers, 287–289
+stack, 284–287
+local symbols, 712
+locality, 49, 616, 640–641
+blocking for, 683
+caches, 679–683, 846
+exploiting, 683
+forms, 640, 650
+instruction fetches, 643–644
+program data references, 642–643
+summary, 644–645
+localtime function, 1060
+lock-and-copy technique, 1058, 1058
+locking mutexes
+lock ordering rule, 1065
+for semaphores, 1039
+logic design, 408
+combinational circuits, 410–416,
+449
+logic gates, 409, 409
+memory and clocking, 417–420
+set membership, 416–417
+logic gates, 409
+logic synthesis, 391, 409, 503
+logical blocks
+disks, 631, 631–632
+SSDs, 637
+logical control ﬂow, 768, 768–769
+logical operations, 92–93, 227
+discussion, 232–233
+load effective address, 227–229
+shift, 94, 140, 228, 230–232
+special, 233–236
+unary and binary, 230
+long [C] integer data type, 76–77,
+97–98
+long double [C] extended-precision
+ﬂoating point, 161, 173
+long double ﬂoating-point
+declaration, 214
+long words in machine-level data, 215
+longjmp [C Stdlib] nonlocal jump,
+759, 819, 819
+loop registers, 563
+loop unrolling, 538, 540, 567
+Core i7, 608
+k × 1, 567
+k × 1a, 580
+k × k, 575–576
+overview, 567–571
+with reassociation transformations,
+577–579
+loopback addresses, 964
+loops, 256
+do-while, 256–259
+for, 264–268
+inefﬁciencies, 544–548
+reverse engineering, 258
+segments, 562–563
+for spatial locality, 679–683
+while, 259–264
+low-level instructions. See machine-
+level programming
+low-level optimizations, 598

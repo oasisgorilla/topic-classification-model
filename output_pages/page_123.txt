@@ -1,0 +1,62 @@
+122
+Chapter 2
+Representing and Manipulating Information
+Aside
+Security vulnerability in getpeername
+In 2002, programmers involved in the FreeBSD open-source operating systems project realized that
+their implementation of the getpeername library function had a security vulnerability. A simpliﬁed
+version of their code went something like this:
+1
+/*
+2
+* Illustration of code vulnerability similar to that found in
+3
+* FreeBSD’s implementation of getpeername()
+4
+*/
+5
+6
+/* Declaration of library function memcpy */
+7
+void *memcpy(void *dest, void *src, size_t n);
+8
+9
+/* Kernel memory region holding user-accessible data */
+10
+#define KSIZE 1024
+11
+char kbuf[KSIZE];
+12
+13
+/* Copy at most maxlen bytes from kernel region to user buffer */
+14
+int copy_from_kernel(void *user_dest, int maxlen) {
+15
+/* Byte count len is minimum of buffer size and maxlen */
+16
+int len = KSIZE < maxlen ? KSIZE : maxlen;
+17
+memcpy(user_dest, kbuf, len);
+18
+return len;
+19
+}
+In this code, we show the prototype for library function memcpy on line 7, which is designed to copy
+a speciﬁed number of bytes n from one region of memory to another.
+The function copy_from_kernel, starting at line 14, is designed to copy some of the data main-
+tained by the operating system kernel to a designated region of memory accessible to the user. Most
+of the data structures maintained by the kernel should not be readable by a user, since they may con-
+tain sensitive information about other users and about other jobs running on the system, but the region
+shown as kbuf was intended to be one that the user could read. The parameter maxlen is intended to be
+the length of the buffer allocated by the user and indicated by argument user_dest. The computation
+at line 16 then makes sure that no more bytes are copied than are available in either the source or the
+destination buffer.
+Suppose, however, that some malicious programmer writes code that calls copy_from_kernel with
+a negative value of maxlen. Then the minimum computation on line 16 will compute this value for len,
+which will then be passed as the parameter n to memcpy. Note, however, that parameter n is declared as
+having data type size_t. This data type is declared (via typedef) in the library ﬁle stdio.h. Typically, it
+is deﬁned to be unsigned for 32-bit programs and unsigned long for 64-bit programs. Since argument
+n is unsigned, memcpy will treat it as a very large positive number and attempt to copy that many bytes
+from the kernel region to the user’s buffer. Copying that many bytes (at least 231) will not actually
+work, because the program will encounter invalid addresses in the process, but the program could read
+regions of the kernel memory for which it is not authorized.

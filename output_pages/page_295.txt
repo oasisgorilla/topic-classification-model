@@ -1,0 +1,45 @@
+294
+Chapter 3
+Machine-Level Representation of Programs
+Practice Problem 3.37 (solution page 377)
+Suppose xP, the address of short integer array P, and long integer index i are stored
+in registers %rdx and %rcx, respectively. For each of the following expressions, give
+its type, a formula for its value, and an assembly-code implementation. The result
+should be stored in register %rax if it is a pointer and register element %ax if it has
+data type short.
+Expression
+Type
+Value
+Assembly code
+P[1]
+P + 3 + i
+P[i * 6 - 5]
+P[2]
+&P[i + 2]
+3.8.3
+Nested Arrays
+The general principles of array allocation and referencing hold even when we
+create arrays of arrays. For example, the declaration
+int A[5][3];
+is equivalent to the declaration
+typedef int row3_t[3];
+row3_t A[5];
+Data type row3_t is deﬁned to be an array of three integers. Array A contains ﬁve
+such elements, each requiring 12 bytes to store the three integers. The total array
+size is then 4 . 5 . 3 = 60 bytes.
+Array A can also be viewed as a two-dimensional array with ﬁve rows and
+three columns, referenced as A[0][0] through A[4][2]. The array elements are
+ordered in memory in row-major order, meaning all elements of row 0, which
+can be written A[0], followed by all elements of row 1 (A[1]), and so on. This is
+illustrated in Figure 3.36.
+This ordering is a consequence of our nested declaration. Viewing A as an
+array of ﬁve elements, each of which is an array of three int’s, we ﬁrst have A[0],
+followed by A[1], and so on.
+To access elements of multidimensional arrays, the compiler generates code to
+compute the offset of the desired element and then uses one of the mov instructions
+with the start of the array as the base address and the (possibly scaled) offset as
+an index. In general, for an array declared as
+T D[R][C];
+array element D[i][j] is at memory address
+&D[i][j] = xD + L(C . i + j)
+(3.1)

@@ -1,0 +1,56 @@
+Section 5.3
+Program Example
+541
+0
+1
+2
+len
+len
+1
+len
+data
+. . .
+Figure 5.3
+Vector abstract data type. A vector is represented by header information
+plus an array of designated length.
+code/opt/vec.h
+1
+/* Create abstract data type for vector */
+2
+typedef struct {
+3
+long len;
+4
+data_t *data;
+5
+} vec_rec, *vec_ptr;
+code/opt/vec.h
+The declaration uses data_t to designate the data type of the underlying elements.
+In our evaluation, we measured the performance of our code for integer (C int
+and long), and ﬂoating-point (C float and double) data. We do this by compiling
+and running the program separately for different type declarations, such as the
+following for data type long:
+typedef long data_t;
+We allocate the data array block to store the vector elements as an array of len
+objects of type data_t.
+Figure 5.4 shows some basic procedures for generating vectors, accessing vec-
+tor elements, and determining the length of a vector. An important feature to note
+is that get_vec_element, the vector access routine, performs bounds checking for
+every vector reference. This code is similar to the array representations used in
+many other languages, including Java. Bounds checking reduces the chances of
+program error, but it can also slow down program execution.
+As an optimization example, consider the code shown in Figure 5.5, which
+combines all of the elements in a vector into a single value according to some
+operation. By using different deﬁnitions of compile-time constants IDENT and
+OP, the code can be recompiled to perform different operations on the data. In
+particular, using the declarations
+#define IDENT 0
+#define OP
++
+it sums the elements of the vector. Using the declarations
+#define IDENT 1
+#define OP
+*
+it computes the product of the vector elements.
+In our presentation, we will proceed through a series of transformations of
+the code, writing different versions of the combining function. To gauge progress,

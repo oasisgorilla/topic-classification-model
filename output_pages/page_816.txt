@@ -1,0 +1,86 @@
+Section 8.5
+Signals
+815
+code/ecf/procmask2.c
+1
+void handler(int sig)
+2
+{
+3
+int olderrno = errno;
+4
+sigset_t mask_all, prev_all;
+5
+pid_t pid;
+6
+7
+Sigfillset(&mask_all);
+8
+while ((pid = waitpid(-1, NULL, 0)) > 0) { /* Reap a zombie child */
+9
+Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+10
+deletejob(pid); /* Delete the child from the job list */
+11
+Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+12
+}
+13
+if (errno != ECHILD)
+14
+Sio_error("waitpid error");
+15
+errno = olderrno;
+16
+}
+17
+18
+int main(int argc, char **argv)
+19
+{
+20
+int pid;
+21
+sigset_t mask_all, mask_one, prev_one;
+22
+23
+Sigfillset(&mask_all);
+24
+Sigemptyset(&mask_one);
+25
+Sigaddset(&mask_one, SIGCHLD);
+26
+Signal(SIGCHLD, handler);
+27
+initjobs(); /* Initialize the job list */
+28
+29
+while (1) {
+30
+Sigprocmask(SIG_BLOCK, &mask_one, &prev_one); /* Block SIGCHLD */
+31
+if ((pid = Fork()) == 0) { /* Child process */
+32
+Sigprocmask(SIG_SETMASK, &prev_one, NULL); /* Unblock SIGCHLD */
+33
+Execve("/bin/date", argv, NULL);
+34
+}
+35
+Sigprocmask(SIG_BLOCK, &mask_all, NULL); /* Parent process */
+36
+addjob(pid);
+/* Add the child to the job list */
+37
+Sigprocmask(SIG_SETMASK, &prev_one, NULL);
+/* Unblock SIGCHLD */
+38
+}
+39
+exit(0);
+40
+}
+code/ecf/procmask2.c
+Figure 8.40
+Using sigprocmask to synchronize processes. In this example, the parent ensures that
+addjob executes before the corresponding deletejob.

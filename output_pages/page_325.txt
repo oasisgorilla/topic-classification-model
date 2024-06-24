@@ -1,0 +1,48 @@
+324
+Chapter 3
+Machine-Level Representation of Programs
+back to the 80286 and is seldom found in programs running on modern systems.
+By storing the canary in a special segment, it can be marked as “read only,” so
+that an attacker cannot overwrite the stored canary value. Before restoring the
+register state and returning, the function compares the value stored at the stack
+location with the canary value (via the xorq instruction on line 11). If the two are
+identical, the xorq instruction will yield zero, and the function will complete in the
+normal fashion. A nonzero value indicates that the canary on the stack has been
+modiﬁed, and so the code will call an error routine.
+Stack protection does a good job of preventing a buffer overﬂow attack from
+corrupting state stored on the program stack. It incurs only a small performance
+penalty, especially because gcc only inserts it when there is a local buffer of
+type char in the function. Of course, there are other ways to corrupt the state
+of an executing program, but reducing the vulnerability of the stack thwarts many
+common attack strategies.
+Practice Problem 3.48 (solution page 383)
+The functions intlen, len, and iptoa provide a very convoluted way to compute
+the number of decimal digits required to represent an integer. We will use this as
+a way to study some aspects of the gcc stack protector facility.
+int len(char *s) {
+return strlen(s);
+}
+void iptoa(char *s, long *p) {
+long val = *p;
+sprintf(s, "%ld", val);
+}
+int intlen(long x) {
+long v;
+char buf[12];
+v = x;
+iptoa(buf, &v);
+return len(buf);
+}
+The following show portions of the code for intlen, compiled both with and
+without stack protector:
+(a) Without protector
+int intlen(long x)
+x in %rdi
+1
+intlen:
+2
+subq
+$40, %rsp
+3
+movq
+%rdi, 24(%rsp)

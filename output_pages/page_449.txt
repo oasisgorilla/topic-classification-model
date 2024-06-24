@@ -1,0 +1,47 @@
+448
+Chapter 4
+Processor Architecture
+The only problem with SEQ is that it is too slow. The clock must run slowly
+enough so that signals can propagate through all of the stages within a single
+cycle. As an example, consider the processing of a ret instruction. Starting with
+an updated program counter at the beginning of the clock cycle, the instruction
+must be read from the instruction memory, the stack pointer must be read from
+the register ﬁle, the ALU must increment the stack pointer by 8, and the return
+address must be read from the memory in order to determine the next value for
+the program counter. All of these must be completed by the end of the clock cycle.
+This style of implementation does not make very good use of our hardware
+units, since each unit is only active for a fraction of the total clock cycle. We will
+see that we can achieve much better performance by introducing pipelining.
+4.4
+General Principles of Pipelining
+Before attempting to design a pipelined Y86-64 processor, let us consider some
+general properties and principles of pipelined systems. Such systems are familiar
+to anyone who has been through the serving line at a cafeteria or run a car through
+an automated car wash. In a pipelined system, the task to be performed is divided
+into a series of discrete stages. In a cafeteria, this involves supplying salad, a
+main dish, dessert, and beverage. In a car wash, this involves spraying water and
+soap, scrubbing, applying wax, and drying. Rather than having one customer run
+through the entire sequence from beginning to end before the next can begin, we
+allow multiple customers to proceed through the system at once. In a traditional
+cafeteria line, the customers maintain the same order in the pipeline and pass
+through all stages, even if they do not want some of the courses. In the case of
+the car wash, a new car is allowed to enter the spraying stage as the preceding
+car moves from the spraying stage to the scrubbing stage. In general, the cars
+must move through the system at the same rate to avoid having one car crash into
+the next.
+A key feature of pipelining is that it increases the throughput of the system
+(i.e., the number of customers served per unit time), but it may also slightly
+increase the latency (i.e., the time required to service an individual customer). For
+example, a customer in a cafeteria who only wants a dessert could pass through a
+nonpipelined system very quickly, stopping only at the dessert stage. A customer in
+a pipelined system who attempts to go directly to the dessert stage risks incurring
+the wrath of other customers.
+4.4.1
+Computational Pipelines
+Shifting our focus to computational pipelines, the “customers” are instructions
+and the stages perform some portion of the instruction execution. Figure 4.32(a)
+shows an example of a simple nonpipelined hardware system. It consists of some
+logic that performs a computation, followed by a register to hold the results of this
+computation. A clock signal controls the loading of the register at some regular
+time interval. An example of such a system is the decoder in a compact disk (CD)
+player. The incoming signals are the bits read from the surface of the CD, and

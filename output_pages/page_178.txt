@@ -1,0 +1,47 @@
+Homework Problems
+177
+Bit-Level Floating-Point Coding Rules
+In the following problems, you will write code to implement ﬂoating-point func-
+tions, operating directly on bit-level representations of ﬂoating-point numbers.
+Your code should exactly replicate the conventions for IEEE ﬂoating-point oper-
+ations, including using round-to-even mode when rounding is required.
+To this end, we deﬁne data type float_bits to be equivalent to unsigned:
+/* Access bit-level representation floating-point number */
+typedef unsigned float_bits;
+Rather than using data type float in your code, you will use float_bits.
+You may use both int and unsigned data types, including unsigned and integer
+constants and operations. You may not use any unions, structs, or arrays. Most
+signiﬁcantly, you may not use any ﬂoating-point data types, operations, or con-
+stants. Instead, your code should perform the bit manipulations that implement
+the speciﬁed ﬂoating-point operations.
+The following function illustrates the use of these coding rules. For argument
+f , it returns ±0 if f is denormalized (preserving the sign of f ), and returns f
+otherwise.
+/* If f is denorm, return 0.
+Otherwise, return f */
+float_bits float_denorm_zero(float_bits f) {
+/* Decompose bit representation into parts */
+unsigned sign = f>>31;
+unsigned exp =
+f>>23 & 0xFF;
+unsigned frac = f
+& 0x7FFFFF;
+if (exp == 0) {
+/* Denormalized.
+Set fraction to 0 */
+frac = 0;
+}
+/* Reassemble bits */
+return (sign << 31) | (exp << 23) | frac;
+}
+2.92 ◆◆
+Following the bit-level ﬂoating-point coding rules, implement the function with
+the following prototype:
+/* Compute -f.
+If f is NaN, then return f. */
+float_bits float_negate(float_bits f);
+For ﬂoating-point number f , this function computes −f . If f is NaN, your
+function should simply return f .
+Test your function by evaluating it for all 232 values of argument f and com-
+paring the result to what would be obtained using your machine’s ﬂoating-point
+operations.

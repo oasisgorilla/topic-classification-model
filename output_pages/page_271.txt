@@ -1,0 +1,108 @@
+270
+Chapter 3
+Machine-Level Representation of Programs
+(a) Switch statement
+void switch_eg(long x, long n,
+long *dest)
+{
+long val = x;
+switch (n) {
+case 100:
+val *= 13;
+break;
+case 102:
+val += 10;
+/* Fall through */
+case 103:
+val += 11;
+break;
+case 104:
+case 106:
+val *= val;
+break;
+default:
+val = 0;
+}
+*dest = val;
+}
+(b) Translation into extended C
+1
+void switch_eg_impl(long x, long n,
+2
+long *dest)
+3
+{
+4
+/* Table of code pointers */
+5
+static void *jt[7] = {
+6
+&&loc_A, &&loc_def, &&loc_B,
+7
+&&loc_C, &&loc_D, &&loc_def,
+8
+&&loc_D
+9
+};
+10
+unsigned long index = n - 100;
+11
+long val;
+12
+13
+if (index > 6)
+14
+goto loc_def;
+15
+/* Multiway branch */
+16
+goto *jt[index];
+17
+18
+loc_A:
+/* Case 100 */
+19
+val = x * 13;
+20
+goto done;
+21
+loc_B:
+/* Case 102 */
+22
+x = x + 10;
+23
+/* Fall through */
+24
+loc_C:
+/* Case 103 */
+25
+val = x + 11;
+26
+goto done;
+27
+loc_D:
+/* Cases 104, 106 */
+28
+val = x * x;
+29
+goto done;
+30
+loc_def:
+/* Default case */
+31
+val = 0;
+32
+done:
+33
+*dest = val;
+34
+}
+Figure 3.22
+Example switch statement and its translation into extended C. The translation shows the
+structure of jump table jt and how it is accessed. Such tables are supported by gcc as an extension to the C
+language.
+an indirect jump, and the operand speciﬁes a memory location indexed by register
+%eax, which holds the value of index. (We will see in Section 3.8 how array
+references are translated into machine code.)
+Our C code declares the jump table as an array of seven elements, each
+of which is a pointer to a code location. These elements span values 0–6 of

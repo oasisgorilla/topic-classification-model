@@ -1,0 +1,54 @@
+418
+Chapter 4
+Processor Architecture
+State = x
+State = y
+Input = y
+Output = x
+Output =  y
+Rising
+clock
+x
+y
+Figure 4.16
+Register operation. The register outputs remain held at the current register
+state until the clock signal rises. When the clock rises, the values at the register inputs are
+captured to become the new register state.
+avoid the delay of ﬁrst writing and then reading the register ﬁle. When necessary
+to avoid ambiguity, we will call the two classes of registers “hardware registers”
+and “program registers,” respectively.
+Figure 4.16 gives a more detailed view of a hardware register and how it
+operates. For most of the time, the register remains in a ﬁxed state (shown as
+x), generating an output equal to its current state. Signals propagate through the
+combinational logic preceding the register, creating a new value for the register
+input (shown as y), but the register output remains ﬁxed as long as the clock is low.
+As the clock rises, the input signals are loaded into the register as its next state
+(y), and this becomes the new register output until the next rising clock edge. A
+key point is that the registers serve as barriers between the combinational logic
+in different parts of the circuit. Values only propagate from a register input to its
+output once every clock cycle at the rising clock edge. Our Y86-64 processors will
+use clocked registers to hold the program counter (PC), the condition codes (CC),
+and the program status (Stat).
+The following diagram shows a typical register ﬁle:
+Register
+file
+A
+B
+valA
+valW
+dstW
+srcA
+valB
+srcB
+clock
+Write port
+W
+Read ports
+This register ﬁle has two read ports, named A and B, and one write port, named
+W. Such a multiported random access memory allows multiple read and write
+operations to take place simultaneously. In the register ﬁle diagrammed, the circuit
+can read the values of two program registers and update the state of a third. Each
+port has an address input, indicating which program register should be selected,
+and a data output or input giving a value for that program register. The addresses
+are register identiﬁers, using the encoding shown in Figure 4.4. The two read ports
+have address inputs srcA and srcB (short for “source A” and “source B”) and data

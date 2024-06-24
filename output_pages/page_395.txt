@@ -1,0 +1,94 @@
+394
+Chapter 4
+Processor Architecture
+this instruction, since it causes the entire system to suspend operation. For
+Y86-64, executing the halt instruction causes the processor to stop, with the
+status code set to HLT. (See Section 4.1.4.)
+4.1.3
+Instruction Encoding
+Figure 4.2 also shows the byte-level encoding of the instructions. Each instruction
+requires between 1 and 10 bytes, depending on which ﬁelds are required. Every
+instruction has an initial byte identifying the instruction type. This byte is split
+into two 4-bit parts: the high-order, or code, part, and the low-order, or function,
+part. As can be seen in Figure 4.2, code values range from 0 to 0xB. The function
+values are signiﬁcant only for the cases where a group of related instructions share
+a common code. These are given in Figure 4.3, showing the speciﬁc encodings of
+the integer operation, branch, and conditional move instructions. Observe that
+rrmovq has the same instruction code as the conditional moves. It can be viewed
+as an “unconditional move” just as the jmp instruction is an unconditional jump,
+both having function code 0.
+As shown in Figure 4.4, each of the 15 program registers has an associated
+register identiﬁer (ID) ranging from 0 to 0xE. The numbering of registers in Y86-
+64 matches what is used in x86-64. The program registers are stored within the
+CPU in a register ﬁle, a small random access memory where the register IDs serve
+as addresses. ID value 0xF is used in the instruction encodings and within our
+hardware designs when we need to indicate that no register should be accessed.
+Some instructions are just 1 byte long, but those that require operands have
+longer encodings. First, there can be an additional register speciﬁer byte, specifying
+either one or two registers. These register ﬁelds are called rA and rB in Figure
+4.2. As the assembly-code versions of the instructions show, they can specify the
+registers used for data sources and destinations, as well as the base register used in
+an address computation, depending on the instruction type. Instructions that have
+no register operands, such as branches and call, do not have a register speciﬁer
+byte. Those that require just one register operand (irmovq, pushq, and popq) have
+Operations
+Branches
+6
+addq
+0
+6
+subq
+1
+6
+andq
+2
+6
+xorq
+3
+7
+7
+jmp
+0
+jle
+1
+7
+jl
+2
+7
+je
+3
+7
+jne
+4
+7
+jge
+5
+7
+jg
+6
+Moves
+2
+2
+rrmovq
+0
+cmovle
+1
+2
+cmovl
+2
+2
+cmove
+3
+2
+cmovne
+4
+2
+cmovge
+5
+2
+cmovg
+6
+Figure 4.3
+Function codes for Y86-64 instruction set. The code speciﬁes a particular
+integer operation, branch condition, or data transfer condition. These instructions are
+shown as OPq, jXX, and cmovXX in Figure 4.2.

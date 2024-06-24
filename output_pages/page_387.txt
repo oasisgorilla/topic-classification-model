@@ -1,0 +1,90 @@
+386
+Chapter 3
+Machine-Level Representation of Programs
+Solution to Problem 3.56 (page 341)
+A. We see here that the 16 bytes starting at address .LC1 form a mask, where
+the low-order 8 bytes contain all ones, except for the most signiﬁcant bit,
+which is the sign bit of a double-precision value. When we compute the and
+of this mask with %xmm0, it will clear the sign bit of x, yielding the absolute
+value. In fact, we generated this code by deﬁning EXPR(x) to be fabs(x),
+where fabs is deﬁned in <math.h>.
+B. We see that the vxorpd instruction sets the entire register to zero, and so this
+is a way to generate ﬂoating-point constant 0.0.
+C. We see that the 16 bytes starting at address .LC2 form a mask with a single
+1 bit, at the position of the sign bit for the low-order value in the XMM
+register. When we compute the exclusive-or of this mask with %xmm0, we
+change the sign of x, computing the expression -x.
+Solution to Problem 3.57 (page 344)
+Again, we annotate the code, including dealing with the conditional branch:
+double funct3(int *ap, double b, long c, float *dp)
+ap in %rdi, b in %xmm0, c in %rsi, dp in %rdx
+1
+funct3:
+2
+vmovss
+(%rdx), %xmm1
+Get d = *dp
+3
+vcvtsi2sd
+(%rdi), %xmm2, %xmm2
+Get a = *ap and convert to double
+4
+vucomisd
+%xmm2, %xmm0
+Compare b:a
+5
+jbe
+.L8
+If <=, goto lesseq
+6
+vcvtsi2ssq
+%rsi, %xmm0, %xmm0
+Convert c to float
+7
+vmulss
+%xmm1, %xmm0, %xmm1
+Multiply by d
+8
+vunpcklps
+%xmm1, %xmm1, %xmm1
+9
+vcvtps2pd
+%xmm1, %xmm0
+Convert to double
+10
+ret
+Return
+11
+.L8:
+lesseq:
+12
+vaddss
+%xmm1, %xmm1, %xmm1
+Compute d+d = 2.0 * d
+13
+vcvtsi2ssq
+%rsi, %xmm0, %xmm0
+Convert c to float
+14
+vaddss
+%xmm1, %xmm0, %xmm0
+Compute c + 2*d
+15
+vunpcklps
+%xmm0, %xmm0, %xmm0
+16
+vcvtps2pd
+%xmm0, %xmm0
+Convert to double
+17
+ret
+Return
+From this, we can write the following code for funct3:
+double funct3(int *ap, double b, long c, float *dp) {
+int a = *ap;
+float d = *dp;
+if (a < b)
+return c*d;
+else
+return c+2*d;
+}

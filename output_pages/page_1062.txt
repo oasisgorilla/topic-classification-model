@@ -1,0 +1,67 @@
+Section 12.7
+Other Concurrency Issues
+1061
+Therefore, Linux systems provide reentrant versions of most thread-unsafe
+functions. The names of the reentrant versions always end with the _r sufﬁx. For
+example, the reentrant version of asctime is called asctime_r. We recommend
+using these functions whenever possible.
+12.7.4
+Races
+A race occurs when the correctness of a program depends on one thread reaching
+point x in its control ﬂow before another thread reaches point y. Races usually
+occur because programmers assume that threads will take some particular trajec-
+tory through the execution state space, forgetting the golden rule that threaded
+programs must work correctly for any feasible trajectory.
+An example is the easiest way to understand the nature of races. Consider the
+simple program in Figure 12.42. The main thread creates four peer threads and
+passes a pointer to a unique integer ID to each one. Each peer thread copies the
+code/conc/race.c
+1
+/* WARNING: This code is buggy! */
+2
+#include "csapp.h"
+3
+#define N 4
+4
+5
+void *thread(void *vargp);
+6
+7
+int main()
+8
+{
+9
+pthread_t tid[N];
+10
+int i;
+11
+12
+for (i = 0; i < N; i++)
+13
+Pthread_create(&tid[i], NULL, thread, &i);
+14
+for (i = 0; i < N; i++)
+15
+Pthread_join(tid[i], NULL);
+16
+exit(0);
+17
+}
+18
+19
+/* Thread routine */
+20
+void *thread(void *vargp)
+21
+{
+22
+int myid = *((int *)vargp);
+23
+printf("Hello from thread %d\n", myid);
+24
+return NULL;
+25
+}
+code/conc/race.c
+Figure 12.42
+A program with a race.

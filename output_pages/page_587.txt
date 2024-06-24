@@ -1,0 +1,64 @@
+586
+Chapter 5
+Optimizing Program Performance
+“commit” the results of the speculatively executed instructions by storing them in
+registers or memory. If the prediction is incorrect, the processor must discard all
+of the speculatively executed results and restart the instruction fetch process at
+the correct location. The misprediction penalty is incurred in doing this, because
+the instruction pipeline must be reﬁlled before useful results are generated.
+We saw in Section 3.6.6 that recent versions of x86 processors, including all
+processors capable of executing x86-64 programs, have conditional move instruc-
+tions. gcc can generate code that uses these instructions when compiling condi-
+tional statements and expressions, rather than the more traditional realizations
+based on conditional transfers of control. The basic idea for translating into con-
+ditional moves is to compute the values along both branches of a conditional
+expression or statement and then use conditional moves to select the desired value.
+We saw in Section 4.5.7 that conditional move instructions can be implemented
+as part of the pipelined processing of ordinary instructions. There is no need to
+guess whether or not the condition will hold, and hence no penalty for guessing
+incorrectly.
+How, then, can a C programmer make sure that branch misprediction penal-
+ties do not hamper a program’s efﬁciency? Given the 19-cycle misprediction
+penalty we measured for the reference machine, the stakes are very high. There
+is no simple answer to this question, but the following general principles apply.
+Do Not Be Overly Concerned about Predictable Branches
+We have seen that the effect of a mispredicted branch can be very high, but that
+does not mean that all program branches will slow a program down. In fact, the
+branch prediction logic found in modern processors is very good at discerning
+regular patterns and long-term trends for the different branch instructions. For
+example, the loop-closing branches in our combining routines would typically be
+predicted as being taken, and hence would only incur a misprediction penalty on
+the last time around.
+As another example, consider the results we observed when shifting from
+combine2 to combine3, when we took the function get_vec_element out of the
+inner loop of the function, as is reproduced below:
+Integer
+Floating point
+Function
+Page
+Method
++
+*
++
+*
+combine2
+545
+Move vec_length
+7.02
+9.03
+9.02
+11.03
+combine3
+549
+Direct data access
+7.17
+9.02
+9.02
+11.03
+The CPE did not improve, even though the transformation eliminated two condi-
+tionals on each iteration that check whether the vector index is within bounds. For
+this function, the checks always succeed, and hence they are highly predictable.
+As a way to measure the performance impact of bounds checking, consider
+the following combining code, where we have modiﬁed the inner loop of combine4
+by replacing the access to the data element with the result of performing an
+inline substitution of the code for get_vec_element. We will call this new version

@@ -1,0 +1,44 @@
+320
+Chapter 3
+Machine-Level Representation of Programs
+D. What register(s) have corrupted value(s) when get_line returns?
+E. Besides the potential for buffer overﬂow, what two other things are wrong
+with the code for get_line?
+A more pernicious use of buffer overﬂow is to get a program to perform
+a function that it would otherwise be unwilling to do. This is one of the most
+common methods to attack the security of a system over a computer network.
+Typically, the program is fed with a string that contains the byte encoding of some
+executable code, called the exploit code, plus some extra bytes that overwrite the
+return address with a pointer to the exploit code. The effect of executing the ret
+instruction is then to jump to the exploit code.
+In one form of attack, the exploit code then uses a system call to start up a
+shell program, providing the attacker with a range of operating system functions.
+In another form, the exploit code performs some otherwise unauthorized task,
+repairs the damage to the stack, and then executes ret a second time, causing an
+(apparently) normal return to the caller.
+As an example, the famous Internet worm of November 1988 used four dif-
+ferent ways to gain access to many of the computers across the Internet. One was
+a buffer overﬂow attack on the ﬁnger daemon fingerd, which serves requests by
+the ﬁnger command. By invoking ﬁnger with an appropriate string, the worm
+could make the daemon at a remote site have a buffer overﬂow and execute code
+that gave the worm access to the remote system. Once the worm gained access to a
+system, it would replicate itself and consume virtually all of the machine’s comput-
+ing resources. As a consequence, hundreds of machines were effectively paralyzed
+until security experts could determine how to eliminate the worm. The author of
+the worm was caught and prosecuted. He was sentenced to 3 years probation, 400
+hours of community service, and a $10,500 ﬁne. Even to this day, however, people
+continue to ﬁnd security leaks in systems that leave them vulnerable to buffer
+overﬂow attacks. This highlights the need for careful programming. Any interface
+to the external environment should be made “bulletproof” so that no behavior by
+an external agent can cause the system to misbehave.
+3.10.4
+Thwarting Buffer Overﬂow Attacks
+Buffer overﬂow attacks have become so pervasive and have caused so many
+problems with computer systems that modern compilers and operating systems
+have implemented mechanisms to make it more difﬁcult to mount these attacks
+and to limit the ways by which an intruder can seize control of a system via a buffer
+overﬂow attack. In this section, we will present mechanisms that are provided by
+recent versions of gcc for Linux.
+Stack Randomization
+In order to insert exploit code into a system, the attacker needs to inject both
+the code as well as a pointer to this code as part of the attack string. Generating

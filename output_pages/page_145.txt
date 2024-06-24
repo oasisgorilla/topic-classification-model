@@ -1,0 +1,41 @@
+144
+Chapter 2
+Representing and Manipulating Information
+limits the range of possible values, and the resulting operations can overﬂow.
+We have also seen that the two’s-complement representation provides a clever
+way to represent both negative and positive values, while using the same bit-level
+implementations as are used to perform unsigned arithmetic—operations such as
+addition, subtraction, multiplication, and even division have either identical or
+very similar bit-level behaviors, whether the operands are in unsigned or two’s-
+complement form.
+We have seen that some of the conventions in the C language can yield some
+surprising results, and these can be sources of bugs that are hard to recognize or
+understand. We have especially seen that the unsigned data type, while conceptu-
+ally straightforward, can lead to behaviors that even experienced programmers do
+not expect. We have also seen that this data type can arise in unexpected ways—for
+example, when writing integer constants and when invoking library routines.
+Practice Problem 2.44 (solution page 193)
+Assume data type int is 32 bits long and uses a two’s-complement representation
+for signed values. Right shifts are performed arithmetically for signed values and
+logically for unsigned values. The variables are declared and initialized as follows:
+int x = foo();
+/* Arbitrary value */
+int y = bar();
+/* Arbitrary value */
+unsigned ux = x;
+unsigned uy = y;
+For each of the following C expressions, either (1) argue that it is true (evalu-
+ates to 1) for all values of x and y, or (2) give values of x and y for which it is false
+(evaluates to 0):
+A. (x > 0) || (x-1 < 0)
+B. (x & 7) != 7 || (x<<29 < 0)
+C. (x * x) >= 0
+D. x < 0 || -x <= 0
+E. x > 0 || -x >= 0
+F.
+x+y == uy+ux
+G. x*~y + uy*ux == -x
+2.4
+Floating Point
+A ﬂoating-point representation encodes rational numbers of the form V = x × 2y.
+It is useful for performing computations involving very large numbers (|V | ≫0),

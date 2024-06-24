@@ -1,0 +1,46 @@
+Section 12.1
+Concurrent Programming with Processes
+1011
+Figure 12.4
+Step 4: Server forks
+another child to service
+the new client.
+Client 1
+clientfd
+Client 2
+clientfd
+connfd(4)
+Child 1
+connfd(5)
+Child 2
+listenfd(3)
+Server
+Data
+transfers
+Data
+transfers
+portant for the parent, which must close its copy of the connected descriptor
+to avoid a memory leak.
+. Finally, because of the reference count in the socket’s ﬁle table entry, the
+connection to the client will not be terminated until both the parent’s and
+child’s copies of connfd are closed.
+12.1.2
+Pros and Cons of Processes
+Processes have a clean model for sharing state information between parents and
+children: ﬁle tables are shared and user address spaces are not. Having separate
+address spaces for processes is both an advantage and a disadvantage. It is im-
+possible for one process to accidentally overwrite the virtual memory of another
+process, which eliminates a lot of confusing failures—an obvious advantage.
+On the other hand, separate address spaces make it more difﬁcult for pro-
+cesses to share state information. To share information, they must use explicit IPC
+(interprocess communications) mechanisms. (See the Aside on page 1013.) An-
+other disadvantage of process-based designs is that they tend to be slower because
+the overhead for process control and IPC is high.
+Practice Problem 12.1 (solution page 1072)
+Figure 12.5 demonstrates a concurrent server in which the parent process creates
+a child process to handle each new connection request. Trace the value of the
+reference counter for the associated ﬁle table for Figure 12.5.
+Practice Problem 12.2 (solution page 1072)
+If we were to delete line 33 of Figure12.5, which closes the connected descriptor,
+the code would still be correct, in the sense that there would be no memory leak.
+Why?

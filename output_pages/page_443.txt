@@ -1,0 +1,43 @@
+442
+Chapter 4
+Processor Architecture
+As an example, the HCL description for need_regids simply determines
+whether the value of icode is one of the instructions that has a register speci-
+ﬁer byte:
+bool need_regids =
+icode in { IRRMOVQ, IOPQ, IPUSHQ, IPOPQ,
+IIRMOVQ, IRMMOVQ, IMRMOVQ };
+Practice Problem 4.19 (solution page 523)
+Write HCL code for the signal need_valC in the SEQ implementation.
+As Figure 4.27 shows, the remaining 9 bytes read from the instruction memory
+encode some combination of the register speciﬁer byte and the constant word.
+These bytes are processed by the hardware unit labeled “Align” into the register
+ﬁelds and the constant word. Byte 1 is split into register speciﬁers rA and rB when
+the computed signal need_regids is 1. If need_regids is 0, both register speciﬁers
+are set to 0xF (RNONE), indicating there are no registers speciﬁed by this instruction.
+Recall also (Figure 4.2) that for any instruction having only one register operand,
+the other ﬁeld of the register speciﬁer byte will be 0xF (RNONE). Thus, we can
+assume that the signals rA and rB either encode registers we want to access or
+indicatethatregisteraccessisnotrequired.Theunitlabeled“Align”alsogenerates
+the constant word valC. This will either be bytes 1–8 or bytes 2–9, depending on
+the value of signal need_regids.
+The PC incrementer hardware unit generates the signal valP, based on the
+current value of the PC, and the two signals need_regids and need_valC. For PC
+value p, need_regids value r, and need_valC value i, the incrementer generates
+the value p + 1 + r + 8i.
+Decode and Write-Back Stages
+Figure 4.28 provides a detailed view of logic that implements both the decode
+and write-back stages in SEQ. These two stages are combined because they both
+access the register ﬁle.
+The register ﬁle has four ports. It supports up to two simultaneous reads (on
+ports A and B) and two simultaneous writes (on ports E and M). Each port has
+both an address connection and a data connection, where the address connection
+is a register ID, and the data connection is a set of 64 wires serving as either an
+output word (for a read port) or an input word (for a write port) of the register
+ﬁle. The two read ports have address inputs srcA and srcB, while the two write
+ports have address inputs dstE and dstM. The special identiﬁer 0xF (RNONE) on an
+address port indicates that no register should be accessed.
+The four blocks at the bottom of Figure 4.28 generate the four different
+register IDs for the register ﬁle, based on the instruction code icode, the register
+speciﬁers rA and rB, and possibly the condition signal Cnd computed in the execute
+stage. Register ID srcA indicates which register should be read to generate valA.

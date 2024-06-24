@@ -1,0 +1,48 @@
+630
+Chapter 6
+The Memory Hierarchy
+Rotational latency. Once the head is in position over the track, the drive waits
+for the ﬁrst bit of the target sector to pass under the head. The perfor-
+mance of this step depends on both the position of the surface when the
+head arrives at the target track and the rotational speed of the disk. In the
+worst case, the head just misses the target sector and waits for the disk to
+make a full rotation. Thus, the maximum rotational latency, in seconds, is
+given by
+Tmax rotation =
+1
+RPM × 60 secs
+1 min
+The average rotational latency, Tavg rotation, is simply half of Tmax rotation.
+Transfer time. When the ﬁrst bit of the target sector is under the head, the drive
+can begin to read or write the contents of the sector. The transfer time
+for one sector depends on the rotational speed and the number of sectors
+per track. Thus, we can roughly estimate the average transfer time for one
+sector in seconds as
+Tavg transfer =
+1
+RPM ×
+1
+(average # sectors/track) × 60 secs
+1 min
+We can estimate the average time to access the contents of a disk sector as
+the sum of the average seek time, the average rotational latency, and the average
+transfer time. For example, consider a disk with the following parameters:
+Parameter
+Value
+Rotational rate
+7,200 RPM
+Tavg seek
+9 ms
+Average number of sectors/track
+400
+For this disk, the average rotational latency (in ms) is
+Tavg rotation = 1/2 × Tmax rotation
+= 1/2 × (60 secs/7,200 RPM) × 1,000 ms/sec
+≈4 ms
+The average transfer time is
+Tavg transfer = 60/7,200 RPM × 1/400 sectors/track × 1,000 ms/sec
+≈0.02 ms
+Putting it all together, the total estimated access time is
+Taccess = Tavg seek + Tavg rotation + Tavg transfer
+= 9 ms + 4 ms + 0.02 ms
+= 13.02 ms

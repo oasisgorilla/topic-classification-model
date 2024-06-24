@@ -1,0 +1,48 @@
+Section 10.4
+Reading and Writing Files
+931
+Practice Problem 10.1 (solution page 951)
+What is the output of the following program?
+1
+#include "csapp.h"
+2
+3
+int main()
+4
+{
+5
+int fd1, fd2;
+6
+7
+fd1 = Open("foo.txt", O_RDONLY, 0);
+8
+Close(fd1);
+9
+fd2 = Open("baz.txt", O_RDONLY, 0);
+10
+printf("fd2 = %d\n", fd2);
+11
+exit(0);
+12
+}
+10.4
+Reading and Writing Files
+Applications perform input and output by calling the read and write functions,
+respectively.
+#include <unistd.h>
+ssize_t read(int fd, void *buf, size_t n);
+Returns: number of bytes read if OK, 0 on EOF, −1 on error
+ssize_t write(int fd, const void *buf, size_t n);
+Returns: number of bytes written if OK, −1 on error
+The read function copies at most n bytes from the current ﬁle position of descriptor
+fd to memory location buf. A return value of −1 indicates an error, and a return
+value of 0 indicates EOF. Otherwise, the return value indicates the number of
+bytes that were actually transferred.
+The write function copies at most n bytes from memory location buf to the
+current ﬁle position of descriptor fd. Figure 10.3 shows a program that uses read
+and write calls to copy the standard input to the standard output, 1 byte at a time.
+Applications can explicitly modify the current ﬁle position by calling the
+lseek function, which is beyond our scope.
+In some situations, read and write transfer fewer bytes than the application
+requests. Such short counts do not indicate an error. They occur for a number of
+reasons:

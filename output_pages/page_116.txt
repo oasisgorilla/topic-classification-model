@@ -1,0 +1,51 @@
+Section 2.2
+Integer Representations
+115
+derivation: Expansion of a two’s-complement number by sign extension
+Let w′ = w + k. What we want to prove is that
+B2Tw+k([xw−1, . . . , xw−1
+
+	
+
+k times
+, xw−1, xw−2, . . . , x0]) = B2Tw([xw−1, xw−2, . . . , x0])
+The proof follows by induction on k. That is, if we can prove that sign extending
+by 1 bit preserves the numeric value, then this property will hold when sign
+extending by an arbitrary number of bits. Thus, the task reduces to proving that
+B2Tw+1([xw−1, xw−1, xw−2, . . . , x0]) = B2Tw([xw−1, xw−2, . . . , x0])
+Expanding the left-hand expression with Equation 2.3 gives the following:
+B2Tw+1([xw−1, xw−1, xw−2, . . . , x0]) = −xw−12w +
+w−1
+
+i=0
+xi2i
+= −xw−12w + xw−12w−1 +
+w−2
+
+i=0
+xi2i
+= −xw−1
+
+2w −2w−1
++
+w−2
+
+i=0
+xi2i
+= −xw−12w−1 +
+w−2
+
+i=0
+xi2i
+= B2Tw([xw−1, xw−2, . . . , x0])
+The key property we exploit is that 2w −2w−1 = 2w−1. Thus, the combined effect
+of adding a bit of weight −2w and of converting the bit having weight −2w−1 to be
+one with weight 2w−1 is to preserve the original numeric value.
+Practice Problem 2.22 (solution page 186)
+Show that each of the following bit vectors is a two’s-complement representation
+of −4 by applying Equation 2.3:
+A. [1100]
+B. [11100]
+C. [111100]
+Observe that the second and third bit vectors can be derived from the ﬁrst by sign
+extension.

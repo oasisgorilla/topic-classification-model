@@ -1,0 +1,102 @@
+10
+Contents
+3.9
+Heterogeneous Data Structures
+301
+3.9.1
+Structures
+301
+3.9.2
+Unions
+305
+3.9.3
+Data Alignment
+309
+3.10
+Combining Control and Data in Machine-Level Programs
+312
+3.10.1 Understanding Pointers
+313
+3.10.2 Life in the Real World: Using the gdb Debugger
+315
+3.10.3 Out-of-Bounds Memory References and Buffer Overﬂow
+315
+3.10.4 Thwarting Buffer Overﬂow Attacks
+320
+3.10.5 Supporting Variable-Size Stack Frames
+326
+3.11
+Floating-Point Code
+329
+3.11.1 Floating-Point Movement and Conversion Operations
+332
+3.11.2 Floating-Point Code in Procedures
+337
+3.11.3 Floating-Point Arithmetic Operations
+338
+3.11.4 Deﬁning and Using Floating-Point Constants
+340
+3.11.5 Using Bitwise Operations in Floating-Point Code
+341
+3.11.6 Floating-Point Comparison Operations
+342
+3.11.7 Observations about Floating-Point Code
+345
+3.12
+Summary
+345
+Bibliographic Notes
+346
+Homework Problems
+347
+Solutions to Practice Problems
+361
+4
+Processor Architecture
+387
+4.1
+The Y86-64 Instruction Set Architecture
+391
+4.1.1
+Programmer-Visible State
+391
+4.1.2
+Y86-64 Instructions
+392
+4.1.3
+Instruction Encoding
+394
+4.1.4
+Y86-64 Exceptions
+399
+4.1.5
+Y86-64 Programs
+400
+4.1.6
+Some Y86-64 Instruction Details
+406
+4.2
+Logic Design and the Hardware Control Language HCL
+408
+4.2.1
+Logic Gates
+409
+4.2.2
+Combinational Circuits and HCL Boolean Expressions
+410
+4.2.3
+Word-Level Combinational Circuits and HCL
+Integer Expressions
+412
+4.2.4
+Set Membership
+416
+4.2.5
+Memory and Clocking
+417
+4.3
+Sequential Y86-64 Implementations
+420
+4.3.1
+Organizing Processing into Stages
+420

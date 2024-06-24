@@ -1,0 +1,48 @@
+Section 11.5
+Web Servers
+985
+Aside
+Origins of the World Wide Web
+The World Wide Web was invented by Tim Berners-Lee, a software engineer working at CERN, a Swiss
+physics lab. In 1989, Berners-Lee wrote an internal memo proposing a distributed hypertext system
+that would connect a “web of notes with links.” The intent of the proposed system was to help CERN
+scientists share and manage information. Over the next two years, after Berners-Lee implemented
+the ﬁrst Web server and Web browser, the Web developed a small following within CERN and a few
+other sites. A pivotal event occurred in 1993, when Marc Andreesen (who later founded Netscape and
+Andreessen Horowitz) and his colleagues at NCSA released a graphical browser called mosaic for all
+three major platforms: Linux, Windows, and Macintosh. After the release of mosaic, interest in the
+Web exploded, with the number of Web sites increasing at an exponential rate. By 2015, there were
+over 975,000,000 sites worldwide. (Source: Netcraft Web Survey)
+MIME type
+Description
+text/html
+HTML page
+text/plain
+Unformatted text
+application/postscript
+Postscript document
+image/gif
+Binary image encoded in GIF format
+image/png
+Binary image encoded in PNG format
+image/jpeg
+Binary image encoded in JPEG format
+Figure 11.23
+Example MIME types.
+11.5.2
+Web Content
+To Web clients and servers, content is a sequence of bytes with an associated MIME
+(multipurpose internet mail extensions) type. Figure 11.23 shows some common
+MIME types.
+Web servers provide content to clients in two different ways:
+. Fetch a disk ﬁle and return its contents to the client. The disk ﬁle is known
+as static content and the process of returning the ﬁle to the client is known as
+serving static content.
+. Run an executable ﬁle and return its output to the client. The output produced
+by the executable at run time is known as dynamic content, and the process of
+running the program and returning its output to the client is known as serving
+dynamic content.
+Every piece of content returned by a Web server is associated with some ﬁle
+that it manages. Each of these ﬁles has a unique name known as a URL (universal
+resource locator). For example, the URL
+http://www.google.com:80/index.html

@@ -1,0 +1,59 @@
+Section 9.4
+VM as a Tool for Memory Management
+847
+Aside
+Counting page faults
+You can monitor the number of page faults (and lots of other information) with the Linux getrusage
+function.
+Figure 9.9
+How VM provides
+processes with separate
+address spaces. The
+operating system maintains
+a separate page table for
+each process in the system.
+Virtual address spaces
+Physical memory
+Shared page
+Address translation
+Process i:
+Process j:
+0
+N–1
+0
+VP 1
+VP 2
+VP 1
+PP 2
+PP 7
+PP 10
+VP 2
+N–1
+0
+M–1
+9.4
+VM as a Tool for Memory Management
+In the last section, we saw how virtual memory provides a mechanism for using the
+DRAM to cache pages from a typically larger virtual address space. Interestingly,
+some early systems such as the DEC PDP-11/70 supported a virtual address space
+that was smaller than the available physical memory. Yet virtual memory was
+still a useful mechanism because it greatly simpliﬁed memory management and
+provided a natural way to protect memory.
+Thus far, we have assumed a single page table that maps a single virtual
+address space to the physical address space. In fact, operating systems provide
+a separate page table, and thus a separate virtual address space, for each process.
+Figure 9.9 shows the basic idea. In the example, the page table for process i maps
+VP 1 to PP 2 and VP 2 to PP 7. Similarly, the page table for process j maps VP 1
+to PP 7 and VP 2 to PP 10. Notice that multiple virtual pages can be mapped to
+the same shared physical page.
+The combination of demand paging and separate virtual address spaces has
+a profound impact on the way that memory is used and managed in a system. In
+particular, VM simpliﬁes linking and loading, the sharing of code and data, and
+allocating memory to applications.
+. Simplifying linking. A separate address space allows each process to use the
+same basic format for its memory image, regardless of where the code and data
+actually reside in physical memory. For example, as we saw in Figure 8.13, ev-
+ery process on a given Linux system has a similar memory format. For 64-bit
+address spaces, the code segment always starts at virtual address 0x400000.
+The data segment follows the code segment after a suitable alignment gap.
+The stack occupies the highest portion of the user process address space and

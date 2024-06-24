@@ -1,0 +1,45 @@
+Section 6.2
+Locality
+641
+Aside
+When cycle time stood still: The advent of multi-core processors
+The history of computers is marked by some singular events that caused profound changes in the
+industry and the world. Interestingly, these inﬂection points tend to occur about once per decade: the
+development of Fortran in the 1950s, the introduction of the IBM 360 in the early 1960s, the dawn of
+the Internet (then called ARPANET) in the early 1970s, the introduction of the IBM PC in the early
+1980s, and the creation of the World Wide Web in the early 1990s.
+The most recent such event occurred early in the 21st century, when computer manufacturers
+ran headlong into the so-called power wall, discovering that they could no longer increase CPU clock
+frequencies as quickly because the chips would then consume too much power. The solution was to
+improve performance by replacing a single large processor with multiple smaller processor cores, each
+a complete processor capable of executing programs independently and in parallel with the other cores.
+This multi-core approach works in part because the power consumed by a processor is proportional to
+P = f CV 2, where f is the clock frequency, C is the capacitance, and V is the voltage. The capacitance
+C is roughly proportional to the area, so the power drawn by multiple cores can be held constant as long
+as the total area of the cores is constant. As long as feature sizes continue to shrink at the exponential
+Moore’s Law rate, the number of cores in each processor, and thus its effective performance, will
+continue to increase.
+From this point forward, computers will get faster not because the clock frequency increases but
+because the number of cores in each processor increases, and because architectural innovations increase
+the efﬁciency of programs running on those cores. We can see this trend clearly in Figure 6.16. CPU
+cycle time reached its lowest point in 2003 and then actually started to rise before leveling off and
+starting to decline again at a slower rate than before. However, because of the advent of multi-core
+processors (dual-core in 2004 and quad-core in 2007), the effective cycle time continues to decrease at
+close to its previous rate.
+once, then the program is likely to reference a nearby memory location in the near
+future.
+Programmers should understand the principle of locality because, in general,
+programs with good locality run faster than programs with poor locality. All levels
+of modern computer systems, from the hardware, to the operating system, to
+application programs, are designed to exploit locality. At the hardware level, the
+principle of locality allows computer designers to speed up main memory accesses
+by introducing small fast memories known as cache memories that hold blocks of
+the most recently referenced instructions and data items. At the operating system
+level, the principle of locality allows the system to use the main memory as a cache
+of the most recently referenced chunks of the virtual address space. Similarly, the
+operating system uses main memory to cache the most recently used disk blocks in
+the disk ﬁle system. The principle of locality also plays a crucial role in the design
+of application programs. For example, Web browsers exploit temporal locality by
+caching recently referenced documents on a local disk. High-volume Web servers
+hold recently requested documents in front-end disk caches that satisfy requests
+for these documents without requiring any intervention from the server.

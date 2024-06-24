@@ -1,0 +1,62 @@
+Section 5.7
+Understanding Modern Processors
+563
+Figure 5.14
+Abstracting combine4
+operations as a data-ﬂow
+graph. We rearrange the
+operators of Figure 5.13
+to more clearly show the
+data dependencies (a), and
+then further show only
+those operations that use
+values from one iteration
+to produce new values for
+the next (b).
+%rax
+%rdx
+%xmm0
+%rdx
+%xmm0
+data[i]
+load
+(a)
+(b)
+mul
+add
+cmp
+jne
+%rdx
+%xmm0
+%rdx
+%xmm0
+load
+mul
+add
+Read-only. These are used as source values, either as data or to compute mem-
+ory addresses, but they are not modiﬁed within the loop. The only read-
+only register for the loop in combine4 is %rax.
+Write-only. These are used as the destinations of data-movement operations.
+There are no such registers in this loop.
+Local. These are updated and used within the loop, but there is no dependency
+from one iteration to another. The condition code registers are examples
+for this loop: they are updated by the cmp operation and used by the jne
+operation, but this dependency is contained within individual iterations.
+Loop. These are used both as source values and as destinations for the loop,
+with the value generated in one iteration being used in another. We can
+see that %rdx and %xmm0 are loop registers for combine4, corresponding
+to program values data+i and acc.
+As we will see, the chains of operations between loop registers determine the
+performance-limiting data dependencies.
+Figure 5.14 shows further reﬁnements of the graphical representation of Fig-
+ure 5.13, with a goal of showing only those operations and data dependencies that
+affect the program execution time. We see in Figure 5.14(a) that we rearranged
+the operators to show more clearly the ﬂow of data from the source registers at
+the top (both read-only and loop registers) and to the destination registers at the
+bottom (both write-only and loop registers).
+In Figure 5.14(a), we also color operators white if they are not part of some
+chain of dependencies between loop registers. For this example, the comparison
+(cmp) and branch (jne) operations do not directly affect the ﬂow of data in the
+program. We assume that the instruction control unit predicts that branch will be
+taken, and hence the program will continue looping. The purpose of the compare
+and branch operations is to test the branch condition and notify the ICU if it is

@@ -1,0 +1,54 @@
+1046
+Chapter 12
+Concurrent Programming
+Aside
+Other synchronization mechanisms
+We have shown you how to synchronize threads using semaphores, mainly because they are simple, clas-
+sical, and have a clean semantic model. But you should know that other synchronization techniques
+exist as well. For example, Java threads are synchronized with a mechanism called a Java monitor [48],
+which provides a higher-level abstraction of the mutual exclusion and scheduling capabilities of sema-
+phores; in fact, monitors can be implemented with semaphores. As another example, the Pthreads
+interface deﬁnes a set of synchronization operations on mutex and condition variables. Pthreads mu-
+texes are used for mutual exclusion. Condition variables are used for scheduling accesses to shared
+resources, such as the bounded buffer in a producer-consumer program.
+Client
+Client
+Master
+thread
+Worker
+thread
+Pool of worker threads
+Worker
+thread
+Buffer
+Remove
+descriptors
+Accept
+connections
+Insert
+descriptors
+Service client
+Service client
+. . .
+. . .
+Figure 12.27
+Organization of a prethreaded concurrent server. A set of existing
+threads repeatedly remove and process connected descriptors from a bounded buffer.
+the resulting connected descriptors in a bounded buffer. Each worker thread
+repeatedly removes a descriptor from the buffer, services the client, and then waits
+for the next descriptor.
+Figure 12.28 shows how we would use the Sbuf package to implement a
+prethreaded concurrent echo server. After initializing buffer sbuf (line 24), the
+main thread creates the set of worker threads (lines 25–26). Then it enters the
+inﬁnite server loop, accepting connection requests and inserting the resulting
+connected descriptors in sbuf. Each worker thread has a very simple behavior.
+It waits until it is able to remove a connected descriptor from the buffer (line 39)
+and then calls the echo_cnt function to echo client input.
+The echo_cnt function in Figure 12.29 is a version of the echo function
+from Figure 11.22 that records the cumulative number of bytes received from
+all clients in a global variable called byte_cnt. This is interesting code to study
+because it shows you a general technique for initializing packages that are called
+from thread routines. In our case, we need to initialize the byte_cnt counter
+and the mutex semaphore. One approach, which we used for the Sbuf and Rio
+packages, is to require the main thread to explicitly call an initialization function.
+Another approach, shown here, uses the pthread_once function (line 19) to call

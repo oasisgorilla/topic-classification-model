@@ -1,0 +1,43 @@
+1038
+Chapter 12
+Concurrent Programming
+Aside
+Origin of the names P and V
+Edsger Dijkstra (1930–2002) was originally from the Netherlands. The names P and V come from the
+Dutch words proberen (to test) and verhogen (to increment).
+The test and decrement operations in P occur indivisibly, in the sense that
+once the semaphore s becomes nonzero, the decrement of s occurs without in-
+terruption. The increment operation in V also occurs indivisibly, in that it loads,
+increments, and stores the semaphore without interruption. Notice that the deﬁ-
+nition of V does not deﬁne the order in which waiting threads are restarted. The
+only requirement is that the V must restart exactly one waiting thread. Thus, when
+several threads are waiting at a semaphore, you cannot predict which one will be
+restarted as a result of the V .
+The deﬁnitions of P and V ensure that a running program can never enter a
+state where a properly initialized semaphore has a negative value. This property,
+known as the semaphore invariant, provides a powerful tool for controlling the
+trajectories of concurrent programs, as we shall see in the next section.
+The Posix standard deﬁnes a variety of functions for manipulating sema-
+phores.
+#include <semaphore.h>
+int sem_init(sem_t *sem, 0, unsigned int value);
+int sem_wait(sem_t *s);
+/* P(s) */
+int sem_post(sem_t *s);
+/* V(s) */
+Returns: 0 if OK, −1 on error
+The sem_init function initializes semaphore sem to value. Each semaphore must
+be initialized before it can be used. For our purposes, the middle argument is
+always 0. Programs perform P and V operations by calling the sem_wait and
+sem_post functions, respectively. For conciseness, we prefer to use the following
+equivalent P and V wrapper functions instead:
+#include "csapp.h"
+void P(sem_t *s);
+/* Wrapper function for sem_wait */
+void V(sem_t *s);
+/* Wrapper function for sem_post */
+Returns: nothing
+12.5.3
+Using Semaphores for Mutual Exclusion
+Semaphores provide a convenient way to ensure mutually exclusive access to
+shared variables. The basic idea is to associate a semaphore s, initially 1, with

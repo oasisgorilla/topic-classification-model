@@ -1,0 +1,58 @@
+Section 3.9
+Heterogeneous Data Structures
+305
+Practice Problem 3.42 (solution page 379)
+The following code shows the declaration of a structure of type ACE and the
+prototype for a function test:
+struct ACE {
+short
+v;
+struct ACE *p;
+};
+short test(struct ACE *ptr);
+When the code for fun is compiled, gcc generates the following assembly
+code:
+short test(struct ACE *ptr)
+ptr in %rdi
+1
+test:
+2
+movl
+$1, %eax
+3
+jmp
+.L2
+4
+.L3:
+5
+imulq
+(%rdi), %rax
+6
+movq
+2(%rdi), %rdi
+7
+.L2:
+8
+testq
+%rdi, %rdi
+9
+jne
+.L3
+10
+rep; ret
+A. Use your reverse engineering skills to write C code for test.
+B. Describe the data structure that this structure implements and the operation
+performed by test.
+3.9.2
+Unions
+Unions provide a way to circumvent the type system of C, allowing a single object
+to be referenced according to multiple types. The syntax of a union declaration is
+identical to that for structures, but its semantics are very different. Rather than
+having the different ﬁelds reference different blocks of memory, they all reference
+the same block.
+Consider the following declarations:
+struct S3 {
+char c;
+int i[2];
+double v;
+};

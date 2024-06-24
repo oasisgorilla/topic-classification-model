@@ -1,0 +1,91 @@
+Section 6.4
+Cache Memories
+657
+block in set 0. Then the cache returns m[0] (the contents of memory location
+0) from block[0] of the newly fetched cache line.
+Set
+Valid
+Tag
+block[0]
+block[1]
+0
+1
+0
+m[0]
+m[1]
+1
+0
+2
+0
+3
+0
+2. Read word at address 1. This is a cache hit. The cache immediately returns
+m[1] from block[1] of the cache line. The state of the cache does not change.
+3. Read word at address 13. Since the cache line in set 2 is not valid, this is a
+cache miss. The cache loads block 6 into set 2 and returns m[13] from block[1]
+of the new cache line.
+Set
+Valid
+Tag
+block[0]
+block[1]
+0
+1
+0
+m[0]
+m[1]
+1
+0
+2
+1
+1
+m[12]
+m[13]
+3
+0
+4. Read word at address 8. This is a miss. The cache line in set 0 is indeed valid,
+but the tags do not match. The cache loads block 4 into set 0 (replacing the
+line that was there from the read of address 0) and returns m[8] from block[0]
+of the new cache line.
+Set
+Valid
+Tag
+block[0]
+block[1]
+0
+1
+1
+m[8]
+m[9]
+1
+0
+2
+1
+1
+m[12]
+m[13]
+3
+0
+5. Read word at address 0. This is another miss, due to the unfortunate fact
+that we just replaced block 0 during the previous reference to address 8. This
+kind of miss, where we have plenty of room in the cache but keep alternating
+references to blocks that map to the same set, is an example of a conﬂict miss.
+Set
+Valid
+Tag
+block[0]
+block[1]
+0
+1
+0
+m[0]
+m[1]
+1
+0
+2
+1
+1
+m[12]
+m[13]
+3
+0

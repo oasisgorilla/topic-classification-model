@@ -1,0 +1,50 @@
+538
+Chapter 5
+Optimizing Program Performance
+Among compilers, gcc is considered adequate, but not exceptional, in terms
+of its optimization capabilities. It performs basic optimizations, but it does not per-
+form the radical transformations on programs that more “aggressive” compilers
+do. As a consequence, programmers using gcc must put more effort into writing
+programs in a way that simpliﬁes the compiler’s task of generating efﬁcient code.
+5.2
+Expressing Program Performance
+We introduce the metric cycles per element, abbreviated CPE, to express program
+performance in a way that can guide us in improving the code. CPE measure-
+ments help us understand the loop performance of an iterative program at a
+detailed level. It is appropriate for programs that perform a repetitive compu-
+tation, such as processing the pixels in an image or computing the elements in a
+matrix product.
+The sequencing of activities by a processor is controlled by a clock providing
+a regular signal of some frequency, usually expressed in gigahertz (GHz), billions
+of cycles per second. For example, when product literature characterizes a system
+as a “4 GHz” processor, it means that the processor clock runs at 4.0 × 109 cycles
+per second. The time required for each clock cycle is given by the reciprocal of
+the clock frequency. These typically are expressed in nanoseconds (1 nanosecond
+is 10−9 seconds) or picoseconds (1 picosecond is 10−12 seconds). For example,
+the period of a 4 GHz clock can be expressed as either 0.25 nanoseconds or 250
+picoseconds. From a programmer’s perspective, it is more instructive to express
+measurements in clock cycles rather than nanoseconds or picoseconds. That way,
+the measurements express how many instructions are being executed rather than
+how fast the clock runs.
+Many procedures contain a loop that iterates over a set of elements. For
+example, functions psum1 and psum2 in Figure 5.1 both compute the preﬁx sum
+of a vector of length n. For a vector ⃗
+a = ⟨a0, a1, . . . , an−1⟩, the preﬁx sum ⃗
+p =
+⟨p0, p1, . . . , pn−1⟩is deﬁned as
+p0 = a0
+pi = pi−1 + ai,
+1 ≤i < n
+(5.1)
+Function psum1 computes one element of the result vector per iteration. Func-
+tion psum2 uses a technique known as loop unrolling to compute two elements per
+iteration. We will explore the beneﬁts of loop unrolling later in this chapter. (See
+Problems 5.11, 5.12, and 5.19 for more about analyzing and optimizing the preﬁx-
+sum computation.)
+The time required by such a procedure can be characterized as a constant plus
+a factor proportional to the number of elements processed. For example, Figure 5.2
+shows a plot of the number of clock cycles required by the two functions for a
+range of values of n. Using a least squares ﬁt, we ﬁnd that the run times (in clock
+cycles) for psum1 and psum2 can be approximated by the equations 368 + 9.0n and
+368 + 6.0n, respectively. These equations indicate an overhead of 368 cycles due
+to the timing code and to initiate the procedure, set up the loop, and complete the

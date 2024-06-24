@@ -1,0 +1,51 @@
+Section 5.11
+Some Limiting Factors
+585
+We can see that none of the CPEs improve with this increased unrolling, and
+some even get worse. Modern x86-64 processors have 16 integer registers and can
+make use of the 16 YMM registers to store ﬂoating-point data. Once the number
+of loop variables exceeds the number of available registers, the program must
+allocate some on the stack.
+As an example, the following snippet of code shows how accumulator acc0 is
+updated in the inner loop of the code with 10 × 10 unrolling:
+Updating of accumulator acc0 in 10 x 10 urolling
+vmulsd
+(%rdx), %xmm0, %xmm0
+acc0 *= data[i]
+We can see that the accumulator is kept in register %xmm0, and so the program can
+simply read data[i] from memory and multiply it by this register.
+The comparable part of the code for 20 × 20 unrolling has a much different
+form:
+Updating of accumulator acc0 in 20 x 20 unrolling
+vmovsd
+40(%rsp), %xmm0
+vmulsd
+(%rdx), %xmm0, %xmm0
+vmovsd
+%xmm0, 40(%rsp)
+The accumulator is kept as a local variable on the stack, at offset 40 from the
+stack pointer. The program must read both its value and the value of data[i]
+from memory, multiply them, and store the result back to memory.
+Once a compiler must resort to register spilling, any advantage of maintaining
+multiple accumulators will most likely be lost. Fortunately, x86-64 has enough
+registers that most loops will become throughput limited before this occurs.
+5.11.2
+Branch Prediction and Misprediction Penalties
+We demonstrated via experiments in Section 3.6.6 that a conditional branch can
+incur a signiﬁcant misprediction penalty when the branch prediction logic does
+not correctly anticipate whether or not a branch will be taken. Now that we have
+learned something about how processors operate, we can understand where this
+penalty arises.
+Modern processors work well ahead of the currently executing instructions,
+reading new instructions from memory and decoding them to determine what
+operations to perform on what operands. This instruction pipelining works well as
+long as the instructions follow in a simple sequence. When a branch is encountered,
+the processor must guess which way the branch will go. For the case of a conditional
+jump, this means predicting whether or not the branch will be taken. For an
+instruction such as an indirect jump (as we saw in the code to jump to an address
+speciﬁed by a jump table entry) or a procedure return, this means predicting the
+target address. In this discussion, we focus on conditional branches.
+In a processor that employs speculative execution, the processor begins exe-
+cuting the instructions at the predicted branch target. It does this in a way that
+avoids modifying any actual register or memory locations until the actual out-
+come has been determined. If the prediction is correct, the processor can then

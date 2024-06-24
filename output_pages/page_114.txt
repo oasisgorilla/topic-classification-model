@@ -1,0 +1,69 @@
+Section 2.2
+Integer Representations
+113
+Web Aside DATA:TMIN
+Writing TMin in C
+In Figure 2.19 and in Problem 2.21, we carefully wrote the value of TMin32 as -2,147,483,647-1. Why
+not simply write it as either -2,147,483,648 or 0x80000000? Looking at the C header ﬁle limits.h,
+we see that they use a similar method as we have to write TMin32 and TMax32:
+/* Minimum and maximum values a ‘signed int’ can hold.
+*/
+#define INT_MAX
+2147483647
+#define INT_MIN
+(-INT_MAX - 1)
+Unfortunately, a curious interaction between the asymmetry of the two’s-complement representa-
+tion and the conversion rules of C forces us to write TMin32 in this unusual way. Although understanding
+this issue requires us to delve into one of the murkier corners of the C language standards, it will help
+us appreciate some of the subtleties of integer data types and representations.
+To convert an unsigned number to a larger data type, we can simply add
+leading zeros to the representation; this operation is known as zero extension,
+expressed by the following principle:
+principle: Expansion of an unsigned number by zero extension
+Deﬁne bit vectors ⃗
+u = [uw−1, uw−2, . . . , u0] of width w and ⃗
+u′ = [0, . . . , 0, uw−1,
+uw−2, . . . , u0] of width w′, where w′ > w. Then B2Uw(⃗
+u) = B2Uw′(⃗
+u′).
+This principle can be seen to follow directly from the deﬁnition of the unsigned
+encoding, given by Equation 2.1.
+For converting a two’s-complement number to a larger data type, the rule
+is to perform a sign extension, adding copies of the most signiﬁcant bit to the
+representation, expressed by the following principle. We show the sign bit xw−1 in
+blue to highlight its role in sign extension.
+principle: Expansion of a two’s-complement number by sign extension
+Deﬁne bit vectors ⃗
+x = [xw−1, xw−2, . . . , x0] of width w and ⃗
+x′ = [xw−1, . . . , xw−1,
+xw−1, xw−2, . . . , x0] of width w′, where w′ > w. Then B2Tw(⃗
+x) = B2Tw′(⃗
+x′).
+As an example, consider the following code:
+1
+short sx = -12345;
+/* -12345 */
+2
+unsigned short usx = sx;
+/*
+53191 */
+3
+int x = sx;
+/* -12345 */
+4
+unsigned ux = usx;
+/*
+53191 */
+5
+6
+printf("sx
+= %d:\t", sx);
+7
+show_bytes((byte_pointer) &sx, sizeof(short));
+8
+printf("usx = %u:\t", usx);
+9
+show_bytes((byte_pointer) &usx, sizeof(unsigned short));
+10
+printf("x
+= %d:\t", x);

@@ -1,0 +1,85 @@
+Solutions to Practice Problems
+379
+6
+cmpq
+$1088, %rax
+Compare index4: 4N(N+1)
+7
+jne
+.L13
+If !=, goto loop
+8
+rep; ret
+Return
+Solution to Problem 3.41 (page 304)
+This problem gets you to think about structure layout and the code used to access
+structure ﬁelds. The structure declaration is a variant of the example shown in
+the text. It shows that nested structures are allocated by embedding the inner
+structures within the outer ones.
+A. The layout of the structure is as follows:
+Offset 
+Contents 
+p
+0
+10
+8
+12
+20
+s.x
+s.y
+next
+B. It uses 20 bytes.
+C. As always, we start by annotating the assembly code:
+void st_init(struct test *st)
+st in %rdi
+1
+st_init:
+2
+movl
+8(%rdi), %eax
+Get st->s.x
+3
+movl
+%eax, 10(%rdi)
+Save in st->s.y
+4
+leaq
+10(%rdi), %rax
+Compute &(st->s.y)
+5
+movq
+%rax, (%rdi)
+Store in st->p
+6
+movq
+%rdi, 12(%rdi)
+Store st in st->next
+7
+ret
+From this, we can generate C code as follows:
+void st_init(struct test *st)
+{
+st->s.y
+= st->s.x;
+st->p
+= &(st->s.y);
+st->next
+= st;
+}
+Solution to Problem 3.42 (page 305)
+This problem demonstrates how a very common data structure and operation on
+it is implemented in machine code. We solve the problem by ﬁrst annotating the
+assembly code, recognizing that the two ﬁelds of the structure are at offsets 0
+(for v) and 2 (for p).
+short test(struct ACE *ptr)
+ptr in %rdi
+1
+test:
+2
+movl
+$1, %eax
+result = 1
+3
+jmp
+.L2
+Goto middle

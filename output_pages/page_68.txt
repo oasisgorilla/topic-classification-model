@@ -1,0 +1,25 @@
+CHAPTER 2
+Representing and Manipulating
+Information
+2.1
+Information Storage
+70
+2.2
+Integer Representations
+95
+2.3
+Integer Arithmetic
+120
+2.4
+Floating Point
+144
+2.5
+Summary
+162
+Bibliographic Notes
+163
+Homework Problems
+164
+Solutions to Practice Problems
+179
+67

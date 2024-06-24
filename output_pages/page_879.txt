@@ -1,0 +1,52 @@
+878
+Chapter 9
+Virtual Memory
+Figure 9.34
+Allocating and freeing
+blocks with malloc
+and free. Each square
+corresponds to a word.
+Each heavy rectangle
+corresponds to a block.
+Allocated blocks are
+shaded. Padded regions of
+allocated blocks are shaded
+with a darker blue. Free
+blocks are unshaded. Heap
+addresses increase from left
+to right.
+p1
+(a) p1 = malloc(4*sizeof(int))
+p1
+p2
+(b) p2 = malloc(5*sizeof(int))
+p1
+p2
+p3
+(c) p3 = malloc(6*sizeof(int))
+p1
+p2
+p3
+(d) free(p2)
+p1
+p2 p4
+p3
+(e) p4 = malloc(2*sizeof(int))
+Figure 9.34 shows how an implementation of malloc and free might manage
+a (very) small heap of 16 words for a C program. Each box represents a 4-byte
+word. The heavy-lined rectangles correspond to allocated blocks (shaded) and
+free blocks (unshaded). Initially, the heap consists of a single 16-word double-
+word-aligned free block.1
+Figure 9.34(a). The program asks for a four-word block. Malloc responds by
+carving out a four-word block from the front of the free block and return-
+ing a pointer to the ﬁrst word of the block.
+Figure 9.34(b). The program requests a ﬁve-word block. Malloc responds by
+allocating a six-word block from the front of the free block. In this exam-
+ple, malloc pads the block with an extra word in order to keep the free
+block aligned on a double-word boundary.
+Figure 9.34(c). The program requests a six-word block and malloc responds by
+carving out a six-word block from the free block.
+Figure 9.34(d). The program frees the six-word block that was allocated in
+Figure 9.34(b). Notice that after the call to free returns, the pointer p2
+1. Throughout this section, we will assume that the allocator returns blocks aligned to 8-byte double-
+word boundaries.

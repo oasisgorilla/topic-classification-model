@@ -1,0 +1,46 @@
+558
+Chapter 5
+Optimizing Program Performance
+Aside
+The history of out-of-order processing
+Out-of-order processing was ﬁrst implemented in the Control Data Corporation 6600 processor in
+1964. Instructions were processed by 10 different functional units, each of which could be operated
+independently. In its day, this machine, with a clock rate of 10 MHz, was considered the premium
+machine for scientiﬁc computing.
+IBM ﬁrst implemented out-of-order processing with the IBM 360/91 processor in 1966, but just to
+execute the ﬂoating-point instructions. For around 25 years, out-of-order processing was considered
+an exotic technology, found only in machines striving for the highest possible performance, until
+IBM reintroduced it in the RS/6000 line of workstations in 1990. This design became the basis for
+the IBM/Motorola PowerPC line, with the model 601, introduced in 1993, becoming the ﬁrst single-
+chip microprocessor to use out-of-order processing. Intel introduced out-of-order processing with its
+PentiumPro model in 1995, with an underlying microarchitecture similar to that of our reference
+machine.
+ﬂushed, discarding any results that may have been computed. By this means,
+mispredictions will not alter the program state.
+As we have described, any updates to the program registers occur only as
+instructions are being retired, and this takes place only after the processor can be
+certain that any branches leading to this instruction have been correctly predicted.
+To expedite the communication of results from one instruction to another, much
+of this information is exchanged among the execution units, shown in the ﬁgure as
+“Operation results.” As the arrows in the ﬁgure show, the execution units can send
+results directly to each other. This is a more elaborate form of the data-forwarding
+techniques we incorporated into our simple processor design in Section 4.5.5.
+The most common mechanism for controlling the communication of operands
+among the execution units is called register renaming. When an instruction that
+updates register r is decoded, a tag t is generated giving a unique identiﬁer to
+the result of the operation. An entry (r, t) is added to a table maintaining the
+association between program register r and tag t for an operation that will update
+this register. When a subsequent instruction using register r as an operand is
+decoded, the operation sent to the execution unit will contain t as the source
+for the operand value. When some execution unit completes the ﬁrst operation,
+it generates a result (v, t), indicating that the operation with tag t produced
+value v. Any operation waiting for t as a source will then use v as the source
+value, a form of data forwarding. By this mechanism, values can be forwarded
+directly from one operation to another, rather than being written to and read from
+the register ﬁle, enabling the second operation to begin as soon as the ﬁrst has
+completed. The renaming table only contains entries for registers having pending
+write operations. When a decoded instruction requires a register r, and there is no
+tag associated with this register, the operand is retrieved directly from the register
+ﬁle. With register renaming, an entire sequence of operations can be performed
+speculatively, even though the registers are updated only after the processor is
+certain of the branch outcomes.

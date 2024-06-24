@@ -1,0 +1,60 @@
+Section 4.5
+Pipelined Y86-64 Implementations
+489
+Practice Problem 4.34 (solution page 527)
+Write HCL code for the signal d_valB, giving the value for source operand valB
+supplied to pipeline register E.
+One small part of the write-back stage remains. As shown in Figure 4.52, the
+overall processor status Stat is computed by a block based on the status value in
+pipeline register W. Recall from Section 4.1.1 that the code should indicate either
+normal operation (AOK) or one of the three exception conditions. Since pipeline
+register W holds the state of the most recently completed instruction, it is natural
+to use this value as an indication of the overall processor status. The only special
+case to consider is when there is a bubble in the write-back stage. This is part of
+normal operation, and so we want the status code to be AOK for this case as well:
+word Stat = [
+W_stat == SBUB : SAOK;
+1 : W_stat;
+];
+Execute Stage
+Figure 4.60 shows the execute stage logic for PIPE. The hardware units and the
+logic blocks are identical to those in SEQ, with an appropriate renaming of signals.
+We can see the signals e_valE and e_dstE directed toward the decode stage as
+one of the forwarding sources. One difference is that the logic labeled “Set CC,”
+which determines whether or not to update the condition codes, has signals m_stat
+and W_stat as inputs. These signals are used to detect cases where an instruction
+e_Cnd 
+W_stat
+m_stat
+e_valE
+e_dstE
+M
+icode
+stat
+stat
+Cnd
+valE
+valA
+dstE dstM
+E
+icode ifun
+valC
+valA
+valB
+dstM srcA srcB
+dstE
+ALU
+A
+Set
+CC
+ALU
+B
+ALU
+fun.
+ALU
+CC
+cond
+dstE
+Figure 4.60
+PIPE execute stage logic. This part of the design is very similar to the logic
+in the SEQ implementation.

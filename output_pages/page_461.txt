@@ -1,0 +1,104 @@
+460
+Chapter 4
+Processor Architecture
+Stat
+Stat
+valA
+Stat
+Stat
+Write
+back
+W
+icode
+valE
+valM
+dstE dstM
+ALU
+A
+ALU
+B
+ALU
+fun.
+M
+icode
+Cnd
+valE
+valA
+dstE dstM
+E
+icode ifun
+valC
+valA
+valB
+dstM srcA srcB
+dstE
+D
+icode
+stat
+stat
+stat
+ifun
+valC
+valP
+rB
+rA
+F
+predPC
+data out
+data in
+M_Cnd
+e_Cnd
+Memory
+ALU
+Execute
+dstE dstM srcA srcB
+Select
+A
+Predict
+PC
+Select
+PC
+d_srcA
+d_rvalA
+d_srcB
+W_valM
+M_valA
+W_valE
+M_valA
+f_pc
+f_stat
+D_stat
+E_stat
+M_stat
+m_stat
+W_stat
+imem_error
+instr_valid
+W_valM
+CC
+Decode
+Fetch
+read
+dmem_error
+write
+Addr
+Mem.
+control
+Register
+file
+A
+B
+E
+M
+PC
+increment
+Instruction
+memory
+dstE
+Data
+memory
+stat
+Figure 4.41
+Hardware structure of PIPE−, an initial pipelined implementation. By
+inserting pipeline registers into SEQ+ (Figure 4.40), we create a ﬁve-stage pipeline. There
+are several shortcomings of this version that we will deal with shortly.

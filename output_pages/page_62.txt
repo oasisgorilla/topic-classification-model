@@ -1,0 +1,54 @@
+Section 1.9
+Important Themes
+61
+Figure 1.17
+Multi-core processor
+organization. Four
+processor cores are
+integrated onto a single
+chip.
+Processor package
+Core 0
+Core 3
+. . .
+Regs
+L1
+d-cache
+L2 unified cache
+L3 unified cache
+(shared by all cores)
+Main memory
+L1
+i-cache
+Regs
+L1
+d-cache
+L2 unified cache
+L1
+i-cache
+typical multi-core processor, where the chip has four CPU cores, each with its
+own L1 and L2 caches, and with each L1 cache split into two parts—one to hold
+recently fetched instructions and one to hold data. The cores share higher levels of
+cache as well as the interface to main memory. Industry experts predict that they
+will be able to have dozens, and ultimately hundreds, of cores on a single chip.
+Hyperthreading, sometimes called simultaneous multi-threading, is a tech-
+nique that allows a single CPU to execute multiple ﬂows of control. It involves
+having multiple copies of some of the CPU hardware, such as program counters
+and register ﬁles, while having only single copies of other parts of the hardware,
+such as the units that perform ﬂoating-point arithmetic. Whereas a conventional
+processor requires around 20,000 clock cycles to shift between different threads,
+a hyperthreaded processor decides which of its threads to execute on a cycle-by-
+cycle basis. It enables the CPU to take better advantage of its processing resources.
+For example, if one thread must wait for some data to be loaded into a cache, the
+CPU can proceed with the execution of a different thread. As an example, the In-
+tel Core i7 processor can have each core executing two threads, and so a four-core
+system can actually execute eight threads in parallel.
+The use of multiprocessing can improve system performance in two ways.
+First, it reduces the need to simulate concurrency when performing multiple tasks.
+As mentioned, even a personal computer being used by a single person is expected
+to perform many activities concurrently. Second, it can run a single application
+program faster, but only if that program is expressed in terms of multiple threads
+that can effectively execute in parallel. Thus, although the principles of concur-
+rency have been formulated and studied for over 50 years, the advent of multi-core
+and hyperthreaded systems has greatly increased the desire to ﬁnd ways to write
+application programs that can exploit the thread-level parallelism available with

@@ -1,0 +1,66 @@
+142
+Chapter 2
+Representing and Manipulating Information
+k
+Bias
+−12,340 + bias (binary)
+>> k (binary)
+Decimal
+−12,340/2k
+0
+0
+1100111111001100
+1100111111001100
+−12,340
+−12,340.0
+1
+1
+1100111111001101
+1110011111100110
+−6,170
+−6,170.0
+4
+15
+1100111111011011
+1111110011111101
+−771
+−771.25
+8
+255
+1101000011001011
+1111111111010000
+−48
+−48.203125
+Figure 2.30
+Dividing two’s-complement numbers by powers of 2. By adding a bias
+before the right shift, the result is rounded toward zero.
+We can correct for the improper rounding that occurs when a negative number
+is shifted right by “biasing” the value before shifting.
+principle: Two’s-complement division by a power of 2, rounding up
+Let C variables x and k have two’s-complement value x and unsigned value k,
+respectively, such that 0 ≤k < w. The C expression (x + (1 << k) - 1) >> k, when
+the shift is performed arithmetically, yields the value ⌈x/2k⌉.
+Figure 2.30 demonstrates how adding the appropriate bias before performing
+the arithmetic right shift causes the result to be correctly rounded. In the third
+column, we show the result of adding the bias value to −12,340, with the lower k
+bits (those that will be shifted off to the right) shown in italics. We can see that
+the bits to the left of these may or may not be incremented. For the case where no
+rounding is required (k = 1), adding the bias only affects bits that are shifted off.
+For the cases where rounding is required, adding the bias causes the upper bits to
+be incremented, so that the result will be rounded toward zero.
+The biasing technique exploits the property that ⌈x/y⌉= ⌊(x + y −1)/y⌋for
+integers x and y such that y > 0. As examples, when x = −30 and y = 4, we have
+x + y −1 = −27 and ⌈−30/4⌉= −7 = ⌊−27/4⌋. When x = −32 and y = 4, we have
+x + y −1 = −29 and ⌈−32/4⌉= −8 = ⌊−29/4⌋.
+derivation: Two’s-complement division by a power of 2, rounding up
+To see that ⌈x/y⌉= ⌊(x + y −1)/y⌋, suppose that x = qy + r, where 0 ≤r < y,
+giving (x + y −1)/y = q + (r + y −1)/y, and so ⌊(x + y −1)/y⌋= q + ⌊(r + y −
+1)/y⌋. The latter term will equal 0 when r = 0 and 1 when r > 0. That is, by adding
+a bias of y −1 to x and then rounding the division downward, we will get q when
+y divides x and q + 1 otherwise.
+Returning to the case where y = 2k, the C expression x + (1 << k) - 1 yields
+the value x + 2k −1. Shifting this right arithmetically by k therefore yields ⌈x/2k⌉.
+These analyses show that for a two’s-complement machine using arithmetic
+right shifts, the C expression
+(x<0 ? x+(1<<k)-1 : x) >> k
+will compute the value x/2k.

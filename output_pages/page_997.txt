@@ -1,0 +1,52 @@
+996
+Chapter 11
+Network Programming
+code/netp/tiny/tiny.c
+1
+void read_requesthdrs(rio_t *rp)
+2
+{
+3
+char buf[MAXLINE];
+4
+5
+Rio_readlineb(rp, buf, MAXLINE);
+6
+while(strcmp(buf, "\r\n")) {
+7
+Rio_readlineb(rp, buf, MAXLINE);
+8
+printf("%s", buf);
+9
+}
+10
+return;
+11
+}
+code/netp/tiny/tiny.c
+Figure 11.32
+Tiny read_requesthdrs reads and ignores request headers.
+status code and status message in the response line, along with an HTML ﬁle in
+the response body that explains the error to the browser’s user.
+Recall that an HTML response should indicate the size and type of the content
+in the body. Thus, we have opted to build the HTML content as a single string so
+that we can easily determine its size. Also, notice that we are using the robust
+rio_writen function from Figure 10.4 for all output.
+The read_requesthdrs Function
+Tiny does not use any of the information in the request headers. It simply reads and
+ignores them by calling the read_requesthdrs function in Figure 11.32. Notice
+that the empty text line that terminates the request headers consists of a carriage
+return and line feed pair, which we check for in line 6.
+The parse_uri Function
+Tiny assumes that the home directory for static content is its current directory and
+that the home directory for executables is ./cgi-bin. Any URI that contains the
+string cgi-bin is assumed to denote a request for dynamic content. The default
+ﬁlename is ./home.html.
+The parse_uri function in Figure 11.33 implements these policies. It parses
+the URI into a ﬁlename and an optional CGI argument string. If the request is
+for static content (line 5), we clear the CGI argument string (line 6) and then
+convert the URI into a relative Linux pathname such as ./index.html (lines 7–8).
+If the URI ends with a ‘/’ character (line 9), then we append the default ﬁlename
+(line 10). On the other hand, if the request is for dynamic content (line 13), we
+extract any CGI arguments (lines 14–20) and convert the remaining portion of the
+URI to a relative Linux ﬁlename (lines 21–22).

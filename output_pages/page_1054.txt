@@ -1,0 +1,88 @@
+Section 12.6
+Using Threads for Parallelism
+1053
+When we run psum-array on our four-core system, we see that it runs orders
+of magnitude faster than psum-mutex:
+Number of threads
+Version
+1
+2
+4
+8
+16
+psum-mutex
+68.00
+432.00
+719.00
+552.00
+599.00
+psum-array
+7.26
+3.64
+1.91
+1.85
+1.84
+In Chapter 5, we learned how to use local variables to eliminate unnecessary
+memory references. Figure 12.34 shows how we can apply this principle by having
+each peer thread accumulate its partial sum into a local variable rather than
+a global variable. When we run psum-local on our four-core machine, we get
+another order-of-magnitude decrease in running time:
+Number of threads
+Version
+1
+2
+4
+8
+16
+psum-mutex
+68.00
+432.00
+719.00
+552.00
+599.00
+psum-array
+7.26
+3.64
+1.91
+1.85
+1.84
+psum-local
+1.06
+0.54
+0.28
+0.29
+0.30
+code/conc/psum-local.c
+1
+/* Thread routine for psum-local.c */
+2
+void *sum_local(void *vargp)
+3
+{
+4
+long myid = *((long *)vargp);
+/* Extract the thread ID */
+5
+long start = myid * nelems_per_thread; /* Start element index */
+6
+long end = start + nelems_per_thread;
+/* End element index */
+7
+long i, sum = 0;
+8
+9
+for (i = start; i < end; i++) {
+10
+sum += i;
+11
+}
+12
+psum[myid] = sum;
+13
+return NULL;
+14
+}
+code/conc/psum-local.c
+Figure 12.34
+Thread routine for psum-local. Each peer thread accumulates its partial sum in a local
+variable.

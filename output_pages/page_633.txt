@@ -1,0 +1,45 @@
+632
+Chapter 6
+The Memory Hierarchy
+Aside
+Formatted disk capacity
+Before a disk can be used to store data, it must be formatted by the disk controller. This involves ﬁlling
+in the gaps between sectors with information that identiﬁes the sectors, identifying any cylinders with
+surface defects and taking them out of action, and setting aside a set of cylinders in each zone as spares
+that can be called into action if one or more cylinders in the zone goes bad during the lifetime of the
+disk. The formatted capacity quoted by disk manufacturers is less than the maximum capacity because
+of the existence of these spare cylinders.
+Parameter
+Value
+Rotational rate
+13,000 RPM
+Tavg seek
+6 ms
+Average number of sectors/track
+5,000
+Surfaces
+4
+Sector size
+512 bytes
+For each case below, suppose that a program reads the logical blocks of the
+ﬁle sequentially, one after the other, and that the time to position the head over
+the ﬁrst block is Tavg seek + Tavg rotation.
+A. Best case: Estimate the optimal time (in ms) required to read the ﬁle given
+the best possible mapping of logical blocks to disk sectors (i.e., sequential).
+B. Random case: Estimate the time (in ms) required to read the ﬁle if blocks
+are mapped randomly to disk sectors.
+Connecting I/O Devices
+Input/output (I/O) devices such as graphics cards, monitors, mice, keyboards, and
+disks are connected to the CPU and main memory using an I/O bus. Unlike the
+system bus and memory buses, which are CPU-speciﬁc, I/O buses are designed
+to be independent of the underlying CPU. Figure 6.11 shows a representative I/O
+bus structure that connects the CPU, main memory, and I/O devices.
+Although the I/O bus is slower than the system and memory buses, it can
+accommodate a wide variety of third-party I/O devices. For example, the bus in
+Figure 6.11 has three different types of devices attached to it.
+. A Universal Serial Bus (USB) controller is a conduit for devices attached to
+a USB bus, which is a wildly popular standard for connecting a variety of
+peripheral I/O devices, including keyboards, mice, modems, digital cameras,
+game controllers, printers, external disk drives, and solid state disks. USB
+3.0 buses have a maximum bandwidth of 625 MB/s. USB 3.1 buses have a
+maximum bandwidth of 1,250 MB/s.

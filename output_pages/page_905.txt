@@ -1,0 +1,54 @@
+904
+Chapter 9
+Virtual Memory
+(a) mark function
+void mark(ptr p) {
+if ((b = isPtr(p)) == NULL)
+return;
+if (blockMarked(b))
+return;
+markBlock(b);
+len = length(b);
+for (i=0; i < len; i++)
+mark(b[i]);
+return;
+}
+(b) sweep function
+void sweep(ptr b, ptr end) {
+while (b < end) {
+if (blockMarked(b))
+unmarkBlock(b);
+else if (blockAllocated(b))
+free(b);
+b = nextBlock(b);
+}
+return;
+}
+Figure 9.51
+Pseudocode for the mark and sweep functions.
+Our description of Mark&Sweep will assume the following functions, where
+ptr is deﬁned as typedef void *ptr:
+ptr isPtr(ptr p). If p points to some word in an allocated block, it returns a
+pointer b to the beginning of that block. Returns NULL otherwise.
+int blockMarked(ptr b). Returns true if block b is already marked.
+int blockAllocated(ptr b). Returns true if block b is allocated.
+void markBlock(ptr b). Marks block b.
+int length(ptr b). Returns the length in words (excluding the header) of
+block b.
+void unmarkBlock(ptr b). Changes the status of block b from marked to un-
+marked.
+ptr nextBlock(ptr b). Returns the successor of block b in the heap.
+The mark phase calls the mark function shown in Figure 9.51(a) once for
+each root node. The mark function returns immediately if p does not point to
+an allocated and unmarked heap block. Otherwise, it marks the block and calls
+itself recursively on each word in block. Each call to the mark function marks any
+unmarked and reachable descendants of some root node. At the end of the mark
+phase, any allocated block that is not marked is guaranteed to be unreachable and,
+hence, garbage that can be reclaimed in the sweep phase.
+The sweep phase is a single call to the sweep function shown in Figure 9.51(b).
+The sweep function iterates over each block in the heap, freeing any unmarked
+allocated blocks (i.e., garbage) that it encounters.
+Figure 9.52 shows a graphical interpretation of Mark&Sweep for a small heap.
+Block boundaries are indicated by heavy lines. Each square corresponds to a
+word of memory. Each block has a one-word header, which is either marked or
+unmarked.

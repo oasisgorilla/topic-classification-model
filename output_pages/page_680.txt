@@ -1,0 +1,64 @@
+Section 6.6
+Putting It Together: The Impact of Caches on Program Performance
+679
+12,000
+10,000
+8,000
+6,000
+4,000
+2,000
+0
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s8
+s9
+s10
+s11
+Read throughput (MB/s)
+Stride (x8 bytes)
+One access
+per cache line
+Figure 6.43
+A slope of spatial locality. The graph shows a slice through Figure 6.41
+with size = 4 MB.
+on the block in L2, depending on the stride. As the stride increases, the ratio of
+L2 misses to L2 hits increases. Since misses are served more slowly than hits, the
+read throughput decreases. Once the stride reaches eight 8-byte words, which on
+this system equals the block size of 64 bytes, every read request misses in L2 and
+must be served from L3. Thus, the read throughput for strides of at least eight is
+a constant rate determined by the rate that cache blocks can be transferred from
+L3 into L2.
+To summarize our discussion of the memory mountain, the performance of the
+memory system is not characterized by a single number. Instead, it is a mountain
+of temporal and spatial locality whose elevations can vary by over an order of
+magnitude. Wise programmers try to structure their programs so that they run in
+the peaks instead of the valleys. The aim is to exploit temporal locality so that
+heavily used words are fetched from the L1 cache, and to exploit spatial locality
+so that as many words as possible are accessed from a single L1 cache line.
+Practice Problem 6.21 (solution page 702)
+Use the memory mountain in Figure 6.41 to estimate the time, in CPU cycles, to
+read a 16-byte word from the L1 d-cache.
+6.6.2
+Rearranging Loops to Increase Spatial Locality
+Consider the problem of multiplying a pair of n × n matrices: C = AB. For exam-
+ple, if n = 2, then
+ c11
+c12
+c21
+c22
+
+=
+ a11
+a12
+a21
+a22
+  b11
+b12
+b21
+b22
+

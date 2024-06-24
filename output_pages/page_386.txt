@@ -1,0 +1,88 @@
+Solutions to Practice Problems
+385
+Refer to arguments as i1 (%rdi), i2 (%esi)
+f1 (%xmm0), and f2 (%xmm1)
+double funct1(arg1_t p, arg2_t q, arg3_t r, arg4_t s)
+1
+funct1:
+2
+vcvtsi2ssq
+%rsi, %xmm2, %xmm2
+Get i2 and convert from long to float
+3
+vaddss
+%xmm0, %xmm2, %xmm0
+Add f1 (type float)
+4
+vcvtsi2ss
+%edi, %xmm2, %xmm2
+Get i1 and convert from int to float
+5
+vdivss
+%xmm0, %xmm2, %xmm0
+Compute i1 / (i2 + f1)
+6
+vunpcklps
+%xmm0, %xmm0, %xmm0
+7
+vcvtps2pd
+%xmm0, %xmm0
+Convert to double
+8
+vsubsd
+%xmm1, %xmm0, %xmm0
+Compute i1 / (i2 + f1) - f2 (double)
+9
+ret
+From this we see that the code computes the value i1/(i2+f1)-f2. We can also
+see that i1 has type int, i2 has type long, f1 has type float, and f2 has type
+double. The only ambiguity in matching arguments to the named values stems
+from the commutativity of multiplication—yielding two possible results:
+double funct1a(int p, float q, long r, double s);
+double funct1b(int p, long q, float r, double s);
+Solution to Problem 3.54 (page 339)
+This problem can readily be solved by stepping through the assembly code and
+determining what is computed on each step, as shown with the annotations below:
+double funct2(double w, int x, float y, long z)
+w in %xmm0, x in %edi, y in %xmm1, z in %rsi
+1
+funct2:
+2
+vcvtsi2ss
+%edi, %xmm2, %xmm2
+Convert x to float
+3
+vmulss
+%xmm1, %xmm2, %xmm1
+Multiply by y
+4
+vunpcklps
+%xmm1, %xmm1, %xmm1
+5
+vcvtps2pd
+%xmm1, %xmm2
+Convert x*y to double
+6
+vcvtsi2sdq
+%rsi, %xmm1, %xmm1
+Convert z to double
+7
+vdivsd
+%xmm1, %xmm0, %xmm0
+Compute w/z
+8
+vsubsd
+%xmm0, %xmm2, %xmm0
+Subtract from x*y
+9
+ret
+Return
+We can conclude from this analysis that the function computes y ∗x −w/z.
+Solution to Problem 3.55 (page 341)
+This problem involves the same reasoning as was required to see that numbers
+declared at label .LC2 encode 1.8, but with a simpler example.
+We see that the two values are 0 and 1077936128 (0x40400000). From the
+high-order bytes, we can extract an exponent ﬁeld of 0x404 (1028), from which
+we subtract a bias of 1023 to get an exponent of 5. Concatenating the fraction bits
+of the two values, we get a fraction ﬁeld of 0, but with the implied leading value
+giving value 1.0. The constant is therefore 1.0 × 25 = 32.0.

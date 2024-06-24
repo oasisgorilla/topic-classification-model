@@ -1,0 +1,84 @@
+16
+Contents
+9.11
+Common Memory-Related Bugs in C Programs
+906
+9.11.1 Dereferencing Bad Pointers
+906
+9.11.2 Reading Uninitialized Memory
+907
+9.11.3 Allowing Stack Buffer Overﬂows
+907
+9.11.4 Assuming That Pointers and the Objects They Point to
+Are the Same Size
+908
+9.11.5 Making Off-by-One Errors
+908
+9.11.6 Referencing a Pointer Instead of the Object It Points To
+909
+9.11.7 Misunderstanding Pointer Arithmetic
+909
+9.11.8 Referencing Nonexistent Variables
+910
+9.11.9 Referencing Data in Free Heap Blocks
+910
+9.11.10 Introducing Memory Leaks
+911
+9.12
+Summary
+911
+Bibliographic Notes
+912
+Homework Problems
+912
+Solutions to Practice Problems
+916
+Part III
+Interaction and Communication
+between Programs
+10
+System-Level I/O
+925
+10.1
+Unix I/O
+926
+10.2
+Files
+927
+10.3
+Opening and Closing Files
+929
+10.4
+Reading and Writing Files
+931
+10.5
+Robust Reading and Writing with the Rio Package
+933
+10.5.1 Rio Unbuffered Input and Output Functions
+933
+10.5.2 Rio Buffered Input Functions
+934
+10.6
+Reading File Metadata
+939
+10.7
+Reading Directory Contents
+941
+10.8
+Sharing Files
+942
+10.9
+I/O Redirection
+945
+10.10 Standard I/O
+947
+10.11 Putting It Together: Which I/O Functions Should I Use?
+947
+10.12 Summary
+949
+Bibliographic Notes
+950
+Homework Problems
+950
+Solutions to Practice Problems
+951

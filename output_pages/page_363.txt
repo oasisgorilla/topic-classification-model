@@ -1,0 +1,71 @@
+362
+Chapter 3
+Machine-Level Representation of Programs
+two forms is an important skill to learn. One important feature is that memory
+references in x86-64 are always given with quad word registers, such as %rax, even
+if the operand is a byte, single word, or double word.
+Here is the code written with sufﬁxes:
+movl
+%eax, (%rsp)
+movw
+(%rax), %dx
+movb
+$0xFF, %bl
+movb
+(%rsp,%rdx,4), %dl
+movq
+(%rdx), %rax
+movw
+%dx, (%rax)
+Solution to Problem 3.3 (page 222)
+Since we will rely on gcc to generate most of our assembly code, being able to
+write correct assembly code is not a critical skill. Nonetheless, this exercise will
+help you become more familiar with the different instruction and operand types.
+Here is the code with explanations of the errors:
+movb $0xF, (%ebx)
+Cannot use %ebx as address register
+movl %rax, (%rsp)
+Mismatch between instruction suffix and register ID
+movw (%rax),4(%rsp)
+Cannot have both source and destination be memory references
+movb %al,%sl
+No register named %sl
+movl %eax,$0x123
+Cannot have immediate as destination
+movl %eax,%dx
+Destination operand incorrect size
+movb %si, 8(%rbp)
+Mismatch between instruction suffix and register ID
+Solution to Problem 3.4 (page 223)
+This exercise gives you more experience with the different data movement in-
+structions and how they relate to the data types and conversion rules of C. The
+nuances of conversions of both signedness and size, as well as integral promotion,
+add challenge to this problem.
+src_t
+dest_t
+Instruction
+Comments
+long
+long
+movq (%rdi), %rax
+Read 8 bytes
+movq %rax, (%rsi)
+Store 8 bytes
+char
+int
+movsbl (%rdi), %eax
+Convert char to int
+movl %eax, (%rsi)
+Store 4 bytes
+char
+unsigned
+movsbl (%rdi), %eax
+Convert char to int
+movl %eax, (%rsi)
+Store 4 bytes
+unsigned char
+long
+movzbl (%rdi), %eax
+Read byte and zero-extend
+movq %rax, (%rsi)
+Store 8 bytes

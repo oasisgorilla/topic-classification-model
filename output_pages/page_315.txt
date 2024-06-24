@@ -1,0 +1,39 @@
+314
+Chapter 3
+Machine-Level Representation of Programs
+. Casting from one type of pointer to another changes its type but not its value.
+One effect of casting is to change any scaling of pointer arithmetic. So, for
+example, if p is a pointer of type char * having value p, then the expression
+(int *) p+7 computes p + 28, while (int *) (p+7) computes p + 7. (Recall
+that casting has higher precedence than addition.)
+. Pointers can also point to functions. This provides a powerful capability for
+storing and passing references to code, which can be invoked in some other
+part of the program. For example, if we have a function deﬁned by the proto-
+type
+int fun(int x, int *p);
+then we can declare and assign a pointer fp to this function by the following
+code sequence:
+int (*fp)(int, int *);
+fp
+= fun;
+We can then invoke the function using this pointer:
+int y = 1;
+int result = fp(3, &y);
+The value of a function pointer is the address of the ﬁrst instruction in the
+machine-code representation of the function.
+New to C?
+Function pointers
+The syntax for declaring function pointers is especially difﬁcult for novice programmers to understand.
+For a declaration such as
+int (*f)(int*);
+it helps to read it starting from the inside (starting with ‘f’) and working outward. Thus, we see that f
+is a pointer, as indicated by (*f). It is a pointer to a function that has a single int * as an argument,
+as indicated by (*f)(int*). Finally, we see that it is a pointer to a function that takes an int * as an
+argument and returns int.
+The parentheses around *f are required, because otherwise the declaration
+int *f(int*);
+would be read as
+(int *) f(int*);
+That is, it would be interpreted as a function prototype, declaring a function f that has an int * as its
+argument and returns an int *.
+Kernighan and Ritchie [61, Sect. 5.12] present a helpful tutorial on reading C declarations.

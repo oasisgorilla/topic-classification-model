@@ -1,0 +1,82 @@
+128
+Chapter 2
+Representing and Manipulating Information
+x
+y
+x + y
+x +t
+4 y
+Case
+−8
+−5
+−13
+3
+1
+[1000]
+[1011]
+[10011]
+[0011]
+−8
+−8
+−16
+0
+1
+[1000]
+[1000]
+[10000]
+[0000]
+−8
+5
+−3
+−3
+2
+[1000]
+[0101]
+[11101]
+[1101]
+2
+5
+7
+7
+3
+[0010]
+[0101]
+[00111]
+[0111]
+5
+5
+10
+−6
+4
+[0101]
+[0101]
+[01010]
+[1010]
+Figure 2.25
+Two’s-complement addition examples. The bit-level representation of
+the 4-bit two’s-complement sum can be obtained by performing binary addition of the
+operands and truncating the result to 4 bits.
+As illustrations of two’s-complement addition, Figure 2.25 shows some exam-
+ples when w = 4. Each example is labeled by the case to which it corresponds in
+the derivation of Equation 2.13. Note that 24 = 16, and hence negative overﬂow
+yields a result 16 more than the integer sum, and positive overﬂow yields a result 16
+less. We include bit-level representations of the operands and the result. Observe
+that the result can be obtained by performing binary addition of the operands and
+truncating the result to 4 bits.
+Figure 2.26 illustrates two’s-complement addition for word size w = 4. The
+operands range between −8 and 7. When x + y < −8, two’s-complement addition
+has a negative overﬂow, causing the sum to be incremented by 16. When −8 ≤
+x + y < 8, the addition yields x + y. When x + y ≥8, the addition has a positive
+overﬂow, causing the sum to be decremented by 16. Each of these three ranges
+forms a sloping plane in the ﬁgure.
+Equation 2.13 also lets us identify the cases where overﬂow has occurred:
+principle: Detecting overﬂow in two’s-complement addition
+For x and y in the range TMinw ≤x, y ≤TMaxw, let s .
+= x +t
+w y. Then the compu-
+tation of s has had positive overﬂow if and only if x > 0 and y > 0 but s ≤0. The
+computation has had negative overﬂow if and only if x < 0 and y < 0 but s ≥0.
+Figure 2.25 shows several illustrations of this principle for w = 4. The ﬁrst
+entry shows a case of negative overﬂow, where two negative numbers sum to a
+positive one. The ﬁnal entry shows a case of positive overﬂow, where two positive
+numbers sum to a negative one.

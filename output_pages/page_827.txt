@@ -1,0 +1,77 @@
+826
+Chapter 8
+Exceptional Control Flow
+5
+if (Fork() != 0) {
+6
+Fork();
+7
+printf("Example\n");
+8
+exit(0);
+9
+}
+10
+return;
+11
+}
+12
+13
+int main()
+14
+{
+15
+try();
+16
+fork(); printf("Example\n");
+17
+exit(0);
+18
+}
+code/ecf/global-forkprob5.c
+8.15 ◆
+How many “Example” lines does this program print?
+code/ecf/global-forkprob6.c
+1
+#include "csapp.h"
+2
+3
+void try()
+4
+{
+5
+if (Fork() == 0) {
+6
+Fork(); Fork();
+7
+printf("Example\n");
+8
+return;
+9
+}
+10
+return;
+11
+}
+12
+13
+int main()
+14
+{
+15
+try();
+16
+printf("Example\n");
+17
+exit(0);
+18
+}
+code/ecf/global-forkprob6.c
+8.16 ◆
+What is the output of the following program?
+code/ecf/global-forkprob7.c
+1
+#include "csapp.h"
+2
+int counter = 1;
+3

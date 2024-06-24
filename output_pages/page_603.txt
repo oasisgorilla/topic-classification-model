@@ -1,0 +1,59 @@
+602
+Chapter 5
+Optimizing Program Performance
+Initial
+Quicksort
+Iter first
+Iter last
+(a) All versions
+(b) All but the slowest version
+Big table 
+Better hash
+Linear lower
+250
+200
+150
+100
+50
+0
+6
+5
+4
+3
+2
+1
+0
+CPU seconds
+Sort
+List
+Lower
+Strlen
+Hash
+Rest
+Better hash
+Quicksort
+Iter first
+Iter last
+Big table 
+Linear lower
+CPU seconds
+Sort
+List
+Lower
+Strlen
+Hash
+Rest
+Figure 5.38
+Proﬁle results for different versions of bigram-frequency counting program. Time is divided
+according to the different major operations in the program.
+Hash. Computing the hash function
+Rest. The sum of all other functions
+As part (a) of the ﬁgure shows, our initial version required 3.5 minutes, with most
+of the time spent sorting. This is not surprising, since insertion sort has quadratic
+run time and the program sorted 363,039 values.
+In our next version, we performed sorting using the library function qsort,
+which is based on the quicksort algorithm [98]. It has an expected run time of
+O(n log n). This version is labeled “Quicksort” in the ﬁgure. The more efﬁcient
+sorting algorithm reduces the time spent sorting to become negligible, and the
+overall run time to around 5.4 seconds. Part (b) of the ﬁgure shows the times for
+the remaining version on a scale where we can see them more clearly.
