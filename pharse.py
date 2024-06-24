@@ -62,22 +62,24 @@ def get_pages_by_topic(conn, topic):
     cursor.execute("SELECT page_num FROM pages WHERE topic=?", (topic,))
     return cursor.fetchall()  # 결과 반환
 
-pdf_path = 'your_textbook.pdf'  # PDF 파일 경로
+pdf_path = './sample/Computer_Systems_A_Programmers_Perspective(3rd).pdf'  # PDF 파일 경로
 pages = extract_text_by_page(pdf_path)  # PDF에서 페이지별로 텍스트를 추출
 
-db_conn = init_db()  # 데이터베이스 초기화
+print(len(pages))
 
-# 각 페이지를 주제별로 분류하고 데이터베이스에 저장
-for page_num, page_text in enumerate(pages):
-    topic = predict_topic(page_text)  # 페이지 텍스트의 주제를 예측
-    save_page_to_db(db_conn, page_num, page_text, topic)  # 데이터베이스에 저장
+# db_conn = init_db()  # 데이터베이스 초기화
 
-# 주제별로 페이지 목록을 가져옴
-topic_A_pages = get_pages_by_topic(db_conn, 'A')
-topic_B_pages = get_pages_by_topic(db_conn, 'B')
-topic_C_pages = get_pages_by_topic(db_conn, 'C')
+# # 각 페이지를 주제별로 분류하고 데이터베이스에 저장
+# for page_num, page_text in enumerate(pages):
+#     topic = predict_topic(page_text)  # 페이지 텍스트의 주제를 예측
+#     save_page_to_db(db_conn, page_num, page_text, topic)  # 데이터베이스에 저장
 
-# 결과 출력
-print("Pages related to topic A:", topic_A_pages)
-print("Pages related to topic B:", topic_B_pages)
-print("Pages related to topic C:", topic_C_pages)
+# # 주제별로 페이지 목록을 가져옴
+# topic_A_pages = get_pages_by_topic(db_conn, 'A')
+# topic_B_pages = get_pages_by_topic(db_conn, 'B')
+# topic_C_pages = get_pages_by_topic(db_conn, 'C')
+
+# # 결과 출력
+# print("Pages related to topic A:", topic_A_pages)
+# print("Pages related to topic B:", topic_B_pages)
+# print("Pages related to topic C:", topic_C_pages)
