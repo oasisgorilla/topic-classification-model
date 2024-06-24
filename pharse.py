@@ -4,7 +4,7 @@ import sqlite3  # SQLite 데이터베이스 라이브러리 임포트
 from sklearn.feature_extraction.text import TfidfVectorizer  # 텍스트 벡터화를 위한 라이브러리 임포트
 from sklearn.svm import SVC  # SVM 분류기를 위한 라이브러리 임포트
 
-# PDF 파일에서 페이지별로 텍스트를 추출하는 함수
+# ----------------------------PDF 파일에서 페이지별로 텍스트를 추출하는 함수----------------------------
 def extract_text_by_page(pdf_path):
     doc = fitz.open(pdf_path)  # PDF 문서를 엽니다
     pages = []  # 페이지 텍스트를 저장할 리스트
@@ -12,6 +12,16 @@ def extract_text_by_page(pdf_path):
         page = doc.load_page(page_num)  # 각 페이지를 로드
         pages.append(page.get_text())  # 페이지의 텍스트를 리스트에 추가
     return pages  # 페이지별 텍스트 리스트를 반환
+
+# ----------------------------추출한 페이지별 텍스트를 txt파일로 저장하는 함수----------------------------
+def export_text_by_txt(pages):
+    output_dir = './output_pages'
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    for i, page_text in enumerate(pages):
+        with open(os.path.join(output_dir, f'page_{i+1}.txt'), 'w', encoding='utf-8') as file:
+            file.write(page_text)
 
 # 예시 텍스트와 라벨
 texts = ["Example text related to A", "Example text related to B", "Example text related to C"]
@@ -25,12 +35,12 @@ X = vectorizer.fit_transform(texts)
 model = SVC()
 model.fit(X, labels)
 
-# 페이지 텍스트의 주제를 예측하는 함수
+# ----------------------------페이지 텍스트의 주제를 예측하는 함수----------------------------
 def predict_topic(page_text):
     X_test = vectorizer.transform([page_text])  # 테스트 데이터를 벡터화
     return model.predict(X_test)[0]  # 예측된 주제를 반환
 
-# SQLite 데이터베이스를 초기화하는 함수
+# ----------------------------SQLite 데이터베이스를 초기화하는 함수----------------------------
 def init_db(db_dir='db', db_name='textbook.db'):
     # db 디렉토리가 존재하지 않으면 생성
     if not os.path.exists(db_dir):
@@ -47,7 +57,7 @@ def init_db(db_dir='db', db_name='textbook.db'):
     conn.commit()  # 변경사항 커밋
     return conn  # 데이터베이스 연결 반환
 
-# 페이지 정보를 데이터베이스에 저장하는 함수
+# ----------------------------페이지 정보를 데이터베이스에 저장하는 함수----------------------------
 def save_page_to_db(conn, page_num, text, topic):
     cursor = conn.cursor()  # 커서를 생성
     # 페이지 정보를 데이터베이스에 삽입
@@ -55,7 +65,7 @@ def save_page_to_db(conn, page_num, text, topic):
                    (page_num, text, topic))
     conn.commit()  # 변경사항 커밋
 
-# 특정 주제에 해당하는 페이지 번호를 가져오는 함수
+# ----------------------------특정 주제에 해당하는 페이지 번호를 가져오는 함수----------------------------
 def get_pages_by_topic(conn, topic):
     cursor = conn.cursor()  # 커서를 생성
     # 주제에 해당하는 페이지 번호를 선택
@@ -65,7 +75,8 @@ def get_pages_by_topic(conn, topic):
 pdf_path = './sample/Computer_Systems_A_Programmers_Perspective(3rd).pdf'  # PDF 파일 경로
 pages = extract_text_by_page(pdf_path)  # PDF에서 페이지별로 텍스트를 추출
 
-print(len(pages))
+print(pages)
+
 
 # db_conn = init_db()  # 데이터베이스 초기화
 
