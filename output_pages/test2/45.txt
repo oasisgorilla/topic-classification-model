@@ -1,0 +1,8 @@
+define문을 여러 줄에 걸쳐 기술하면서 변수를 숨겨라
+나쁜 예,
+#define local_var xy_z
+“xy_z”를 두 줄로 분리한 좋은 예,
+#define local_var xy\
+_z // local_var OK
+이렇게 하면 xy_z를 검색해도 나오지 않는다. C 전처리 프로그램은 줄의 끝 부분
+에 나오는 “\”를 다음 줄로 이어진다는 의미로 해석한다.

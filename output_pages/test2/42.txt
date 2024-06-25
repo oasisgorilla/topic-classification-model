@@ -1,0 +1,13 @@
+네임스페이스
+C는 struct/union과 typedef struct/union의 네임스페이스를 구별한다(그러나
+C++에서는 구별하지 않는다). 구조체든 유니언 네임스페이스든 같은 이름을 사용
+하자. 가능하다면 둘이 서로 호환되게 하자.
+typedef struct {
+char* pTr;
+size_t lEn;
+} snafu;
+struct snafu {
+unsigned cNt
+char* pTr;
+size_t lEn;
+ } A;

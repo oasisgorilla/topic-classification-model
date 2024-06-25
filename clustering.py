@@ -33,7 +33,7 @@ def preprocess(text):
 def tokenize_and_remove_stopwords(text):
     okt = Okt()
     tokens = okt.morphs(text)  # 형태소 분석
-    tokens = [token for token in tokens if token not in stop_words]  # 불용어 제거
+    tokens = [token for token in tokens if token not in korean_stopwords]  # 불용어 제거
     return ' '.join(tokens)
 
 # 디렉토리 내부의 모든 txt 파일을 불러옴
@@ -83,7 +83,7 @@ def print_clustered_documents(filenames, labels):
         print(f"Cluster {cluster}: {docs}")
 
 # 실행부
-directory = './output_pages'
+directory = './output_pages/test2'
 
 # 텍스트 파일 로드 및 전처리
 texts, filenames = load_and_preprocess_files(directory)

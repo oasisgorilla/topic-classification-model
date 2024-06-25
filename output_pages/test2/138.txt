@@ -1,0 +1,11 @@
+일관성 부족을 악용하라
+자바에서 배열 선언은 정말 어지럽다. 예전 C 형식으로 할 수 있고, string x[]와
+같은 방식도 가능하며(배열 표시 위치가 앞-뒤로 혼합된 형태), string[] x(배열
+표시가 앞쪽에 오는 형태)와 같이 선언할 수 있다. 사람들에게 혼란을 주려면 다음
+과 같이 여러 표기법을 혼합한다.
+byte[ ] rowvector, colvector , matrix[ ];
+CHAPTER  06    코드 혼잡화 44
+위 코드는 다음과 같다.
+byte[ ] rowvector;
+byte[ ] colvector;
+byte[ ][] matrix;

@@ -1,0 +1,16 @@
+주석으로 위장한 코드와 코드로 위장한 주석
+실제로는 주석처리가 되었지만 얼핏 보면 주석처리가 되지 않은 것처럼 보이게 할
+수 있다.
+for(j=0; j<array_len; j+ =8)
+{
+total += array[j+0];
+total += array[j+1];
+total += array[j+2]; /* 속도 향상을 위해
+total += array[j+3]; * 루프의 코드를 길게
+total += array[j+4]; * 펼쳐 놓았다.
+total += array[j+5]; */
+total += array[j+6];
+total += array[j+7];
+}
+위 코드에서 다른 색으로 표시하지 않았다면 세 줄의 코드가 주석처리되었다는 사
+실을 알 수 있었을까? 

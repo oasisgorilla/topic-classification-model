@@ -1,0 +1,9 @@
+헝가리안 표기법의 변형
+헝가리안 표기법을 활용한 또 다른 술책으로 “변수명은 그대로 사용하되 변
+수 형식을 바꾸는” 방법이 있다. 이 방법은 윈도 응용프로그램이 Win16
+WndProc(HWND hW, WORD wMsg, WORD wParam, LONG lParam)에서
+Win32 WndProc(HWND hW, UINT wMsg, WPARAM wParam, LPARAM
+lParam)으로 변경되는 경우와 같은 상황에서 어김없이 등장한다. 여기서 w는
+words임을 가리키는 듯하지만 실제로는 long을 가리킨다. Win64로 응용프로그
+램을 변경하는 경우 이 사실이 더욱 명확해진다. Win64에서는 파라미터가 64비트
+이지만 기존의 “w”와 “I” 접두어는 변하지 않는다.

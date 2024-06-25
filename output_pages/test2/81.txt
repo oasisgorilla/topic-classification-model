@@ -1,0 +1,9 @@
+좋은 것은 남용하라
+캡슐화와 oo를 남용하라. 다음 코드를 살펴보자.
+myPanel.add( getMyButton() );
+private JButton getMyButton()
+{
+return myButton;
+}
+위 코드에 특별히 흥미로운 부분은 없어 보인다. 걱정할 필요 없다. 언젠가는 재미
+있는 일이 일어날 것이다.

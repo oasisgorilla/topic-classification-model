@@ -1,0 +1,5 @@
+몬티 파이썬 주석
+makeSnafucated라는 메소드에는 /* make snafucated */과 같은 자바독JavaDoc
+주석을 추가한다. 어디에도 snafucated의 의미를 정의하지 않는 것이 핵심이다.
+snafucated의 의미를 모르는 사람은 바보임에 틀림없다. Sun AWD 자바독에는
+이와 같은 기법을 사용한 고전 예제가 많다.

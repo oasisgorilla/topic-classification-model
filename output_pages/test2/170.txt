@@ -1,0 +1,7 @@
+비주얼 베이직 선언
+다음과 같은 선언보다는
+dim Count_num as string
+dim Color_var as string
+dim counter as integer
+아래와 같이 선언하는 것이 바람직하다
+Dim Count_num$, Color_var$, counter%

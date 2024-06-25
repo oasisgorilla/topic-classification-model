@@ -1,0 +1,4 @@
+추상화하라
+가능한 한 it, everything, data, handle, stuff, do, routine, perform, 숫
+자 등과 같은 추상적인 단어를 변수명이나 함수명에 많이 사용하자(좋은 예,
+routineX48, PerformDataFunction, DoIt, HandleStuff, do_args_method).

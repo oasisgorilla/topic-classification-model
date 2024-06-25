@@ -1,0 +1,24 @@
+비주얼 폭스프로(Foxpro)
+이 팁은 비주얼 폭스프로에서만 적용할 수 있는 내용이다. 변수의 상태가 undefined
+인 경우에는 값을 할당해야 변수를 사용할 수 있다. 이와 같은 상황은 변수의 형식
+을 확인할 때 발생한다.
+lcx = TYPE(‘somevariable’)
+위 코드의 수행 결과 lcx는 ‘U’ 또는 undefined가 된다. 그러나 변수에 범위를 할
+당하면 변수를 정의하는 효과가 나타나 므로 논리적인 FALSE값을 갖게 할 수 있
+다. 간단하지 않은가?
+LOCAL lcx lcx = TYPE(‘somevariable’)
+그럼 lcx 값은 ‘L’ 혹은 논리값(결국 FALSE)을 갖는다. 유지보수할 수 없는 코드를
+작성하는데 이러한 특징이 얼마나 도움이 될지 상상해보라.
+LOCAL lc_one, lc_two, lc_three... , lc_n
+IF lc_one
+DO some_incredibly_complex_operation_that_will_neverbe_executed WITH
+make_sure_to_pass_parameters
+ENDIF
+IF lc_two
+DO some_incredibly_complex_operation_that_will_neverbe_executed WITH
+make_sure_to_pass_parameters
+ENDIF
+PROCEDURE some_incredibly_complex_oper....
+* 여기에 추가하는 많은 코드는 절대 실행되지 않는다.
+* 우리의 메인 프로시저 코드를 여기에 잘라내서 붙인다면 재미있지 않겠는가!
+ENDIF 

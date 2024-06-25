@@ -1,0 +1,3 @@
+중첩된 switch
+중첩된 switch구문(switch문 내의 switch)은 사람을 가장 혼란스럽게 하는 중첩
+가운데 하나다.
