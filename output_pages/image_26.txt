@@ -1,0 +1,41 @@
+12
+CHAPTER  03    위장술
+3  |  위장술 
+표면으로 올라오는 시간이 오래 걸리는 버그일수록 찾기가 어렵다. 
+_로에디 그린Roedy Green 
+위장술, 숨기기, 어떤 것을 마치 다른 것처럼 보이게 하기 등의 기술은 유지보수할 
+수 없는 코드에 필수적인 기법이다. 이런 기술 중 대다수는 사람의 눈이나 텍스트 
+편집기로는 알아채기 힘들다는 약점을 이용한다. 
+주석으로 위장한 코드와 코드로 위장한 주석 
+실제로는 주석처리가 되었지만 얼핏 보면 주석처리가 되지 않은 것처럼 보이게 할 
+수 있다. 
+for(j=0; j<array_len; j+ =8) 
+	
+{ 
+	
+total += array[j+0]; 
+	
+total += array[j+1]; 
+	
+total += array[j+2]; 	
+/* 속도 향상을 위해 
+	
+total += array[j+3]; 	
+* 루프의 코드를 길게
+	
+total += array[j+4]; 	
+* 펼쳐 놓았다. 
+	
+total += array[j+5]; 	
+*/ 
+	
+total += array[j+6]; 
+	
+total += array[j+7]; 
+	
+} 
+위 코드에서 다른 색으로 표시하지 않았다면 세 줄의 코드가 주석처리되었다는 사
+실을 알 수 있었을까? 
+네임스페이스 
+C는 struct/union과 typedef struct/union의 네임스페이스를 구별한다(그러나 
+This eBook is licensed to 남궁진(jinvicky@naver.com). Personal use only

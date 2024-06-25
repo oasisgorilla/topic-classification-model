@@ -1,0 +1,39 @@
+66
+CHAPTER  11    잡다한 기법
+디바이스 드라이버를 바꿀 방법이 없으므로 선택의 여지는 없다.
+커스텀 스크립트 언어 
+우리의 클라이언트/서버 응용프로그램에서 실행 중에 바이트로 컴파일되는 스크
+립팅 명령어 언어를 포함해야 한다. 
+컴파일러 종속 코드 
+컴파일러나 인터프리터 버그를 발견했으면 이 버그를 이용해 우리 코드가 제대로 
+동작하게 만들자. 이제 우리 프로그램을 사용하는 모든 이는 다른 컴파일러를 사용
+할 수 없게 된다. 
+실생활 예제 
+스승님께서 작성하신 실생활 예제를 보여주겠다. 하나의 C 함수에 그가 사용한 여
+러 기법을 살펴보자. 
+void* Realocate(void*buf, int os, int ns) 
+{ 
+	
+void*temp; 
+	
+temp = malloc(os); 
+	
+memcpy((void*)temp, (void*)buf, os); 
+	
+free(buf); buf = malloc(ns); 
+	
+memset(buf, 0, ns); 
+	
+memcpy((void*)buf, (void*)temp, ns); 
+	
+return buf; 
+} 
+1. 	 
+자세히 보면 Realocate의 철자가 부정확하다. 창의적인 철자법의 힘을 
+얕보지 말라. 
+2.	 
+아무런 이유 없이 입력 버퍼를 임시 복사본을 만든다. 
+3.	 
+이유 없이 형을 변환한다. Memcpy( 
+)는 (void*)형을 매개변수로 
+This eBook is licensed to 남궁진(jinvicky@naver.com). Personal use only

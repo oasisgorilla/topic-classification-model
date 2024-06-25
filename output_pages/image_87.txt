@@ -1,0 +1,6 @@
+대용량 서버 구축을 위한
+Memcached와 
+Redis
+강대명 지음
+Hanbit eBook 
+Realtime 02

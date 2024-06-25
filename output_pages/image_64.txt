@@ -1,0 +1,15 @@
+50
+CHAPTER  07    테스트
+자신감 향상 프로그램에 보내는 것과 테스트를 하는 것, 어떤 것이 바람직한 일인
+가? 비용 절감 효과는 상상을 초월할 것이다.
+디버그 모드에서만 동작하는 코드
+TESTING을 1로 정의했다면,
+#define TESTING 1
+아래와 같이 TESTING이 1인 경우에만 수행되는 별도의 코드 섹션을 가질 수 있다.
+#if TESTING==1
+#endif
+별도의 코드 섹션에 다음과 같은 꼭 필요한 코드를 넣고 빼는 것은 우리의 자유다.
+x = rt_val;
+누군가 TESTING을 0으로 재설정하면 프로그램은 동작하지 않는다. 조금만 창의력
+을 발휘하면 이 기법으로 로직을 망가뜨리고 컴파일러 기능 장애를 초래할 수 있다.
+This eBook is licensed to 남궁진(jinvicky@naver.com). Personal use only

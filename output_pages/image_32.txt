@@ -1,0 +1,19 @@
+18
+CHAPTER  03    위장술
+// 두 번째 정의 내용 
+void g(void* str); 
+#define TWICE 
+#else // ONCE 
+// 첫 번째 정의 내용 
+void g(std::string str); 
+#define ONCE 
+#endif // ONCE 
+#endif // TWICE 
+#endif // DONE 
+이제 얼마나 많이 헤더를 include했느냐에 따라 결과가 달라지므로 g( ) 함수에 
+char*를 전달해 호출하면 어떤 재미있는 일이 벌어지는지 구경하는 일만 남았다.
+컴파일러 지시어
+컴파일러 지시어는 같은 코드를 상황에 따라 다르게 동작하도록 만들어졌다. 
+Boolean 쇼트 서킷 지시어와 long strings 지시어를 반복적으로 줄기차게 껐다 
+켜기를 반복하자.
+This eBook is licensed to 남궁진(jinvicky@naver.com). Personal use only

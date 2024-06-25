@@ -72,7 +72,7 @@ def get_pages_by_topic(conn, topic):
     cursor.execute("SELECT page_num FROM pages WHERE topic=?", (topic,))
     return cursor.fetchall()  # 결과 반환
 
-pdf_path = './sample/Computer_Systems_A_Programmers_Perspective(3rd).pdf'  # PDF 파일 경로
+pdf_path = "./sample/Computer_Systems_A_Programmers_Perspective(3rd).pdf"  # PDF 파일 경로
 pages = extract_text_by_page(pdf_path)  # PDF에서 페이지별로 텍스트를 추출
 
 print(f"{len(pages)} pages extract complete")

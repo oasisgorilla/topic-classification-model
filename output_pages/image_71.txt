@@ -1,0 +1,25 @@
+57
+CHAPTER  10    색다른 언어를 이용한 트릭
+ReadChars = .ReadChars (29,0) 
+ReadChar = trim(left(mid(ReadChar,len(ReadChar)-15,len(ReadChar)-5),7)) 
+If ReadChars = “alongsentancewithoutanyspaces” 
+Mid,14,24 = “withoutanys” 
+and left,5 = “without” 
+델파이/파스칼 전용 기법 
+함수나 프로시저를 사용하지 말자. 대신 label/goto 문으로 코드 여기저기를 점
+프할 수 있다. 이 기법은 유지보수 프로그래머를 정신을 빼 놓을 수 있다. 처음에는 
+이와 같은 기법에 적응할 시간을 좀 주고 갑작스럽게 마구잡이로 점프를 시작하는 
+것도 좋은 방법이다. 
+펄 
+if문과 unless문을 계속 이어 나간다. 특히 아주 긴 줄일 경우에 효과적이다. 
+Lisp 
+LISP는 유지보수할 수 없는 코드를 작성하는 우리에게는 환상적인 언어다. 아래와 
+같은 환상적인 코드를 감상해보라! 
+(lambda (*<8-]= *<8-[= ) (or *<8-]= *<8-[= )) 
+(defun :-] (<) (= < 2))
+(defun !(!)(if(and(funcall(lambda(!)(if(and ‘(< 0)(< ! 2))1 nil))(1+ !)) 
+(not(null ‘(lambda(!)(if(< 1 !)t nil)))))1(* !(!(1- !))))) 
+비주얼 폭스프로(Foxpro) 
+이 팁은 비주얼 폭스프로에서만 적용할 수 있는 내용이다. 변수의 상태가 undefined
+인 경우에는 값을 할당해야 변수를 사용할 수 있다. 이와 같은 상황은 변수의 형식
+을 확인할 때 발생한다. 
